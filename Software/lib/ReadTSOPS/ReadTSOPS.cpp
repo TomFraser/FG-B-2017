@@ -83,5 +83,6 @@ void ReadTSOPS::reset(){
 }
 
 void ReadTSOPS::stop(){
-
+    digitalWrite(POWER_PIN_1, LOW);
+    digitalWrite(POWER_PIN_2, LOW);
 }

@@ -1,7 +1,7 @@
 #ifndef ReadTSOPS_h
 #define ReadTSOPS_h
 
-#include </Users/Thomas/Documents/Developer/FG\&B/Software/Config/Config.h>
+#include <Config.h>
 
 class ReadTSOPS{
 
