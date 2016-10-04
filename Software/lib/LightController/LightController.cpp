@@ -23,7 +23,7 @@ LightController::LightController(){
     pinMode(LIGHT_19, INPUT);
 
     lightSensors[0] = LIGHT_1;
-    lightSensors[1] = LIGHT_2;
+    lightSensors[1] = LIGHT_2; 
     lightSensors[2] = LIGHT_3;
     lightSensors[3] = LIGHT_4;
     lightSensors[4] = LIGHT_5;
