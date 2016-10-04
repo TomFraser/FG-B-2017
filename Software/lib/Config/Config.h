@@ -11,6 +11,9 @@
 //--------------------------------------------
 //Light
 
+#define LIGHTSENSOR_NUM 19
+#define LIGHTSENSOR_THRESHOLD 30
+
 #define LIGHT_1 0
 #define LIGHT_2 0
 #define LIGHT_3 0
