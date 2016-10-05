@@ -15,6 +15,7 @@ public:
     void read(int mode);
     void reset();
     void stop();
+    void moveTangent();
 
     int bestSensor;
 };

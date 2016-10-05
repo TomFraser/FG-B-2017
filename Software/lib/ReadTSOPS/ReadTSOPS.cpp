@@ -86,3 +86,23 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
 }
+
+void ReadTSOPS::moveTangent(){ //Hmmmmm
+    digitalWrite(POWER_PIN_1, HIGH);
+    digitalWrite(POWER_PIN_2, HIGH);
+    for(int j = 0; j < MAX_READS; j++){
+        for(int i = 0; i < TSOP_NUM; i++){
+            values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
+        }
+    }
+    digitalWrite(POWER_PIN_1, LOW);
+    digitalWrite(POWER_PIN_2, LOW);
+    for(int i = 0; i < TSOP_NUM; i++){
+        if(values[i] > index){
+            index = i;
+        }
+    values[i] = 0;
+    }
+
+    //Begin weighting
+}

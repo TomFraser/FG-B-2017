@@ -1,6 +1,9 @@
 #ifndef LightController_h
 #define LightController_h
 
+#include <Config.h>
+#include <Arduino.h>
+
 class LightController{
 
 public:
