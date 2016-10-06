@@ -15,7 +15,7 @@ public:
     void setAngle(int angle);
 
 private:
-    int angleArray[3] = {120, 180, 60};
+    int angleArray[3] = {60, 180, 300};
 
 };
 
