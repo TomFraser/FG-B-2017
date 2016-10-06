@@ -18,7 +18,7 @@ public:
     void read();
     void reset();
     void stop();
-    bool moveTangent();
+    double moveTangent();
 
     int bestSensor;
 };

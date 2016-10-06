@@ -76,15 +76,21 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-bool ReadTSOPS::moveTangent(){ //Hmmmmm
+double ReadTSOPS::moveTangent(){ //Hmmmmm
     read();
     //Begin weighting
     angleToBall = index * 20.00;
-    if(angleToBall < 180.00 && angleToBall != 0){
-        return angleToBall + 90.00;
-    }
-    if(angleToBall > 180.00 && angleToBall != 0){
-        return angleToBall - 90.00;
+
+    if(angleToBall != 0){
+        return angleToBall < 180 ? (angleToBall + 90) : (angleToBall - 90);
     }
     return 0;
+
+    // if(angleToBall < 180.00 && angleToBall != 0){
+    //     return angleToBall + 90.00;
+    // }
+    // if(angleToBall > 180.00 && angleToBall != 0){
+    //     return angleToBall - 90.00;ID
+    // }
+    // return 0;
 }
