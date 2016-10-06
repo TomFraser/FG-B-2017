@@ -19,7 +19,7 @@ ReadTSOPS::ReadTSOPS(){
     index = 0;
 }
 
-void ReadTSOPS::read(int mode){
+void ReadTSOPS::readMode(int mode){
     bestSensor = 0;
     index = 0;
 
@@ -27,51 +27,40 @@ void ReadTSOPS::read(int mode){
         case 0: //Nothing
             break;
         case 1: //Reading
-            digitalWrite(POWER_PIN_1, HIGH);
-            digitalWrite(POWER_PIN_2, HIGH);
-            for(int j = 0; j < MAX_READS; j++){
-                for(int i = 0; i < TSOP_NUM; i++){
-                    values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
-                }
-            }
-            digitalWrite(POWER_PIN_1, LOW);
-            digitalWrite(POWER_PIN_2, LOW);
-            for(int i = 0; i < TSOP_NUM; i++){
-                if(values[i] > index){
-                    index = i;
-                }
-            values[i] = 0;
-            }
-            bestSensor = index;
+            read();
             break;
 
         case 2: //Read w/ filtering
-            digitalWrite(POWER_PIN_1, HIGH);
-            digitalWrite(POWER_PIN_2, HIGH);
-            for(int j = 0; j < MAX_READS; j++){
-                for(int i = 0; i < TSOP_NUM; i++){
-                    values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
-                }
-            }
-            digitalWrite(POWER_PIN_1, LOW);
-            digitalWrite(POWER_PIN_2, LOW);
-            for(int i = 0; i < TSOP_NUM; i++){
-                if(values[i] < READ_THRESHOLD){
-                    values[i] = 0;
-                }
-                if(values[i] > index){
-                    index = i;
-                }
-            values[i] = 0;
-            }
-            bestSensor = index;
+            read();
             break;
 
         case 3: //Read w/ weighting
+            read();
             break;
         case 4: //Read w/ filtering & weighting
+            read();
             break;
     }
+}
+
+void ReadTSOPS::read(){
+
+    digitalWrite(POWER_PIN_1, HIGH);
+    digitalWrite(POWER_PIN_2, HIGH);
+    for(int j = 0; j < MAX_READS; j++){
+        for(int i = 0; i < TSOP_NUM; i++){
+            values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
+        }
+    }
+    digitalWrite(POWER_PIN_1, LOW);
+    digitalWrite(POWER_PIN_2, LOW);
+    for(int i = 0; i < TSOP_NUM; i++){
+        if(values[i] > index){
+            index = i;
+        }
+    values[i] = 0;
+    }
+    bestSensor = index;
 }
 
 void ReadTSOPS::reset(){

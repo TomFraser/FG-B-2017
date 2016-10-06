@@ -12,7 +12,8 @@ private:
 
 public:
     ReadTSOPS();
-    void read(int mode);
+    void readMode(int mode);
+    void read();
     void reset();
     void stop();
     void moveTangent();
