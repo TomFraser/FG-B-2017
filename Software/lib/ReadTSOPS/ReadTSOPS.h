@@ -9,6 +9,8 @@ private:
     int sensors[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     int values[12];
     int index;
+    bool angleToBall;
+    bool angleOrbit;
 
 public:
     ReadTSOPS();
@@ -16,7 +18,7 @@ public:
     void read();
     void reset();
     void stop();
-    void moveTangent();
+    bool moveTangent();
 
     int bestSensor;
 };
