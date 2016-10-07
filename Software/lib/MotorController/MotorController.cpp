@@ -1,13 +1,18 @@
-#include <MotorCotroller.h>
+#include <MotorController.h>
 
 MotorController::MotorController(){
-    Motor motorA(0,0,0,0);
-    Motor motorB(0,0,0,0);
-    Motor motorC(0,0,0,0);
 }
 
 void MotorController::setAngle(int angle){
-    motorA.set(cos(((angleArray[0] + 90) * angleToRad) - (angle * angleToRad)));
-    motorB.set(cos(((angleArray[1] + 90) * angleToRad) - (angle * angleToRad)));
-    motorC.set(cos(((angleArray[2] + 90) * angleToRad) - (angle * angleToRad)));
+    cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad)); //Needs motor.set stuffs
+    cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad));
+    cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad));
+}
+
+void MotorController::setAnlge(int angle, int dirNum){
+    int newAngle = (abs(round(angle/(360*1/dirNum))))*(360*1/dirNum);
+
+    if(newAngle != -1){
+        double direction = newAngle < 180 ? (newAngle + 90) : (newAngle - 90);
+    }
 }

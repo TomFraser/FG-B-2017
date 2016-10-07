@@ -13,6 +13,7 @@ class MotorController{
 public:
     MotorController();
     void setAngle(int angle);
+    void setAnlge(int angle, int dirNum);
 
 private:
     int angleArray[3] = {60, 180, 300};

@@ -76,7 +76,7 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-double ReadTSOPS::moveTangent(){ //Hmmmmm
+double ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be done later down the course.
     read();
     //Begin weighting
     angleToBall = index * 20.00;

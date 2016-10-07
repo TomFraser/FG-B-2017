@@ -2,16 +2,17 @@
 #include <MotorController.h>
 #include <t3spi.h>
 
-MotorController MOTOR;
-T3SPI MOTOR;
+MotorController MOTOR = MotorController();
+T3SPI MASTER_TEENSY;
+
+int angle = 0;
 
 void setup(){
-    MOTOR.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
-    MOTOR.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
+    MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
+    MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
 }
 
 void loop(){
     //Recieve Data From Slave 0, Slave 1
-
-    MOTOR.setAngle(int angle);
+    MOTOR.setAngle(angle);
 }

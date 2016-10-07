@@ -1,7 +1,7 @@
 #include <Motor.h>
 
 Motor::Motor(int pwm, int dir, int brk, int rev){
-    pinMode(pwn, OUTPUT);
+    pinMode(pwm, OUTPUT);
     pinMode(dir, OUTPUT);
     pinMode(brk, OUTPUT);
     reversed = rev;
@@ -15,7 +15,7 @@ void Motor::set(int pwm){
     digitalWrite(r_brk, LOW);
 }
 void Motor::brake(){
-    digitalWrite(r_dr, LOW);
+    digitalWrite(r_dir, LOW);
     analogWrite(r_pwm, 0);
     digitalWrite(r_brk, HIGH);
 }
