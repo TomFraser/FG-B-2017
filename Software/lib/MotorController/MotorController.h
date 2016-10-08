@@ -13,7 +13,7 @@ class MotorController{
 public:
     MotorController();
     void setAngle(int angle);
-    void setAnlge(int angle, int dirNum);
+    void setAnlge(int angle, int dirNum); //used to limit the nuber of directions the robot can move in.
 
 private:
     int angleArray[3] = {60, 180, 300};
