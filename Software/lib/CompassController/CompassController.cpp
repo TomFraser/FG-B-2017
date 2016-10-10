@@ -1,3 +1,4 @@
+
 #include <CompassController.h>
 
 double CompassController::doubleMod(double value, double maxVal){
