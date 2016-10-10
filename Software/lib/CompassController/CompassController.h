@@ -13,10 +13,7 @@ public:
     double doubleMod(double value, double maxVal);
     double calcHeading(double heading);
 
-    Vector3D calcGyro();
-
 private:
-    Madgwick filter;
     void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data);
     void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data);
 
