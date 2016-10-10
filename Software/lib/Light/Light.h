@@ -8,12 +8,14 @@ class Light{
 
 public:
     Light();
-    void determineThresholds();
-    void letsDoSomeGeometry();
+    void init();
+    void readLight();
 
 private:
     int thresholds[19];
     int lightSensors[19];
+
+    bool seeingWhite[19];
 
 };
 

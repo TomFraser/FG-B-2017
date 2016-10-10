@@ -43,12 +43,21 @@ Light::Light(){
     lightSensors[18] = LIGHT_19;
 }
 
-void Light::determineThresholds(){
+void Light::init(){
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
         thresholds[i] = analogRead(lightSensors[i] + LIGHTSENSOR_THRESHOLD);
     }
 }
 
-void Light::letsDoSomeGeometry(){
+void Light::readLight(){
     //Cuck. Need to sit down with everyone and figure out how we are gonna do this.
+    for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+        if(analogRead(lightSensors[i]) >= thresholds[i]){
+            seeingWhite[i] = true;
+        }
+        else{
+            seeingWhite[i] = false;
+        }
+    }
+    
 }
