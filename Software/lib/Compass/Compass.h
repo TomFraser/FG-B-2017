@@ -4,10 +4,10 @@
 #include <Config.h>
 #include <Wire.h>
 #include <Vector3D.h>
-#include <Math.h>
+#include <math.h>
 
 
-class Compass{
+class Compass {
 
 public:
     Compass();
@@ -17,9 +17,9 @@ public:
     double getHeading();
 
 private:
-    double heading;
     long previousTime;
     double calibration;
+    double heading;
 
     double doubleMod(double value, double maxVal);
 
