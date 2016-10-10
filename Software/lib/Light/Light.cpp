@@ -1,6 +1,6 @@
 #include <LightController.h>
 
-LightController::LightController(){
+Light::Light(){
     //init
     pinMode(LIGHT_1, INPUT);
     pinMode(LIGHT_2, INPUT);
@@ -43,12 +43,12 @@ LightController::LightController(){
     lightSensors[18] = LIGHT_19;
 }
 
-void LightController::determineThresholds(){
+void Light::determineThresholds(){
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
         thresholds[i] = analogRead(lightSensors[i] + LIGHTSENSOR_THRESHOLD);
     }
 }
 
-void LightController::letsDoSomeGeometry(){
+void Light::letsDoSomeGeometry(){
     //Cuck. Need to sit down with everyone and figure out how we are gonna do this.
 }

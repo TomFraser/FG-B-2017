@@ -4,10 +4,10 @@
 #include <Config.h>
 #include <Arduino.h>
 
-class LightController{
+class Light{
 
 public:
-    LightController();
+    Light();
     void determineThresholds();
     void letsDoSomeGeometry();
 
