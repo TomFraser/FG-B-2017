@@ -9,6 +9,10 @@
 #define READ_THRESHOLD 40
 
 //--------------------------------------------
+//SPI
+#define DATA_LENGTH 16
+
+//--------------------------------------------
 //Light
 
 #define LIGHTSENSOR_NUM 19

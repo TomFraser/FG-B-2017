@@ -1,6 +1,7 @@
 #include <Config.h>
 #include <MotorController.h>
 #include <t3spi.h>
+#include <Motor.h>
 
 MotorController MOTOR = MotorController();
 T3SPI MASTER_TEENSY;

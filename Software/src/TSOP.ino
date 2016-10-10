@@ -2,7 +2,10 @@
 #include <Config.h>
 #include <t3spi.h>
 
-ReadTSOPS tsops; //= ReadTSOPS();
+TsopController tsops;
+
+volatile uint16_t dataIn[DATA_LENGTH];
+volatile uint16_t dataOut[DATA_LENGTH];
 
 T3SPI MOTOR;
 
@@ -12,5 +15,5 @@ void setup(){
 }
 
 void loop(){
-
+    dataOut[0] = tsops.activateTsop();
 }
