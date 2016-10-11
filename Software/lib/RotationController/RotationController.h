@@ -17,14 +17,18 @@ public:
     RotationController(){};
     bool getPixy(); //gets pixy stuff
     void calcPixy(); //calcs pixy stuff
-    void setRotation(); //sets the rotation
+    void calcRotation(); //calcs final stuff
     void getCompass(); //gets compass stuff
-    int rotate();
+    int rotate(); //gives rotation
 
 private:
     PixyI2C pixy;
     Compass compass;
+    int rotationToAdd;
     int finalRotation
+
+    double compassHeading;
+    double newTarget;
 
 };
 
