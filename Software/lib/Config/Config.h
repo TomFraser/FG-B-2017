@@ -38,4 +38,6 @@
 #define LIGHT_18 0
 #define LIGHT_19 0
 
+#define DETECTED_NUMBER_LIGHT 3
+
 #endif

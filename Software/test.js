@@ -13,4 +13,11 @@ function log() {
     console.log(newNum * 255);
 }
 
-log();
+function run() {
+    var dou = 79.91;
+    var mega = Math.trunc(dou);
+
+    console.log(mega);
+}
+
+run();

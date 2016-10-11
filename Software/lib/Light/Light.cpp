@@ -50,14 +50,32 @@ void Light::init(){
 }
 
 void Light::readLight(){
+    detectedNumber = 0;
     //Cuck. Need to sit down with everyone and figure out how we are gonna do this.
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
         if(analogRead(lightSensors[i]) >= thresholds[i]){
             seeingWhite[i] = true;
+            detectedNumber++;
         }
         else{
             seeingWhite[i] = false;
         }
     }
-    
+}
+
+void Light::averageAngles(){
+    if(detectedNumber >= DETECTED_NUMBER_LIGHT){
+        averageAngles();
+    }
+    for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+        if(seeingWhite[i] == true){
+            tempAngle = tempAngle + i*18;
+        }
+    }
+    tempAngle = tempAngle / detectedNumber;
+    finalDirection = tempAngle;
+}
+
+int Light::getAngle(){
+    return finalDirection;
 }
