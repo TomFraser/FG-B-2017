@@ -2,6 +2,9 @@
 #define ReadTSOPS_h
 
 #include <Config.h>
+#include <Pins.h>
+#include <Defines.h>
+#include <Arduino.h>
 
 class ReadTSOPS{
 

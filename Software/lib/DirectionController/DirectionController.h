@@ -1,17 +1,20 @@
-#ifndef MotorController_h
-#define MotorController_h
+#ifndef DirectionController_h
+#define DirectionController_h
 
 #include <Config.h>
+#include <Pins.h>
+#include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
+#include <Light.h>
 
 #define angToRad 0.01745329251
 #define radToAng 57.2957795131
 
-class MotorController{
+class DirectionController{
 
 public:
-    MotorController();
+    DirectionController();
     void setAngle(int angle);
     void setAnlge(int angle, int dirNum); //used to limit the nuber of directions the robot can move in.
 
