@@ -15,11 +15,14 @@ public:
     Vector3D read();
     void update();
     double getHeading();
+    void setTarget(double target_);
 
 private:
     long previousTime;
     double calibration;
     double heading;
+
+    double target;
 
     double doubleMod(double value, double maxVal);
 

@@ -8,6 +8,8 @@ Compass::Compass(){
     I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
     I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
+
+    setTarget(0);
 }
 
 //========Init Calibrate========
@@ -21,6 +23,8 @@ double Compass::calibrate(){
         reading += (double) read().z;
     }
     calibration = reading/COMPASS_CALIBRATION_NUMBER;
+
+
 
     return calibration;
 }
@@ -46,9 +50,15 @@ void Compass::update() {
 	previousTime = currentTime;
 }
 
+//=======Set Target=======
+void setTarget(double target_){
+    target = target_*-1;
+}
+
 //=======Get heading======
 double getHeading(){
-    return heading;
+    curr = (heading - 180) + target
+    return curr
 }
 
 
