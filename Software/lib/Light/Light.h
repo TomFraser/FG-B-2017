@@ -13,6 +13,7 @@ public:
     void init();
     void readLight();
     int getAngle();
+    void checkMod();
     void recalcAngle(); //Used when in the loop of moving back into the field.
 
 private:

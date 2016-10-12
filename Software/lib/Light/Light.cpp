@@ -79,3 +79,7 @@ void Light::averageAngles(){
 int Light::getAngle(){
     return finalDirection;
 }
+
+void Light::checkMod(){
+
+}
