@@ -56,9 +56,9 @@ void ReadTSOPS::read(){
     digitalWrite(POWER_PIN_2, LOW);
     for(int i = 0; i < TSOP_NUM; i++){
         if(values[i] > index){
-            index = i;
+            index = i + 1;
         }
-    values[i] = 0;
+        values[i] = 0;
     }
     bestSensor = index;
 }

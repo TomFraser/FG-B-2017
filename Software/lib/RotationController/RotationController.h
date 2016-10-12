@@ -19,7 +19,7 @@ public:
     void calcPixy(); //calcs pixy stuff
     void calcRotation(); //calcs final stuff
     void getCompass(); //gets compass stuff
-    int rotate(); //gives rotation
+    double rotate(); //gives rotation
 
 private:
     PixyI2C pixy;

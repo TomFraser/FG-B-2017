@@ -12,9 +12,8 @@ public:
     Light();
     void init();
     void readLight();
-    int getAngle();
-    void checkMod();
-    void recalcAngle(); //Used when in the loop of moving back into the field.
+    double getAngle();
+    void averageAngles();
 
 private:
     int thresholds[19];

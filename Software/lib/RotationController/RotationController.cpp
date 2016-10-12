@@ -37,7 +37,7 @@ void RotationController::calcRotation(){
     compass.updateTarget(newTarget);
 }
 
-int RotationController::rotate(){
+double RotationController::rotate(){
     finalRotation = compass.read();
     return finalRotation;
 }

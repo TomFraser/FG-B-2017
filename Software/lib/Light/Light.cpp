@@ -64,22 +64,21 @@ void Light::readLight(){
 }
 
 void Light::averageAngles(){
+    finalDirection = 0;
     if(detectedNumber >= DETECTED_NUMBER_LIGHT){
-        averageAngles();
-    }
-    for(int i = 0; i < LIGHTSENSOR_NUM; i++){
-        if(seeingWhite[i] == true){
-            tempAngle = tempAngle + i*18;
+        for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+            if(seeingWhite[i] == true){
+                tempAngle = tempAngle + i*18;
+            }
         }
+        tempAngle = tempAngle / detectedNumber;
+        finalDirection = tempAngle;
     }
-    tempAngle = tempAngle / detectedNumber;
-    finalDirection = tempAngle;
+    else{
+        finalDirection = -1;
+    }
 }
 
-int Light::getAngle(){
-    return finalDirection;
-}
-
-void Light::checkMod(){
-
+double Light::getAngle(){
+    return (double)finalDirection;
 }
