@@ -1,9 +1,9 @@
 #ifndef LightController_h
 #define LightController_h
 
-#include <Config.h>
-#include <Pins.h>
-#include <Defines.h>
+// #include <Config.h>
+// #include <Pins.h>
+// #include <Defines.h>
 #include <Arduino.h>
 
 class Light{

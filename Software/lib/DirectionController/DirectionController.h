@@ -1,9 +1,9 @@
 #ifndef DirectionController_h
 #define DirectionController_h
 
-#include <Config.h>
-#include <Pins.h>
-#include <Defines.h>
+// #include <Config.h>
+// #include <Pins.h>
+// #include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
 #include <Light.h>

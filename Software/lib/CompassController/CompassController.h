@@ -1,7 +1,7 @@
 #ifndef CompassController_h
 #define CompassController_h
 
-#include <Config.h>
+// #include <Config.h>
 #include <Wire.h>
 #include <Math.h>
 

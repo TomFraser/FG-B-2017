@@ -1,9 +1,9 @@
 #ifndef RotationController_h
 #define RotationController_h
 
-#include <Config.h>
-#include <Pins.h>
-#include <Defines.h>
+// #include <Config.h>
+// #include <Pins.h>
+// #include <Defines.h>
 #include <Arduino.h>
 #include <PixyI2C.h>
 #include <Compass.h>

@@ -1,7 +1,7 @@
 #ifndef I2CController_h
 #define I2CController_h
 
-#include <Config.h>
+// #include <Config.h>
 
 class I2CController{
 public:
