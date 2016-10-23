@@ -6,7 +6,7 @@
 // #include <Defines.h>
 #include <Arduino.h>
 #include <PixyI2C.h>
-#include <Compass.h>
+#include <CompassController.h>
 
 #define PIXY_CENTRE_X 160
 #define PIXY_CENTRE_Y 100
@@ -25,7 +25,7 @@ private:
     PixyI2C pixy;
     Compass compass;
     int rotationToAdd;
-    int finalRotation
+    int finalRotation;
 
     double compassHeading;
     double newTarget;

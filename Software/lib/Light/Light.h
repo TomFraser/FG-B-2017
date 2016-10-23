@@ -28,8 +28,6 @@ private:
     int newTempAngle;
     int newAngle;
 
-    void averageAngles();
-
 };
 
 #endif

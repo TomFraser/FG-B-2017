@@ -7,7 +7,7 @@
 #include <Arduino.h>
 #include <Motor.h>
 #include <Light.h>
-#include <ReadTSOPS.h.>
+#include <ReadTSOPS.h>
 #include <RotationController.h>
 
 #define angToRad 0.01745329251
@@ -47,6 +47,6 @@ private:
 struct lightStruct {
     bool seeing;
     double angle;
-}
+};
 
 #endif

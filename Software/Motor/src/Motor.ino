@@ -1,9 +1,9 @@
 #include <Config.h>
-#include <MotorController.h>
+#include <DirectionController.h>
 #include <t3spi.h>
 #include <Motor.h>
 
-MotorController MOTOR = MotorController();
+// MotorController MOTOR = MotorController();
 T3SPI MASTER_TEENSY;
 
 int angle = 0;
@@ -15,5 +15,5 @@ void setup(){
 
 void loop(){
     //Recieve Data From Slave 0, Slave 1
-    MOTOR.setAngle(angle);
+    // MOTOR.setAngle(angle);
 }
