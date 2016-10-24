@@ -1,4 +1,4 @@
-#include <LightController.h>
+#include <Light.h>
 
 Light::Light(){
     //init

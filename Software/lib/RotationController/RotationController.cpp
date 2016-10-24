@@ -2,7 +2,7 @@
 
 bool RotationController::getPixy(){
     if(pixy.getBlocks()){ //seing the block
-        int cam = pixy.blocks[0];
+        Block cam = pixy.blocks[0];
         int blockHeight = cam.height();
         int blockWidth = cam.width();
         int blockX = cam.x;

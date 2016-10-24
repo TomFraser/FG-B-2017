@@ -1,7 +1,7 @@
 #include <CompassController.h>
 
 double CompassController::doubleMod(double value, double maxVal){
-    return fmod((value + maxValue), maxValue);
+    return fmod((value + maxVal), maxVal);
 }
 
 double CompassController::calcHeading(double heading){
