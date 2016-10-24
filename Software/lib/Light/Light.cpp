@@ -1,6 +1,6 @@
-#include <LightController.h>
+#include <Light.h>
 
-LightController::LightController(){
+Light::Light(){
     //init
     pinMode(LIGHT_1, INPUT);
     pinMode(LIGHT_2, INPUT);
@@ -43,12 +43,42 @@ LightController::LightController(){
     lightSensors[18] = LIGHT_19;
 }
 
-void LightController::determineThresholds(){
+void Light::init(){
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
         thresholds[i] = analogRead(lightSensors[i] + LIGHTSENSOR_THRESHOLD);
     }
 }
 
-void LightController::letsDoSomeGeometry(){
+void Light::readLight(){
+    detectedNumber = 0;
     //Cuck. Need to sit down with everyone and figure out how we are gonna do this.
+    for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+        if(analogRead(lightSensors[i]) >= thresholds[i]){
+            seeingWhite[i] = true;
+            detectedNumber++;
+        }
+        else{
+            seeingWhite[i] = false;
+        }
+    }
+}
+
+void Light::averageAngles(){
+    finalDirection = 0;
+    if(detectedNumber >= DETECTED_NUMBER_LIGHT){
+        for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+            if(seeingWhite[i] == true){
+                tempAngle = tempAngle + i*18;
+            }
+        }
+        tempAngle = tempAngle / detectedNumber;
+        finalDirection = tempAngle;
+    }
+    else{
+        finalDirection = -1;
+    }
+}
+
+double Light::getAngle(){
+    return (double)finalDirection;
 }

@@ -1,7 +1,10 @@
 #ifndef ReadTSOPS_h
 #define ReadTSOPS_h
 
-#include <Config.h>
+ #include <Config.h>
+// #include <Pins.h>
+// #include <Defines.h>
+#include <Arduino.h>
 
 class ReadTSOPS{
 
@@ -9,8 +12,6 @@ private:
     int sensors[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
     int values[12];
     int index;
-    bool angleToBall;
-    bool angleOrbit;
 
 public:
     ReadTSOPS();
@@ -21,6 +22,7 @@ public:
     double moveTangent();
 
     int bestSensor;
+    double angleToBall;
 };
 
 #endif

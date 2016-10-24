@@ -2,6 +2,9 @@
 #define Compass_h
 
 #include <Config.h>
+#include <Pins.h>
+#include <Defines.h>
+
 #include <Wire.h>
 #include <Vector3D.h>
 #include <math.h>
