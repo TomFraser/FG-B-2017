@@ -23,7 +23,7 @@ public:
 
 private:
     PixyI2C pixy;
-    Compass compass;
+    CompassController compass;
     int rotationToAdd;
     int finalRotation;
 

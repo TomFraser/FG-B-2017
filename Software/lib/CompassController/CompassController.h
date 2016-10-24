@@ -4,6 +4,13 @@
 // #include <Config.h>
 #include <Wire.h>
 #include <Math.h>
+#include <Madgwick.h>
+
+struct Vector3D {
+    int x;
+    int y;
+    int z;
+};
 
 
 class CompassController{
@@ -22,10 +29,5 @@ private:
 
 };
 
-struct Vector3D {
-    int x;
-    int y;
-    int z;
-};
 
 #endif

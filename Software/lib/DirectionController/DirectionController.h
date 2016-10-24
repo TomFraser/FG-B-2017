@@ -13,6 +13,11 @@
 #define angToRad 0.01745329251
 #define radToAng 57.2957795131
 
+struct lightStruct {
+    bool seeing;
+    double angle;
+};
+
 class DirectionController{
 
 public:
@@ -44,9 +49,5 @@ private:
     RotationController rotationController = RotationController();
 };
 
-struct lightStruct {
-    bool seeing;
-    double angle;
-};
 
 #endif
