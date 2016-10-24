@@ -24,8 +24,6 @@ double Compass::calibrate(){
     }
     calibration = reading/COMPASS_CALIBRATION_NUMBER;
 
-
-
     return calibration;
 }
 
@@ -51,20 +49,20 @@ void Compass::update() {
 }
 
 //=======Set Target=======
-void setTarget(double target_){
-    target = target_*-1;
+void Compass::setTarget(double target_){
+    target = -target_;
 }
 
-//=======Get heading======
-double getHeading(){
-    curr = (heading - 180) + target
-    return curr
+//=======Get Heading======
+double Compass::getHeading(){
+    double curr = (heading - 180) + target;
+    return curr;
 }
 
 
 //======Utility Functions======
-double CompassController::doubleMod(double value, double maxVal){
-    return fmod((value + maxValue), maxValue);
+double Compass::doubleMod(double value, double maxVal){
+    return fmod((value + maxVal), maxVal);
 }
 
 void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data)
@@ -83,7 +81,7 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
 }
 
 // Write a byte (Data) in device (Address) at register (Register)
-void CompassController::I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data)
+void Compass::I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data)
 {
   // Set register address
   Wire.beginTransmission(Address);

@@ -8,10 +8,6 @@
 
 
 class Compass {
-    long previousTime;
-    double calibration;
-    double heading;
-    double target;
 
 public:
     Compass();
@@ -22,6 +18,11 @@ public:
     void setTarget(double target_);
 
 private:
+    long previousTime;
+    double calibration;
+    double heading;
+    double target;
+
     double doubleMod(double value, double maxVal);
 
     void I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t* Data);
@@ -33,7 +34,6 @@ private:
         // +500 maps to a raw value of 32767
 
         return (raw * 500.0) / 32768.0;
-
     }
 
 };
