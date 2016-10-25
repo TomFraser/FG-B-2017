@@ -14,11 +14,11 @@ enum kickerStatus {
 class Kicker{
 public:
     Kicker();
-    kickerStatus kickerReady();
-    kickerStatus checkLightGate();
+    void kickerReady();
+    void checkLightGate();
     void kickBall();
 private:
-    kickerStatus status = unknown;
+    kickerStatus status;
     long currentMSec, lastKick;
 
 };

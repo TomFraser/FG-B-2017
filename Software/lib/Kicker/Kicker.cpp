@@ -5,28 +5,26 @@
 #define LIGHTGATE_PIN 0
 #define LIGHTGATE_THRESHOLD 100
 
-void Kicker::Kicker(){
+Kicker::Kicker(){
     pinMode(KICKER_PIN, OUTPUT);
     digitalWrite(KICKER_PIN, HIGH);
     pinMode(LIGHTGATE_PIN, INPUT);
+    status = kickerStatus::unknown;
 }
 
-kickerStatus Kicker::kickerReady(){
+void Kicker::kickerReady(){
     long currentMSec = micros();
     if((currentMSec - lastKick) >= KICKER_DELAY){
         status = kickerStatus::waitingForLightGate;
-        return kickerStatus::waitingForLightGate;
     }
     else{
         status = kickerStatus::waitingForCharge;
-        return kickerStatus::waitingForCharge;
     }
 }
 
-kickerStatus Kicker::checkLightGate(){
+void Kicker::checkLightGate(){
     if(analogRead(LIGHTGATE_PIN) <= LIGHTGATE_THRESHOLD && status == kickerStatus::waitingForLightGate){
         status = kickerStatus::ready;
-        return kickerStatus::ready;
     }
 }
 
