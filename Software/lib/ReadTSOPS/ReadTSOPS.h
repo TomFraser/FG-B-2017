@@ -19,7 +19,7 @@ public:
     void read();
     void reset();
     void stop();
-    double moveTangent();
+    int moveTangent();
 
     int bestSensor;
     double angleToBall;

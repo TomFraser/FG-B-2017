@@ -25,8 +25,7 @@ public:
     void calcMotors(double angle, double rotation);
     void calcMotors(double angle, double rotation, int dirNum); //used to limit the nuber of directions the robot can move in.
     lightStruct calcLight();
-    void calcTsops();
-    void combine();
+    void combine(double angle);
 
 private:
     int angleArray[3] = {60, 180, 300};
@@ -43,8 +42,6 @@ private:
     lightStruct values;
 
     ReadTSOPS tsops = ReadTSOPS();
-
-    double tsopAngle;
 
     RotationController rotationController = RotationController();
 };

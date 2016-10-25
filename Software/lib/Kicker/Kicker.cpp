@@ -2,7 +2,7 @@
 
 Kicker::Kicker(){
     pinMode(KICKER_PIN, OUTPUT);
-    digitalWrite(KICKER_PIN, HIGH);
+    digitalWrite(KICKER_PIN, LOW);
     pinMode(LIGHTGATE_PIN, INPUT);
     status = kickerStatus::unknown;
 }
@@ -25,8 +25,8 @@ void Kicker::checkLightGate(){
 
 void Kicker::kickBall(){
     if(status == kickerStatus::ready){
-        digitalWrite(KICKER_PIN, LOW);
         digitalWrite(KICKER_PIN, HIGH);
+        digitalWrite(KICKER_PIN, LOW);
         lastKick = micros();
         status = kickerStatus::notReady;
     }

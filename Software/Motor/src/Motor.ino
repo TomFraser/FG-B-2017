@@ -1,12 +1,14 @@
 #include <Config.h>
 #include <DirectionController.h>
 #include <t3spi.h>
-#include <Motor.h>
+#include <Kicker.h>
 
 // MotorController MOTOR = MotorController();
 T3SPI MASTER_TEENSY;
+Kicker kicker = Kicker();
+DirectionController direction = DirectionController();
 
-int angle = 0;
+double tsopAng = 0.00;
 
 void setup(){
     MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
@@ -15,5 +17,10 @@ void setup(){
 
 void loop(){
     //Recieve Data From Slave 0, Slave 1
-    // MOTOR.setAngle(angle);
+
+    direction.combine(tsopAng); //Movement and rotation
+
+    kicker.kickerReady(); //Kicker
+    kicker.checkLightGate();
+    kicker.kickBall();
 }
