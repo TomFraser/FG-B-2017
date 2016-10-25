@@ -19,5 +19,5 @@ void loop(){
 }
 
 void spi0_isr(){
-    TSOP.tx16(dataOut, DATA_LENGTH);
+    TSOP.rxtx16(dataIn, dataOut, DATA_LENGTH);
 }

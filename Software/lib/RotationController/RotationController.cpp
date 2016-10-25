@@ -2,11 +2,10 @@
 
 bool RotationController::getPixy(){
     if(pixy.getBlocks()){ //seing the block
-        Block cam = pixy.blocks[0];
-        int blockHeight = cam.height();
-        int blockWidth = cam.width();
-        int blockX = cam.x;
-        int blockY = cam.y;
+        blockHeight = pixy.blocks[0].height;
+        blockWidth = pixy.blocks[0].width;
+        blockX = pixy.blocks[0].x;
+        blockY = pixy.blocks[0].y;
         return true;
     }
     return false;
@@ -34,10 +33,11 @@ void RotationController::calcPixy(){
 
 void RotationController::calcRotation(){
     newTarget = compassHeading > 180 ? compassHeading - rotationToAdd : compassHeading + rotationToAdd;
-    compass.updateTarget(newTarget);
+    compass.setTarget(newTarget);
 }
 
 double RotationController::rotate(){
-    finalRotation = compass.read();
+    compass.update();
+    finalRotation = compass.getHeading();
     return finalRotation;
 }
