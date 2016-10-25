@@ -1,10 +1,5 @@
 #include <Kicker.h>
 
-#define KICKER_PIN 0
-#define KICKER_DELAY 2000L
-#define LIGHTGATE_PIN 0
-#define LIGHTGATE_THRESHOLD 100
-
 Kicker::Kicker(){
     pinMode(KICKER_PIN, OUTPUT);
     digitalWrite(KICKER_PIN, HIGH);
@@ -33,6 +28,7 @@ void Kicker::kickBall(){
         digitalWrite(KICKER_PIN, LOW);
         digitalWrite(KICKER_PIN, HIGH);
         lastKick = micros();
+        status = kickerStatus::notReady;
     }
     else{
         status = kickerStatus::notReady;

@@ -26,4 +26,8 @@
 #define LIGHT_18 0
 #define LIGHT_19 0
 
+//============Kicker pins==========
+#define LIGHTGATE_PIN 0
+#define KICKER_PIN 0
+
 #endif

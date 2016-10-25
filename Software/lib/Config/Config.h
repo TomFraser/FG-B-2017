@@ -24,4 +24,8 @@
 
 //========Pixy Definitions========
 
+//=============Kicker=============
+#define KICKER_DELAY 2000L //Recharge time
+#define LIGHTGATE_THRESHOLD 100
+
 #endif

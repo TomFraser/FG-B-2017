@@ -2,6 +2,8 @@
 #define Kicker_h
 
 #include <Arduino.h>
+#include <Config.h>
+#include <Pins.h>
 
 enum kickerStatus {
     unknown,
