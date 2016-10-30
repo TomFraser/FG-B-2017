@@ -22,7 +22,7 @@ public:
 private:
     kickerStatus status;
     long currentMSec, lastKick;
-
+    
 };
 
 #endif

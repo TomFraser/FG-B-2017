@@ -26,6 +26,7 @@ void Kicker::checkLightGate(){
 void Kicker::kickBall(){
     if(status == kickerStatus::ready){
         digitalWrite(KICKER_PIN, HIGH);
+        delay(50);
         digitalWrite(KICKER_PIN, LOW);
         lastKick = micros();
         status = kickerStatus::notReady;
