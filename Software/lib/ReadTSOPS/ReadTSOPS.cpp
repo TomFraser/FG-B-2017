@@ -94,3 +94,28 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
     // }
     // return 0;
 }
+
+double ReadTSOPS::findStrength(){
+    digitalWrite(POWER_PIN_1, HIGH);
+    digitalWrite(POWER_PIN_2, HIGH);
+    for(int j = 0; j < MAX_READS; j++){
+        for(int i = 0; i < TSOP_NUM; i++){
+            values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
+        }
+    }
+    digitalWrite(POWER_PIN_1, LOW);
+    digitalWrite(POWER_PIN_2, LOW);
+    for(int i = 0; i < TSOP_NUM; i++){
+        if(values[i] > index){
+            index = i + 1;
+        }
+    }
+    bestSensor = index;
+    double tempStr = TSOP_K1 * values[bestSensor] + TSOP_K2 * (values[mod(bestSensor-1, TSOP_NUM)] + values[mod(bestSensor+1, TSOP_NUM)]) + TSOP_K3 * (values[mod(bestSensor-2, TSOP_NUM)] + values[mod(bestSensor+2, TSOP_NUM)]);
+    return tempStr/16;
+}
+
+int ReadTSOPS::mod(int x,int m){
+    int r = x % m;
+    return r < 0 ? r + m : r;
+}

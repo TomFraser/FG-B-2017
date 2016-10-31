@@ -22,6 +22,13 @@
 #define TSOP_NUM 12
 #define MAX_READS 128
 
+#define TSOP_K1 12
+#define TSOP_K2 1
+#define TSOP_K3 1
+
+#define MED_STRENGTH 100
+#define HIGH_STRENGTH 150
+
 //========Pixy Definitions========
 
 //=============Kicker=============
