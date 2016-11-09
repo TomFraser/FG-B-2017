@@ -30,4 +30,6 @@
 #define LIGHTGATE_PIN 0
 #define KICKER_PIN 0
 
+//============Buzzer pins==========
+#define BUZZER_PIN 0
 #endif

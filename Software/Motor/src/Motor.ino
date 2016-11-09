@@ -2,6 +2,7 @@
 #include <DirectionController.h>
 #include <t3spi.h>
 #include <Kicker.h>
+#include <Buzzer.h>
 
 // MotorController MOTOR = MotorController();
 T3SPI MASTER_TEENSY;

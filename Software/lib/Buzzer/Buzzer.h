@@ -23,7 +23,7 @@ void Buzzer::playTone(int miliS){
 }
 
 void Buzzer::errorTone(){
-    digitalWrite(BUZZER_PIN, HIGH);
+    digitalWrite(BUZZER_PIN, HIGH); //The Im Broken plz help sound
 }
 
 void Buzzer::readyTone(){
