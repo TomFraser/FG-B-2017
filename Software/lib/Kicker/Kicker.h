@@ -16,13 +16,19 @@ enum kickerStatus {
 class Kicker{
 public:
     Kicker();
+
+    //Check if the kicker is ready to kick
     void kickerReady();
+
+    //Check if the light gate is seeing the ball
     void checkLightGate();
+
+    //Kick the ball
     void kickBall();
 private:
     kickerStatus status;
     long currentMSec, lastKick;
-    
+
 };
 
 #endif

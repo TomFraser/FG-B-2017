@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>PixyI2C.h</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.cpp
+                </a>
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.h
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.cpp
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.h
+                </a>
+              
+                
+                <a class="source" href="Config.html">
+                  Config.h
+                </a>
+              
+                
+                <a class="source" href="Defines.html">
+                  Defines.h
+                </a>
+              
+                
+                <a class="source" href="Pins.html">
+                  Pins.h
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.cpp
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.h
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.cpp
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.h
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.cpp
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.h
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.cpp
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.h
+                </a>
+              
+                
+                <a class="source" href="Pixy.html">
+                  Pixy.h
+                </a>
+              
+                
+                <a class="source" href="PixyI2C.html">
+                  PixyI2C.h
+                </a>
+              
+                
+                <a class="source" href="PixySPI_SS.html">
+                  PixySPI_SS.h
+                </a>
+              
+                
+                <a class="source" href="PixyUART.html">
+                  PixyUART.h
+                </a>
+              
+                
+                <a class="source" href="TPixy.html">
+                  TPixy.h
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.cpp
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.h
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.cpp
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.h
+                </a>
+              
+                
+                <a class="source" href="Vector3D.html">
+                  Vector3D.h
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.cpp
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.h
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>PixyI2C.h</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>begin license header</p>
+<p>This file is part of Pixy CMUcam5 or “Pixy” for short</p>
+<p>All Pixy source code is provided under the terms of the
+GNU General Public License v2 (<a href="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</a>).
+Those wishing to use Pixy source code, software and/or
+technologies under different licensing terms should contact us at
+cmucam@cs.cmu.edu. Such licensing terms are available for
+all portions of the Pixy codebase presented here.</p>
+<p>end license header</p>
+<p>This file is for defining the link class for I2C communications.  </p>
+<p>Note, the PixyI2C class takes an optional argument, which is the I2C address 
+of the Pixy you want to talk to.  The default address is 0x54 (used when no 
+argument is used.)  So, for example, if you wished to talk to Pixy at I2C 
+address 0x55, declare like this:</p>
+<p>PixyI2C pixy(0x55);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-meta">#ifndef _PIXYI2C_H</span>
+<span class="hljs-meta">#define _PIXYI2C_H</span>
+
+<span class="hljs-meta">#include <span class="hljs-meta-string">"TPixy.h"</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">"Wire.h"</span></span>
+
+<span class="hljs-meta">#define PIXY_I2C_DEFAULT_ADDR           0x54  </span>
+
+<span class="hljs-keyword">class</span> LinkI2C
+{
+public:
+  <span class="hljs-keyword">void</span> init()
+  {
+    Wire.begin();
+  }
+  <span class="hljs-keyword">void</span> setArg(uint16_t arg)
+  {
+    <span class="hljs-keyword">if</span> (arg==PIXY_DEFAULT_ARGVAL)
+      addr = PIXY_I2C_DEFAULT_ADDR;
+	<span class="hljs-keyword">else</span>
+	  addr = arg;
+  }
+  uint16_t getWord()
+  {
+    uint16_t w;
+	uint8_t c;
+	Wire.requestFrom((<span class="hljs-keyword">int</span>)addr, <span class="hljs-number">2</span>);
+    c = Wire.read();
+    w = Wire.read();
+    w &lt;&lt;= <span class="hljs-number">8</span>;
+    w |= c; 
+    <span class="hljs-keyword">return</span> w;
+  }
+  uint8_t getByte()
+  {
+	Wire.requestFrom((<span class="hljs-keyword">int</span>)addr, <span class="hljs-number">1</span>);
+	<span class="hljs-keyword">return</span> Wire.read();
+  }
+
+  int8_t send(uint8_t *data, uint8_t len)
+  {
+    Wire.beginTransmission(addr);
+    Wire.write(data, len);
+	Wire.endTransmission();
+	<span class="hljs-keyword">return</span> len;
+  }
+	
+private:
+  uint8_t addr;
+};
+
+<span class="hljs-keyword">typedef</span> TPixy&lt;LinkI2C&gt; PixyI2C;
+
+<span class="hljs-meta">#endif</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

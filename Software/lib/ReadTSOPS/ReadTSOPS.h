@@ -11,11 +11,23 @@ class ReadTSOPS{
 
 public:
     ReadTSOPS();
+
+    //Contains multiple ways of reading the tsops
     void readMode(int mode);
+
+    //Read the Tsops
     void read();
+
+    //Reset the Tsops by dropping power
     void reset();
+
+    //Stop reading tsops, error has occured
     void stop();
+
+    //Calculate a tangent to move on to orbit around the ball
     int moveTangent();
+
+    //Find the strength for the ball and determine how to orbit
     double findStrength();
 
     int bestSensor;

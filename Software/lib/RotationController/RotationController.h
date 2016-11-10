@@ -15,11 +15,21 @@ class RotationController{
 
 public:
     RotationController(){};
-    bool getPixy(); //gets pixy stuff
-    void calcPixy(); //calcs pixy stuff
-    void calcRotation(); //calcs final stuff
-    void getCompass(); //gets compass stuff
-    double rotate(); //gives rotation
+
+    //Gets the pixy information
+    bool getPixy();
+
+    //Calulates the pixy and which direction to go
+    void calcPixy();
+
+    //Calculates the rotation needed to face the centre of the goal
+    void calcRotation();
+
+    //Uses compass library to find the compass roataion required
+    void getCompass();
+
+    //The final rotation to add to the motors
+    double rotate();
 
 private:
     PixyI2C pixy;

@@ -10,7 +10,10 @@ class Motor{
 
 public:
     Motor(int pwm, int dir, int brk, int rev);
+
+    //Set a pwm value to the motor
     void set(int pwm);
+    //Stop the motor with no coast
     void brake();
 
 private:

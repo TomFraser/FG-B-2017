@@ -10,9 +10,17 @@ class Light{
 
 public:
     Light();
+
+    //Set up the light sensors
     void init();
+
+    //Read the light sensors
     void readLight();
+
+    //get the angle to move from the Line
     double getAngle();
+
+    //Average the angles over time
     void averageAngles();
 
 private:

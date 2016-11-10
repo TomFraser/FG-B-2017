@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>DirectionController.h</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.cpp
+                </a>
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.h
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.cpp
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.h
+                </a>
+              
+                
+                <a class="source" href="Config.html">
+                  Config.h
+                </a>
+              
+                
+                <a class="source" href="Defines.html">
+                  Defines.h
+                </a>
+              
+                
+                <a class="source" href="Pins.html">
+                  Pins.h
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.cpp
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.h
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.cpp
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.h
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.cpp
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.h
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.cpp
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.h
+                </a>
+              
+                
+                <a class="source" href="Pixy.html">
+                  Pixy.h
+                </a>
+              
+                
+                <a class="source" href="PixyI2C.html">
+                  PixyI2C.h
+                </a>
+              
+                
+                <a class="source" href="PixySPI_SS.html">
+                  PixySPI_SS.h
+                </a>
+              
+                
+                <a class="source" href="PixyUART.html">
+                  PixyUART.h
+                </a>
+              
+                
+                <a class="source" href="TPixy.html">
+                  TPixy.h
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.cpp
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.h
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.cpp
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.h
+                </a>
+              
+                
+                <a class="source" href="Vector3D.html">
+                  Vector3D.h
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.cpp
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.h
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>DirectionController.h</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">#ifndef DirectionController_h</span>
+<span class="hljs-meta">#define DirectionController_h</span>
+
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Config.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Pins.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Defines.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Arduino.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Motor.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;Light.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;ReadTSOPS.h&gt;</span></span>
+<span class="hljs-meta">#include <span class="hljs-meta-string">&lt;RotationController.h&gt;</span></span>
+
+<span class="hljs-meta">#define angToRad 0.01745329251</span>
+<span class="hljs-meta">#define radToAng 57.2957795131</span>
+
+<span class="hljs-keyword">struct</span> lightStruct {
+    <span class="hljs-keyword">bool</span> seeing;
+    <span class="hljs-keyword">double</span> angle;
+};
+
+<span class="hljs-keyword">class</span> DirectionController{
+
+public:
+    DirectionController();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Calculate motor angles</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">void</span> calcMotors(<span class="hljs-keyword">double</span> angle, <span class="hljs-keyword">double</span> rotation);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Calculate motor angles</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">void</span> calcMotors(<span class="hljs-keyword">double</span> angle, <span class="hljs-keyword">double</span> rotation, <span class="hljs-keyword">int</span> dirNum);</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Calculate lightsensors</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    lightStruct calcLight();</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Combines lightsensors and tsop direction</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">void</span> combine(<span class="hljs-keyword">double</span> angle);
+
+private:
+    <span class="hljs-keyword">int</span> angleArray[<span class="hljs-number">3</span>] = {<span class="hljs-number">60</span>, <span class="hljs-number">180</span>, <span class="hljs-number">300</span>};
+
+    <span class="hljs-keyword">double</span> direction;
+
+    Motor motorA = Motor(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>);
+    Motor motorB = Motor(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>);
+    Motor motorC = Motor(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">0</span>);
+
+    Light light = Light();
+
+    <span class="hljs-keyword">double</span> lightAngle;
+    lightStruct values;
+
+    ReadTSOPS tsops = ReadTSOPS();
+
+    RotationController rotationController = RotationController();
+};
+
+
+<span class="hljs-meta">#endif</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

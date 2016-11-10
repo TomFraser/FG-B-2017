@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+  <title>TPixy.h</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
+</head>
+<body>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page_wrapper">
+            <div id="jump_page">
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.cpp
+                </a>
+              
+                
+                <a class="source" href="Buzzer.html">
+                  Buzzer.h
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.cpp
+                </a>
+              
+                
+                <a class="source" href="Compass.html">
+                  Compass.h
+                </a>
+              
+                
+                <a class="source" href="Config.html">
+                  Config.h
+                </a>
+              
+                
+                <a class="source" href="Defines.html">
+                  Defines.h
+                </a>
+              
+                
+                <a class="source" href="Pins.html">
+                  Pins.h
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.cpp
+                </a>
+              
+                
+                <a class="source" href="DirectionController.html">
+                  DirectionController.h
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.cpp
+                </a>
+              
+                
+                <a class="source" href="Kicker.html">
+                  Kicker.h
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.cpp
+                </a>
+              
+                
+                <a class="source" href="Light.html">
+                  Light.h
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.cpp
+                </a>
+              
+                
+                <a class="source" href="Motor.html">
+                  Motor.h
+                </a>
+              
+                
+                <a class="source" href="Pixy.html">
+                  Pixy.h
+                </a>
+              
+                
+                <a class="source" href="PixyI2C.html">
+                  PixyI2C.h
+                </a>
+              
+                
+                <a class="source" href="PixySPI_SS.html">
+                  PixySPI_SS.h
+                </a>
+              
+                
+                <a class="source" href="PixyUART.html">
+                  PixyUART.h
+                </a>
+              
+                
+                <a class="source" href="TPixy.html">
+                  TPixy.h
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.cpp
+                </a>
+              
+                
+                <a class="source" href="ReadTSOPS.html">
+                  ReadTSOPS.h
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.cpp
+                </a>
+              
+                
+                <a class="source" href="RotationController.html">
+                  RotationController.h
+                </a>
+              
+                
+                <a class="source" href="Vector3D.html">
+                  Vector3D.h
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.cpp
+                </a>
+              
+                
+                <a class="source" href="t3spi.html">
+                  t3spi.h
+                </a>
+              
+            </div>
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>TPixy.h</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>begin license header</p>
+<p>This file is part of Pixy CMUcam5 or “Pixy” for short</p>
+<p>All Pixy source code is provided under the terms of the
+GNU General Public License v2 (<a href="http://www.gnu.org/licenses/gpl-2.0.html">http://www.gnu.org/licenses/gpl-2.0.html</a>).
+Those wishing to use Pixy source code, software and/or
+technologies under different licensing terms should contact us at
+cmucam@cs.cmu.edu. Such licensing terms are available for
+all portions of the Pixy codebase presented here.</p>
+<p>end license header</p>
+<p>This file is for defining the Block struct and the Pixy template class.
+(TPixy).  TPixy takes a communication link as a template parameter so that 
+all communication modes (SPI, I2C and UART) can share the same code.  </p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>
+<span class="hljs-meta">#ifndef _TPIXY_H</span>
+<span class="hljs-meta">#define _TPIXY_H</span>
+
+<span class="hljs-meta">#include <span class="hljs-meta-string">"Arduino.h"</span></span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Communication/misc parameters</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">#define PIXY_INITIAL_ARRAYSIZE      30</span>
+<span class="hljs-meta">#define PIXY_MAXIMUM_ARRAYSIZE      130</span>
+<span class="hljs-meta">#define PIXY_START_WORD             0xaa55</span>
+<span class="hljs-meta">#define PIXY_START_WORD_CC          0xaa56</span>
+<span class="hljs-meta">#define PIXY_START_WORDX            0x55aa</span>
+<span class="hljs-meta">#define PIXY_MAX_SIGNATURE          7</span>
+<span class="hljs-meta">#define PIXY_DEFAULT_ARGVAL         0xffff</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Pixy x-y position values</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">#define PIXY_MIN_X                  0L</span>
+<span class="hljs-meta">#define PIXY_MAX_X                  319L</span>
+<span class="hljs-meta">#define PIXY_MIN_Y                  0L</span>
+<span class="hljs-meta">#define PIXY_MAX_Y                  199L</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>RC-servo values</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-meta">#define PIXY_RCS_MIN_POS            0L</span>
+<span class="hljs-meta">#define PIXY_RCS_MAX_POS            1000L</span>
+<span class="hljs-meta">#define PIXY_RCS_CENTER_POS         ((PIXY_RCS_MAX_POS-PIXY_RCS_MIN_POS)/2)</span>
+
+ 
+<span class="hljs-keyword">enum</span> BlockType
+{
+	NORMAL_BLOCK,
+	CC_BLOCK
+};
+
+<span class="hljs-keyword">struct</span> Block 
+{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>print block structure!</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">void</span> print()
+  {
+    <span class="hljs-keyword">int</span> i, j;
+    <span class="hljs-keyword">char</span> buf[<span class="hljs-number">128</span>], sig[<span class="hljs-number">6</span>], d;
+	<span class="hljs-keyword">bool</span> flag;	
+    <span class="hljs-keyword">if</span> (signature&gt;PIXY_MAX_SIGNATURE) <span class="hljs-comment">// color code! (CC)</span>
+	{</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>convert signature number to an octal string</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">for</span> (i=<span class="hljs-number">12</span>, j=<span class="hljs-number">0</span>, flag=<span class="hljs-literal">false</span>; i&gt;=<span class="hljs-number">0</span>; i-=<span class="hljs-number">3</span>)
+      {
+        d = (signature&gt;&gt;i)&amp;<span class="hljs-number">0x07</span>;
+        <span class="hljs-keyword">if</span> (d&gt;<span class="hljs-number">0</span> &amp;&amp; !flag)
+          flag = <span class="hljs-literal">true</span>;
+        <span class="hljs-keyword">if</span> (flag)
+          sig[j++] = d + <span class="hljs-string">'0'</span>;
+      }
+      sig[j] = <span class="hljs-string">'\0'</span>;	
+      sprintf(buf, <span class="hljs-string">"CC block! sig: %s (%d decimal) x: %d y: %d width: %d height: %d angle %d\n"</span>, sig, signature, x, y, width, height, angle);
+    }			
+	<span class="hljs-keyword">else</span> <span class="hljs-comment">// regular block.  Note, angle is always zero, so no need to print</span>
+      sprintf(buf, <span class="hljs-string">"sig: %d x: %d y: %d width: %d height: %d\n"</span>, signature, x, y, width, height);		
+    Serial.print(buf); 
+  }
+  uint16_t signature;
+  uint16_t x;
+  uint16_t y;
+  uint16_t width;
+  uint16_t height;
+  uint16_t angle;
+};
+
+
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; <span class="hljs-keyword">class</span> TPixy
+{
+public:
+  TPixy(uint16_t arg=PIXY_DEFAULT_ARGVAL);
+  ~TPixy();
+	
+  uint16_t getBlocks(uint16_t maxBlocks=<span class="hljs-number">1000</span>);
+  int8_t setServos(uint16_t s0, uint16_t s1);
+  int8_t setBrightness(uint8_t brightness);
+  int8_t setLED(uint8_t r, uint8_t g, uint8_t b);
+  <span class="hljs-keyword">void</span> init();
+  
+  Block *blocks;
+	
+private:
+  boolean getStart();
+  <span class="hljs-keyword">void</span> resize();
+
+  LinkType link;
+  boolean  skipStart;
+  BlockType blockType;
+  uint16_t blockCount;
+  uint16_t blockArraySize;
+};
+
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; TPixy&lt;LinkType&gt;::TPixy(uint16_t arg)
+{
+  skipStart = <span class="hljs-literal">false</span>;
+  blockCount = <span class="hljs-number">0</span>;
+  blockArraySize = PIXY_INITIAL_ARRAYSIZE;
+  blocks = (Block *)malloc(<span class="hljs-keyword">sizeof</span>(Block)*blockArraySize);
+  link.setArg(arg);
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; <span class="hljs-keyword">void</span> TPixy&lt;LinkType&gt;::init()
+{
+  link.init();
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; TPixy&lt;LinkType&gt;::~TPixy()
+{
+  free(blocks);
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; boolean TPixy&lt;LinkType&gt;::getStart()
+{
+  uint16_t w, lastw;
+ 
+  lastw = <span class="hljs-number">0xffff</span>;
+  
+  <span class="hljs-keyword">while</span>(<span class="hljs-literal">true</span>)
+  {
+    w = link.getWord();
+    <span class="hljs-keyword">if</span> (w==<span class="hljs-number">0</span> &amp;&amp; lastw==<span class="hljs-number">0</span>)
+	{
+      delayMicroseconds(<span class="hljs-number">10</span>);
+	  <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+	}		
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (w==PIXY_START_WORD &amp;&amp; lastw==PIXY_START_WORD)
+	{
+      blockType = NORMAL_BLOCK;
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (w==PIXY_START_WORD_CC &amp;&amp; lastw==PIXY_START_WORD)
+	{
+      blockType = CC_BLOCK;
+      <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+	}
+	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (w==PIXY_START_WORDX)
+	{
+	  Serial.println(<span class="hljs-string">"reorder"</span>);
+	  link.getByte(); <span class="hljs-comment">// resync</span>
+	}
+	lastw = w; 
+  }
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; <span class="hljs-keyword">void</span> TPixy&lt;LinkType&gt;::resize()
+{
+  blockArraySize += PIXY_INITIAL_ARRAYSIZE;
+  blocks = (Block *)realloc(blocks, <span class="hljs-keyword">sizeof</span>(Block)*blockArraySize);
+}  
+		
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; uint16_t TPixy&lt;LinkType&gt;::getBlocks(uint16_t maxBlocks)
+{
+  uint8_t i;
+  uint16_t w, checksum, sum;
+  Block *block;
+  
+  <span class="hljs-keyword">if</span> (!skipStart)
+  {
+    <span class="hljs-keyword">if</span> (getStart()==<span class="hljs-literal">false</span>)
+      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  }
+  <span class="hljs-keyword">else</span>
+	skipStart = <span class="hljs-literal">false</span>;
+	
+  <span class="hljs-keyword">for</span>(blockCount=<span class="hljs-number">0</span>; blockCount&lt;maxBlocks &amp;&amp; blockCount&lt;PIXY_MAXIMUM_ARRAYSIZE;)
+  {
+    checksum = link.getWord();
+    <span class="hljs-keyword">if</span> (checksum==PIXY_START_WORD) <span class="hljs-comment">// we've reached the beginning of the next frame</span>
+    {
+      skipStart = <span class="hljs-literal">true</span>;
+	  blockType = NORMAL_BLOCK;</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Serial.println(“skip”);</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>      <span class="hljs-keyword">return</span> blockCount;
+    }
+	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (checksum==PIXY_START_WORD_CC)
+	{
+	  skipStart = <span class="hljs-literal">true</span>;
+	  blockType = CC_BLOCK;
+	  <span class="hljs-keyword">return</span> blockCount;
+	}
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (checksum==<span class="hljs-number">0</span>)
+      <span class="hljs-keyword">return</span> blockCount;
+    
+	<span class="hljs-keyword">if</span> (blockCount&gt;blockArraySize)
+		resize();
+	
+	block = blocks + blockCount;
+	
+    <span class="hljs-keyword">for</span> (i=<span class="hljs-number">0</span>, sum=<span class="hljs-number">0</span>; i&lt;<span class="hljs-keyword">sizeof</span>(Block)/<span class="hljs-keyword">sizeof</span>(uint16_t); i++)
+    {
+	  <span class="hljs-keyword">if</span> (blockType==NORMAL_BLOCK &amp;&amp; i&gt;=<span class="hljs-number">5</span>) <span class="hljs-comment">// skip </span>
+	  {
+		block-&gt;angle = <span class="hljs-number">0</span>;
+		<span class="hljs-keyword">break</span>;
+	  }
+      w = link.getWord();
+      sum += w;
+      *((uint16_t *)block + i) = w;
+    }
+
+    <span class="hljs-keyword">if</span> (checksum==sum)
+      blockCount++;
+    <span class="hljs-keyword">else</span>
+      Serial.println(<span class="hljs-string">"cs error"</span>);
+	
+	w = link.getWord();
+	<span class="hljs-keyword">if</span> (w==PIXY_START_WORD)
+	  blockType = NORMAL_BLOCK;
+	<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (w==PIXY_START_WORD_CC)
+	  blockType = CC_BLOCK;
+	<span class="hljs-keyword">else</span>
+      <span class="hljs-keyword">return</span> blockCount;
+  }
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; int8_t TPixy&lt;LinkType&gt;::setServos(uint16_t s0, uint16_t s1)
+{
+  uint8_t outBuf[<span class="hljs-number">6</span>];
+   
+  outBuf[<span class="hljs-number">0</span>] = <span class="hljs-number">0x00</span>;
+  outBuf[<span class="hljs-number">1</span>] = <span class="hljs-number">0xff</span>; 
+  *(uint16_t *)(outBuf + <span class="hljs-number">2</span>) = s0;
+  *(uint16_t *)(outBuf + <span class="hljs-number">4</span>) = s1;
+  
+  <span class="hljs-keyword">return</span> link.send(outBuf, <span class="hljs-number">6</span>);
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; int8_t TPixy&lt;LinkType&gt;::setBrightness(uint8_t brightness)
+{
+  uint8_t outBuf[<span class="hljs-number">3</span>];
+   
+  outBuf[<span class="hljs-number">0</span>] = <span class="hljs-number">0x00</span>;
+  outBuf[<span class="hljs-number">1</span>] = <span class="hljs-number">0xfe</span>; 
+  outBuf[<span class="hljs-number">2</span>] = brightness;
+  
+  <span class="hljs-keyword">return</span> link.send(outBuf, <span class="hljs-number">3</span>);
+}
+
+template &lt;<span class="hljs-keyword">class</span> LinkType&gt; int8_t TPixy&lt;LinkType&gt;::setLED(uint8_t r, uint8_t g, uint8_t b)
+{
+  uint8_t outBuf[<span class="hljs-number">5</span>];
+  
+  outBuf[<span class="hljs-number">0</span>] = <span class="hljs-number">0x00</span>;
+  outBuf[<span class="hljs-number">1</span>] = <span class="hljs-number">0xfd</span>; 
+  outBuf[<span class="hljs-number">2</span>] = r;
+  outBuf[<span class="hljs-number">3</span>] = g;
+  outBuf[<span class="hljs-number">4</span>] = b;
+  
+  <span class="hljs-keyword">return</span> link.send(outBuf, <span class="hljs-number">5</span>);
+}
+
+<span class="hljs-meta">#endif</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
+  </div>
+</body>
+</html>

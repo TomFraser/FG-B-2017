@@ -1,9 +1,9 @@
 #ifndef DirectionController_h
 #define DirectionController_h
 
-// #include <Config.h>
-// #include <Pins.h>
-// #include <Defines.h>
+#include <Config.h>
+#include <Pins.h>
+#include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
 #include <Light.h>
@@ -22,9 +22,17 @@ class DirectionController{
 
 public:
     DirectionController();
+
+    //Calculate motor angles
     void calcMotors(double angle, double rotation);
-    void calcMotors(double angle, double rotation, int dirNum); //used to limit the nuber of directions the robot can move in.
+
+    //Calculate motor angles
+    void calcMotors(double angle, double rotation, int dirNum);
+
+    //Calculate lightsensors
     lightStruct calcLight();
+
+    //Combines lightsensors and tsop direction
     void combine(double angle);
 
 private:
