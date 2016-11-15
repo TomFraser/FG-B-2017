@@ -2,6 +2,7 @@
 
 //========Constructor========
 Compass::Compass(){
+    Wire.begin();
     I2CwriteByte(IMU_ADDRESS, 29, 0x06);
     I2CwriteByte(IMU_ADDRESS, 26, 0x06);
     I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_500_DPS);
@@ -11,6 +12,8 @@ Compass::Compass(){
 
     setTarget(0);
 }
+
+
 
 //========Init Calibrate========
 double Compass::calibrate(){
