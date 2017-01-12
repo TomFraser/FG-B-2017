@@ -1,11 +1,16 @@
 #ifndef Light_new_h
 #define Light_new_h
 
-class Light{
-public:
+#include <Arduino.h>
+#include <Math.h>
 
+class Light{
 private:
-    enum locationRobot{
+    bool lightReadings[19] = {};
+    int calibrationReading[19] = {};
+    int lightSensors[19] = {/* pins to sensors hereeeee*/};
+
+    enum robotLocation{
         regular,
         online_left,
         online_right,
@@ -16,9 +21,9 @@ private:
         overline_top,
         overline_back,
         lost
-    }
-    enum locationLine{
-        regular,
+    };
+    enum lineLocation{
+        standard,
         small_left,
         small_right,
         small_top,
@@ -27,13 +32,18 @@ private:
         big_right,
         big_top,
         big_back,
-        lost
-    }
+        gone
+    };
+    robotLocation currLocation = regular;
 
-    locationRobot prevRobot = regular;
-    locationRobot currRobot = regular;
-    locationLine prevLine = regular;
-    locationLine currLine = regular;
-}
+public:
+    Light(){};
+    void setThreshold();
+    void read();
+    void sort();
+    robotLocation getLocation();
+    robotLocation getPrevLocation();
+
+};
 
 #endif
