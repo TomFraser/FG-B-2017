@@ -1,3 +1,5 @@
+const fs = require('fs')
+
 function log() {
     var angle = 90;
     var dirNum = 4;
@@ -20,6 +22,10 @@ function run() {
     console.log(mega);
 }
 
-run();
+function calulcateIfs(){
+    for(let i = 0; i < 301; i++){
+        
+    }
+}
 
 //ahhhhhhhhhH
