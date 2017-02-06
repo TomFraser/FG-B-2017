@@ -3,7 +3,7 @@
 
 #include <Arduino.h>
 #include <Math.h>
-#include <FGBCommon.h>
+#include <fgbcommon.h>
 
 class Light{
 private:

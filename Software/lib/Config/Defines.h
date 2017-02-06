@@ -15,4 +15,12 @@
 #define ACC_FULL_SCALE_8_G 0x10
 #define ACC_FULL_SCALE_16_G 0x18
 
+//Pixy
+#define PIXY_CENTRE_X 160
+#define PIXY_CENTRE_Y 100
+
+//=================Other====================
+#define angToRad 0.01745329251
+#define radToAng 57.2957795131
+
 #endif

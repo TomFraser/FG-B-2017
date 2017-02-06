@@ -3,6 +3,7 @@
 #include <t3spi.h>
 #include <Kicker.h>
 #include <Buzzer.h>
+#include <fgbcommon.h>
 
 // MotorController MOTOR = MotorController();
 T3SPI MASTER_TEENSY;
@@ -19,7 +20,7 @@ void setup(){
 void loop(){
     //Recieve Data From Slave 0, Slave 1
 
-    direction.combine(tsopAng); //Movement and rotation
+    direction.move(tsopAng); //Movement and rotation
 
     kicker.kickerReady(); //Kicker
     kicker.checkLightGate();

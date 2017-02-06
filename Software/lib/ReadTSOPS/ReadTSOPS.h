@@ -1,7 +1,7 @@
 #ifndef ReadTSOPS_h
 #define ReadTSOPS_h
 
- #include <Config.h>
+#include <Config.h>
 #include <Pins.h>
 #include <Defines.h>
 #include <Arduino.h>

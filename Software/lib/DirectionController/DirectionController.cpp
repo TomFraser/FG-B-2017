@@ -35,7 +35,7 @@ lightStruct DirectionController::calcLight(){
     }
 }
 
-void DirectionController::combine(double tsopAngle){
+void DirectionController::move(double tsopAngle){
     if(calcLight().seeing == false){
         calcMotors(tsopAngle, rotationController.rotate());
     }

@@ -10,9 +10,6 @@
 #include <ReadTSOPS.h>
 #include <RotationController.h>
 
-#define angToRad 0.01745329251
-#define radToAng 57.2957795131
-
 struct lightStruct {
     bool seeing;
     double angle;
@@ -33,7 +30,7 @@ public:
     lightStruct calcLight();
 
     //Combines lightsensors and tsop direction
-    void combine(double angle);
+    void move(double angle);
 
 private:
     int angleArray[3] = {60, 180, 300};
