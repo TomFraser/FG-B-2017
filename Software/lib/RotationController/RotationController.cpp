@@ -39,5 +39,4 @@ void RotationController::calcRotation(){
 double RotationController::rotate(){
     compass.update();
     finalRotation = compass.getHeading();
-    return finalRotation;
 }

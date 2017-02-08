@@ -9,12 +9,14 @@
 T3SPI MASTER_TEENSY;
 Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
+Buzzer buzzer = Buzzer();
 
 double tsopAng = 0.00;
 
 void setup(){
     MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
     MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
+    buzzer.readyTone();
 }
 
 void loop(){

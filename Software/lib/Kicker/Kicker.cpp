@@ -26,7 +26,7 @@ void Kicker::checkLightGate(){
 void Kicker::kickBall(){
     if(status == kickerStatus::ready){
         digitalWrite(KICKER_PIN, HIGH);
-        delay(50);
+        delay(50); //To Change in the future to a loop system. This will slow the robot down.
         digitalWrite(KICKER_PIN, LOW);
         lastKick = micros();
         status = kickerStatus::notReady;

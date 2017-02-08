@@ -102,7 +102,7 @@ void Light::adjust(){
     }
     else if(currLocation == online_back){                                                                                                           ////out on top
         if(prevLocation == online_top){
-            //Going over the line!!! FUCK! <--- DELETE THAT!
+            //Going over the line!!!
             locr = overline_top;
         }
         else if(prevLocation == online_back){
