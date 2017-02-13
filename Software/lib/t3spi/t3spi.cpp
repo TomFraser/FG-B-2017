@@ -2,7 +2,7 @@
 #include "t3spi.h"
 #include "mk20dx128.h"
 #include "core_pins.h"
-#include "arduino.h"
+#include "Arduino.h"
 
 
 T3SPI::T3SPI() {
@@ -230,10 +230,10 @@ void T3SPI::printStatistics(int length) {
 	for (unsigned int mask = 0x80000000; mask; mask >>= 1) {
 		Serial.print(mask&SPI0_MCR?'1':'0');}
 	Serial.println();
-	
+
 	if(0x80000000 & SPI0_MCR){
 		if (ctar==0){
-			Serial.print("SPIO_CTAR0:      ");		
+			Serial.print("SPIO_CTAR0:      ");
 			CTAR = SPI0_CTAR0;}
 		if (ctar==1){
 			Serial.print("SPIO_CTAR1:      ");
@@ -244,7 +244,7 @@ void T3SPI::printStatistics(int length) {
 
 	for (unsigned int mask = 0x80000000; mask; mask >>= 1) {
 		Serial.print(mask&CTAR?'1':'0');}
-			
+
 	Serial.println();
 	Serial.print("SPI0_SR:         ");
 	for (unsigned int mask = 0x80000000; mask; mask >>= 1) {
@@ -274,7 +274,7 @@ void T3SPI::printStatistics(int length) {
 }
 
 //TRANSMIT PACKET OF 8 BIT DATA
-void T3SPI::tx8(volatile uint8_t *dataOUT,   int length, bool CTARn, uint8_t PCS){ 
+void T3SPI::tx8(volatile uint8_t *dataOUT,   int length, bool CTARn, uint8_t PCS){
 	ctar=CTARn;
 	for (int i=0; i < length; i++){
 		SPI_WRITE_8(dataOUT[i], CTARn, PCS);
@@ -283,7 +283,7 @@ void T3SPI::tx8(volatile uint8_t *dataOUT,   int length, bool CTARn, uint8_t PCS
 }
 
 //TRANSMIT PACKET OF 16 BIT DATA
-void T3SPI::tx16(volatile uint16_t *dataOUT, int length, bool CTARn, uint8_t PCS){ 
+void T3SPI::tx16(volatile uint16_t *dataOUT, int length, bool CTARn, uint8_t PCS){
 	//ctar=CTARn;
 	for (int i=0; i < length; i++){
 		SPI_WRITE_16(dataOUT[i], CTARn, PCS);
@@ -292,7 +292,7 @@ void T3SPI::tx16(volatile uint16_t *dataOUT, int length, bool CTARn, uint8_t PCS
 }
 
 //TRANSMIT & RECEIVE PACKET OF 8 BIT DATA
-void T3SPI::txrx8(volatile uint8_t *dataOUT, volatile uint8_t *dataIN, int length, bool CTARn, uint8_t PCS){ 
+void T3SPI::txrx8(volatile uint8_t *dataOUT, volatile uint8_t *dataIN, int length, bool CTARn, uint8_t PCS){
 	ctar=CTARn;
 	for (int i=0; i < length; i++){
 		SPI0_MCR |= SPI_MCR_CLR_RXF;
@@ -305,7 +305,7 @@ void T3SPI::txrx8(volatile uint8_t *dataOUT, volatile uint8_t *dataIN, int lengt
 }
 
 //TRANSMIT & RECEIVE PACKET OF 16 BIT DATA
-void T3SPI::txrx16(volatile uint16_t *dataOUT, volatile uint16_t *dataIN, int length, bool CTARn, uint8_t PCS){ 
+void T3SPI::txrx16(volatile uint16_t *dataOUT, volatile uint16_t *dataIN, int length, bool CTARn, uint8_t PCS){
 	ctar=CTARn;
 	for (int i=0; i < length; i++){
 		SPI0_MCR |= SPI_MCR_CLR_RXF;
@@ -341,7 +341,7 @@ void T3SPI::rxtx8(volatile uint8_t *dataIN, volatile uint8_t *dataOUT, int lengt
 	if (dataPointer == length){
 		dataPointer=0;
 		packetCT++;}
-	SPI0_PUSHR_SLAVE = dataOUT[dataPointer];  
+	SPI0_PUSHR_SLAVE = dataOUT[dataPointer];
 	SPI0_SR |= SPI_SR_RFDF;
 }
 
@@ -351,6 +351,6 @@ void T3SPI::rxtx16(volatile uint16_t *dataIN, volatile uint16_t *dataOUT, int le
 	if (dataPointer == length){
 		dataPointer=0;
 		packetCT++;}
-  SPI0_PUSHR_SLAVE = dataOUT[dataPointer];  
+  SPI0_PUSHR_SLAVE = dataOUT[dataPointer];
   SPI0_SR |= SPI_SR_RFDF;
 }

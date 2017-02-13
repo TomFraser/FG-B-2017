@@ -51,7 +51,6 @@ void Light::init(){
 
 void Light::readLight(){
     detectedNumber = 0;
-    //Cuck. Need to sit down with everyone and figure out how we are gonna do this.
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
         if(analogRead(lightSensors[i]) >= thresholds[i]){
             seeingWhite[i] = true;
@@ -63,22 +62,24 @@ void Light::readLight(){
     }
 }
 
-void Light::averageAngles(){
-    finalDirection = 0;
-    if(detectedNumber >= DETECTED_NUMBER_LIGHT){
-        for(int i = 0; i < LIGHTSENSOR_NUM; i++){
-            if(seeingWhite[i] == true){
-                tempAngle = tempAngle + i*18;
-            }
-        }
-        tempAngle = tempAngle / detectedNumber;
-        finalDirection = tempAngle;
+//[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]
+
+cluster Light::findClusters(int startNum, int begin){
+  if(seeingWhite[startNum]){
+    if(seeingWhite[startNum+1]){
+      findClusters(startNum+1, begin);
     }
     else{
-        finalDirection = -1;
+      cluster lightCluster;
+      lightCluster.exist = true;
+      lightCluster.start = begin;
+      lightCluster.end = startNum;
+      return lightCluster;
     }
-}
-
-double Light::getAngle(){
-    return (double)finalDirection;
+  }
+  else{
+    cluster noCluster;
+    noCluster.exist = false;
+    return noCluster;
+  }
 }

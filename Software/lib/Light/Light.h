@@ -17,25 +17,26 @@ public:
     //Read the light sensors
     void readLight();
 
-    //get the angle to move from the Line
-    double getAngle();
+    //Identify clusters of lightsensors seeing the Line
+    void findClusters();
 
-    //Average the angles over time
-    void averageAngles();
 
 private:
+    //init stuff
     int thresholds[19];
     int lightSensors[19];
+
+    //for reading light
     int detectedNumber;
     bool seeingWhite[19];
 
-    double tempAngle;
-    double finalDirection;
-
-    int initalAngle;
-    int newTempAngle;
-    int newAngle;
+    //cluster stuff
 
 };
 
+struct cluster{
+  bool exist;
+  int begin;
+  int end;
+};
 #endif
