@@ -24,9 +24,9 @@ void DirectionController::calcMotors(double angle, double rotation, int dirNum){
 
 lightStruct DirectionController::calcLight(){
     values = {false, 0};
-    light.readLight();
-    light.averageAngles();
-    lightAngle = light.getAngle();
+    //light.readLight();
+    //light.averageAngles();
+    //lightAngle = light.getAngle();
     if(lightAngle >= 0){
         values = {true, lightAngle};
     }

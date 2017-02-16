@@ -64,15 +64,15 @@ void Light::readLight(){
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]
 
-cluster Light::findClusters(int startNum, int begin){
+cluster Light::singleCluster(int startNum, int begin){
   if(seeingWhite[startNum]){
     if(seeingWhite[startNum+1]){
-      findClusters(startNum+1, begin);
+      singleCluster(startNum+1, begin);
     }
     else{
       cluster lightCluster;
       lightCluster.exist = true;
-      lightCluster.start = begin;
+      lightCluster.begin = begin;
       lightCluster.end = startNum;
       return lightCluster;
     }
@@ -81,5 +81,19 @@ cluster Light::findClusters(int startNum, int begin){
     cluster noCluster;
     noCluster.exist = false;
     return noCluster;
+  }
+}
+
+void Light::findClusters(){
+  int num = 0;
+  while(num < LIGHTSENSOR_NUM){
+    cluster c = singleCluster(num, num);
+    if(c.exist){
+      //we found a cluster - should actually do something
+      num = c.end;
+    }
+    else{
+      num++;
+    }
   }
 }

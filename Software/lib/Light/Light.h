@@ -6,6 +6,12 @@
 #include <Defines.h>
 #include <Arduino.h>
 
+struct cluster{
+  bool exist;
+  int begin;
+  int end;
+};
+
 class Light{
 
 public:
@@ -18,6 +24,9 @@ public:
     void readLight();
 
     //Identify clusters of lightsensors seeing the Line
+    cluster singleCluster(int, int);
+
+    //Find all the clusters
     void findClusters();
 
 
@@ -32,11 +41,5 @@ private:
 
     //cluster stuff
 
-};
-
-struct cluster{
-  bool exist;
-  int begin;
-  int end;
 };
 #endif
