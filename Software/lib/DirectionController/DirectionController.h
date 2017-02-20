@@ -6,7 +6,7 @@
 #include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
-#include <Light.h>
+// #include <Light.h>
 #include <ReadTSOPS.h>
 #include <RotationController.h>
 
@@ -32,6 +32,8 @@ public:
     //Combines lightsensors and tsop direction
     void move(double angle);
 
+    void setPWM(int pwm);
+
 private:
     int angleArray[4] = {60, 135, 225, 300};
 
@@ -42,7 +44,7 @@ private:
     Motor motorC = Motor(MOTOR_C_PWM, MOTOR_C_DIR, MOTOR_C_BRK, MOTOR_C_REV);
     Motor motorD = Motor(MOTOR_D_PWM, MOTOR_D_DIR, MOTOR_D_BRK, MOTOR_D_REV);
 
-    Light light = Light();
+    // Light light = Light();
 
     double lightAngle;
     lightStruct values;

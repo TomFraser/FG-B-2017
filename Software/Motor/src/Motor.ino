@@ -22,10 +22,7 @@ void setup(){
 void loop(){ //Things to do before running the program, setting up the pins!!!!!
     //Recieve Data From Slave 0, Slave 1
 
-    direction.move(360.00); //Movement and rotation
-    delay(2000);
-    direction.move(180.00);
-    delay(2000);
+    direction.setPWM(255);
 
     // kicker.kickerReady(); //Kicker
     // kicker.checkLightGate();
