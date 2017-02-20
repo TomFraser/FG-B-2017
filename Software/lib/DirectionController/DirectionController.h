@@ -33,13 +33,14 @@ public:
     void move(double angle);
 
 private:
-    int angleArray[3] = {60, 180, 300};
+    int angleArray[4] = {60, 135, 225, 300};
 
     double direction;
 
-    Motor motorA = Motor(1,2,3,0);
-    Motor motorB = Motor(1,2,3,0);
-    Motor motorC = Motor(1,2,3,0);
+    Motor motorA = Motor(MOTOR_A_PWM, MOTOR_A_DIR, MOTOR_A_BRK, MOTOR_A_REV);
+    Motor motorB = Motor(MOTOR_B_PWM, MOTOR_B_DIR, MOTOR_B_BRK, MOTOR_B_REV);
+    Motor motorC = Motor(MOTOR_C_PWM, MOTOR_C_DIR, MOTOR_C_BRK, MOTOR_C_REV);
+    Motor motorD = Motor(MOTOR_D_PWM, MOTOR_D_DIR, MOTOR_D_BRK, MOTOR_D_REV);
 
     Light light = Light();
 

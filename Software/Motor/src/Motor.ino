@@ -6,25 +6,28 @@
 #include <fgbcommon.h>
 
 // MotorController MOTOR = MotorController();
-T3SPI MASTER_TEENSY;
-Kicker kicker = Kicker();
+// T3SPI MASTER_TEENSY;
+// Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
-Buzzer buzzer = Buzzer();
+// Buzzer buzzer = Buzzer();
 
 double tsopAng = 0.00;
 
 void setup(){
-    MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
-    MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
-    buzzer.readyTone();
+    // MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
+    // MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
+    // buzzer.readyTone();
 }
 
-void loop(){
+void loop(){ //Things to do before running the program, setting up the pins!!!!!
     //Recieve Data From Slave 0, Slave 1
 
-    direction.move(tsopAng); //Movement and rotation
+    direction.move(360.00); //Movement and rotation
+    delay(2000);
+    direction.move(180.00);
+    delay(2000);
 
-    kicker.kickerReady(); //Kicker
-    kicker.checkLightGate();
-    kicker.kickBall();
+    // kicker.kickerReady(); //Kicker
+    // kicker.checkLightGate();
+    // kicker.kickBall();
 }
