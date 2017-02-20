@@ -6,6 +6,8 @@
 #define POWER_PIN_2 0
 
 //========Light Pins=======
+//NOTE: SENSOR 1 IS THE RIGHT HAND ONE AND THEN THEY GO CLOCKWISE AROUND THE CIRCLE
+//(excluding the top most one - ask Al if ur unsure)
 #define LIGHT_1 0
 #define LIGHT_2 0
 #define LIGHT_3 0

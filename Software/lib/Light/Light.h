@@ -27,7 +27,9 @@ public:
     cluster singleCluster(int, int);
 
     //Find all the clusters
-    void findClusters();
+    void findClusters(cluster *);
+
+
 
 
 private:
