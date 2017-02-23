@@ -24,7 +24,7 @@
 #define radToAng 57.2957795131
 
 //================Lightsensors==============
-#define maxNumClusters
+#define maxNumClusters 20
 //CARTESIAN CO-ORDINATES
 #define light1x 1.0
 #define light1y 0.0

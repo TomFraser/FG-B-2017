@@ -29,6 +29,9 @@ public:
     //Find all the clusters
     void findClusters(cluster *);
 
+    //Get angles
+    double getAngle();
+
 
 
 

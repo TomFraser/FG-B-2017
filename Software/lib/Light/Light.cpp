@@ -106,7 +106,7 @@ cluster Light::singleCluster(int startNum, int begin){
   }
 }
 
-void Light::findClusters(cluster *bestClusters){ //foundClusters is lenghth of 2 (returns 2 best clusters)
+void Light::findClusters(cluster *bestClusters){ //foundClusters is length of 2 (returns 2 best clusters)
   cluster foundClusters[maxNumClusters];
   int index = 0;
   int num = 0;
@@ -145,4 +145,20 @@ void Light::findClusters(cluster *bestClusters){ //foundClusters is lenghth of 2
   //now we have them return them
   bestClusters[0] = foundClusters[firstIndex];
   bestClusters[1] = foundClusters[secondIndex];
+}
+
+double getAngle(){
+    cluster bestClusters[2];
+    findClusters(bestClusters);
+    float clus1xavg = 0;
+    float clus1yavg = 0;
+
+    for(int i=bestClusters[0].begin; i<=bestClusters[0].end; i++){
+      clus1xavg += lightCoords[i][0];
+      clusyavg += lightCoords[i][1];
+    }
+
+    clus1xavg /= bestClusters[0].end-bestClusters[0].begin
+    clus1yavg /= bestClusters[0].end-bestClusters[0].begin
+
 }
