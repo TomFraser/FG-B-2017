@@ -1,7 +1,7 @@
 #include <DirectionController.h>
 
 DirectionController::DirectionController(){
-    light.init();
+    // light.init();
 }
 
 void DirectionController::calcMotors(double angle, double rotation){
@@ -31,6 +31,7 @@ lightStruct DirectionController::calcLight(){
     //lightAngle = light.getAngle();
     if(lightAngle >= 0){
         values = {true, lightAngle};
+        return values;
     }
     else{
         return values;
@@ -44,4 +45,11 @@ void DirectionController::move(double tsopAngle){
     else{
         calcMotors(calcLight().angle/*Takes in angle to move away from line as oppose to following ball*/, rotationController.rotate());
     }
+}
+
+void DirectionController::setPWM(int pwm){
+    motorA.set(pwm);
+    motorB.set(pwm);
+    motorC.set(pwm);
+    motorD.set(pwm);
 }
