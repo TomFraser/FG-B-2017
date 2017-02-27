@@ -25,10 +25,6 @@ int counter = 0;
 
 void setup(){
     pinMode(A13, OUTPUT);
-    analogWriteFrequency(3, 19000);
-    analogWriteFrequency(4, 19000);
-    analogWriteFrequency(5, 19000);
-    analogWriteFrequency(21, 19000);
     // MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
     // MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
     // buzzer.readyTone();

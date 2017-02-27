@@ -8,6 +8,7 @@ Motor::Motor(int pwm, int dir, int brk, int rev){
     r_pwm = pwm;
     r_dir = dir;
     r_brk = brk;
+    analogWriteFrequency(pwm, 19000);
 }
 void Motor::set(int pwm){
     digitalWrite(r_dir, pwm > 0 ? !reversed : reversed);
