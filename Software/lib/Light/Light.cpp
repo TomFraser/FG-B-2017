@@ -42,29 +42,12 @@ Light::Light(){
     lightSensors[17] = LIGHT_18;
     lightSensors[18] = LIGHT_19;
 
-    float lightCoords[19][2] = {
-        {light1x, light1y},
-        {light2x, light2y},
-        {light3x, light3y},
-        {light4x, light4y},
-        {light5x, light5y},
-        {light6x, light6y},
-        {light7x, light7y},
-        {light8x, light8y},
-        {light9x, light9y},
-        {light10x, light10y},
-        {light11x, light11y},
-        {light12x, light12y},
-        {light13x, light13y},
-        {light14x, light14y},
-        {light15x, light15y},
-        {light16x, light16y},
-        {light17x, light17y},
-        {light18x, light18y},
-        {light19x, light19y}
-    };
+}
 
-
+void Light::getVals(int *vals){
+  for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+      Serial.println(analogRead(lightSensors[i]));
+  }
 }
 
 void Light::init(){
@@ -108,7 +91,8 @@ cluster Light::singleCluster(int startNum, int begin){
   }
 }
 
-void Light::findClusters(cluster *bestClusters){ //foundClusters is length of 2 (returns 2 best clusters)
+//foundClusters is length of 2 (returns 2 best clusters)
+void Light::findClusters(cluster *bestClusters){
   cluster foundClusters[maxNumClusters];
   int index = 0;
   int num = 0;
@@ -149,18 +133,36 @@ void Light::findClusters(cluster *bestClusters){ //foundClusters is length of 2 
   bestClusters[1] = foundClusters[secondIndex];
 }
 
-double getAngle(){
+double Light::getAngle(){
     cluster bestClusters[2];
     findClusters(bestClusters);
-    float clus1xavg = 0;
-    float clus1yavg = 0;
+    double clus1xavg = 0;
+    double clus1yavg = 0;
 
     for(int i=bestClusters[0].begin; i<=bestClusters[0].end; i++){
       clus1xavg += lightCoords[i][0];
-      clusyavg += lightCoords[i][1];
+      clus1yavg += lightCoords[i][1];
     }
 
-    clus1xavg /= bestClusters[0].end-bestClusters[0].begin
-    clus1yavg /= bestClusters[0].end-bestClusters[0].begin
+    clus1xavg /= bestClusters[0].end-bestClusters[0].begin;
+    clus1yavg /= bestClusters[0].end-bestClusters[0].begin;
+
+    double clus2xavg = 0;
+    double clus2yavg = 0;
+
+    for(int i=bestClusters[1].begin; i<=bestClusters[1].end; i++){
+      clus2xavg += lightCoords[i][0];
+      clus2yavg += lightCoords[i][1];
+    }
+
+    clus2xavg /= bestClusters[1].end-bestClusters[1].begin;
+    clus2yavg /= bestClusters[1].end-bestClusters[1].begin;
+
+    double deltaX = clus2xavg - clus1xavg;
+    double deltaY = clus2yavg - clus1yavg;
+
+    double angle = atan2(deltaY, deltaX);
+
+    return angle;
 
 }
