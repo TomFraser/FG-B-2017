@@ -12,9 +12,6 @@ class ReadTSOPS{
 public:
     ReadTSOPS();
 
-    //Contains multiple ways of reading the tsops
-    void readMode(int mode);
-
     //Read the Tsops
     void read();
 
@@ -34,7 +31,7 @@ public:
     double angleToBall;
 
 private:
-    int sensors[12] = {0,0,0,0,0,0,0,0,0,0,0,0};
+    int sensors[12] = {1,2,3,4,5,6,7,8,9,15,16,17};
     int values[12];
     int index;
     int mod(int x, int m);

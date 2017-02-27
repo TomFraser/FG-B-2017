@@ -34,17 +34,16 @@ void setup(){
 
 void loop(){
 
-    // direction.setPWM(255);
-    // motorA.set(255);
-    // motorB.set(255);
-    // motorC.set(255);
-    // motorD.set(255);
-    analogWrite(A13, 255);
-    // motorA.set(255);
-    // motorB.set(255);
-    // motorC.set(255);
-    // motorD.set(255);
-    // blinkLED();
+    motorA.set(255);
+    motorB.set(255);
+    motorC.set(255);
+    motorD.set(255);
+    delay(2000);
+    motorA.set(-255);
+    motorB.set(-255);
+    motorC.set(-255);
+    motorD.set(-255);
+    delay(2000);
 
     // kicker.kickerReady(); //Kicker
     // kicker.checkLightGate();
