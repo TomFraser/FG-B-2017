@@ -36,20 +36,20 @@
 #define BUZZER_PIN 0
 
 //Motor Pins
-#define MOTOR_A_PWM 0
-#define MOTOR_B_PWM 0
-#define MOTOR_C_PWM 0
-#define MOTOR_D_PWM 0
+#define MOTOR_A_PWM 3
+#define MOTOR_B_PWM 4
+#define MOTOR_C_PWM 5
+#define MOTOR_D_PWM 21
 //
-#define MOTOR_A_DIR 0
-#define MOTOR_B_DIR 0
-#define MOTOR_C_DIR 0
-#define MOTOR_D_DIR 0
+#define MOTOR_A_DIR 6
+#define MOTOR_B_DIR 7
+#define MOTOR_C_DIR 8
+#define MOTOR_D_DIR 22
 //
 #define MOTOR_A_BRK 0
-#define MOTOR_B_BRK 0
-#define MOTOR_C_BRK 0
-#define MOTOR_D_BRK 0
+#define MOTOR_B_BRK 1
+#define MOTOR_C_BRK 2
+#define MOTOR_D_BRK 20
 //
 #define MOTOR_A_REV 0
 #define MOTOR_B_REV 0
