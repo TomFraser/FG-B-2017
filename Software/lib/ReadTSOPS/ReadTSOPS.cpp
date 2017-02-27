@@ -32,8 +32,8 @@ void ReadTSOPS::read(){
     digitalWrite(POWER_PIN_2, LOW);
     delayMicroseconds(200); //We can remove this if we dont need it later.
     for(int i = 0; i < TSOP_NUM; i++){
-        if(values[i] > index){
-            index = i + 1; //1-12 as oppose to 0-11
+        if(values[i] > values[index]){
+            index = i; //1-12 as oppose to 0-11
         }
         values[i] = 0;
     }
