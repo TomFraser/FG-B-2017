@@ -57,9 +57,9 @@
 #define MOTOR_D_REV 0
 
 //============LED Indicators==========
-// #define LED_IND_1
-// #define LED_IND_2
-// #define LED_IND_3
-// #define LED_IND_4
+#define LED_IND_1 28
+#define LED_IND_2 27
+#define LED_IND_3 26
+#define LED_IND_4 25
 
 #endif

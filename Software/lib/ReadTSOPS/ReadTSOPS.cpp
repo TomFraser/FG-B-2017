@@ -20,6 +20,7 @@ ReadTSOPS::ReadTSOPS(){
 
 void ReadTSOPS::read(){
     bestSensor = 0;
+    value_index = 0;
     index = 0;
     digitalWrite(POWER_PIN_1, HIGH);
     digitalWrite(POWER_PIN_2, HIGH);
@@ -32,12 +33,14 @@ void ReadTSOPS::read(){
     digitalWrite(POWER_PIN_2, LOW);
     delayMicroseconds(200); //We can remove this if we dont need it later.
     for(int i = 0; i < TSOP_NUM; i++){
-        if(values[i] > values[index]){
-            index = i; //1-12 as oppose to 0-11
+        if(values[i] > value_index){
+            index = i + 1; //1-12 as oppose to 0-11
+            value_index = values[i];
         }
         values[i] = 0;
     }
     bestSensor = index;
+    Serial.println(bestSensor);
 }
 
 void ReadTSOPS::reset(){
