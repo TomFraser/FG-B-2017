@@ -40,10 +40,10 @@ lightStruct DirectionController::calcLight(){
 
 void DirectionController::move(double tsopAngle){
     if(calcLight().seeing == false){
-        calcMotors(tsopAngle, rotationController.rotate());
+        calcMotors(tsopAngle, /*rotationController.rotate()*/0.00);
     }
     else{
-        calcMotors(calcLight().angle/*Takes in angle to move away from line as oppose to following ball*/, rotationController.rotate());
+        calcMotors(calcLight().angle/*Takes in angle to move away from line as oppose to following ball*/, /*rotationController.rotate()*/0.00);
     }
 }
 
