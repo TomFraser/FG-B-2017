@@ -26,15 +26,15 @@ double tsopAng = 0.00;
 int counter = 0;
 
 void setup(){
-    pinMode(A13, OUTPUT);
+    pinMode(A12, INPUT);
     MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
     MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
 }
 
 void loop(){
-    MASTER_TEENSY.txrx16(dataOut, dataIn, DATA_LENGTH, CTAR_0, CS1);
-    delay(40);
+    MASTER_TEENSY.txrx16(dataOut, dataIn, DATA_LENGTH, CTAR_0, CS0);
     double angle = dataIn[0];
+    delay(50);
     direction.calcMotors(angle, 0.00);
 
     // kicker.kickerReady(); //Kicker
@@ -49,12 +49,12 @@ void loop(){
 //     delay(2000);
 // }
 //
-// void blinkLED(){
-//     digitalWrite(13, HIGH);
-//     delay(1000);
-//     digitalWrite(13, LOW);
-//     delay(1000);
-// }
+void blinkLED(){
+    digitalWrite(13, HIGH);
+    delay(1000);
+    digitalWrite(13, LOW);
+    delay(1000);
+}
 //
 // void incrementSpeed(){
 //     direction.setPWM(counter);

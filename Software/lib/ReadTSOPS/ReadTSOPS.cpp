@@ -31,7 +31,7 @@ void ReadTSOPS::read(){
     }
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(2000); //We can remove this if we dont need it later.
+    delayMicroseconds(3000); //We can remove this if we dont need it later.
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
         if(values[i] < 30){
@@ -44,6 +44,7 @@ void ReadTSOPS::read(){
         values[i] = 0;
     }
     bestSensor = index;
+    Serial.println(bestSensor);
     // Serial.println(bestSensor);
     // Serial.println("Value: " + value_index);
 }
@@ -64,12 +65,10 @@ void ReadTSOPS::stop(){
 int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be done later down the course.
     read();
     //Begin weighting
-    angleToBall = index * 20.00;
+    angleToBall = index * 30.00;
 
-    if(angleToBall != 0){
-        return (int)angleToBall < 180 ? (angleToBall + 90.00) : (angleToBall - 90.00);
-    }
-    return 0.00;
+    // return (int)angleToBall < 180 ? (angleToBall + 90.00) : (angleToBall - 90.00);
+    return (int)angleToBall;
 
     // if(angleToBall < 180.00 && angleToBall != 0){
     //     return angleToBall + 90.00;
@@ -81,6 +80,12 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
 }
 
 double ReadTSOPS::findStrength(){
+     bestSensor = 0;
+    value_index = 0;
+    index = 0;
+    for(int i = 0; i < TSOP_NUM; i++){
+        values[i] = 0;
+    }
     digitalWrite(POWER_PIN_1, HIGH);
     digitalWrite(POWER_PIN_2, HIGH);
     for(int j = 0; j < MAX_READS; j++){
@@ -90,10 +95,17 @@ double ReadTSOPS::findStrength(){
     }
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
+    delayMicroseconds(3000); //We can remove this if we dont need it later.
     for(int i = 0; i < TSOP_NUM; i++){
-        if(values[i] > index){
-            index = i + 1;
+        // Filtering
+        if(values[i] < 30){
+            values[i] = 0;
         }
+        if(values[i] > value_index){
+            index = i + 1; //1-12 as oppose to 0-11
+            value_index = values[i];
+        }
+        // values[i] = 0;
     }
     bestSensor = index;
     double tempStr = TSOP_K1 * values[bestSensor] + TSOP_K2 * (values[mod(bestSensor-1, TSOP_NUM)] + values[mod(bestSensor+1, TSOP_NUM)]) + TSOP_K3 * (values[mod(bestSensor-2, TSOP_NUM)] + values[mod(bestSensor+2, TSOP_NUM)]);

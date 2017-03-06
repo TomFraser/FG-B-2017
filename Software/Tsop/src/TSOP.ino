@@ -13,13 +13,13 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 T3SPI TSOP;
 
 void setup(){
-    TSOP.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0); //Might be wrong CS pin.
+    TSOP.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
     TSOP.setCTAR_SLAVE(16, SPI_MODE0);
+    NVIC_ENABLE_IRQ(IRQ_SPI0);
 }
 
 void loop(){
     dataOut[0] = tsops.moveTangent();
-    Serial.println(dataOut[0]);
 }
 
 void spi0_isr(){
