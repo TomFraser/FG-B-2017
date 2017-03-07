@@ -6,6 +6,9 @@
 #define READ_THRESHOLD 40
 #define TSOP_NUM 12
 #define MAX_READS 512
+#define TSOP_FORWARD_LOWER 29
+#define TSOP_FORWARD_UPPER 331
+#define TSOP_ORBIT_ANGLE 90
 
 #define TSOP_K1 12
 #define TSOP_K2 2

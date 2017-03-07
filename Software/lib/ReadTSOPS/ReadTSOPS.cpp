@@ -115,9 +115,9 @@ int ReadTSOPS::mod(int x,int m){
 }
 
 double ReadTSOPS::correctOrbit(double angleIn){
-    if(angleIn <= 29 || angleIn >= 331){
+    if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
         return angleIn;
     }else{
-        return angleIn < 180 ? (angleIn + 90.00) : (angleIn - 90.00);
+        return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
     }
 }
