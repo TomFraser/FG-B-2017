@@ -34,7 +34,7 @@ void ReadTSOPS::read(){
     delayMicroseconds(3000); //We can remove this if we dont need it later.
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
-        if(values[i] < 30){
+        if(values[i] < TSOP_MIN_THRESHOLD){
             values[i] = 0;
         }
         if(values[i] > value_index){
