@@ -5,11 +5,18 @@ DirectionController::DirectionController(){
 }
 
 void DirectionController::calcMotors(double angle, double rotation){
-    //Do some shit to calculate values based on previous values.
-    motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * 200); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
-    motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * 200);
-    motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * 200);
-    motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * 200);
+    //Solve the whole going forward while no seeing ball thing
+    if(angle != 65506.00){
+        motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * 100); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
+        motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * 100);
+        motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * 100);
+        motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * 100);
+    }else{
+        motorA.set(0);
+        motorB.set(0);
+        motorC.set(0);
+        motorD.set(0);
+    }
 }
 
 void DirectionController::calcMotors(double angle, double rotation, int dirNum){

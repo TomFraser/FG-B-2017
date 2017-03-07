@@ -21,7 +21,7 @@ ReadTSOPS::ReadTSOPS(){
 void ReadTSOPS::read(){
     bestSensor = 0;
     value_index = 0;
-    index = 0;
+    index = -1;
     digitalWrite(POWER_PIN_1, HIGH);
     digitalWrite(POWER_PIN_2, HIGH);
     for(int j = 0; j < MAX_READS; j++){
@@ -38,15 +38,12 @@ void ReadTSOPS::read(){
             values[i] = 0;
         }
         if(values[i] > value_index){
-            index = i + 1; //1-12 as oppose to 0-11
+            index = i; //1-12 as oppose to 0-11
             value_index = values[i];
         }
         values[i] = 0;
     }
     bestSensor = index;
-    Serial.println(bestSensor);
-    // Serial.println(bestSensor);
-    // Serial.println("Value: " + value_index);
 }
 
 void ReadTSOPS::reset(){
@@ -67,7 +64,7 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
     //Begin weighting
     angleToBall = index * 30.00;
 
-    // return (int)angleToBall < 180 ? (angleToBall + 90.00) : (angleToBall - 90.00);
+    return (int)correctOrbit(angleToBall);
     return (int)angleToBall;
 
     // if(angleToBall < 180.00 && angleToBall != 0){
@@ -115,4 +112,12 @@ double ReadTSOPS::findStrength(){
 int ReadTSOPS::mod(int x,int m){
     int r = x % m;
     return r < 0 ? r + m : r;
+}
+
+double ReadTSOPS::correctOrbit(double angleIn){
+    if(angleIn <= 29 || angleIn >= 331){
+        return angleIn;
+    }else{
+        return angleIn < 180 ? (angleIn + 90.00) : (angleIn - 90.00);
+    }
 }
