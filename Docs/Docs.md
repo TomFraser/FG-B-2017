@@ -14,7 +14,7 @@
 
 
 
-![FG&B Logo](../images/FG&BFooter.png)
+![FG&B Logo](FG&BFooter.png)
 
 -----------------------
 
@@ -22,9 +22,9 @@
 
 #### Documentation written by Thomas Fraser & Alistair English
 
-[FG&B Website](fgb.bbcrobotics.org)
+[FG&B Website](http://fgb.bbcrobotics.org)
 
-[Brisbane Boys college, Queensland Australia](bbc.qld.edu.au)
+[Brisbane Boys' College, Queensland Australia](http://bbc.qld.edu.au)
 
 
 
@@ -62,7 +62,7 @@ audio.playTone(200);
 
 #### Contains (.h, .cpp)
 
-The Compass library is use to control the MPU9250 Compass, Gyro and Accelerometer package.
+The Compass library is use to control the MPU9250 Compass, Gyro and Accelerometer package. The compass' purpose is to keep the robot facing the oppositions goal.
 
 To use the library, import it into your main c++ file
 
@@ -97,7 +97,7 @@ Config contains configurable constants useful for modifying the behaviour of the
 
 ## Defines.h
 
-Defines contains set constants that shouldn't need to be changed
+Defines contains set constants that shouldn't need to be changed.
 
 ## Pins.h
 
@@ -117,7 +117,7 @@ To use these libraries import them using
 
 #### Contains (.h, .cpp)
 
-The direction controller controls all all directional movement via four motors.
+The direction controller controls all all directional movement via four Maxon DCX motors. The direction controller takes in inputs from the TSOPs and Lightsensors and determines an angle at which to move on.
 
 To use the library, import it into your main c++ file
 
@@ -147,7 +147,7 @@ direction.setPWM(value/*-255 - 255*/);
 
 #### Contains (.h)
 
-The FGB Common header contains methods that are being globally used across multiple libraries and methods that don't belong to a class
+The FGB Common header contains methods that are being globally used across multiple libraries and methods that don't belong to a class.
 
 To use the library, import it into your main c++ file
 
@@ -161,7 +161,7 @@ To use the library, import it into your main c++ file
 
 #### Contains (.h)
 
-The Kicker libary controls the actions of the solenoid and lightgate on each robot
+The Kicker libary controls the actions of the solenoid and lightgate on each robot, allowing us to kick goals from a distance.
 
 To use the library, import it into your main c++ file
 
@@ -189,7 +189,7 @@ kicker.kick();
 
 #### Contains (.h, .cpp)
 
-The Light library controls all 20 lightsensors on the botom of the robot and keeps us from going out over the white line.
+The Light library controls all 20 lightsensors on the botom of the robot and keeps us from going out over the white line. The library reads the 20 lightsensors situated in a circular pattern giving us full control of the robots position relative to the line.
 
 To use the Light library, import it into your main c++ file
 
@@ -211,7 +211,7 @@ To be completely honest, the other programmer not writing this (Alistair) wrote 
 
 #### Contains (.h, .cpp)
 
-The motor library controls our 4 Maxon DCX Motors using the LMD18200T motor control chip
+The motor library controls our 4 Maxon DCX Motors using the LMD18200T motor control chip. The library writes Pulse Width Modulation values to the motor controllers giving us movement.
 
 To use the Motor ibaray, import it into your main c++ file
 
@@ -242,7 +242,7 @@ motorA.brake();
 
 #### Contains (.h, .cpp)
 
-The Read TSOPs library reads and controls our TSOP infared sensors
+The Read TSOPs library reads and controls our TSOP infared sensors. The TSOPs are the robots primary way of ball detection.
 
 To use the Read TSOPs library, import it into your main c++ file
 
@@ -270,7 +270,7 @@ tsops.moveTangent();
 
 #### Contains (.h, .cpp)
 
-The Rotation Controller library handles all rotational (non directional) movement
+The Rotation Controller library handles all rotational (non directional) movement. The rotation controller takes both pixy and compass input into account and acts accordingly.
 
 To use the Rotation Controller libaray, import it into your main c++ file
 
@@ -281,7 +281,7 @@ To use the Rotation Controller libaray, import it into your main c++ file
 To declare the Rotation Controller object
 
 ```c++
-RotationController rotation = RoationController();
+RotationController rotation = RotationController();
 ```
 
 Unfortunately the Rotation Controller contains code that is very specific to our robots (being the compass MPU9250 and Pixy Camera) so I wont provide any sample use.
