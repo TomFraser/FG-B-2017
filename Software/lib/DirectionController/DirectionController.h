@@ -49,7 +49,7 @@ private:
     double lightAngle;
     lightStruct values;
 
-    RotationController rotationController = RotationController();
+    // RotationController rotationController = RotationController();
 };
 
 

@@ -10,6 +10,7 @@
 #define TSOP_FORWARD_UPPER 331
 #define TSOP_ORBIT_ANGLE 45 //Formerally 90
 #define TSOP_MIN_THRESHOLD 30
+#define TSOP_VARIABLE_ANGLE 18
 
 #define TSOP_K1 12
 #define TSOP_K2 2

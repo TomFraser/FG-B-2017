@@ -1,5 +1,10 @@
 #include <RotationController.h>
 
+RotationController::RotationController(){
+    Wire.begin();
+    // compass.calibrate();
+}
+
 bool RotationController::getPixy(){
     if(pixy.getBlocks()){ //seing the block
         blockHeight = pixy.blocks[0].height;
@@ -12,8 +17,9 @@ bool RotationController::getPixy(){
 }
 
 void RotationController::getCompass(){
-    // compass.update();
-    // compassHeading = compass.getHeading();
+    compass.update();
+    compassHeading = compass.getHeading();
+    Serial.println(compassHeading);
 }
 
 

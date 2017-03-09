@@ -11,7 +11,7 @@
 class RotationController{
 
 public:
-    RotationController(){};
+    RotationController();
 
     //Gets the pixy information
     bool getPixy();
