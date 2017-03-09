@@ -12,8 +12,8 @@ bool RotationController::getPixy(){
 }
 
 void RotationController::getCompass(){
-    compass.update();
-    compassHeading = compass.getHeading();
+    // compass.update();
+    // compassHeading = compass.getHeading();
 }
 
 

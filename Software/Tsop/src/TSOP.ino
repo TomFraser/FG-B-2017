@@ -20,6 +20,7 @@ void setup(){
 
 void loop(){
     dataOut[0] = tsops.moveTangent();
+    Serial.println(dataOut[0]);
 }
 
 void spi0_isr(){
