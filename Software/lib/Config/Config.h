@@ -19,6 +19,9 @@
 #define MED_STRENGTH 100
 #define HIGH_STRENGTH 150
 
+//Motors
+#define SPEED_VAL 44; //This is a percentage 0-100
+
 //Compass
 #define COMPASS_CALIBRATION_TIME 2000
 #define COMPASS_CALIBRATION_NUMBER 50
