@@ -24,7 +24,7 @@ function run() {
 
 function calulcateIfs(){
     for(let i = 0; i < 301; i++){
-        
+
     }
 }
 
