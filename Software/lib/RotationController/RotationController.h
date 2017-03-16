@@ -3,15 +3,18 @@
 
 #include <Config.h>
 #include <Pins.h>
+#include <i2c_t3.h>
 #include <Defines.h>
 #include <Arduino.h>
-#include <PixyI2C.h>
+// #include <PixyI2C.h>
 #include <Compass.h>
 
 class RotationController{
 
 public:
     RotationController();
+
+    void init();
 
     //Gets the pixy information
     bool getPixy();
@@ -29,7 +32,7 @@ public:
     double rotate();
 
 private:
-    PixyI2C pixy;
+    // PixyI2C pixy;
     Compass compass = Compass();
     int rotationToAdd;
     int finalRotation;

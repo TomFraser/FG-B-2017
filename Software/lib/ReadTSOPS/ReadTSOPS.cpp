@@ -64,6 +64,7 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
     //Begin weighting
     angleToBall = index * 30.00;
 
+    Serial.println(correctOrbit(angleToBall));
     return (int)correctOrbit(angleToBall);
     return (int)angleToBall;
 
@@ -115,19 +116,19 @@ int ReadTSOPS::mod(int x,int m){
 }
 
 double ReadTSOPS::correctOrbit(double angleIn){
-    if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-        return angleIn;
-    }else{
-        return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
-    }
-
     // if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
     //     return angleIn;
     // }else{
-    //     int selectedTsop = angleIn/30;
-    //     int variableRotate = constrain(TSOP_VARIABLE_ANGLE * selectedTsop < 180 ? (selectedTsop) : (TSOP_NUM - selectedTsop), 0.00, TSOP_ORBIT_ANGLE);
-    //     return variableRotate;
+    //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
     // }
+
+    if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        return angleIn;
+    }else{
+        int selectedTsop = angleIn/30;
+        int variableRotate = constrain(TSOP_VARIABLE_ANGLE * selectedTsop < 180 ? (selectedTsop) : (TSOP_NUM - selectedTsop), 0.00, TSOP_ORBIT_ANGLE);
+        return variableRotate;
+    }
 
 
 }

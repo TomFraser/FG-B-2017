@@ -5,7 +5,7 @@
 #include <Pins.h>
 #include <Defines.h>
 
-#include <Wire.h>
+#include <i2c_t3.h>
 #include <Vector3D.h>
 #include <math.h>
 
@@ -14,6 +14,7 @@ class Compass {
 
 public:
     Compass();
+    void init();
     double calibrate();
     Vector3D read();
     void update();

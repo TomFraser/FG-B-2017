@@ -2,32 +2,35 @@
 
 //========Constructor========
 Compass::Compass(){
-    Wire.begin();
-    // I2CwriteByte(IMU_ADDRESS, 29, 0x06);
-    // I2CwriteByte(IMU_ADDRESS, 26, 0x06);
-    // I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_500_DPS);
-    // I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
-    // I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
-    // I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
-    // I2CwriteByte(IMU_ADDRESS, 29, 0x06);
-    // I2CwriteByte(IMU_ADDRESS, 26, 0x06);
-    // I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_250_DPS);
-    // I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
-    // I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
-    // I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
 
-
-    setTarget(0);
 }
 
 
 
+void Compass::init(){
+    I2CwriteByte(IMU_ADDRESS, 29, 0x06);
+    I2CwriteByte(IMU_ADDRESS, 26, 0x06);
+    I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_500_DPS);
+    I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
+    I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
+    I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
+    I2CwriteByte(IMU_ADDRESS, 29, 0x06);
+    I2CwriteByte(IMU_ADDRESS, 26, 0x06);
+    I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_250_DPS);
+    I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
+    I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
+    I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
+
+    setTarget(0);
+}
+
 //========Init Calibrate========
 double Compass::calibrate(){
     read();
+    Serial.println("Read Done");
 
     delay(COMPASS_CALIBRATION_TIME);
-
+    Serial.println("Delay time done");
     double reading = 0;
     for(int i=0; i<COMPASS_CALIBRATION_NUMBER; i++){
         reading += (double) read().z;

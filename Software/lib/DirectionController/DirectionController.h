@@ -20,6 +20,7 @@ class DirectionController{
 public:
     DirectionController();
 
+    void init();
     //Calculate motor angles
     void calcMotors(double angle, double rotation);
 
@@ -49,7 +50,7 @@ private:
     double lightAngle;
     lightStruct values;
 
-    // RotationController rotationController = RotationController();
+    RotationController rotationController = RotationController();
 };
 
 
