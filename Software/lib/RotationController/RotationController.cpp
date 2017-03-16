@@ -7,6 +7,7 @@ RotationController::RotationController(){
 void RotationController::init(){
     compass.init();
     Serial.println("Compass Init Done");
+    delay(10);
     compass.calibrate();
     Serial.println("Calibration Done");
 }
@@ -25,7 +26,7 @@ bool RotationController::getPixy(){
 void RotationController::getCompass(){
     compass.update();
     compassHeading = compass.getHeading();
-    Serial.println(compassHeading);
+    // Serial.println(compassHeading);
 }
 
 

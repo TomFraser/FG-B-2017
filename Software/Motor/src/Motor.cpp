@@ -28,8 +28,8 @@ double tsopAng = 0.00;
 int counter = 0;
 
 void setup(){
-    Wire.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
-    Wire.setDefaultTimeout(200000); // 200ms
+    Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
+    Wire1.setDefaultTimeout(200000); // 200ms
 
     pinMode(A12, INPUT);
     MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
