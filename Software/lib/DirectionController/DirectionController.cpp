@@ -1,11 +1,12 @@
 #include <DirectionController.h>
 
 DirectionController::DirectionController(){
-    // light.init();
+    
 }
 
 void DirectionController::init(){
     rotationController.init();
+    //light.init();
 }
 
 void DirectionController::calcMotors(double angle, double rotation){

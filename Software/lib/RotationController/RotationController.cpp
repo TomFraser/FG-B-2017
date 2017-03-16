@@ -25,7 +25,6 @@ bool RotationController::getPixy(){
 void RotationController::getCompass(){
     compass.update();
     compassHeading = compass.getHeading();
-    Serial.print("Heading: ");
     Serial.println(compassHeading);
 }
 

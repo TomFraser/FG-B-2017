@@ -30,7 +30,7 @@ int counter = 0;
 void setup(){
     Wire.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
     Wire.setDefaultTimeout(200000); // 200ms
-    
+
     pinMode(A12, INPUT);
     MASTER_TEENSY.begin_MASTER(ALT_SCK, MOSI, MISO, CS1, CS_ActiveLOW);
     MASTER_TEENSY.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV8);
