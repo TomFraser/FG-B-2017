@@ -8,8 +8,6 @@
 
 void setup(){
     Serial.begin(9600);
-    pinMode(A7, INPUT);
-    //um what the fuck is this lol
     //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
     //LightSPI.setCTAR_SLAVE(16, SPI_MODE0);
 
