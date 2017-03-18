@@ -11,13 +11,13 @@ void DirectionController::init(){
 
 void DirectionController::calcMotors(double angle, double rotation){
     //Solve the whole going forward while no seeing ball thing
-    rotationController.getCompass();
+    double universalRotation = rotationController.getCompass();
 
     if(angle != 65506.00){
-        motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55)); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
-        motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55));
-        motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55));
-        motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55));
+        motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
+        motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
+        motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
+        motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
     }else{
         motorA.set(0);
         motorB.set(0);

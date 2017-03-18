@@ -26,7 +26,7 @@ public:
     void calcRotation();
 
     //Uses compass library to find the compass roataion required
-    void getCompass();
+    double getCompass();
 
     //The final rotation to add to the motors
     double rotate();
