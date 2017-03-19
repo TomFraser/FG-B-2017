@@ -4,6 +4,7 @@
 #include <Kicker.h>
 #include <Buzzer.h>
 #include <fgbcommon.h>
+#include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
 
@@ -51,26 +52,10 @@ void loop(){
     // motorD.set(255); //Front Left
 
 }
-//
-// void testDirection(){
-//     direction.setPWM(255);
-//     delay(2000);
-//     direction.setPWM(-255);
-//     delay(2000);
-// }
-//
+
 void blinkLED(){
     digitalWrite(13, HIGH);
     delay(1000);
     digitalWrite(13, LOW);
     delay(1000);
 }
-//
-// void incrementSpeed(){
-//     direction.setPWM(counter);
-//     delay(100);
-//     counter++;
-//     if(counter >= 255){
-//         counter = 0;
-//     }
-// }
