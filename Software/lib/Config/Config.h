@@ -20,7 +20,7 @@
 #define HIGH_STRENGTH 150
 
 //Motors
-#define SPEED_VAL 44 //This is a percentage 0-100
+#define SPEED_VAL 80 //This is a percentage 0-100
 
 //Compass
 #define COMPASS_CALIBRATION_TIME 2000
