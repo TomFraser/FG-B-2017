@@ -5,19 +5,11 @@ Compass::Compass(){
 
 }
 
-
-
 void Compass::init(){
 
     I2CwriteByte(IMU_ADDRESS, 29, 0x06);
     I2CwriteByte(IMU_ADDRESS, 26, 0x06);
     I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_500_DPS);
-    I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
-    I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
-    I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
-    I2CwriteByte(IMU_ADDRESS, 29, 0x06);
-    I2CwriteByte(IMU_ADDRESS, 26, 0x06);
-    I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_250_DPS);
     I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
     I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
@@ -58,7 +50,7 @@ void Compass::update() {
 	long currentTime = micros();
     heading += (((double)(currentTime - previousTime) / 1000000.0) * (reading - calibration));
 	heading = doubleMod(heading, 360.0);
-
+    // Serial.println(360 - heading);
 	previousTime = currentTime;
 }
 
