@@ -131,7 +131,7 @@ double ReadTSOPS::correctOrbit(double angleIn){
     // }else{
     //     int selectedTsop = angleIn/30;
     //     int inVar = angleIn < 180.00 ? (selectedTsop) : (TSOP_NUM - selectedTsop);
-    //     int variableRotate = constrain(TSOP_VARIABLE_ANGLE * inVar, 0.00, TSOP_ORBIT_ANGLE);
+    //     int variableRotate = constrain(TSOP_VARIABLE_ANGLE * inVar, 0.00, angleIn < 180.00 ? (angleIn - TSOP_ORBIT_ANGLE) : (angleIn + TSOP_ORBIT_ANGLE));
     //     Serial.println(inVar);
     //     return variableRotate;
     // }
