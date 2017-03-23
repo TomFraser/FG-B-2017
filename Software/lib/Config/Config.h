@@ -6,9 +6,9 @@
 #define READ_THRESHOLD 40
 #define TSOP_NUM 12
 #define MAX_READS 512
-#define TSOP_FORWARD_LOWER 
-#define TSOP_FORWARD_UPPER 270
-#define TSOP_ORBIT_ANGLE 60 //Formerally 90
+#define TSOP_FORWARD_LOWER 59
+#define TSOP_FORWARD_UPPER 301
+#define TSOP_ORBIT_ANGLE 45 //Formerally 90
 #define TSOP_MIN_THRESHOLD 30
 #define TSOP_VARIABLE_ANGLE 18
 
@@ -20,7 +20,7 @@
 #define HIGH_STRENGTH 150
 
 //Motors
-#define SPEED_VAL 44 //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 65 //This is a percentage 0-100 (44 is optimum apparently)
 
 //Compass
 #define COMPASS_CALIBRATION_TIME 2000
