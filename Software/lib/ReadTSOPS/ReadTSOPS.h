@@ -36,7 +36,7 @@ private:
     int index;
     int value_index;
     int mod(int x, int m);
-    double correctOrbit(double angleIn);
+    double correctOrbit(double angleIn, bool useFirst);
 
 };
 
