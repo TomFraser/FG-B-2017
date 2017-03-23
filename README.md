@@ -17,3 +17,10 @@
 ![FG&B Logo](/images/FG&BFooter.png)
 
 -------------------------------------------------------------
+##Branches
+
+The **Master** branch contains a basic version of all code for the robots.
+
+The **O_bot** branch contains code specified for the first robot built, lovingly named "O".
+
+The **P2_bot** branch contains code specified for the first robot built, named "P2".
