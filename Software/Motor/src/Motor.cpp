@@ -41,7 +41,7 @@ void setup(){
 void loop(){
     MASTER_TEENSY.txrx16(dataOut, dataIn, DATA_LENGTH, CTAR_0, CS0);
     double angle = dataIn[0];
-    delay(50);
+    delay(30);
     direction.calcMotors(angle, 0.00);
     // Serial.println(angle);
     // delay(100);
