@@ -6,7 +6,7 @@
 #include <Pins.h>
 
 ReadTSOPS tsops;
-//
+
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 
@@ -20,7 +20,6 @@ void setup(){
 
 void loop(){
     dataOut[0] = tsops.moveTangent();
-    // Serial.println(dataOut[0]);
 }
 
 void spi0_isr(){

@@ -1,26 +1,33 @@
-//#include <t3spi.h>
-//#include <Light.h>
+#include <t3spi.h>
+#include <Config.h>
+#include <Arduino.h>
+#include <Light.h>
 
-//T3SPI LightSPI;
-//Light Light;
+Light Light;
 
-//int lightValues[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+T3SPI LIGHT;
+
+volatile uint16_t dataIn[DATA_LENGTH] = {};
+volatile uint16_t dataOut[DATA_LENGTH] = {};
+
+double lightAngle;
 
 void setup(){
+    Light.init();
     Serial.begin(9600);
-    //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
-    //LightSPI.setCTAR_SLAVE(16, SPI_MODE0);
+    LIGHT.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
+    LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
 
-    //Serial.print(Light.getAngle());
+    NVIC_ENABLE_IRQ(IRQ_SPI0);
 }
 
 void loop(){
-    //Light.getVals(lightValues);
-    //for(int i=0; i < 19; i++){
-      //Serial.print(lightValues[i]);
-      //Serial.print(" ");
-    //}
-    //Serial.println();
-    Serial.println(analogRead(A7));
-    delay(100);
+    Light.readLight();
+    Serial.println(Light.getAngle());
+    lightAngle = Light.getAngle();
+    dataOut[0] = 100;
+}
+
+void spi0_isr(){
+    LIGHT.rxtx16(dataIn, dataOut, DATA_LENGTH);
 }

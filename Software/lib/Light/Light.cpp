@@ -25,8 +25,8 @@ Light::Light(){
     lightSensors[0] = LIGHT_1;
     lightSensors[1] = LIGHT_2;
     lightSensors[2] = LIGHT_3;
-    lightSensors[3] = LIGHT_4;
-    lightSensors[4] = LIGHT_5;
+    lightSensors[3] = 0; //cooked
+    lightSensors[4] = 0; //cooked
     lightSensors[5] = LIGHT_6;
     lightSensors[6] = LIGHT_7;
     lightSensors[7] = LIGHT_8;
@@ -44,15 +44,36 @@ Light::Light(){
 
 }
 
+
+//====================Getter Dump Functions===========================
 void Light::getVals(int *vals){
   for(int i = 0; i < LIGHTSENSOR_NUM; i++){
-      Serial.println(analogRead(lightSensors[i]));
+      // Serial.println(analogRead(lightSensors[i]));
+      vals[i] = analogRead(lightSensors[i]);
   }
 }
 
+void Light::getOnWhite(bool *vals){
+  for(int i=0; i < LIGHTSENSOR_NUM; i++){
+    vals[i] = seeingWhite[i];
+  }
+}
+
+//=============================Other Functions=====================
 void Light::init(){
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
-        thresholds[i] = analogRead(lightSensors[i] + LIGHTSENSOR_THRESHOLD);
+        thresholds[i] = 0;
+    }
+
+    for(int n = 0; n < LIGHTSENSOR_AVG; n++){
+        for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+          thresholds[i] += analogRead(lightSensors[i]);
+        }
+    }
+
+    for(int i = 0; i < LIGHTSENSOR_NUM; i++){
+        thresholds[i] /= LIGHTSENSOR_AVG;
+        thresholds[i] += LIGHTSENSOR_THRESHOLD;
     }
 }
 
@@ -70,99 +91,131 @@ void Light::readLight(){
 }
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]
-
-cluster Light::singleCluster(int startNum, int begin){
-  if(seeingWhite[startNum]){
-    if(seeingWhite[startNum+1]){
-      singleCluster(startNum+1, begin);
+void Light::singleCluster(cluster *returnClus, int startNum, int begin){
+  if(seeingWhite[startNum%LIGHTSENSOR_NUM]){
+    if(seeingWhite[(startNum+1)%LIGHTSENSOR_NUM]){
+      singleCluster(returnClus, startNum+1, begin);
     }
     else{
-      cluster lightCluster;
-      lightCluster.exist = true;
-      lightCluster.begin = begin;
-      lightCluster.end = startNum;
-      return lightCluster;
+      returnClus->exist = true;
+      returnClus->begin = begin;
+      returnClus->end = startNum;
+      return;
     }
   }
   else{
-    cluster noCluster;
-    noCluster.exist = false;
-    return noCluster;
+    returnClus->exist = false;
+    return;
   }
 }
 
 //foundClusters is length of 2 (returns 2 best clusters)
-void Light::findClusters(cluster *bestClusters){
+void Light::findCluster(cluster *bestCluster){
   cluster foundClusters[maxNumClusters];
+  cluster temp = {false, 0, 0};
+  for(int i = 0; i < maxNumClusters; i++){
+    foundClusters[i] = temp;
+  }
+
   int index = 0;
   int num = 0;
   while(num < LIGHTSENSOR_NUM){
-    cluster c = singleCluster(num, num);
+    cluster c;
+    singleCluster(&c, num, num);
     if(c.exist){
       foundClusters[index] = c;
       index++;
-      num = c.end;
+      num = c.end+1;
     }
     else{
       num++;
     }
   }
 
-  //now find the largest 2 clusters
+  // print all found clusters
+  // for(int i=0; i<maxNumClusters; i++){
+  //   Serial.print(foundClusters[i].begin); Serial.print(" "); Serial.print(foundClusters[i].end); Serial.print(" | ");
+  // }
+  // Serial.println();
+
+
+  //now find the largest cluster
   int firstIndex = 0;
-  int secondIndex = 0;
-
   int maxSize = 0;
-  int secondSize = 0;
 
-  for(int i=0; i<maxNumClusters; i++){
-    cluster cluster = foundClusters[i];
-    int size = cluster.end - cluster.begin;
-    if(size > maxSize){
-      maxSize = size;
-      firstIndex = i;
+  // for(int i=0; i<maxNumClusters; i++){
+  //   Serial.print(foundClusters[i].exist); Serial.print(" | ");
+  // }
+  // Serial.println();
+
+  // Check if we found any clusters at all
+  if(foundClusters[0].exist){
+    for(int i=0; i<maxNumClusters; i++){
+      cluster cluster = foundClusters[i];
+      if(cluster.exist){
+        int size = cluster.end - cluster.begin + 1;
+        if(size > maxSize){
+          maxSize = size;
+          firstIndex = i;
+        }
+      }
     }
-    else if(size > secondSize){
-      secondSize = size;
-      secondIndex = i;
-    }
+
+    //now we have them return them
+    bestCluster->exist = true;
+    bestCluster->begin = foundClusters[firstIndex].begin;
+    bestCluster->end = foundClusters[firstIndex].end;
+
   }
-
-  //now we have them return them
-  bestClusters[0] = foundClusters[firstIndex];
-  bestClusters[1] = foundClusters[secondIndex];
+  else {
+    // If not, say so
+    bestCluster->exist = false;
+  }
 }
 
 double Light::getAngle(){
-    cluster bestClusters[2];
-    findClusters(bestClusters);
-    double clus1xavg = 0;
-    double clus1yavg = 0;
+    cluster bestCluster;
+    findCluster(&bestCluster);
 
-    for(int i=bestClusters[0].begin; i<=bestClusters[0].end; i++){
-      clus1xavg += lightCoords[i][0];
-      clus1yavg += lightCoords[i][1];
+    if(!bestCluster.exist){
+      return -1;
     }
 
-    clus1xavg /= bestClusters[0].end-bestClusters[0].begin;
-    clus1yavg /= bestClusters[0].end-bestClusters[0].begin;
+    double xavg = 0;
+    double yavg = 0;
 
-    double clus2xavg = 0;
-    double clus2yavg = 0;
-
-    for(int i=bestClusters[1].begin; i<=bestClusters[1].end; i++){
-      clus2xavg += lightCoords[i][0];
-      clus2yavg += lightCoords[i][1];
+    for(int i=bestCluster.begin; i<=bestCluster.end; i++){
+      xavg += lightCoords[i%LIGHTSENSOR_NUM][0];
+      yavg += lightCoords[i%LIGHTSENSOR_NUM][1];
     }
 
-    clus2xavg /= bestClusters[1].end-bestClusters[1].begin;
-    clus2yavg /= bestClusters[1].end-bestClusters[1].begin;
+    xavg /= bestCluster.end-bestCluster.begin + 1;
+    yavg /= bestCluster.end-bestCluster.begin + 1;
 
-    double deltaX = clus2xavg - clus1xavg;
-    double deltaY = clus2yavg - clus1yavg;
+    double lineAngle = -atan2(yavg, xavg)*radToAng; //0-180/-180 on east
+    lineAngle += lineAngle < 0 ? 360 : 0; //lineAngle is now a 0-360 value on east
+    lineAngle = fmod(lineAngle + 90, 360); //convert to 0-360 on north
+    double directionAngle = fmod(lineAngle + 180, 360); //make it the opposite direction
 
-    double angle = atan2(deltaY, deltaX);
+    return directionAngle;
+}
 
-    return angle;
 
+int Light::identifyQuadrant(double angle){
+  // int num;
+  // if(angle >= 0 && angle <= 90){
+  //   num = 2;
+  // }
+  // else if(angle <= 180){
+  //   num = 3;
+  // }
+  // else if(angle <= 270){
+  //   num = 4;
+  // }
+  // else{
+  //   num = 1;
+  // }
+  //
+  // return num;
+  return int(angle/90) + 1;
 }

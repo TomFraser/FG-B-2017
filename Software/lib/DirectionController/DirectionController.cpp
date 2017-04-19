@@ -9,11 +9,13 @@ void DirectionController::init(){
     //light.init();
 }
 
-void DirectionController::calcMotors(double angle, double rotation){
-    //Solve the whole going forward while no seeing ball thing
-    double universalRotation = rotationController.getCompass();
-    Serial.println(universalRotation);
-    Serial.println(angle);
+void DirectionController::calcMotors(double angle, double lightAngle, double rotation){
+    // if(lightAngle != 65506.00){
+    //     double primaryAngle = lightAngle;
+    // }else{
+    //     double primaryAngle = angle;
+    // }
+    double universalRotation = rotationController.rotate();
     if(angle != 65506.00){
         motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
         motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
@@ -56,10 +58,10 @@ lightStruct DirectionController::calcLight(){
 
 void DirectionController::move(double tsopAngle){
     if(calcLight().seeing == false){
-        calcMotors(tsopAngle, /*rotationController.rotate()*/0.00);
+        calcMotors(tsopAngle, 0.00, 0.00);
     }
     else{
-        calcMotors(calcLight().angle/*Takes in angle to move away from line as oppose to following ball*/, /*rotationController.rotate()*/0.00);
+        calcMotors(calcLight().angle/*Takes in angle to move away from line as oppose to following ball*/, 0.00, 0.00);
     }
 }
 

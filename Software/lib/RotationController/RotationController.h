@@ -6,7 +6,7 @@
 #include <i2c_t3.h>
 #include <Defines.h>
 #include <Arduino.h>
-// #include <PixyI2C.h>
+#include <PixyI2C.h>
 #include <Compass.h>
 
 class RotationController{
@@ -20,7 +20,7 @@ public:
     bool getPixy();
 
     //Calulates the pixy and which direction to go
-    void calcPixy();
+    double calcPixy();
 
     //Calculates the rotation needed to face the centre of the goal
     void calcRotation();
@@ -32,10 +32,11 @@ public:
     double rotate();
 
 private:
-    // PixyI2C pixy;
+    PixyI2C pixy;
     Compass compass = Compass();
     int rotationToAdd;
     int finalRotation;
+    double prevReturn;
 
     int blockHeight, blockWidth, blockX, blockY;
 

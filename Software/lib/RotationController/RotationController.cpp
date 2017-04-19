@@ -6,42 +6,41 @@ RotationController::RotationController(){
 
 void RotationController::init(){
     compass.init();
-    // Serial.println("Compass Init Done");
     delay(10);
     compass.calibrate();
-    // Serial.println("Calibration Done");
 }
 
 bool RotationController::getPixy(){
-    // if(pixy.getBlocks()){ //seing the block
-        // blockHeight = pixy.blocks[0].height;
-        // blockWidth = pixy.blocks[0].width;
-        // blockX = pixy.blocks[0].x;
-        // blockY = pixy.blocks[0].y;
-        // return true;
-    // }
+    if(pixy.getBlocks()){ //seing the block
+        blockHeight = pixy.blocks[0].height;
+        blockWidth = pixy.blocks[0].width;
+        blockX = pixy.blocks[0].x;
+        blockY = pixy.blocks[0].y;
+        return true;
+    }
     return false;
 }
 
 double RotationController::getCompass(){
     compass.update();
     compassHeading = compass.getHeading();
-    compassHeading = (compassHeading * 0.8) + (1 * (SPEED_VAL/8));
+    compassHeading = (compassHeading * COMPASS_MULTIPLIER);
     return compassHeading;
 }
 
 
-void RotationController::calcPixy(){
+double RotationController::calcPixy(){
     if(getPixy()){
         if(blockX >= PIXY_CENTRE_X){
-            rotationToAdd = blockX - PIXY_CENTRE_X;
+            return rotationToAdd = -1*(PIXY_CENTRE_X - blockX);
         }
         else if(blockX <= PIXY_CENTRE_X){
-            rotationToAdd = PIXY_CENTRE_X - blockX;
+            prevReturn = -1*(PIXY_CENTRE_X - blockX);
+            return -1*(PIXY_CENTRE_X - blockX);
         }
     }
     else{
-        rotationToAdd = 0;
+        return 0.00;
     }
 }
 
@@ -51,6 +50,12 @@ void RotationController::calcRotation(){
 }
 
 double RotationController::rotate(){
-    compass.update();
-    finalRotation = compass.getHeading();
+    if(pixy.getBlocks()){
+        return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
+    }else{
+        compass.update();
+        compassHeading = compass.getHeading();
+        compassHeading = (compassHeading * COMPASS_MULTIPLIER);
+        return compassHeading; //Returns compass when no goal is seen
+    }
 }

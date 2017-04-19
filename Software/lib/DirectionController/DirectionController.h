@@ -22,7 +22,7 @@ public:
 
     void init();
     //Calculate motor angles
-    void calcMotors(double angle, double rotation);
+    void calcMotors(double angle, double lightAngle, double rotation);
 
     //Calculate motor angles
     void calcMotors(double angle, double rotation, int dirNum);
@@ -44,6 +44,7 @@ private:
     int angleArray[4] = {60, 135, 225, 300};
 
     double direction;
+    double primaryAngle;
 
     // Light light = Light();
 
