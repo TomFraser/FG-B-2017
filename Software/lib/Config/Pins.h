@@ -62,4 +62,9 @@
 #define LED_IND_3 26
 #define LED_IND_4 25
 
+//===SPI===
+#define TSOP_SS 15
+#define LIGHT_SS 16
+#define ALT_SCK 14
+
 #endif
