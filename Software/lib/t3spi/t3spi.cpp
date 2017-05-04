@@ -102,6 +102,10 @@ void T3SPI::enableCS(uint8_t cs, bool activeState){
 		CORE_PIN15_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);		//Set Pin15 Output & CS4
 		if (activeState == 1){
 			setCS_ActiveLOW(CS4_ActiveLOW);}}
+	if(cs == 0x11){
+		CORE_PIN16_CONFIG = PORT_PCR_DSE | PORT_PCR_MUX(2);
+		if(activeState == 1){
+			setCS_ActiveLOW(CUSTOM_CS_ACtiveLOW);}}				//Set Pin16 OUTPUT & CUSTOM_CS
 	if (cs   ==  0x81){
 		CORE_PIN2_CONFIG  = PORT_PCR_DSE | PORT_PCR_MUX(2);		//Set Pin2  Output & (alt) CS0
 		if (activeState == 1){

@@ -46,22 +46,22 @@ public:
   uint16_t getWord(){
     uint16_t w;
 	uint8_t c;
-	Wire.requestFrom((int)addr, 2);
-    c = Wire.read();
-    w = Wire.read();
+	Wire1.requestFrom((int)addr, 2);
+    c = Wire1.read();
+    w = Wire1.read();
     w <<= 8;
     w |= c;
     return w;
   }
   uint8_t getByte(){
-	Wire.requestFrom((int)addr, 1);
-	return Wire.read();
+	Wire1.requestFrom((int)addr, 1);
+	return Wire1.read();
   }
 
   int8_t send(uint8_t *data, uint8_t len){
-    Wire.beginTransmission(addr);
-    Wire.write(data, len);
-	Wire.endTransmission();
+    Wire1.beginTransmission(addr);
+    Wire1.write(data, len);
+	Wire1.endTransmission();
 	return len;
   }
 

@@ -42,6 +42,7 @@
 #define CS2					0x04
 #define CS3					0x08
 #define CS4					0x10
+#define CUSTOM_CS			0x11
 #define ALT_CS0				0x81
 #define ALT_CS1				0x82
 #define ALT_CS2				0x84
@@ -54,6 +55,7 @@
 #define CS2_ActiveLOW		0x00040000
 #define CS3_ActiveLOW		0x00080000
 #define CS4_ActiveLOW		0x00100000
+#define CUSTOM_CS_ACtiveLOW 0x00120000
 
 #define SPI_SR_TXCTR		0x0000f000 //Mask isolating the TXCTR
 
@@ -85,14 +87,14 @@ public:
 	volatile int dataPointer;
 	volatile int packetCT;
 	volatile int data16;
-	
+
 	unsigned long timeStamp1;
 	unsigned long timeStamp2;
 	uint8_t ctar;
 
 
 	T3SPI();
-	
+
 	//Functions for MASTER MODE
 	static void begin_MASTER();
 	void begin_MASTER(uint8_t sck, uint8_t mosi, uint8_t miso, uint8_t cs, bool activeState);
@@ -111,7 +113,7 @@ public:
 	void rx16(volatile uint16_t *dataIN, int length);
 	void rxtx8(volatile uint8_t *dataIN, volatile uint8_t *dataOUT, int length);
 	void rxtx16(volatile uint16_t *dataIN, volatile uint16_t *dataOUT, int length);
-	
+
 	//Global Functions
 	static void start();
 	static void stop();

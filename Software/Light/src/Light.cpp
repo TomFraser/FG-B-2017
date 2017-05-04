@@ -1,26 +1,41 @@
-//#include <t3spi.h>
-//#include <Light.h>
+#include <t3spi.h>
+#include <Config.h>
+#include <Arduino.h>
+#include <Light.h>
 
-//T3SPI LightSPI;
-//Light Light;
+Light Light;
 
-//int lightValues[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+T3SPI LIGHT;
+
+volatile uint16_t dataIn[DATA_LENGTH] = {};
+volatile uint16_t dataOut[DATA_LENGTH] = {};
+
+double lightAngle;
 
 void setup(){
+    Light.init();
     Serial.begin(9600);
-    //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
-    //LightSPI.setCTAR_SLAVE(16, SPI_MODE0);
 
-    //Serial.print(Light.getAngle());
+    LIGHT.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
+    LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
+    NVIC_ENABLE_IRQ(IRQ_SPI0);
 }
 
 void loop(){
-    //Light.getVals(lightValues);
-    //for(int i=0; i < 19; i++){
-      //Serial.print(lightValues[i]);
-      //Serial.print(" ");
-    //}
-    //Serial.println();
-    Serial.println(analogRead(A7));
-    delay(100);
+    Light.readLight();
+    lightAngle = Light.getAngle();
+
+    dataOut[0] = lightAngle;
+    // dataOut[0] = 100;
+}
+
+void spi0_isr(){ //SPI INTERUPT
+    int response = SPI0_POPR;
+    switch(response){
+        case 0: SPI0_PUSHR_SLAVE = 0; //Return no line
+        case 1: SPI0_PUSHR_SLAVE = dataOut[0]; //Return line
+        default: SPI0_PUSHR_SLAVE = dataOut[0]; //Default
+    }
+    // SPI0_PUSHR_SLAVE = dataOut[0];
+    SPI0_SR |= SPI_SR_RFDF; //Force Refresh of SPI register?
 }

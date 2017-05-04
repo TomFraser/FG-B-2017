@@ -50,7 +50,6 @@ void Compass::update() {
 	long currentTime = micros();
     heading += (((double)(currentTime - previousTime) / 1000000.0) * (reading - calibration));
 	heading = doubleMod(heading, 360.0);
-    // Serial.println(360 - heading);
 	previousTime = currentTime;
 }
 
@@ -61,7 +60,7 @@ void Compass::setTarget(double target_){
 
 //=======Get Heading======
 double Compass::getHeading(){
-    double curr = heading > 180 ? -(360-heading) : heading;// + target; //Fix this
+    double curr = heading > 180 ? -(360-heading + target) : heading - target;// + target; //Fix this
     return curr;
 }
 

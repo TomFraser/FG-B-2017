@@ -23,29 +23,40 @@ public:
     //Dump Light Values
     void getVals(int *);
 
+    //Dump On White Values
+    void getOnWhite(bool *);
+
     //Read the light sensors
     void readLight();
-
-    //Identify clusters of lightsensors seeing the Line
-    cluster singleCluster(int, int);
-
-    //Find all the clusters
-    void findClusters(cluster *);
 
     //Get angles
     double getAngle();
 
-
-
-
 private:
+    // Function Definitions
+
+    //Identify clusters of lightsensors seeing the Line
+    void singleCluster(cluster *, int, int);
+
+    //Find all the clusters
+    void findCluster(cluster *);
+
+    //Find what quadrant an angle is in
+    int identifyQuadrant(double);
+
+    // Other Stuff
+
     //init stuff
     int thresholds[19];
     int lightSensors[19];
 
     //for reading light
     int detectedNumber;
-    bool seeingWhite[19] = {false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+
+    bool onWhite = false;
+
+    // bool seeingWhite[19] = {true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+    bool seeingWhite[19];
 
     //cluster stuff
     double lightCoords[19][2] = {

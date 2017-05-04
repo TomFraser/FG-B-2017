@@ -7,7 +7,7 @@ It should be noted that I experienced some problems when using SLAVE mode, with 
 with a large array length, at the fastest clock rate.  I was able to go to the next clock
 divider (SPI_CLOCK_DIV4	= 12.0	MHz) and this solved my problem.  I can also use a smaller
 array length with no issues.  I think that at very high speed, with short frame size, the
-master SPI can over-run my slave ISR scan time. 
+master SPI can over-run my slave ISR scan time.
 
 ***
 The SLAVE "return data" is loaded every time the ISR is called.  So on the first byte received,
@@ -53,12 +53,12 @@ begin_MASTER();
 	CS0:		Pin 10 (output)
 
 
-	
+
 begin_MASTER(sck, mosi, miso, cs, activeState);
 
 *******	This funtion initializes the SPI(0) with user-defined pins.
 	You can initialize Alternate Pins here.
-	
+
 	sck	OPTIONS:	SCK	 = Pin 13
 				ALT_SCK  = Pin 14
 
@@ -117,7 +117,7 @@ enableCS(cs, activeState);
 *******	This funtion enables CS pins.
 	This is useful if you want to use more CS pins to control multiple SPI devices.
 	You can initialize Alternate Pins here.
-	
+
 	cs	OPTIONS:	CS0	 = Pin 10
 				CS1	 = Pin  9
 				CS2	 = Pin 20
@@ -210,7 +210,7 @@ begin_SLAVE();
 	CTAR:		CTAR0_SLAVE
 	Frame Size:	8 bits
 	SPI Mode:	0
-	
+
 	Clock:		Pin 13 (input)
 	MOSI:		Pin 11 (output)
 	MISO:		Pin 12 (input)
@@ -223,7 +223,7 @@ begin_SLAVE(sck, mosi, miso, cs);
 *******	This funtion initializes the SPI(0) with user-defined pins.
 	You can initialize Alternate Pins here.
 	CS is always CS0 (or ALT_CS0) & ACTIVE_LOW in slave mode.
-	
+
 	sck	OPTIONS:	SCK	 = Pin 13
 				ALT_SCK  = Pin 14
 
@@ -257,7 +257,7 @@ setCTAR_SLAVE(size, dataMode);
 
 ******* NOTE *******
 The SPI SLAVE uses an Interrupt Service Routine to notify the device that a frame of data has been received.
-A rx function must be used in ISR to tell the device how to handle it received data. 
+A rx function must be used in ISR to tell the device how to handle it received data.
 
 It looks like this (example):
 
@@ -331,7 +331,7 @@ stop();
 end();
 
 *******	This disables SPI functions.
-	
+
 
 
 printStatistics(length);
@@ -364,7 +364,7 @@ setMCR(mode);
 setFrameSize(CTARn, size);
 
 *******	This funtion sets the frame size.
-	
+
 	CTARn	OPTIONS:	CTAR0		= configures CTAR0
 				CTAR1		= configures CTAR1
 				CTAR_SLAVE	= configures CTAR0_SLAVE
@@ -379,7 +379,7 @@ setMode(CTARn, dataMode);
 
 	CTARn	OPTIONS:	CTAR0		= configures CTAR0
 				CTAR1		= configures CTAR1
-	
+
 	dataMode OPTIONS:	0 - 3	= industry standard SPI clock modes, see wikipedia SPI Mode
 
 
@@ -394,7 +394,7 @@ setBitOrder(CTARn, bo);
 	bo	OPTIONS:	LSB_FIRST = Least significant bit transfered first
 				MSB_FIRST = Most significant bit transfered first.
 
-	
+
 setClockDivider(CTARn, cdiv);
 
 *******	This funtion sets the clock divider in MASTER mode.
@@ -415,7 +415,7 @@ setClockDivider(CTARn, cdiv);
 
 
 
-enablePins(sck, mosi, miso, cs, activeState);	
+enablePins(sck, mosi, miso, cs, activeState);
 
 *******	This funtion enables the SPI pins
 	You can initialize Alternate Pins here.
@@ -472,7 +472,7 @@ setCS_ActiveLOW(pin);
 				CS2_ActiveLow	 = Sets the CS as ACTIVE_LOW
 				CS3_ActiveLow 	 = Sets the CS as ACTIVE_LOW
 				CS4_ActiveLow	 = Sets the CS as ACTIVE_LOW
-				
+
 
 
 ********************************************
@@ -480,7 +480,7 @@ setCS_ActiveLOW(pin);
 
 As long as the T3SPI is #included, these three macros can be used outside of the T3SPI class.
 Because they are defined, you don't need to use the class pointer to use them.
-*Use SPI_WRITE_16, not use t3SPI.SPI_WRITE_16  
+*Use SPI_WRITE_16, not use t3SPI.SPI_WRITE_16
 
 
 
