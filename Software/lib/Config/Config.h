@@ -10,7 +10,7 @@
 #define TSOP_FORWARD_UPPER 301
 #define TSOP_ORBIT_ANGLE 45 //Formerally 90
 #define TSOP_ORBIT_ANGLE_15 20
-#define TSOP_MIN_THRESHOLD 30
+#define TSOP_MIN_THRESHOLD 60
 #define TSOP_VARIABLE_ANGLE 18
 
 #define TSOP_K1 12
@@ -21,7 +21,7 @@
 #define HIGH_STRENGTH 150
 
 //Motors
-#define SPEED_VAL 85 //85 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 65 //85 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
 
 //Compass
 #define COMPASS_CALIBRATION_TIME 2000
@@ -30,7 +30,6 @@
 
 //SPI
 #define DATA_LENGTH 1
-#define SPI_DEGUB true
 
 //Lightsensors
 #define LIGHTSENSOR_NUM 19

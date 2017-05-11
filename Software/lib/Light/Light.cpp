@@ -174,6 +174,8 @@ void Light::findCluster(cluster *bestCluster){
 }
 
 double Light::getAngle(){
+    readLight();
+
     cluster bestCluster;
     findCluster(&bestCluster);
 
@@ -201,21 +203,60 @@ double Light::getAngle(){
 }
 
 
-int Light::identifyQuadrant(double angle){
-  // int num;
-  // if(angle >= 0 && angle <= 90){
-  //   num = 2;
-  // }
-  // else if(angle <= 180){
-  //   num = 3;
-  // }
-  // else if(angle <= 270){
-  //   num = 4;
-  // }
-  // else{
-  //   num = 1;
-  // }
-  //
-  // return num;
-  return int(angle/90) + 1;
+// int Light::identifyQuadrant(double angle){
+//     // int num;
+//     // if(angle >= 0 && angle <= 90){
+//     //   num = 2;
+//     // }
+//     // else if(angle <= 180){
+//     //   num = 3;
+//     // }
+//     // else if(angle <= 270){
+//     //   num = 4;
+//     // }
+//     // else{
+//     //   num = 1;
+//     // }
+//     //
+//     // return num;
+//     return int(angle/90) + 1;
+// }
+
+double Light::getDirection(){
+  double direction = getAngle();
+  double lightDir = direction;
+  if(seeingLine){
+    if(direction == -1){
+      // just stopped seeing the line
+      double diff = abs(lineInitDirection - lastLightVal);
+      if(!(diff > 45 && diff < 315)){
+        // exited on the correct side of the line
+        seeingLine = false;
+        lineInitDirection = 0;
+      }
+      else{
+        // exited on the wrong side of the line - go back the way we came
+        direction = lineInitDirection;
+      }
+    }
+    else{
+      // was seeing line and still are - need to check if we're over or not
+      double diff = abs(lineInitDirection - direction);
+      if(diff > 45 && diff < 315){
+        // we have flipped our direction so just move at initial direction
+        direction = lineInitDirection;
+      }
+    }
+  }
+  else {
+    if(direction != -1){
+      // we just started seeing the line!
+      lineInitDirection = direction;
+      seeingLine = true;
+    }
+    // otherwise still not seeing the line - all goods
+  }
+
+  lastLightVal = lightDir;
+  return direction;
 }

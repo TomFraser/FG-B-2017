@@ -3,7 +3,7 @@
 
 ReadTSOPS::ReadTSOPS(){
     for(int i = 0; i < TSOP_NUM; i++){
-        pinMode(sensors[i], INPUT);
+        pinMode(sensors[i], INPUT_PULLUP);
     }
     pinMode(POWER_PIN_1, OUTPUT);
     pinMode(POWER_PIN_2, OUTPUT);
@@ -34,10 +34,13 @@ void ReadTSOPS::read(){
         if(values[i] > value_index){
             index = i; //1-12 as oppose to 0-11
             value_index = values[i];
+            // Serial.println(value_index);
         }
+        // Serial.println(values[i]);
         values[i] = 0;
     }
     bestSensor = index;
+    Serial.println(bestSensor);
 }
 
 void ReadTSOPS::reset(){
@@ -103,7 +106,7 @@ int ReadTSOPS::mod(int x,int m){
 }
 
 double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
-    Serial.println(angleIn);
+    // Serial.println(angleIn);
     if(useFirst){
         if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
             return angleIn;
@@ -111,8 +114,12 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
             return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
         }
     }else{
-        if(angleIn == -30 || angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        if(angleIn == -30){
             return angleIn;
+        }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+            //-50cos3x+50 (Maybe) [Confirmed]
+            Serial.println(angleIn < 180 ? (-50*cos(3*angleIn)+50) : -(-50*cos(3*angleIn)+50));
+            return angleIn < 180 ? (-50*cos(3*angleIn)+50) : -(-50*cos(3*angleIn)+50);
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);

@@ -24,6 +24,7 @@ void DirectionController::calcMotors(double angle, double lightAngle, double rot
             motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
             motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
         }else{
+            Serial.println("Here");
             motorA.set(0 + (int)universalRotation);
             motorB.set(0 + (int)universalRotation);
             motorC.set(0 + (int)universalRotation);
