@@ -59,17 +59,18 @@ void loop(){
     SPI.transfer16(512); //Transfer 512 and recieve value
     int response = SPI.transfer16(512); //Transfer 512 and recieve value
     digitalWrite(TSOP_SS, HIGH); //Set cs high
+    Serial.println(response);
 
     delay(15);
 
-    digitalWrite(LIGHT_SS, LOW);
-    delay(1);
-    SPI.transfer16(512);
-    int lightResponse = SPI.transfer16(512);
-    digitalWrite(LIGHT_SS, HIGH);
-    Serial.println(lightResponse);
+    // digitalWrite(LIGHT_SS, LOW);
+    // delay(1);
+    // SPI.transfer16(512);
+    // int lightResponse = SPI.transfer16(512);
+    // digitalWrite(LIGHT_SS, HIGH);
+    // Serial.println(lightResponse);
 
-    direction.calcMotors(response, lightResponse, 0.00);
+    direction.calcMotors(response, 0.00, 0.00);
 }
 
 void blinkLED(){

@@ -50,12 +50,12 @@ void RotationController::calcRotation(){
 }
 
 double RotationController::rotate(){
-    if(pixy.getBlocks()){
-        return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
-    }else{
+    // if(pixy.getBlocks()){
+    //     return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
+    // }else{
         compass.update();
         compassHeading = compass.getHeading();
         compassHeading = (compassHeading * COMPASS_MULTIPLIER);
         return compassHeading; //Returns compass when no goal is seen
-    }
+    // }
 }
