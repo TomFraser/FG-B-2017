@@ -63,11 +63,11 @@ void loop(){
 
     delay(15);
 
-    // digitalWrite(LIGHT_SS, LOW);
-    // delay(1);
-    // SPI.transfer16(512);
-    // int lightResponse = SPI.transfer16(512);
-    // digitalWrite(LIGHT_SS, HIGH);
+    digitalWrite(LIGHT_SS, LOW);
+    delay(1);
+    SPI.transfer16(512);
+    int lightResponse = SPI.transfer16(512);
+    digitalWrite(LIGHT_SS, HIGH);
     // Serial.println(lightResponse);
 
     direction.calcMotors(response, 0.00, 0.00);

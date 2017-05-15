@@ -14,7 +14,7 @@
 #define LIGHT_4 A1
 #define LIGHT_5 A0
 #define LIGHT_6 A18
-#define LIGHT_7 A18 //A17
+#define LIGHT_7 A17
 #define LIGHT_8 A16
 #define LIGHT_9 A15
 #define LIGHT_10 A14

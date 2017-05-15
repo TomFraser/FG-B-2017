@@ -22,11 +22,11 @@ void setup(){
 }
 
 void loop(){
-    Light.readLight();
-    // Serial.println(Light.getDirection());
-    lightAngle = Light.getDirection();
-    dataOut[0] = lightAngle;
-    // dataOut[0] = 100;
+    // Light.readLight();
+    // Serial.println(Light.getVals());
+    // lightAngle = Light.getDirection();
+    // dataOut[0] = lightAngle;
+    dataOut[0] = 100;
 }
 
 void spi0_isr(){
