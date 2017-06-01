@@ -25,7 +25,7 @@ long currentTime = 0;
 double angle;
 double lightAngle = 0;
 
-// Kicker kicker = Kicker();
+Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
 // Buzzer buzzer = Buzzer();
 
@@ -61,16 +61,20 @@ void loop(){
     digitalWrite(TSOP_SS, HIGH); //Set cs high
     Serial.println(response);
 
-    delay(15);
+    delay(20);
 
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
     SPI.transfer16(512);
     int lightResponse = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
-    // Serial.println(lightResponse);
 
     direction.calcMotors(response, 0.00, 0.00);
+    // direction.setPWM(100);
+    if(random(0, 200) == 1){
+        kicker.kickBall();
+    }
+
 }
 
 void blinkLED(){

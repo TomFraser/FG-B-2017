@@ -35,6 +35,7 @@ public:
     Vect2D calcDirection(int angle);
     Vect2D calcVector(Vect2D X, Vect2D Y, double rotation);
 
+    double getCompassGlobal(); //Global compass
 private:
     double getCompass(); //Read compass
     PixyI2C pixy;

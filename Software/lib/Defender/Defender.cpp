@@ -32,7 +32,7 @@ double Defender::aimBall(int angle){
 }
 
 Vect2D Defender::calcScale(){
-    //Some pixy aye
+    //Some pixy shit aye
     if(pixy.getBlocks()){ //Seeing the goal
         // pixyData initial = {0,0,0,0,0};
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
@@ -46,7 +46,7 @@ Vect2D Defender::calcScale(){
             return backward;
         }
     }else{
-        return nothing; //Cant see the goal...
+        return nothing;
     }
 }
 
@@ -67,14 +67,18 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     //X on Hypot
-    double direction = asin((X.strength/vectorStrength)) * radToAng + rotation;
+    double direction = asin((X.strength/vectorStrength)) * radToAng;
     //This value should be a direction that the robot needs to move in to intercept the ball
     //The strength shouldnt matter, it should just be a set speed
     // Vect2D finals = {direction, DEFENDER_SPEED};
     return {direction, DEFENDER_SPEED};
 }
 
-double Defender::getCompass(){ //This should be rotationController.getCompass();
+double Defender::getCompassGlobal(){
+    return getCompass();
+}
+
+double Defender::getCompass(){
     compass.update();
     return compass.getHeading();
 }

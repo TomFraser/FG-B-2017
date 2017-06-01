@@ -1,7 +1,6 @@
-//#include <t3spi.h>
+// #include <t3spi.h>
 #include <Light.h>
 
-//T3SPI LightSPI;
 Light Light;
 
 int lightValues[19];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -26,35 +25,46 @@ void setup(){
 }
 
 void loop(){
-    // === Print out raw values ===
-    Light.getVals(lightValues);
-    for(int i=0; i < 19; i++){
-      // if(i==3){
-      //   Serial.print("fuk");
-      // }
-      // else{
-      //   Serial.print(lightValues[i]);
-      // }
-      Serial.print(lightValues[i]);
+    // // === Print out raw values ===
+    // Light.getVals(lightValues);
+    // for(int i=0; i < 19; i++){
+    //   // if(i==3){
+    //   //   Serial.print("fuk");
+    //   // }
+    //   // else{
+    //   //   Serial.print(lightValues[i]);
+    //   // }
+    //   Serial.print(lightValues[i]);
+    //
+    //   if(lightValues[i]<10){
+    //     Serial.print(" ");
+    //   }
+    //   if(lightValues[i]<100){
+    //     Serial.print(" ");
+    //   }
+    //   Serial.print(" ");
+    // }
+    // Serial.println();
 
-      if(lightValues[i]<10){
-        Serial.print(" ");
-      }
-      if(lightValues[i]<100){
-        Serial.print(" ");
-      }
-      Serial.print(" ");
-    }
-    Serial.println();
-
-    // === Print out on white ===
+    // // === Print out on white ===
     // Light.readLight();
     // Light.getOnWhite(results);
     // for(int i=0; i < 19; i++){
+    //   // if(results[1] > 0){
+    //   //   Serial.print(results[i]);
+    //   // }
+    //   // else{
+    //   //   Serial.print(" ");
+    //   // }
     //   Serial.print(results[i]);
     //   Serial.print("   ");
     // }
     // Serial.println();
+
+    double lightAngle = Light.getAngle();
+    if(lightAngle > -1){
+      Serial.println(lightAngle);
+    }
 
     delay(100);
 }

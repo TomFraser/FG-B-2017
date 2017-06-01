@@ -34,7 +34,10 @@ private:
     int sensors[12] = {1,2,3,4,5,6,7,8,9,15,16,17};
     int values[12];
     int index;
-    int value_index;
+    int previousIndex = 0;
+    int scaledAngle;
+    int scaledStrength;
+    int value_index, previousValue_index;
     int mod(int x, int m);
     double correctOrbit(double angleIn, bool useFirst);
 

@@ -50,12 +50,26 @@ void RotationController::calcRotation(){
 }
 
 double RotationController::rotate(){
-    // if(pixy.getBlocks()){
-    //     return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
-    // }else{
-        compass.update();
-        compassHeading = compass.getHeading();
-        compassHeading = (compassHeading * COMPASS_MULTIPLIER);
-        return compassHeading; //Returns compass when no goal is seen
-    // }
+    compass.update();
+    compassHeading = compass.getHeading();
+    compassHeading = (compassHeading * COMPASS_MULTIPLIER);
+
+    if(pixy.getBlocks()){
+        return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
+    }else{
+        if(compassHeading <= 0){ //Negative
+            if(compassHeading > COMPASS_ABS_MAX_NEG){
+                return COMPASS_ABS_MAX_NEG;
+            }else{
+                return compassHeading;
+            }
+        }else{
+            if(compassHeading > COMPASS_ABS_MAX){
+                return COMPASS_ABS_MAX;
+            }else{
+                return compassHeading;
+            }
+        }
+        return absCompassHeading; //Returns compass when no goal is seen
+    }
 }

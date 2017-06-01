@@ -36,12 +36,12 @@ void setup(){
 
 void loop(){
     // dataOut[0] = 6969;
-    // delay(10);
+    delay(10);
 }
 
 void spi0_isr(){ //SPI INTERUPT
     dataOut[0] = tsops.moveTangent();
-    Serial.println(dataOut[0]);
+    // Serial.println(dataOut[0]);
     //Apparently using the library itself for seting data is slow af. So we are going to send data using register commands, I have little idea how these work, plz no roast.
     SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
     SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?

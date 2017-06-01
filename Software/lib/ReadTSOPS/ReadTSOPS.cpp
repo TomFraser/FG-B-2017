@@ -34,13 +34,11 @@ void ReadTSOPS::read(){
         if(values[i] > value_index){
             index = i; //1-12 as oppose to 0-11
             value_index = values[i];
-            // Serial.println(value_index);
         }
         // Serial.println(values[i]);
         values[i] = 0;
     }
     bestSensor = index;
-    // Serial.println(bestSensor);
 }
 
 void ReadTSOPS::reset(){
@@ -117,13 +115,29 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
         if(angleIn == -30){
             return angleIn;
         }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-            //-50cos3x+50 (Maybe) [Confirmed]
-            // Serial.println(angleIn < 180 ? (-50*cos(3*angleIn)+50) : -(-50*cos(3*angleIn)+50));
-            return angleIn < 180 ? (-50*cos(2*(angleIn*angToRad))+50) : 360-(-50*cos(3*angleIn)+50);
+
+            //f(x) = -50cos(3x) + 50        for max = 100, min = 0, period = -60|60
+            //f(x) = -0.5cos(3x) + 0.5      for max = 1, min = 0, period = -60|60
+            //f(x) = -0.5cos(2x) + 0.5      for max = 1, min = 0, period = -90|90
+
+            scaledStrength = (value_index + previousValue_index)/2;
+            previousValue_index = value_index;
+            scaledAngle = (angleIn + previousIndex)/2;
+            previousIndex = angleIn;
+            // return angleIn < 180 ? ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5) * (angleIn + 90)) : 360 - (1 + ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5)) * (angleIn - 90));
+            return angleIn < 180 ? (scaledAngle + ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90))) : scaledAngle - ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90));
+
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
-            return tsop < 6 ? (constrain(angleIn + TSOP_ORBIT_ANGLE_15 * frontalChange, 0.00, 270)) : (constrain(angleIn - TSOP_ORBIT_ANGLE_15 * frontalChange, 90.00, 360));
+            // return tsop < 6 ? (constrain(angleIn + TSOP_ORBIT_ANGLE_15 * frontalChange, 0.00, 270)) : (constrain(angleIn - TSOP_ORBIT_ANGLE_15 * frontalChange, 90.00, 360));
+            scaledAngle = (angleIn + previousIndex)/2;
+            previousIndex = angleIn;
+            if(scaledStrength >= TSOP_MIN_VAL_INDEX){
+                return angleIn < 180 ? (scaledAngle + 110) : (scaledAngle - 110);
+            }else{
+                return scaledAngle;
+            }
         }
     }
 
