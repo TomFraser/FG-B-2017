@@ -106,11 +106,7 @@ int ReadTSOPS::mod(int x,int m){
 double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
     // Serial.println(angleIn);
     if(useFirst){
-        if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-            return angleIn;
-        }else{
-            return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
-        }
+        return angleIn;
     }else{
         if(angleIn == -30){
             return angleIn;

@@ -1,10 +1,7 @@
 #include <Defender.h>
 
 bool Defender::init(){
-    //Pixy
-    if(pixy.getBlocks()){ //Seeing the goal
-        pixyData initial = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
-    }
+    //Pixy is done later because ??????
     compass.init();
     delay(10);
     compass.calibrate();
@@ -13,7 +10,6 @@ bool Defender::init(){
 Vect2D Defender::getPixy(){
     if(pixy.getBlocks()){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
-
         if(currentPixy.blockX >= PIXY_CENTRE_X){
             Vect2D left = {270, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
             return left;
@@ -27,22 +23,25 @@ Vect2D Defender::getPixy(){
 
 double Defender::aimBall(int angle){
     double currentDirection = (int)getCompass();
-    double angleToBall = angle < 180 ? (int)getCompass() + angle : (int)getCompass() - angle; //The ammount we need to rotate from current direction to meet the ball
-    return angleToBall * DEFENDER_MULTIPLIER; //Make it snappy (Same as compass correction variable)
+    double angleToBall = angle < 180 ? (int)getCompass() + angle : (int)getCompass() + angle; //The ammount we need to rotate from current direction to meet the ball
+    return angleToBall; //Make it snappy (Same as compass correction variable)
 }
 
 Vect2D Defender::calcScale(){
     //Some pixy shit aye
     if(pixy.getBlocks()){ //Seeing the goal
-        // pixyData initial = {0,0,0,0,0};
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
-        if(currentPixy.width >= initial.width){ //Current Goal is bigger than initial
+        if(doneRead){
+            firstRead = currentPixy;
+            doneRead = false;
+        }
+        if(currentPixy.width > firstRead.width){ //Current Goal is bigger than initial
             //Move Forward
-            Vect2D forward = {0, (currentPixy.width - initial.width)};
+            Vect2D forward = {0, (abs(currentPixy.width - firstRead.width))};
             return forward;
-        }else if(currentPixy.width <= initial.width){ //Current goal is smaller than initial
+        }else if(currentPixy.width < firstRead.width){ //Current goal is smaller than initial
             //Move Backward
-            Vect2D backward = {180, (currentPixy.width - initial.width)};
+            Vect2D backward = {180, (abs(currentPixy.width - firstRead.width))};
             return backward;
         }
     }else{
@@ -65,12 +64,13 @@ Vect2D Defender::calcDirection(int angle){
 
 Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
-    int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
+    int vectorStrength = sqrt(pow(X.direction, 2) + pow(Y.direction, 2));
     //X on Hypot
-    double direction = asin((X.strength/vectorStrength)) * radToAng;
+    double direction = asin((X.direction/vectorStrength)) * radToAng;
     //This value should be a direction that the robot needs to move in to intercept the ball
     //The strength shouldnt matter, it should just be a set speed
     // Vect2D finals = {direction, DEFENDER_SPEED};
+    prevDirection = direction;
     return {direction, DEFENDER_SPEED};
 }
 

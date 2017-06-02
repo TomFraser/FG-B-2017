@@ -6,7 +6,7 @@
 #include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
-// #include <Defender.h>
+#include <Defender.h>
 
 #include <SPI.h>
 
@@ -25,6 +25,7 @@ long currentTime = 0;
 double angle;
 double lightAngle = 0;
 
+Defender defender = Defender();
 Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
 // Buzzer buzzer = Buzzer();
@@ -50,6 +51,7 @@ void setup(){
     SPI.setSCK(ALT_SCK);
     // pinMode(12, INPUT);
     SPI.setClockDivider(SPI_CLOCK_DIV8);
+    defender.init();
 }
 
 void loop(){
@@ -59,7 +61,7 @@ void loop(){
     SPI.transfer16(512); //Transfer 512 and recieve value
     int response = SPI.transfer16(512); //Transfer 512 and recieve value
     digitalWrite(TSOP_SS, HIGH); //Set cs high
-    Serial.println(response);
+    // Serial.println(response);
 
     delay(20);
 
@@ -70,10 +72,12 @@ void loop(){
     digitalWrite(LIGHT_SS, HIGH);
 
     direction.calcMotors(response, 0.00, 0.00);
-    // direction.setPWM(100);
-    if(random(0, 200) == 1){
-        kicker.kickBall();
-    }
+
+    // Serial.println(defender.calcScale().strength);
+    // Serial.print("Code: ");
+    // Vect2D getDefender = defender.calcScale();
+    // Serial.println(getDefender.direction);
+    // direction.calcMotors(getDefender.direction, 0.00, 0.00, getDefender.strength);
 
 }
 
