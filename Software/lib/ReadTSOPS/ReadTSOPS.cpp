@@ -130,7 +130,7 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
             scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
             if(scaledStrength >= TSOP_MIN_VAL_INDEX){
-                return angleIn < 180 ? (scaledAngle + 110) : (scaledAngle - 110);
+                return angleIn < 180 ? (scaledAngle + 90) : (scaledAngle - 90);
             }else{
                 return scaledAngle;
             }
