@@ -23,7 +23,7 @@
 #define HIGH_STRENGTH 150
 
 //Motors
-#define SPEED_VAL 80 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 60 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
 
 //Compass
 #define COMPASS_CALIBRATION_TIME 2000

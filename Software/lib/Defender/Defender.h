@@ -42,6 +42,5 @@ private:
     pixyData firstRead = {0,0,0,0,0};
     Vect2D nothing = {65565,0};
     bool doneRead = true;
-    double prevDirection;
     Compass compass = Compass();
 };

@@ -29,7 +29,9 @@ double Defender::aimBall(int angle){
 
 Vect2D Defender::calcScale(){
     //Some pixy shit aye
-    if(pixy.getBlocks()){ //Seeing the goal
+    delay(10);
+    int pixyReq = pixy.getBlocks();
+    if(pixyReq != 0){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(doneRead){
             firstRead = currentPixy;
@@ -37,15 +39,15 @@ Vect2D Defender::calcScale(){
         }
         if(currentPixy.width > firstRead.width){ //Current Goal is bigger than initial
             //Move Forward
-            Vect2D forward = {0, (abs(currentPixy.width - firstRead.width))};
+            Vect2D forward = {0, (currentPixy.width - firstRead.width)};
+            Serial.println("Forwards");
             return forward;
         }else if(currentPixy.width < firstRead.width){ //Current goal is smaller than initial
             //Move Backward
-            Vect2D backward = {180, (abs(currentPixy.width - firstRead.width))};
+            Vect2D backward = {180, (currentPixy.width - firstRead.width)};
+            Serial.println("Backwards");
             return backward;
         }
-    }else{
-        return nothing;
     }
 }
 
@@ -70,7 +72,6 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //This value should be a direction that the robot needs to move in to intercept the ball
     //The strength shouldnt matter, it should just be a set speed
     // Vect2D finals = {direction, DEFENDER_SPEED};
-    prevDirection = direction;
     return {direction, DEFENDER_SPEED};
 }
 

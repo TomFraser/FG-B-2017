@@ -73,17 +73,14 @@ void loop(){
 
     direction.calcMotors(response, 0.00, 0.00);
 
+    if(random(0, 200) == 5){
+        kicker.kickBall();
+    }
+
     // Serial.println(defender.calcScale().strength);
     // Serial.print("Code: ");
     // Vect2D getDefender = defender.calcScale();
     // Serial.println(getDefender.direction);
-    // direction.calcMotors(getDefender.direction, 0.00, 0.00, getDefender.strength);
+    // direction.calcMotors(getDefender.direction, 0.00, 0.00);
 
-}
-
-void blinkLED(){
-    digitalWrite(13, HIGH);
-    delay(1000);
-    digitalWrite(13, LOW);
-    delay(1000);
 }
