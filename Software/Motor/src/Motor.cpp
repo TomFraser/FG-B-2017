@@ -73,7 +73,7 @@ void loop(){
 
     direction.calcMotors(response, 0.00, 0.00);
 
-    if(random(0, 200) == 5){
+    if(random(0, 75) == 5){
         kicker.kickBall();
     }
 
