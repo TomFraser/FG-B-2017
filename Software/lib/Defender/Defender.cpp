@@ -39,12 +39,10 @@ Vect2D Defender::calcScale(int pixyIn){
         if(currentPixy.width > firstRead.width){ //Current Goal is bigger than initial
             //Move Forward
             Vect2D forward = {0, (currentPixy.width - firstRead.width)};
-            Serial.println("Forwards");
             return forward;
         }else if(currentPixy.width < firstRead.width){ //Current goal is smaller than initial
             //Move Backward
             Vect2D backward = {180, (currentPixy.width - firstRead.width)};
-            Serial.println("Backwards");
             return backward;
         }
     }else{
@@ -74,7 +72,11 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     //X on Hypot
-    double direction = atan2(Y.strength * radToAng, X.strength * radToAng);
+    Serial.print("Y: ");
+    Serial.println(Y.strength);
+    Serial.print("X: ");
+    Serial.println(X.strength);
+    double direction = atan2(X.strength, Y.strength)*radToAng;
     //This value should be a direction that the robot needs to move in to intercept the ball
     //The strength shouldnt matter, it should just be a set speed
     // Vect2D finals = {direction, DEFENDER_SPEED};
