@@ -7,6 +7,9 @@
 #include <Motor.h>
 #include <Pins.h>
 #include <Defender.h>
+#include <Debug.h>
+
+debugClass debug = debugClass();
 
 #include <SPI.h>
 
@@ -52,6 +55,8 @@ void setup(){
     // pinMode(12, INPUT);
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     defender.init();
+
+    debug.logValue("test", 125);
 }
 
 void loop(){
