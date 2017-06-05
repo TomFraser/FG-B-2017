@@ -7,8 +7,8 @@ bool Defender::init(){
     compass.calibrate();
 }
 
-Vect2D Defender::getPixy(){
-    if(pixy.getBlocks()){ //Seeing the goal
+Vect2D Defender::getPixy(int pixyIn){
+    if(pixyIn != 0){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(currentPixy.blockX >= PIXY_CENTRE_X){
             Vect2D left = {270, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
@@ -27,11 +27,10 @@ double Defender::aimBall(int angle){
     return angleToBall; //Make it snappy (Same as compass correction variable)
 }
 
-Vect2D Defender::calcScale(){
+Vect2D Defender::calcScale(int pixyIn){
     //Some pixy shit aye
     delay(10);
-    int pixyReq = pixy.getBlocks();
-    if(pixyReq != 0){ //Seeing the goal
+    if(pixyIn != 0){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(doneRead){
             firstRead = currentPixy;
@@ -48,27 +47,34 @@ Vect2D Defender::calcScale(){
             Serial.println("Backwards");
             return backward;
         }
+    }else{
+        return nothing;
     }
 }
 
 Vect2D Defender::calcDirection(int angle){
-    //get Y Data (forwards and backwards)
-    Vect2D Y = calcScale();
-    //get X Data (left and right)
-    Vect2D X = getPixy();
-    //get Rotation
-    double rotation = aimBall(angle);//Fix
-    //Move on a direction
-    Vect2D direction = calcVector(X,Y,rotation);
-    Vect2D finals = {direction.direction, direction.strength};
-    return finals;
+    int pixyBlocks = pixy.getBlocks();
+    if(pixyBlocks != 0){
+        //get Y Data (forwards and backwards)
+        Vect2D Y = calcScale(pixyBlocks);
+        //get X Data (left and right)
+        Vect2D X = getPixy(pixyBlocks);
+        //get Rotation
+        double rotation = aimBall(angle);//Fix
+        //Move on a direction
+        Vect2D direction = calcVector(X,Y,rotation);
+        Vect2D finals = {direction.direction, direction.strength};
+        return finals;
+    }else{
+        Serial.println("NO CALC DIRECTION");
+    }
 }
 
 Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
-    int vectorStrength = sqrt(pow(X.direction, 2) + pow(Y.direction, 2));
+    int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     //X on Hypot
-    double direction = asin((X.direction/vectorStrength)) * radToAng;
+    double direction = atan2(Y.strength * radToAng, X.strength * radToAng);
     //This value should be a direction that the robot needs to move in to intercept the ball
     //The strength shouldnt matter, it should just be a set speed
     // Vect2D finals = {direction, DEFENDER_SPEED};

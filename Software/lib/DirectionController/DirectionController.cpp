@@ -10,8 +10,8 @@ void DirectionController::init(){
 }
 
 void DirectionController::calcMotors(double angle, double lightAngle, double rotation){
-    double universalRotation = rotationController.rotate();
-    // universalRotation = 0;
+    // double universalRotation = rotationController.rotate();
+    double universalRotation = 0;
     if(lightAngle != 0){
         motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation); //Light Movement
         motorB.set((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);

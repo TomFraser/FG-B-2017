@@ -71,16 +71,16 @@ void loop(){
     int lightResponse = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
 
-    direction.calcMotors(response, 0.00, 0.00);
-
-    if(random(0, 75) == 5){
-        kicker.kickBall();
-    }
-
-    // Serial.println(defender.calcScale().strength);
+    // direction.calcMotors(response, 0.00, 0.00);
+    //
+    // if(random(0, 75) == 5){
+    //     kicker.kickBall();
+    // }
+    int defenderGo = defender.calcDirection(response).direction;
+    Serial.println(defenderGo);
     // Serial.print("Code: ");
     // Vect2D getDefender = defender.calcScale();
     // Serial.println(getDefender.direction);
-    // direction.calcMotors(getDefender.direction, 0.00, 0.00);
+    direction.calcMotors(defenderGo, 0.00, 0.00);
 
 }

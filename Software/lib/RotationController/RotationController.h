@@ -32,7 +32,7 @@ public:
     double rotate();
 
 private:
-    PixyI2C pixy;
+    // PixyI2C pixy;
     Compass compass = Compass();
     int rotationToAdd;
     int finalRotation;

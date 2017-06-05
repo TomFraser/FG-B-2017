@@ -29,9 +29,9 @@
 class Defender{
 public:
     bool init();
-    Vect2D getPixy();
+    Vect2D getPixy(int pixyIn);
     double aimBall(int angle);
-    Vect2D calcScale();
+    Vect2D calcScale(int pixyIn);
     Vect2D calcDirection(int angle);
     Vect2D calcVector(Vect2D X, Vect2D Y, double rotation);
 
