@@ -59,7 +59,7 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
     //Begin weighting
     angleToBall = index * 30.00;
 
-    return (int)correctOrbit(angleToBall, false);
+    return (int)correctOrbit(angleToBall, true);
     return (int)angleToBall;
 }
 

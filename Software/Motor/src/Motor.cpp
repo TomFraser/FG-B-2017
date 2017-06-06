@@ -81,11 +81,11 @@ void loop(){
     // if(random(0, 75) == 5){
     //     kicker.kickBall();
     // }
-    int defenderGo = defender.calcDirection(response).direction;
+    int defenderGo = defender.calcDirection(response).direction; //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
     Serial.println(defenderGo);
     // Serial.print("Code: ");
     // Vect2D getDefender = defender.calcScale();
     // Serial.println(getDefender.direction);
-    direction.calcMotors(defenderGo, 0.00, 0.00);
+    direction.calcMotors(defenderGo, 0.00, response);
 
 }
