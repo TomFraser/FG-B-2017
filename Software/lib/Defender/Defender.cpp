@@ -64,7 +64,7 @@ Vect2D Defender::calcDirection(int angle){
         Vect2D finals = {direction.direction, direction.strength};
         return finals;
     }else{
-        Serial.println("NO CALC DIRECTION");
+        Serial.println("NO GOAL DIRECTION");
     }
 }
 
@@ -76,10 +76,8 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     Serial.println(Y.strength);
     Serial.print("X: ");
     Serial.println(X.strength);
-    double direction = atan2(X.strength, Y.strength)*radToAng;
+    double direction = atan2(-(X.strength), -(Y.strength))*radToAng;
     //This value should be a direction that the robot needs to move in to intercept the ball
-    //The strength shouldnt matter, it should just be a set speed
-    // Vect2D finals = {direction, DEFENDER_SPEED};
     return {direction, DEFENDER_SPEED};
 }
 

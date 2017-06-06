@@ -39,6 +39,12 @@ void debugClass::logValue(const String& title, bool value){
     #endif
 }
 
+void debugClass::logString(const String& title){
+    #if DEBUG
+    Serial.println(title);
+    #endif
+}
+
 void debugClass::watchVariable(){
     //This will take some time, dynamically print a variable based upon a change in value
 }

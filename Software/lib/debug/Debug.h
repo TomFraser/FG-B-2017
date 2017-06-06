@@ -15,6 +15,7 @@ public:
     void logValue(const String& title, int value);
     void logValue(const String& title, double value);
     void logValue(const String& title, bool value);
+    void logString(const String& title);
     void watchVariable();
 private:
 
