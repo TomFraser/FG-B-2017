@@ -23,7 +23,8 @@ Vect2D Defender::getPixy(int pixyIn){
 
 double Defender::aimBall(int angle){
     double currentDirection = (int)getCompass();
-    double angleToBall = angle < 180 ? (int)getCompass() + angle : (int)getCompass() + angle; //The ammount we need to rotate from current direction to meet the ball
+    //---------------ME WAS HERE-------------------------------------
+    double angleToBall = angle < 180 ? (int)getCompass() - angle : (int)getCompass() + (360-angle); //The ammount we need to rotate from current direction to meet the ball
     return angleToBall; //Make it snappy (Same as compass correction variable)
 }
 
@@ -72,13 +73,14 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     //X on Hypot
-    Serial.print("Y: ");
-    Serial.println(Y.strength);
-    Serial.print("X: ");
-    Serial.println(X.strength);
-    double direction = atan2(-(X.strength), -(Y.strength))*radToAng;
+    // Serial.print("Y: ");
+    // Serial.println(Y.strength);
+    // Serial.print("X: ");
+    // Serial.println(X.strength);
+    double direction = atan2(-(X.strength), (Y.strength))*radToAng;
+    Serial.println(rotation);
     //This value should be a direction that the robot needs to move in to intercept the ball
-    return {direction, DEFENDER_SPEED};
+    return {direction, rotation};
 }
 
 double Defender::getCompassGlobal(){

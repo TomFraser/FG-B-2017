@@ -56,7 +56,7 @@ void setup(){
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     defender.init();
 
-    debug.logValue("test", 125);
+    // debug.logValue("test", 125);
 }
 
 void loop(){
@@ -81,11 +81,8 @@ void loop(){
     // if(random(0, 75) == 5){
     //     kicker.kickBall();
     // }
-    int defenderGo = defender.calcDirection(response).direction; //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
-    Serial.println(defenderGo);
-    // Serial.print("Code: ");
-    // Vect2D getDefender = defender.calcScale();
-    // Serial.println(getDefender.direction);
-    direction.calcMotors(defenderGo, 0.00, response);
+    Vect2D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
+    Serial.println(defenderGo.strength);
+    direction.calcMotors(defenderGo.direction, 0.00, 0.00);
 
 }
