@@ -22,7 +22,7 @@ public:
 
     void init();
     //Calculate motor angles
-    void calcMotors(double angle, double lightAngle, double rotation);
+    void calcMotors(double angle, double lightAngle, double rotation, double setSpeed);
 
     //Calculate motor angles
     void calcMotors(double angle, double rotation, int dirNum);

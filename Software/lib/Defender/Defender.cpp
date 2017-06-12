@@ -23,9 +23,17 @@ Vect2D Defender::getPixy(int pixyIn){
 
 double Defender::aimBall(int angle){
     double currentDirection = (int)getCompass();
-    //---------------ME WAS HERE-------------------------------------
-    double angleToBall = angle < 180 ? (int)getCompass() - angle : (int)getCompass() + (360-angle); //The ammount we need to rotate from current direction to meet the ball
-    return angleToBall; //Make it snappy (Same as compass correction variable)
+    //---------------ME WAS HERE---------------------------------------
+    // double angleToBall = angle < 180 ? /*(int)getCompass() -*/ angle : /*(int)getCompass() +*/ -(360-angle); //The ammount we need to rotate from current direction to meet the ball
+    if(angle > 400){
+        return 0.00;
+    }
+    // return angleToBall; //Make it snappy (Same as compass correction variable)
+    if(angle < 180){
+        return angle;
+    }else{
+        return -(360-angle);
+    }
 }
 
 Vect2D Defender::calcScale(int pixyIn){
@@ -47,11 +55,11 @@ Vect2D Defender::calcScale(int pixyIn){
             return backward;
         }
     }else{
-        return nothing;
+        return {65506, 100};
     }
 }
 
-Vect2D Defender::calcDirection(int angle){
+Vector3D Defender::calcDirection(int angle){
     int pixyBlocks = pixy.getBlocks();
     if(pixyBlocks != 0){
         //get Y Data (forwards and backwards)
@@ -61,15 +69,16 @@ Vect2D Defender::calcDirection(int angle){
         //get Rotation
         double rotation = aimBall(angle);//Fix
         //Move on a direction
-        Vect2D direction = calcVector(X,Y,rotation);
-        Vect2D finals = {direction.direction, direction.strength};
+        Vector3D direction = calcVector(X,Y,rotation);
+        //x = direction, y = strength, z = rotation
+        Vector3D finals = {direction.x, direction.y, direction.z}; //three vects
         return finals;
     }else{
         Serial.println("NO GOAL DIRECTION");
     }
 }
 
-Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
+Vector3D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     //X on Hypot
@@ -78,9 +87,8 @@ Vect2D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     // Serial.print("X: ");
     // Serial.println(X.strength);
     double direction = atan2(-(X.strength), (Y.strength))*radToAng;
-    Serial.println(rotation);
     //This value should be a direction that the robot needs to move in to intercept the ball
-    return {direction, rotation};
+    return {direction, vectorStrength, rotation}; //3 vects
 }
 
 double Defender::getCompassGlobal(){

@@ -9,20 +9,27 @@ void DirectionController::init(){
     //light.init();
 }
 
-void DirectionController::calcMotors(double angle, double lightAngle, double rotation){
-    double universalRotation = rotationController.rotate();
+void DirectionController::calcMotors(double angle, double lightAngle, double rotation, double setSpeed){
+    double universalRotation = (rotation*0.1);
+    setSpeed = min((setSpeed * 1.25), 100);
+    // double universalRotation = rotationController.rotate();
     // double universalRotation = 0;
     if(lightAngle != 0){
-        motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation); //Light Movement
-        motorB.set((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
-        motorC.set((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
-        motorD.set((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
+        // motorA.set(min(((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation), 255));
+        // motorB.set(min(((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation), 255));
+        // motorC.set(min(((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation), 255));
+        // motorD.set(min(((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation), 255));
+
+        motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (setSpeed*2.55) + (int)universalRotation); //Light Movement
+        motorB.set((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
+        motorC.set((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
+        motorD.set((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
     }else{
         if(angle != 65506.00){
-            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
-            motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
-            motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
-            motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + (int)universalRotation);
+            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
+            motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
+            motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
+            motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
         }else{
             motorA.set(0 + (int)universalRotation);
             motorB.set(0 + (int)universalRotation);

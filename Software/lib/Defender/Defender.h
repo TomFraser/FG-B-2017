@@ -32,8 +32,8 @@ public:
     Vect2D getPixy(int pixyIn);
     double aimBall(int angle);
     Vect2D calcScale(int pixyIn);
-    Vect2D calcDirection(int angle);
-    Vect2D calcVector(Vect2D X, Vect2D Y, double rotation);
+    Vector3D calcDirection(int angle);
+    Vector3D calcVector(Vect2D X, Vect2D Y, double rotation);
 
     double getCompassGlobal(); //Global compass
 private:
