@@ -77,12 +77,9 @@ void loop(){
     digitalWrite(LIGHT_SS, HIGH);
 
     // direction.calcMotors(response, 0.00, 0.00);
-    //
-    // if(random(0, 75) == 5){
-    //     kicker.kickBall();
-    // }
+
     Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
-    Serial.println(defenderGo.y);
-    direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y);
+    // Serial.println(defenderGo.y);
+    direction.calcMotors(defenderGo.x, 0.00, 0.00, defenderGo.y);
 
 }

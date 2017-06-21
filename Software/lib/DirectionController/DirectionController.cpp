@@ -10,8 +10,8 @@ void DirectionController::init(){
 }
 
 void DirectionController::calcMotors(double angle, double lightAngle, double rotation, double setSpeed){
-    double universalRotation = (rotation*0.1);
-    setSpeed = min((setSpeed * 1.25), 100);
+    double universalRotation = rotation;
+    // setSpeed = min((setSpeed * 1.25), 100);
     // double universalRotation = rotationController.rotate();
     // double universalRotation = 0;
     if(lightAngle != 0){
