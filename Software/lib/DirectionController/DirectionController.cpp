@@ -26,7 +26,7 @@ void DirectionController::calcMotors(double angle, double lightAngle, double rot
         motorD.set((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
     }else{
         if(angle != 65506.00){
-            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation); //Probs should do this motor stuff in the main application? I guess we can do it here tho. Might be less clear to observers
+            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
             motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
             motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);
             motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (setSpeed*2.55) + (int)universalRotation);

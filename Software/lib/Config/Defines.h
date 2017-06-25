@@ -83,4 +83,10 @@
 #define light19x 0.9510565162951535
 #define light19y -0.3090169943749476
 
+//ball
+#define NO_BALL 65506.00
+#define NO_ROTATION 0.00
+#define NO_LIGHT 0
+#define NO_SPEED 0
+
 #endif

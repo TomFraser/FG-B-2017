@@ -27,6 +27,7 @@
 
 //Motors
 #define SPEED_VAL 25 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define COME_BACK_IN_SPD 30
 #define SS_MULTIPLIER 1.00
 
 //Compass
@@ -49,7 +50,7 @@
 #define PIXY_MULTIPLIER 1.0
 
 //Kicker
-#define KICKER_DELAY 2000L
+#define KICKER_DELAY 1000L
 #define LIGHTGATE_THRESHOLD 100
 
 //Defender
