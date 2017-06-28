@@ -11,11 +11,11 @@ Vect2D Defender::getPixy(int pixyIn){
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(currentPixy.blockX >= PIXY_CENTRE_X){
             Vect2D left = {270, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
-            Serial.println(currentPixy.blockX);
+            // Serial.println(currentPixy.blockX);
             return left;
         }else if(currentPixy.blockX <= PIXY_CENTRE_X){
             Vect2D right = {90, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
-            Serial.println(currentPixy.blockX);
+            // Serial.println(currentPixy.blockX);
             return right;
         }
     }
@@ -45,13 +45,13 @@ Vect2D Defender::calcScale(int pixyIn){
             firstRead = currentPixy;
             doneRead = false;
         }
-        if(currentPixy.width > firstRead.width){ //Current Goal is bigger than initial
+        if(currentPixy.height > firstRead.height){ //Current Goal is bigger than initial
             //Move Forward
-            Vect2D forward = {0, (currentPixy.width - firstRead.width)};
+            Vect2D forward = {0, (currentPixy.height - firstRead.height)};
             return forward;
-        }else if(currentPixy.width < firstRead.width){ //Current goal is smaller than initial
+        }else if(currentPixy.height < firstRead.height){ //Current goal is smaller than initial
             //Move Backward
-            Vect2D backward = {180, (currentPixy.width - firstRead.width)};
+            Vect2D backward = {180, (currentPixy.height - firstRead.height)};
             return backward;
         }
     }else{
@@ -81,11 +81,18 @@ Vector3D Defender::calcDirection(int angle){
 
 Vector3D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
+    Serial.println(Y.strength);
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     double direction = atan2(-(X.strength), (Y.strength))*radToAng;
+    if(direction < 0){
+        direction = 360+direction;
+    }
+    // Serial.println(direction);
     // Serial.println(X.strength);
-    // rotation = rotation*0.1;
+    rotation = rotation * max((vectorStrength/850), 0.2);
     //This value should be a direction that the robot needs to move in to intercept the ball
+    // vectorStrength = min(vectorStrength > 5 ? (vectorStrength*2) : (vectorStrength/2), 100);
+    // vectorStrength = vectorStreng;
     return {direction, vectorStrength, rotation}; //3 vects
 }
 

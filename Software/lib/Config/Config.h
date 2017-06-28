@@ -26,7 +26,7 @@
 #define DEBUG true
 
 //Motors
-#define SPEED_VAL 25 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 50 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
 #define COME_BACK_IN_SPD 30
 #define SS_MULTIPLIER 1.00
 
@@ -48,6 +48,7 @@
 
 //Pixy
 #define PIXY_MULTIPLIER 1.0
+#define CANT_SEE_GOAL 65506
 
 //Kicker
 #define KICKER_DELAY 1000L

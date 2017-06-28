@@ -30,7 +30,7 @@ double lightAngle = 0;
 
 Defender defender = Defender();
 Kicker kicker = Kicker();
-// DirectionController direction = DirectionController();
+DirectionController direction = DirectionController();
 // Buzzer buzzer = Buzzer();
 
 int currentAngle = 0;
@@ -44,6 +44,8 @@ void setup(){
     Wire1.setDefaultTimeout(200000); // 200ms
 
     direction.init();
+
+    pinMode(KICKER_PIN, OUTPUT);
 
     //SPI SETUP
     pinMode(LIGHT_SS, OUTPUT);
@@ -78,7 +80,11 @@ void loop(){
     // direction.calcMotors(response, 0.00, 0.00);
 
     Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
-    // Serial.println(defenderGo.y);
-    direction.calcMotors(defenderGo.x, 0.00, 0.00, defenderGo.y);
+    direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+
+
+    // if(random(0, 200) == 5){
+    //     kicker.kickBall();
+    // }
 
 }

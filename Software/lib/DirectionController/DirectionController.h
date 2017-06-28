@@ -6,6 +6,7 @@
 #include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
+#include <MotorController.h>
 // #include <Light.h>
 #include <ReadTSOPS.h>
 #include <RotationController.h>
@@ -22,7 +23,7 @@ public:
 
     void init();
     //Calculate motor angles
-    void calcMotors(double angle, double lightAngle, double rotation, double setSpeed);
+    void calcMotors(double angle, double lightAngle, double rotation, double setSpeed, double altAngle);
 
     //Calculate motor angles
     void calcMotors(double angle, double rotation, int dirNum);
@@ -52,6 +53,7 @@ private:
     lightStruct values;
 
     RotationController rotationController = RotationController();
+    MotorController motorController = MotorController();
 };
 
 

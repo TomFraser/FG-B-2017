@@ -19,9 +19,6 @@ bool MotorController::playDefense(double goalAngle, double lightAngle, double ba
 
 bool MotorController::playOffense(double angle, double lightAngle, double rotation, double speed){ //<-- The rotation passed here is external rotastion and compass will
     //still be done unless this value is greater than 0.
-    if(rotation == NO_ROTATION){
-        rotation = rotationController.rotate(); //Getting Compass
-    }
     if(speed == NO_SPEED){
         speed = SPEED_VAL; //Defaulting to normal speed
     }
