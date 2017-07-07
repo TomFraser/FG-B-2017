@@ -34,6 +34,7 @@ public:
     Vect2D calcScale(int pixyIn);
     Vector3D calcDirection(int angle);
     Vector3D calcVector(Vect2D X, Vect2D Y, double rotation);
+    Vector3D determineDefense(int ballAngle);
 
     double getCompassGlobal(); //Global compass
 private:
@@ -43,4 +44,7 @@ private:
     Vect2D nothing = {65565,0};
     bool doneRead = true;
     Compass compass = Compass();
+
+    Vect2D X,Y;
+    double rotationFromPixy;
 };
