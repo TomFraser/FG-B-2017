@@ -10,11 +10,10 @@ Vect2D Defender::getPixy(int pixyIn){
     if(pixyIn != 0){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(currentPixy.blockX >= PIXY_CENTRE_X){
-            Vect2D left = {270, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
-            // Serial.println(currentPixy.blockX);
+            Vect2D left = {270, currentPixy.blockX - PIXY_CENTRE_X}; //These are flipped from normal because the camera is facing backwards
             return left;
         }else if(currentPixy.blockX <= PIXY_CENTRE_X){
-            Vect2D right = {90, (-1*(PIXY_CENTRE_X - currentPixy.blockX))}; //These are flipped from normal because the camera is facing backwards
+            Vect2D right = {90, currentPixy.blockX - PIXY_CENTRE_X}; //These are flipped from normal because the camera is facing backwards
             // Serial.println(currentPixy.blockX);
             return right;
         }
@@ -32,7 +31,7 @@ double Defender::aimBall(int angle){
     if(angle < 180){
         return angle;
     }else{
-        return -(360-angle);
+        return angle-360;
     }
 }
 
@@ -87,13 +86,7 @@ Vector3D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     if(direction < 0){
         direction = 360+direction;
     }
-    // Serial.println(direction);
-    // Serial.println(X.strength);
-    rotation = rotation * max((vectorStrength/850), 0.2);
     //This value should be a direction that the robot needs to move in to intercept the ball
-    // vectorStrength = min(vectorStrength > 5 ? (vectorStrength*2) : (vectorStrength/2), 100);
-    // vectorStrength = vectorStrength * 1.45;
-    vectorStrength = vectorStrength < 10 ? (vectorStrength * 5) : vectorStrength*1.5;
     return {direction, vectorStrength, rotation}; //3 vects
 }
 
@@ -114,19 +107,19 @@ Vector3D Defender::determineDefense(int ballAngle){
 
         //X Calc
         if(ballAngle < 180){
-            Vect2D X = {90, ballAngle};
+            Vect2D X = {90, (ballAngle/3)};
         }else{
-            Vect2D X = {270, 360-ballAngle};
+            Vect2D X = {270, 360-(ballAngle/3)};
         }
 
         //Rotation
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(currentPixy.blockX >= PIXY_CENTRE_X){
-            int rotation = PIXY_CENTRE_X - currentPixy.blockX;
+            int rotationFromPixy = PIXY_CENTRE_X - currentPixy.blockX;
         }else{
             int rotationFromPixy = currentPixy.blockX - PIXY_CENTRE_X;
         }
         return calcVector(X, Y, rotationFromPixy);
     }
-    return {65506, 0.00, 0.00};
+    return {65506, 0.00, getCompass()};
 }
