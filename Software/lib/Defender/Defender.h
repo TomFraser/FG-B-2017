@@ -45,6 +45,6 @@ private:
     bool doneRead = true;
     Compass compass = Compass();
 
-    Vect2D X,Y;
+    // Vect2D X,Y;
     double rotationFromPixy;
 };

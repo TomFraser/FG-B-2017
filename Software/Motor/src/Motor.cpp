@@ -47,6 +47,8 @@ void setup(){
 
     pinMode(KICKER_PIN, OUTPUT);
 
+    pinMode(A12, INPUT);
+
     //SPI SETUP
     pinMode(LIGHT_SS, OUTPUT);
     pinMode(TSOP_SS, OUTPUT);
@@ -77,11 +79,12 @@ void loop(){
     int lightResponse = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
 
-    // direction.calcMotors(response, 0.00, 0.00);
-
     // Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
     Vector3D defenderGo = defender.determineDefense(response);
     direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+
+    // Serial.print("LIGHT: ");
+    // Serial.println(analogRead(A12));
 
 
     // if(random(0, 200) == 5){

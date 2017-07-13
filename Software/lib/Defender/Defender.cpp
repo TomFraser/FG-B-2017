@@ -80,6 +80,7 @@ Vector3D Defender::calcDirection(int angle){
 
 Vector3D Defender::calcVector(Vect2D X, Vect2D Y, double rotation){
     //Calc Hypot with a^2 + b^2 = c^2
+    Serial.print("Y Str: ");
     Serial.println(Y.strength);
     int vectorStrength = sqrt(pow(X.strength, 2) + pow(Y.strength, 2));
     double direction = atan2(-(X.strength), (Y.strength))*radToAng;
@@ -106,18 +107,20 @@ Vector3D Defender::determineDefense(int ballAngle){
         Vect2D Y = calcScale(pixyBlocks);
 
         //X Calc
+        Vect2D X;
         if(ballAngle < 180){
-            Vect2D X = {90, (ballAngle/3)};
+            X = {90, (ballAngle/3)};
         }else{
-            Vect2D X = {270, 360-(ballAngle/3)};
+            X = {270, (360-ballAngle)/3};
         }
 
         //Rotation
+        int rotationFromPixy;
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(currentPixy.blockX >= PIXY_CENTRE_X){
-            int rotationFromPixy = PIXY_CENTRE_X - currentPixy.blockX;
+            rotationFromPixy = PIXY_CENTRE_X - currentPixy.blockX;
         }else{
-            int rotationFromPixy = currentPixy.blockX - PIXY_CENTRE_X;
+            rotationFromPixy = currentPixy.blockX - PIXY_CENTRE_X;
         }
         return calcVector(X, Y, rotationFromPixy);
     }
