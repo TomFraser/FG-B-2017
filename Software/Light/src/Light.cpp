@@ -18,10 +18,10 @@ void setup(){
     Serial.begin(9600);
     delay(3000);
     Serial.println("end setup");
-    // LIGHT.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
-    // LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
+    LIGHT.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
+    LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
 
-    // NVIC_ENABLE_IRQ(IRQ_SPI0);
+    NVIC_ENABLE_IRQ(IRQ_SPI0);
 }
 
 void loop(){
@@ -30,8 +30,8 @@ void loop(){
     if(lightAngle > -1){
       Serial.println(lightAngle);
     }
-    // dataOut[0] = lightAngle;
-    delay(20);
+    dataOut[0] = lightAngle;
+    // delay(20);
 }
 
 void spi0_isr(){
