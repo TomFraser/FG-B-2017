@@ -27,10 +27,11 @@ void setup(){
 void loop(){
     Light.readLight();
     lightAngle = Light.getAngle();
-    if(lightAngle > -1){
-      Serial.println(lightAngle);
-    }
+    // if(lightAngle > -1){
+    //   Serial.println(lightAngle);
+    // }
     dataOut[0] = lightAngle;
+    // Serial.println(dataOut[0]);
     // delay(20);
 }
 

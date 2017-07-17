@@ -61,7 +61,7 @@ int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be 
     //Begin weighting
     angleToBall = index * 30.00;
 
-    return (int)correctOrbit(angleToBall, true);
+    return (int)correctOrbit(angleToBall, false);
     return (int)angleToBall;
 }
 
@@ -108,10 +108,11 @@ int ReadTSOPS::mod(int x,int m){
 double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
     // Serial.println(angleIn);
     if(useFirst){
-        // double scaledStrength = (angleIn + previousIndex)/2;
-        // previousIndex = angleIn;
-        // return scaledStrength;
-        return angleIn;
+        if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+            return angleIn;
+        }else{
+            return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
+        }
     }else{
         if(angleIn == -30){
             return angleIn;
@@ -130,12 +131,12 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
 
         }else{
             int tsop = angleIn/30;
-            int frontalChange = tsop <= 6 ? (tsop) : (TSOP_NUM - tsop);
+            int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
             // return tsop < 6 ? (constrain(angleIn + TSOP_ORBIT_ANGLE_15 * frontalChange, 0.00, 270)) : (constrain(angleIn - TSOP_ORBIT_ANGLE_15 * frontalChange, 90.00, 360));
             scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
             if(scaledStrength >= TSOP_MIN_VAL_INDEX){
-                return angleIn <= 180 ? (scaledAngle + 90) : (scaledAngle - 90);
+                return angleIn < 180 ? (scaledAngle + 90) : (scaledAngle - 90);
             }else{
                 return scaledAngle;
             }

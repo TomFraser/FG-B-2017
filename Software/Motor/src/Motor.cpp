@@ -66,22 +66,24 @@ void loop(){
     //Send and recieve data
     digitalWrite(TSOP_SS, LOW); //Set cs low
     delay(1);
-    SPI.transfer16(512); //Transfer 512 and recieve value
+    // SPI.transfer16(512); //Transfer 512 and recieve value
     int response = SPI.transfer16(512); //Transfer 512 and recieve value
     digitalWrite(TSOP_SS, HIGH); //Set cs high
+    // Serial.println(response);
 
     delay(20);
 
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
-    SPI.transfer16(512);
+    // SPI.transfer16(512);
     int lightResponse = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
+
     Serial.println(lightResponse);
 
     // Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
-    Vector3D defenderGo = defender.determineDefense(response);
-    direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+    // Vector3D defenderGo = defender.determineDefense(response);
+    direction.calcMotors(response, 0.00, 0.00, 0.00, response);
 
     // Serial.print("LIGHT: ");
     // Serial.println(analogRead(A12));

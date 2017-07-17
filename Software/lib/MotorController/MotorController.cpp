@@ -19,9 +19,10 @@ bool MotorController::playDefense(double goalAngle, double lightAngle, double ba
 
 bool MotorController::playOffense(double angle, double lightAngle, double rotation, double speed){ //<-- The rotation passed here is external rotastion and compass will
     //still be done unless this value is greater than 0.
-    if(speed == NO_SPEED){
-        speed = SPEED_VAL; //Defaulting to normal speed
-    }
+    // if(speed == NO_SPEED){
+    //     speed = SPEED_VAL; //Defaulting to normal speed
+    // }
+
 
     if(lightAngle != NO_LIGHT){
         motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (COME_BACK_IN_SPD*2.55) + rotation);
@@ -31,9 +32,10 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
         return true;
     }else{
         if(angle != NO_BALL){
-            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (speed*2.55) + rotation);
-            motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (speed*2.55) + rotation);
-            motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (speed*2.55) + rotation);
+            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
             return false;
         }else{
             motorA.set(0 + rotation);
