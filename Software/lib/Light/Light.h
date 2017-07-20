@@ -89,5 +89,8 @@ private:
     double lineInitDirection = 0;
     double lastLightVal = 0;
 
+    //For angle countback and filtering
+    double countback[NUM_COUNTBACK];
+
 };
 #endif

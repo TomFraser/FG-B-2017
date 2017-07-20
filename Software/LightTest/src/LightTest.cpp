@@ -7,6 +7,8 @@ int lightValues[19];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 bool results[19];
 
 int threshold = 0;
+int counter = 0;
+
 
 void setup(){
     Light.init();
@@ -14,6 +16,7 @@ void setup(){
     Serial.begin(9600);
     delay(3000);
     Serial.println("end setup");
+
 
     //um what the fuck is this lol
     //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
@@ -46,25 +49,32 @@ void loop(){
     // }
     // Serial.println();
 
-    // // === Print out on white ===
-    // Light.readLight();
-    // Light.getOnWhite(results);
-    // for(int i=0; i < 19; i++){
-    //   // if(results[1] > 0){
-    //   //   Serial.print(results[i]);
-    //   // }
-    //   // else{
-    //   //   Serial.print(" ");
-    //   // }
-    //   Serial.print(results[i]);
-    //   Serial.print("   ");
-    // }
-    // Serial.println();
-
-    double lightAngle = Light.getAngle();
-    if(lightAngle > -1){
-      Serial.println(lightAngle);
+    // === Print out on white ===
+    Light.readLight();
+    Light.getOnWhite(results);
+    for(int i=0; i < 19; i++){
+      if(results[1] > 0){
+        Serial.print(results[i]);
+      }
+      else{
+        Serial.print(" ");
+      }
+      Serial.print(results[i]);
+      Serial.print("   ");
     }
+    Serial.println();
 
-    delay(100);
+    // === Print out other stuff
+    // Light.readLight();
+    // double lightAngle = Light.getDirection();
+    // Serial.println(lightAngle);
+    // if(lightAngle > -1){
+    //   Serial.println(counter);
+    //   Serial.println(lightAngle);
+    //   counter = 0;
+    // }
+    // else{
+    //   counter ++;
+    // }
+
 }

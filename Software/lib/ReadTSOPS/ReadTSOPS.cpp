@@ -128,7 +128,6 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
             previousIndex = angleIn;
             // return angleIn < 180 ? ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5) * (angleIn + 90)) : 360 - (1 + ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5)) * (angleIn - 90));
             return angleIn < 180 ? (scaledAngle + ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90))) : scaledAngle - ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90));
-
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);

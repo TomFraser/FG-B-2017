@@ -47,4 +47,5 @@ private:
 
     // Vect2D X,Y;
     double rotationFromPixy;
+    int pixyBlocks;
 };

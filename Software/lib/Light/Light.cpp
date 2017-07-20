@@ -42,6 +42,10 @@ Light::Light(){
     lightSensors[17] = LIGHT_9;
     lightSensors[18] = LIGHT_8;
 
+    for(int i = 0; i < NUM_COUNTBACK; i++){
+      countback[i] = -1;
+    }
+
 }
 
 
@@ -179,25 +183,54 @@ double Light::getAngle(){
     cluster bestCluster;
     findCluster(&bestCluster);
 
+    double directionAngle;
+
     if(!bestCluster.exist){
-      return -1;
+      directionAngle = -1;
+    }
+    else{
+      double xavg = 0;
+      double yavg = 0;
+
+      for(int i=bestCluster.begin; i<=bestCluster.end; i++){
+        xavg += lightCoords[i%LIGHTSENSOR_NUM][0];
+        yavg += lightCoords[i%LIGHTSENSOR_NUM][1];
+      }
+
+      xavg /= bestCluster.end-bestCluster.begin + 1;
+      yavg /= bestCluster.end-bestCluster.begin + 1;
+
+      double lineAngle = -atan2(yavg, xavg)*radToAng; //0-180/-180 on east
+      lineAngle += lineAngle < 0 ? 360 : 0; //lineAngle is now a 0-360 value on east
+      lineAngle = fmod(lineAngle + 90, 360); //convert to 0-360 on north
+      directionAngle = fmod(lineAngle + 180, 360); //make it the opposite direction
+    }
+    double countbackVal = directionAngle;
+
+    // check the countback for if all the values are greater than 0 if we are greater than 0
+    if(directionAngle > -1){
+      bool allGood = true;
+      for(int i; i < NUM_COUNTBACK; i++){
+        if(countback[i] < 0){
+          allGood = false;
+        }
+      }
+      if(!allGood){
+        directionAngle = -1;
+      }
     }
 
-    double xavg = 0;
-    double yavg = 0;
+    // for(int i=0; i<NUM_COUNTBACK; i++){
+    //   Serial.print(i); Serial.print(" "); Serial.println(countback[i]);
+    //   Serial.println();
+    // }
 
-    for(int i=bestCluster.begin; i<=bestCluster.end; i++){
-      xavg += lightCoords[i%LIGHTSENSOR_NUM][0];
-      yavg += lightCoords[i%LIGHTSENSOR_NUM][1];
+
+    for(int i=0; i<NUM_COUNTBACK-1; i++){
+      countback[i+1] = countback[i];
     }
 
-    xavg /= bestCluster.end-bestCluster.begin + 1;
-    yavg /= bestCluster.end-bestCluster.begin + 1;
-
-    double lineAngle = -atan2(yavg, xavg)*radToAng; //0-180/-180 on east
-    lineAngle += lineAngle < 0 ? 360 : 0; //lineAngle is now a 0-360 value on east
-    lineAngle = fmod(lineAngle + 90, 360); //convert to 0-360 on north
-    double directionAngle = fmod(lineAngle + 180, 360); //make it the opposite direction
+    countback[0] = countbackVal;
 
     return directionAngle;
 }
@@ -229,7 +262,11 @@ double Light::getDirection(){
     if(direction == -1){
       // just stopped seeing the line
       double diff = abs(lineInitDirection - lastLightVal);
-      if(!(diff > 45 && diff < 315)){
+      // Serial.print("Init: "); Serial.println(lineInitDirection);
+      // Serial.print("LastLight: "); Serial.println(lastLightVal);
+      // Serial.print("Diff: "); Serial.println(diff);
+      // Serial.println("");
+      if(!(diff > 90 && diff < 270)){
         // exited on the correct side of the line
         // Serial.println(lastLightVal);
         seeingLine = false;

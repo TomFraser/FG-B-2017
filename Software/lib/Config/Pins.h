@@ -51,8 +51,8 @@
 #define MOTOR_C_BRK 2
 #define MOTOR_D_BRK 20
 //
-#define MOTOR_A_REV 0
-#define MOTOR_B_REV 1 //
+#define MOTOR_A_REV 1
+#define MOTOR_B_REV 0 //
 #define MOTOR_C_REV 1 //
 #define MOTOR_D_REV 0 //
 

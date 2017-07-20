@@ -16,9 +16,13 @@ void DirectionController::calcMotors(double angle, double lightAngle, double rot
     // }else{
     //     motorController.playDefense(angle, lightAngle, rotation, setSpeed);
     // }
-    rotation = rotationController.getCompass();
 
+    //====OFFENSE
+    rotation = rotationController.getCompass();
     motorController.playOffense(angle, lightAngle, rotation, setSpeed);
+
+    //====DEFENSE
+    // motorController.playDefense(angle, lightAngle, rotation, setSpeed);
 
 
     // double universalRotation = rotation;
@@ -57,10 +61,12 @@ void DirectionController::calcMotors(double angle, double rotation, int dirNum){
         direction = newAngle < 180 ? (newAngle + 90) : (newAngle - 90);
     }
 
-    motorA.set(((cos(((angleArray[0] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation);
-    motorB.set(((cos(((angleArray[1] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation);
-    motorC.set(((cos(((angleArray[2] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation);
-    motorD.set(((cos(((angleArray[3] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation);
+    motorA.set(((cos(((angleArray[0] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation); //B
+    motorB.set(((cos(((angleArray[1] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation); //A
+    motorC.set(((cos(((angleArray[2] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation); //C
+    motorD.set(((cos(((angleArray[3] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation); //D
+
+    // Serial.println(((cos(((angleArray[0] + 90) * angToRad) - (direction * angToRad))) * 255) + rotation);
 }
 
 lightStruct DirectionController::calcLight(){
@@ -88,7 +94,7 @@ void DirectionController::move(double tsopAngle){
 
 void DirectionController::setPWM(int pwm){
     motorA.set(pwm);
-    // motorB.set(pwm);
-    // motorC.set(pwm);
+    motorB.set(pwm);
+    motorC.set(pwm);
     // motorD.set(pwm);
 }

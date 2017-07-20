@@ -26,7 +26,7 @@
 #define DEBUG true
 
 //Motors
-#define SPEED_VAL 50 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 65 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
 #define COME_BACK_IN_SPD 30
 #define SS_MULTIPLIER 1.00
 
@@ -43,8 +43,9 @@
 //Lightsensors
 #define LIGHTSENSOR_NUM 19
 #define LIGHTSENSOR_AVG 100
-#define LIGHTSENSOR_THRESHOLD 60
+#define LIGHTSENSOR_THRESHOLD 80
 #define DETECTED_NUMBER_LIGHT 3
+#define NUM_COUNTBACK 2
 
 //Pixy
 #define PIXY_MULTIPLIER 1.0

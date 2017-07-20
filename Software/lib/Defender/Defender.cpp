@@ -36,8 +36,6 @@ double Defender::aimBall(int angle){
 }
 
 Vect2D Defender::calcScale(int pixyIn){
-    //Some pixy shit aye
-    delay(10);
     if(pixyIn != 0){ //Seeing the goal
         pixyData currentPixy = {pixy.blocks[0].x, pixy.blocks[0].y, pixy.blocks[0].width, pixy.blocks[0].height, (pixy.blocks[0].width/pixy.blocks[0].height)};
         if(doneRead){
@@ -59,7 +57,6 @@ Vect2D Defender::calcScale(int pixyIn){
 }
 
 Vector3D Defender::calcDirection(int angle){
-    int pixyBlocks = pixy.getBlocks();
     if(pixyBlocks != 0){
         //get Y Data (forwards and backwards)
         Vect2D Y = calcScale(pixyBlocks);

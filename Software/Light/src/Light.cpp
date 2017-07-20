@@ -12,6 +12,12 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 
 double lightAngle;
 
+void transfer(){
+    SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
+    SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?
+    Serial.println("COMS");
+}
+
 void setup(){
     Light.init();
 
@@ -21,7 +27,8 @@ void setup(){
     LIGHT.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
     LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
 
-    NVIC_ENABLE_IRQ(IRQ_SPI0);
+    // NVIC_ENABLE_IRQ(IRQ_SPI0);
+    attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
 }
 
 void loop(){
@@ -36,5 +43,10 @@ void loop(){
 }
 
 void spi0_isr(){
-    LIGHT.rxtx16(dataIn, dataOut, DATA_LENGTH);
+    // LIGHT.rxtx16(dataIn, dataOut, DATA_LENGTH);
+    // Serial.println(dataOut[0]);
+    //Apparently using the library itself for seting data is slow af. So we are going to send data using register commands, I have little idea how these work, plz no roast.
+    SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
+    SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?
+    Serial.println("COMS");
 }
