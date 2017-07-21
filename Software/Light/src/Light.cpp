@@ -29,6 +29,8 @@ void setup(){
 
     // NVIC_ENABLE_IRQ(IRQ_SPI0);
     attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
+
+    digitalWrite(13, HIGH); //Lets us know the teensy is ready
 }
 
 void loop(){

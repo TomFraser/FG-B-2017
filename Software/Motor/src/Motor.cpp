@@ -60,6 +60,7 @@ void setup(){
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     defender.init();
 
+    digitalWrite(13, HIGH); //Lets us know the teensy is ready
 }
 
 void loop(){

@@ -32,6 +32,8 @@ void setup(){
     TSOP.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
     TSOP.setCTAR_SLAVE(16, SPI_MODE0);
     NVIC_ENABLE_IRQ(IRQ_SPI0);
+
+    digitalWrite(13, HIGH); //Lets us know the teensy is ready
 }
 
 void loop(){
