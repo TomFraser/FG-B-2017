@@ -12,19 +12,14 @@ class ReadTSOPS{
 public:
     ReadTSOPS();
 
-    //Read the Tsops
     void read();
 
-    //Reset the Tsops by dropping power
     void reset();
 
-    //Stop reading tsops, error has occured
     void stop();
 
-    //Calculate a tangent to move on to orbit around the ball
     int moveTangent();
 
-    //Find the strength for the ball and determine how to orbit
     double findStrength();
 
     int bestSensor;
@@ -40,6 +35,7 @@ private:
     int value_index, previousValue_index;
     int mod(int x, int m);
     double correctOrbit(double angleIn, bool useFirst);
+    double correctedOrbit(double angleIn);
 
 };
 

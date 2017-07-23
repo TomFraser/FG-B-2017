@@ -85,13 +85,13 @@ void loop(){
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
     //==== OFFENSE
-    direction.calcMotors(response, lightResponse, 0.00, 0.00, 0.00);
+    direction.calcMotors(response, 0.00, 0.00, 0.00, 0.00);
 
     // Serial.print("LIGHTGATE: ");
-    Serial.println(analogRead(A12));
+    // Serial.println(analogRead(A12));
 
-    if(analogRead(A12) < 250 && millis() >= lastKick + 2000){
-        // kicker.kickBall();
+    if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
+        kicker.kickBall();
         lastKick = millis();
     }
     // direction.setPWM(255);

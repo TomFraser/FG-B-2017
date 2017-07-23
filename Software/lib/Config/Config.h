@@ -6,14 +6,14 @@
 #define READ_THRESHOLD 40
 #define TSOP_NUM 12
 #define MAX_READS 512
-#define TSOP_FORWARD_LOWER 90
-#define TSOP_FORWARD_UPPER 270
-#define TSOP_ORBIT_ANGLE 45 //Formerally 90
+#define TSOP_FORWARD_LOWER 90 //THESE NEED CHANGE
+#define TSOP_FORWARD_UPPER 270 //THESE NEED CHANGE
+#define TSOP_ORBIT_ANGLE 45
 #define TSOP_ORBIT_ANGLE_15 10
 #define TSOP_MIN_THRESHOLD 110
 #define TSOP_VARIABLE_ANGLE 18
 
-#define TSOP_MIN_VAL_INDEX 150
+#define TSOP_MIN_VAL_INDEX 0 //THIS ONE TO ORBIT CLOSE
 
 #define TSOP_K1 12
 #define TSOP_K2 2
@@ -26,7 +26,7 @@
 #define DEBUG true
 
 //Motors
-#define SPEED_VAL 65 //It was found that 90% speed can be used accurately with this new orbit. //This is a percentage 0-100 (44 is optimum apparently)
+#define SPEED_VAL 65
 #define COME_BACK_IN_SPD 30
 #define SS_MULTIPLIER 1.00
 

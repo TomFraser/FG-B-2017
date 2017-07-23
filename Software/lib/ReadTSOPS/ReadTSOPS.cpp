@@ -25,18 +25,15 @@ void ReadTSOPS::read(){
     }
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(1000); //We can remove this if we dont need it later.
+    delayMicroseconds(1000);
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
         if(values[i] < TSOP_MIN_THRESHOLD){
             values[i] = 0;
         }
         if(values[i] > value_index){
-            index = i; //1-12 as oppose to 0-11
+            index = i;
             value_index = values[i];
-        }
-        if(values[i] >= 320){
-            Serial.println("Kick Range");
         }
         values[i] = 0;
     }
@@ -56,13 +53,11 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-int ReadTSOPS::moveTangent(){ //Hmmmmm This shouldnt be done here, it should be done later down the course.
+int ReadTSOPS::moveTangent(){
     read();
-    //Begin weighting
     angleToBall = index * 30.00;
 
     return (int)correctOrbit(angleToBall, false);
-    return (int)angleToBall;
 }
 
 double ReadTSOPS::findStrength(){
@@ -81,9 +76,8 @@ double ReadTSOPS::findStrength(){
     }
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(3000); //We can remove this if we dont need it later.
+    delayMicroseconds(3000);
     for(int i = 0; i < TSOP_NUM; i++){
-        // Filtering
         if(values[i] < 30){
             values[i] = 0;
         }
@@ -91,7 +85,7 @@ double ReadTSOPS::findStrength(){
             values[i] = 0;
         }
         if(values[i] > value_index){
-            index = i + 1; //1-12 as oppose to 0-11
+            index = i + 1;
             value_index = values[i];
         }
     }
@@ -106,7 +100,6 @@ int ReadTSOPS::mod(int x,int m){
 }
 
 double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
-    // Serial.println(angleIn);
     if(useFirst){
         if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
             return angleIn;
@@ -117,21 +110,14 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
         if(angleIn == -30){
             return angleIn;
         }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-
-            //f(x) = -50cos(3x) + 50        for max = 100, min = 0, period = -60|60
-            //f(x) = -0.5cos(3x) + 0.5      for max = 1, min = 0, period = -60|60
-            //f(x) = -0.5cos(2x) + 0.5      for max = 1, min = 0, period = -90|90
-
             scaledStrength = (value_index + previousValue_index)/2;
             previousValue_index = value_index;
             scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
-            // return angleIn < 180 ? ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5) * (angleIn + 90)) : 360 - (1 + ((-0.5 * cos(3*(angleIn * angToRad)) + 0.5)) * (angleIn - 90));
-            return angleIn < 180 ? (scaledAngle + ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90))) : scaledAngle - ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (90));
+            return angleIn < 180 ? (scaledAngle + ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (75))) : scaledAngle - ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (75));
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
-            // return tsop < 6 ? (constrain(angleIn + TSOP_ORBIT_ANGLE_15 * frontalChange, 0.00, 270)) : (constrain(angleIn - TSOP_ORBIT_ANGLE_15 * frontalChange, 90.00, 360));
             scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
             if(scaledStrength >= TSOP_MIN_VAL_INDEX){
@@ -141,18 +127,20 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
             }
         }
     }
+}
 
-    //Old Orbit - I might be an idiot
-    //Theoretical Values for this: [ 126, 144, 162, 180, 198, 180, 198, 216, 234 ]
-
-    // if(angleIn == -30.0 || angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-    //     return angleIn;
-    // }else{
-    //     int selectedTsop = angleIn/30;
-    //     int inVar = angleIn < 180.00 ? (selectedTsop) : (TSOP_NUM - selectedTsop);
-    //     int variableRotate = angleIn < 180.00 ? (TSOP_VARIABLE_ANGLE * inVar + 90) : (360 - TSOP_VARIABLE_ANGLE * inVar - 90);
-    //     // int variableRotate = constrain(TSOP_VARIABLE_ANGLE * inVar, 0.00, angleIn < 180.00 ? (angleIn - TSOP_ORBIT_ANGLE) : (angleIn + TSOP_ORBIT_ANGLE));
-    //     return variableRotate;
-    // }
-    //
+double ReadTSOPS::correctedOrbit(double angleIn){
+    if(angleIn == -30){
+        return angleIn;
+    }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        // return angleIn < 180 ? (angleIn + ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (90))) : angleIn - ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (90));
+        return angleIn < 180 ? (angleIn * 0.5) : ((360 - angleIn) * 0.5); //New
+    }else{
+        int frontalChange = angleIn < 180 ? (angleIn) : (360 - angleIn);
+        if(value_index >= TSOP_MIN_VAL_INDEX){
+            return angleIn < 180 ? (angleIn + 90) : (angleIn - 90);
+        }else{
+            return angleIn;
+        }
+    }
 }

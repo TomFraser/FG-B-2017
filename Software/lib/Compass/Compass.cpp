@@ -1,6 +1,5 @@
 #include <Compass.h>
 
-//========Constructor========
 Compass::Compass(){
 
 }
@@ -17,7 +16,6 @@ void Compass::init(){
     setTarget(0);
 }
 
-//========Init Calibrate========
 double Compass::calibrate(){
     read();
     Serial.println("Read Done");
@@ -33,7 +31,6 @@ double Compass::calibrate(){
     return calibration;
 }
 
-//=====Read / Update======
 Vector3D Compass::read(){
     uint8_t buffer[14];
     I2Cread(IMU_ADDRESS, 0x3B, 14, buffer);
@@ -53,19 +50,16 @@ void Compass::update() {
 	previousTime = currentTime;
 }
 
-//=======Set Target=======
 void Compass::setTarget(double target_){
     target = -target_;
 }
 
-//=======Get Heading======
 double Compass::getHeading(){
     double curr = heading > 180 ? -(360-heading + target) : heading - target;// + target; //Fix this
     return curr;
 }
 
 
-//======Utility Functions======
 double Compass::doubleMod(double value, double maxVal){
     return fmod((value + maxVal), maxVal);
 }
