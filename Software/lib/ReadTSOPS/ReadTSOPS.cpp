@@ -58,6 +58,7 @@ int ReadTSOPS::moveTangent(){
     angleToBall = index * 30.00;
 
     return (int)correctOrbit(angleToBall, false);
+    //return (int)correctedOrbit(angleToBall);
 }
 
 double ReadTSOPS::findStrength(){
@@ -130,17 +131,13 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
 }
 
 double ReadTSOPS::correctedOrbit(double angleIn){
-    if(angleIn == -30){
+    if(angleIn == -30){ //FORWARD
         return angleIn;
-    }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-        // return angleIn < 180 ? (angleIn + ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (90))) : angleIn - ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (90));
-        return angleIn < 180 ? (angleIn * 0.5) : ((360 - angleIn) * 0.5); //New
-    }else{
-        int frontalChange = angleIn < 180 ? (angleIn) : (360 - angleIn);
-        if(value_index >= TSOP_MIN_VAL_INDEX){
-            return angleIn < 180 ? (angleIn + 90) : (angleIn - 90);
-        }else{
-            return angleIn;
-        }
+    }else{ //ALL OTHER DIRECTIONS
+        scaledStrength = (value_index + previousValue_index)/2;
+        previousValue_index = value_index;
+        scaled90 = 1700 * (pow((512 - scaledStrength - 106.95), -1.00)) + 5;
+        scaled90 = min(scaled90, 90); //Limit scaled90 to 90 Degrees
+        return angleIn < 180 ? (angleIn + scaled90) : (angleIn - scaled90);
     }
 }
