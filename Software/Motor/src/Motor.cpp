@@ -7,46 +7,26 @@
 #include <Motor.h>
 #include <Pins.h>
 #include <Defender.h>
-#include <Debug.h>
-
-debugClass debug = debugClass();
-
 #include <SPI.h>
-
-// Motor motorD = Motor(MOTOR_A_PWM, MOTOR_A_DIR, MOTOR_A_BRK, MOTOR_A_REV); //Really Motor D
-// Motor motorC = Motor(MOTOR_B_PWM, MOTOR_B_DIR, MOTOR_B_BRK, MOTOR_B_REV); //Really Motor A
-// Motor motorB = Motor(MOTOR_C_PWM, MOTOR_C_DIR, MOTOR_C_BRK, MOTOR_C_REV);
-// Motor motorA = Motor(MOTOR_D_PWM, MOTOR_D_DIR, MOTOR_D_BRK, MOTOR_D_REV);
-
-//C, A, B, D
-
-volatile uint16_t dataOut[DATA_LENGTH] = {};
-volatile uint16_t dataIn[DATA_LENGTH] = {};
-
-long initialTime = 0;
-long currentTime = 0;
-double angle;
-double lightAngle = 0;
-
-Defender defender = Defender();
-Kicker kicker = Kicker();
-DirectionController direction = DirectionController();
-// Buzzer buzzer = Buzzer();
-
-int currentAngle = 0;
 
 #define TSOP_SS 16
 #define LIGHT_SS 15
 #define ALT_SCK 14
-long lastKick = 0;
+
+volatile uint16_t dataOut[DATA_LENGTH] = {};
+volatile uint16_t dataIn[DATA_LENGTH] = {};
+
+long initialTime, currentTime, lastKick = 0;
+
+Defender defender = Defender();
+Kicker kicker = Kicker();
+DirectionController direction = DirectionController();
 
 void setup(){
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
     Wire1.setDefaultTimeout(200000); // 200ms
 
     direction.init();
-
-    pinMode(KICKER_PIN, OUTPUT);
 
     pinMode(A12, INPUT);
 
@@ -60,39 +40,34 @@ void setup(){
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     defender.init();
 
-    digitalWrite(13, HIGH); //Lets us know the teensy is ready
+    pinMode(13, OUTPUT);
+    digitalWrite(13, HIGH);
 }
 
 void loop(){
-    //Send and recieve data
-    digitalWrite(TSOP_SS, LOW); //Set cs low
+    digitalWrite(TSOP_SS, LOW);
     delay(1);
-    int response = SPI.transfer16(512); //Transfer 512 and recieve value
-    digitalWrite(TSOP_SS, HIGH); //Set cs high
+    int tsopData = SPI.transfer16(512);
+    digitalWrite(TSOP_SS, HIGH);
 
     delay(20);
 
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
-    // SPI.transfer16(512);
-    int lightResponse = SPI.transfer16(512);
+    int lightData = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
 
-    //==== DEFENSE
+    //DEFENSE
     // Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
     // Vector3D defenderGo = defender.determineDefense(response);
     // Serial.print("Angle: ");
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
-    //==== OFFENSE
-    direction.calcMotors(response, 0.00, 0.00, 0.00, 0.00);
+    //OFFENSE
+    direction.calcMotors(tsopData, 0.00, 0.00, 0.00, 0.00);
 
-    // Serial.print("LIGHTGATE: ");
-    // Serial.println(analogRead(A12));
-
-    if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
-        kicker.kickBall();
-        lastKick = millis();
-    }
-    // direction.setPWM(255);
+    // if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
+    //     kicker.kickBall();
+    //     lastKick = millis();
+    // }
 }

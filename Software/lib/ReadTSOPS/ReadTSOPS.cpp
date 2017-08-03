@@ -1,5 +1,4 @@
 #include <ReadTSOPS.h>
-#include <Arduino.h>
 
 ReadTSOPS::ReadTSOPS(){
     for(int i = 0; i < TSOP_NUM; i++){
