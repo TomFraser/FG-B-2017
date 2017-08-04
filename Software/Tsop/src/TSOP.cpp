@@ -13,6 +13,12 @@ T3SPI TSOP;
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 
+void transfer(){
+    dataOut[0] = tsops.moveTangent();
+    SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
+    SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?
+}
+
 void setup(){
     //<-- Magical Slave Setup From the interwebs -->
     // SPCR =0x40; // |= _BV(SPE);  //From Arduino, dosn't work without it??
@@ -31,7 +37,8 @@ void setup(){
 
     TSOP.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
     TSOP.setCTAR_SLAVE(16, SPI_MODE0);
-    NVIC_ENABLE_IRQ(IRQ_SPI0);
+    // NVIC_ENABLE_IRQ(IRQ_SPI0);
+    attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
 
     digitalWrite(13, HIGH); //Lets us know the teensy is ready
 }
