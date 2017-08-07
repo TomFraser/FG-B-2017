@@ -37,6 +37,8 @@ void ReadTSOPS::read(){
         values[i] = 0;
     }
     bestSensor = index;
+    // Serial.println(bestSensor);
+    // Serial.println(value_index);
 }
 
 void ReadTSOPS::reset(){
@@ -57,11 +59,11 @@ int ReadTSOPS::moveTangent(){
     angleToBall = index * 30.00;
 
     return (int)correctOrbit(angleToBall, false);
-    //return (int)correctedOrbit(angleToBall);
+    // return (int)correctedOrbit(angleToBall);
 }
 
 double ReadTSOPS::findStrength(){
-     bestSensor = 0;
+    bestSensor = 0;
     value_index = 0;
     index = 0;
     for(int i = 0; i < TSOP_NUM; i++){
@@ -101,30 +103,34 @@ int ReadTSOPS::mod(int x,int m){
 
 double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
     if(useFirst){
-        if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-            return angleIn;
-        }else{
-            return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
-        }
+        // if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        //     return angleIn;
+        // }else{
+        //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
+        // }
+        return angleIn;
     }else{
         if(angleIn == -30){
             return angleIn;
         }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
             scaledStrength = (value_index + previousValue_index)/2;
             previousValue_index = value_index;
-            scaledAngle = (angleIn + previousIndex)/2;
+            // scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
-            return angleIn < 180 ? (scaledAngle + ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (75))) : scaledAngle - ((-0.5 * cos(2*(scaledAngle * angToRad)) + 0.5) * (75));
+            // Serial.println(angleIn < 180 ? (angleIn + (angleIn/100 * 90)) : (angleIn - ((360-angleIn)/100 * 90)));
+            // return angleIn < 180 ? (angleIn + ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65))) : angleIn - ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65));
+            return angleIn < 180 ? (angleIn + (angleIn/120 * 75)) : (angleIn - ((360-angleIn)/120 * 75));
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
             scaledAngle = (angleIn + previousIndex)/2;
             previousIndex = angleIn;
-            if(scaledStrength >= TSOP_MIN_VAL_INDEX){
-                return angleIn < 180 ? (scaledAngle + 90) : (scaledAngle - 90);
-            }else{
-                return scaledAngle;
-            }
+            // if(scaledStrength >= TSOP_MIN_VAL_INDEX){
+            // Serial.println(angleIn < 180 ? (angleIn + 90) : (angleIn - 90));
+                return angleIn < 180 ? (angleIn + 75) : (angleIn - 75);
+            // }else{
+                // return scaledAngle;
+            // }
         }
     }
 }

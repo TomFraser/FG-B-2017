@@ -50,7 +50,7 @@ void loop(){
     int tsopData = SPI.transfer16(512);
     digitalWrite(TSOP_SS, HIGH);
 
-    delay(20);
+    delay(10);
 
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
