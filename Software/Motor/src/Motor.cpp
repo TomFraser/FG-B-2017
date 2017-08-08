@@ -66,8 +66,8 @@ void loop(){
     //OFFENSE
     direction.calcMotors(tsopData, 0.00, 0.00, 0.00, 0.00);
 
-    // if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
-    //     kicker.kickBall();
-    //     lastKick = millis();
-    // }
+    if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
+        kicker.kickBall();
+        lastKick = millis();
+    }
 }

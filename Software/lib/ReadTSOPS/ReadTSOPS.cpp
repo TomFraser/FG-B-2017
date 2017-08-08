@@ -60,7 +60,7 @@ int ReadTSOPS::moveAngle(){
 
     return (int)calculateOrbitSimple(angleToBall, false);
     // return (int)calculateOrbitComplex(angleToBall);
-    //return (int)calculateTSOPAverage();
+    // return (int)calculateTSOPAverage();
 }
 
 double ReadTSOPS::calculateStrength(){
@@ -120,7 +120,7 @@ double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
             previousIndex = angleIn;
             // Serial.println(angleIn < 180 ? (angleIn + (angleIn/100 * 90)) : (angleIn - ((360-angleIn)/100 * 90)));
             // return angleIn < 180 ? (angleIn + ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65))) : angleIn - ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65));
-            return angleIn < 180 ? (angleIn + (angleIn/120 * 75)) : (angleIn - ((360-angleIn)/120 * 75));
+            return angleIn < 180 ? (angleIn + (angleIn/120 * 60)) : (angleIn - ((360-angleIn)/120 * 60));
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
@@ -128,7 +128,7 @@ double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
             previousIndex = angleIn;
             // if(scaledStrength >= TSOP_MIN_VAL_INDEX){
             // Serial.println(angleIn < 180 ? (angleIn + 90) : (angleIn - 90));
-                return angleIn < 180 ? (angleIn + 75) : (angleIn - 75);
+                return angleIn < 180 ? (angleIn + 65) : (angleIn - 65);
             // }else{
                 // return scaledAngle;
             // }
@@ -140,43 +140,46 @@ double ReadTSOPS::calculateOrbitComplex(double angleIn){
     if(angleIn == -30){
         return angleIn;
     }else if(angleIn <= TSOP_FORWARD_LOWER_ED || angleIn >= TSOP_FORWARD_UPPER_ED){
-        scaledStrength = (value_index + previousValue_index)/2;
-        previousValue_index = value_index;
-        // scaledAngle = (angleIn + previousIndex)/2;
-        previousIndex = angleIn;
-        return angleIn < 180 ? (angleIn + ((1/8100)*pow(angleIn, 2) * 75)) : (360 + (angleIn - 360) - ((1/8100)*pow((angleIn - 360) , 2) * 75));
+
+        int frontalChange = angleIn < 180 ? (angleIn) : (abs(angleIn-360));
+
+        return angleIn < 180 ? (angleIn + ((1/8100)*pow(frontalChange, 2) * 90)) : (angleIn - ((1/8100)*pow(frontalChange, 2) * 90));
     }else{
         return angleIn < 180 ? (angleIn + 75) : (angleIn - 75);
     }
 }
 
-double ReadTSOPS::calculateTSOPAverage(){
-    bestSensor = secondSensor = thirdSensor = 0;
-    value_index = 0;
-    index = tsop2 = tsop3 = -1;
-    digitalWrite(POWER_PIN_1, HIGH);
-    digitalWrite(POWER_PIN_2, HIGH);
-    for(int j = 0; j < MAX_READS; j++){
-        for(int i = 0; i < TSOP_NUM; i++){
-            values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
-        }
-    }
-    digitalWrite(POWER_PIN_1, LOW);
-    digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(1000);
-    for(int i = 0; i < TSOP_NUM; i++){
-        if(values[i] > value_index){
-            tsop3 = tsop2;
-            tsop2 = index;
-            index = i;
-            value_index = values[i];
-        }
-        values[i] = 0;
-    }
-    bestSensor = index;
-    secondSensor = tsop2;
-    thirdSensor = tsop3;
-    // If this doesnt work, mess with the dividers
-    double averagedAngle = bestSensor + (secondSensor - bestSensor)/2 + (thirdSensor - bestSensor)/5;
-    return averagedAngle;
+// double ReadTSOPS::calculateTSOPAverage(){
+//     bestSensor = secondSensor = thirdSensor = 0;
+//     value_index = 0;
+//     index = tsop2 = tsop3 = -1;
+//     digitalWrite(POWER_PIN_1, HIGH);
+//     digitalWrite(POWER_PIN_2, HIGH);
+//     for(int j = 0; j < MAX_READS; j++){
+//         for(int i = 0; i < TSOP_NUM; i++){
+//             values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
+//         }
+//     }
+//     digitalWrite(POWER_PIN_1, LOW);
+//     digitalWrite(POWER_PIN_2, LOW);
+//     delayMicroseconds(1000);
+//     for(int i = 0; i < TSOP_NUM; i++){
+//         if(values[i] > value_index){
+//             tsop3 = tsop2;
+//             tsop2 = index;
+//             index = i;
+//             value_index = values[i];
+//         }
+//         values[i] = 0;
+//     }
+//     bestSensor = index;
+//     secondSensor = tsop2;
+//     thirdSensor = tsop3;
+//     // If this doesnt work, mess with the dividers
+//     double averagedAngle = bestSensor + (secondSensor - bestSensor)/2 + (thirdSensor - bestSensor)/5;
+//     return averagedAngle;
+// }
+
+double ReadTSOPS::calculateTSOPAverage() {
+    
 }
