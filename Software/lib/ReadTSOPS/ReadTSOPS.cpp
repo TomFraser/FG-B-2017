@@ -60,6 +60,7 @@ int ReadTSOPS::moveAngle(){
 
     return (int)calculateOrbitSimple(angleToBall, false);
     // return (int)calculateOrbitComplex(angleToBall);
+    //return (int)calculateTSOPAverage();
 }
 
 double ReadTSOPS::calculateStrength(){
@@ -150,11 +151,9 @@ double ReadTSOPS::calculateOrbitComplex(double angleIn){
 }
 
 double ReadTSOPS::calculateTSOPAverage(){
-    bestSensor = 0;
+    bestSensor = secondSensor = thirdSensor = 0;
     value_index = 0;
-    index = -1;
-    tsop2 = -1;
-    tsop3 = -1;
+    index = tsop2 = tsop3 = -1;
     digitalWrite(POWER_PIN_1, HIGH);
     digitalWrite(POWER_PIN_2, HIGH);
     for(int j = 0; j < MAX_READS; j++){
@@ -165,8 +164,6 @@ double ReadTSOPS::calculateTSOPAverage(){
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
     delayMicroseconds(1000);
-
-    value_index = 0;
     for(int i = 0; i < TSOP_NUM; i++){
         if(values[i] > value_index){
             tsop3 = tsop2;
@@ -181,4 +178,5 @@ double ReadTSOPS::calculateTSOPAverage(){
     thirdSensor = tsop3;
     // If this doesnt work, mess with the dividers
     double averagedAngle = bestSensor + (secondSensor - bestSensor)/2 + (thirdSensor - bestSensor)/5;
+    return averagedAngle;
 }

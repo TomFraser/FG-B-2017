@@ -22,18 +22,10 @@ public:
     DirectionController();
 
     void init();
-    //Calculate motor angles
     void calcMotors(double angle, double lightAngle, double rotation, double setSpeed, double altAngle);
-
-    //Calculate motor angles
     void calcMotors(double angle, double rotation, int dirNum);
-
-    //Calculate lightsensors
     lightStruct calcLight();
-
-    //Combines lightsensors and tsop direction
     void move(double angle);
-
     void setPWM(int pwm);
 
     Motor motorD = Motor(MOTOR_A_PWM, MOTOR_A_DIR, MOTOR_A_BRK, MOTOR_A_REV);
