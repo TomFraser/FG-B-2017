@@ -14,7 +14,7 @@ volatile uint16_t dataIn[DATA_LENGTH] = {};
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 
 void transfer(){
-    dataOut[0] = tsops.moveTangent();
+    dataOut[0] = tsops.moveAngle();
     SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
     SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?
 }
@@ -49,7 +49,7 @@ void loop(){
 }
 
 void spi0_isr(){ //SPI INTERUPT
-    dataOut[0] = tsops.moveTangent();
+    dataOut[0] = tsops.moveAngle();
     //Apparently using the library itself for seting data is slow af. So we are going to send data using register commands, I have little idea how these work, plz no roast.
     SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
     SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?

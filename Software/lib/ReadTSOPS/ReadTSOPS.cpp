@@ -54,15 +54,15 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-int ReadTSOPS::moveTangent(){
+int ReadTSOPS::moveAngle(){
     read();
     angleToBall = index * 30.00;
 
-    return (int)correctOrbit(angleToBall, false);
-    // return (int)correctedOrbit(angleToBall);
+    return (int)calculateOrbitSimple(angleToBall, false);
+    // return (int)calculateOrbitComplex(angleToBall);
 }
 
-double ReadTSOPS::findStrength(){
+double ReadTSOPS::calculateStrength(){
     bestSensor = 0;
     value_index = 0;
     index = 0;
@@ -101,7 +101,7 @@ int ReadTSOPS::mod(int x,int m){
     return r < 0 ? r + m : r;
 }
 
-double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
+double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
     if(useFirst){
         // if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
         //     return angleIn;
@@ -135,14 +135,50 @@ double ReadTSOPS::correctOrbit(double angleIn, bool useFirst){
     }
 }
 
-double ReadTSOPS::correctedOrbit(double angleIn){
-    if(angleIn == -30){ //FORWARD
+double ReadTSOPS::calculateOrbitComplex(double angleIn){
+    if(angleIn == -30){
         return angleIn;
-    }else{ //ALL OTHER DIRECTIONS
+    }else if(angleIn <= TSOP_FORWARD_LOWER_ED || angleIn >= TSOP_FORWARD_UPPER_ED){
         scaledStrength = (value_index + previousValue_index)/2;
         previousValue_index = value_index;
-        scaled90 = 1700 * (pow((512 - scaledStrength - 106.95), -1.00)) + 5;
-        scaled90 = min(scaled90, 90); //Limit scaled90 to 90 Degrees
-        return angleIn < 180 ? (angleIn + scaled90) : (angleIn - scaled90);
+        // scaledAngle = (angleIn + previousIndex)/2;
+        previousIndex = angleIn;
+        return angleIn < 180 ? (angleIn + ((1/8100)*pow(angleIn, 2) * 75)) : (360 + (angleIn - 360) - ((1/8100)*pow((angleIn - 360) , 2) * 75));
+    }else{
+        return angleIn < 180 ? (angleIn + 75) : (angleIn - 75);
     }
+}
+
+double ReadTSOPS::calculateTSOPAverage(){
+    bestSensor = 0;
+    value_index = 0;
+    index = -1;
+    tsop2 = -1;
+    tsop3 = -1;
+    digitalWrite(POWER_PIN_1, HIGH);
+    digitalWrite(POWER_PIN_2, HIGH);
+    for(int j = 0; j < MAX_READS; j++){
+        for(int i = 0; i < TSOP_NUM; i++){
+            values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
+        }
+    }
+    digitalWrite(POWER_PIN_1, LOW);
+    digitalWrite(POWER_PIN_2, LOW);
+    delayMicroseconds(1000);
+
+    value_index = 0;
+    for(int i = 0; i < TSOP_NUM; i++){
+        if(values[i] > value_index){
+            tsop3 = tsop2;
+            tsop2 = index;
+            index = i;
+            value_index = values[i];
+        }
+        values[i] = 0;
+    }
+    bestSensor = index;
+    secondSensor = tsop2;
+    thirdSensor = tsop3;
+    // If this doesnt work, mess with the dividers
+    double averagedAngle = bestSensor + (secondSensor - bestSensor)/2 + (thirdSensor - bestSensor)/5;
 }
