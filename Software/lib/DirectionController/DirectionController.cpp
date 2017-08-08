@@ -18,7 +18,7 @@ void DirectionController::calcMotors(double angle, double lightAngle, double rot
     // }
 
     //====OFFENSE
-    rotation = rotationController.getCompass();
+    rotation = rotationController.rotate();
     motorController.playOffense(angle, lightAngle, rotation, setSpeed);
 
     //====DEFENSE

@@ -6,7 +6,7 @@
 #include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
-#include <Defender.h>
+// #include <Defender.h>
 #include <SPI.h>
 
 #define TSOP_SS 16
@@ -18,7 +18,7 @@ volatile uint16_t dataIn[DATA_LENGTH] = {};
 
 long initialTime, currentTime, lastKick = 0;
 
-Defender defender = Defender();
+// Defender defender = Defender();
 Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
 
@@ -38,7 +38,7 @@ void setup(){
     digitalWrite(LIGHT_SS, HIGH);
     SPI.setSCK(ALT_SCK);
     SPI.setClockDivider(SPI_CLOCK_DIV8);
-    defender.init();
+    // defender.init();
 
     pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
