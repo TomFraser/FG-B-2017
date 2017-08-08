@@ -22,12 +22,17 @@ void ReadTSOPS::read(){
             values[i] += (digitalRead(sensors[i]) == HIGH ? 0 : 1);
         }
     }
+    // values[5] = 0;
+    // values[6] = 0;
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
     delayMicroseconds(1000);
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
         if(values[i] < TSOP_MIN_THRESHOLD){
+            values[i] = 0;
+        }
+        if(values[i] > 300){
             values[i] = 0;
         }
         if(values[i] > value_index){
@@ -103,12 +108,12 @@ int ReadTSOPS::mod(int x,int m){
 }
 
 double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
-    if(useFirst){
-        // if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-        //     return angleIn;
-        // }else{
-        //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
-        // }
+        if(useFirst){
+    //     if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+    //         return angleIn;
+    //     }else{
+    //         return angleIn < 180 ? (angleIn + TSOP_ORBIT_ANGLE) : (angleIn - TSOP_ORBIT_ANGLE);
+    //     }
         return angleIn;
     }else{
         if(angleIn == -30){
@@ -120,7 +125,8 @@ double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
             previousIndex = angleIn;
             // Serial.println(angleIn < 180 ? (angleIn + (angleIn/100 * 90)) : (angleIn - ((360-angleIn)/100 * 90)));
             // return angleIn < 180 ? (angleIn + ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65))) : angleIn - ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (65));
-            return angleIn < 180 ? (angleIn + (angleIn/120 * 60)) : (angleIn - ((360-angleIn)/120 * 60));
+            // Serial.println(angleIn < 180 ? (angleIn + (angleIn/120 * 150)) : (angleIn - ((360-angleIn)/120 * 150)));
+            return angleIn < 180 ? (angleIn + (angleIn/120 * 90)) : (angleIn - ((360-angleIn)/120 * 90));
         }else{
             int tsop = angleIn/30;
             int frontalChange = tsop < 6 ? (tsop) : (TSOP_NUM - tsop);
@@ -181,5 +187,5 @@ double ReadTSOPS::calculateOrbitComplex(double angleIn){
 // }
 
 double ReadTSOPS::calculateTSOPAverage() {
-    
+
 }
