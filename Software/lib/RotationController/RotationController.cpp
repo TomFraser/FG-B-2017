@@ -58,7 +58,7 @@ double RotationController::rotate(){
         return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
     }else{
         if(compassHeading <= 0){ //Negative
-            if(compassHeading > COMPASS_ABS_MAX_NEG){
+            if(compassHeading < COMPASS_ABS_MAX_NEG){
                 return COMPASS_ABS_MAX_NEG;
             }else{
                 return compassHeading;

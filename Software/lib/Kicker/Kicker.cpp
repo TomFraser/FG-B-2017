@@ -24,16 +24,11 @@ void Kicker::checkLightGate(){
 }
 
 void Kicker::kickBall(){
-    // if(status == kickerStatus::ready){
-        digitalWrite(KICKER_PIN, HIGH);
-        delay(10); //To Change in the future to a loop system. This will slow the robot down.
-        digitalWrite(KICKER_PIN, LOW);
-        lastKick = micros();
-        status = kickerStatus::notReady;
-    // }
-    // else{
-        // status = kickerStatus::notReady;
-    // }
+    digitalWrite(KICKER_PIN, HIGH);
+    delay(10); //To Change in the future to a loop system. This will slow the robot down.
+    digitalWrite(KICKER_PIN, LOW);
+    lastKick = micros();
+    status = kickerStatus::notReady;
 }
 
 bool Kicker::controlKick(){

@@ -9,10 +9,6 @@
 // #include <Defender.h>
 #include <SPI.h>
 
-#define TSOP_SS 16
-#define LIGHT_SS 15
-#define ALT_SCK 14
-
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 
@@ -63,11 +59,12 @@ void loop(){
     // Serial.print("Angle: ");
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+
     //OFFENSE
     direction.calcMotors(tsopData, 0.00, 0.00, 0.00, 0.00);
 
-    // if(analogRead(A12) < 250 && millis() >= lastKick + 1000){
-    //     kicker.kickBall();
-    //     lastKick = millis();
-    // }
+    if(analogRead(A12) < LIGHTGATE_THRESHOLD && millis() >= lastKick + 1000 && KICK == true){ //Limits kicks to 1 per second
+        kicker.kickBall();
+        lastKick = millis();
+    }
 }

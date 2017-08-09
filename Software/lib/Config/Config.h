@@ -1,30 +1,41 @@
 #ifndef Config_h
 #define Config_h
 
+//Critical Stuff
+//TSOPS
+#define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
+#define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit
+//ORBIT
+#define TSOP_ORBIT_FRONT_DENOMINATOR 120
+#define TSOP_ORBIT_FRONT_RATIO 90
+#define TSOP_ORBIT_SIDE_RATIO 65
+//MOTORS
+#define SPEED_VAL 60
+#define COME_BACK_IN_SPD 30
+//PIXY
+#define PIXY_MULTIPLIER 1.0
+//SOLENOID
+#define KICK false
+
+//-----------------------------------------------------------------------------
+
 //Tsops
 #define TSOP_NUM 12
 #define READ_THRESHOLD 40
 #define TSOP_NUM 12
 #define MAX_READS 512
-#define TSOP_FORWARD_LOWER 60 //90 //THESE NEED CHANGE
-#define TSOP_FORWARD_UPPER 300 //270 //THESE NEED CHANGE
-#define TSOP_FORWARD_LOWER_ED 60
-#define TSOP_FORWARD_UPPER_ED 300
+#define TSOP_FORWARD_LOWER 60 //Simple Orbit
+#define TSOP_FORWARD_UPPER 300 //Simple Orbit
 #define TSOP_ORBIT_ANGLE 45
 #define TSOP_ORBIT_ANGLE_15 10
 #define TSOP_MIN_THRESHOLD 110
 #define TSOP_VARIABLE_ANGLE 18
-
 #define TSOP_MIN_VAL_INDEX 180 //THIS ONE TO ORBIT CLOSE
 
-#define TSOP_ORBIT_FRONT_DENOMINATOR 120
-#define TSOP_ORBIT_FRONT_RATIO 90
-#define TSOP_ORBIT_SIDE_RATIO 65
-
+//Strength scaling
 #define TSOP_K1 12
 #define TSOP_K2 2
 #define TSOP_K3 1
-
 #define MED_STRENGTH 100
 #define HIGH_STRENGTH 150
 
@@ -32,8 +43,6 @@
 #define DEBUG true
 
 //Motors
-#define SPEED_VAL 60
-#define COME_BACK_IN_SPD 30
 #define SS_MULTIPLIER 1.00
 
 //Compass
@@ -45,6 +54,9 @@
 
 //SPI
 #define DATA_LENGTH 1
+#define TSOP_SS 16
+#define LIGHT_SS 15
+#define ALT_SCK 14
 
 //Lightsensors
 #define LIGHTSENSOR_NUM 19
@@ -54,12 +66,11 @@
 #define NUM_COUNTBACK 2
 
 //Pixy
-#define PIXY_MULTIPLIER 1.0
 #define CANT_SEE_GOAL 65506
 
 //Kicker
 #define KICKER_DELAY 1000L
-#define LIGHTGATE_THRESHOLD 100
+#define LIGHTGATE_THRESHOLD 250
 
 //Defender
 #define DEFENDER_SPEED 40

@@ -29,7 +29,7 @@
 #define LIGHT_19 A18
 
 //============Kicker pins==========
-#define LIGHTGATE_PIN 0
+#define LIGHTGATE_PIN A12
 #define KICKER_PIN 9
 
 //============Buzzer pins==========
