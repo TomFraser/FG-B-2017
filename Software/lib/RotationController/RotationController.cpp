@@ -53,7 +53,22 @@ double RotationController::rotate(){
     compassHeading = (compassHeading * COMPASS_MULTIPLIER);
 
     if(pixy.getBlocks()){
-        return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
+        // return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
+        int pixyHeading = calcPixy() * PIXY_MULTIPLIER;
+
+        if(pixyHeading <= 0){
+            if(pixyHeading < COMPASS_ABS_MAX_NEG){
+                return COMPASS_ABS_MAX_NEG;
+            }else{
+                return pixyHeading;
+            }
+        }else{
+            if(pixyHeading > COMPASS_ABS_MAX){
+                return COMPASS_ABS_MAX;
+            }else{
+                return pixyHeading;
+            }
+        }
     }else{
         if(compassHeading <= 0){ //Negative
             if(compassHeading < COMPASS_ABS_MAX_NEG){
