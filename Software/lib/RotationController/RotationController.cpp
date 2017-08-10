@@ -11,14 +11,12 @@ void RotationController::init(){
 }
 
 bool RotationController::getPixy(){
-    if(pixy.getBlocks()){ //seing the block
-        blockHeight = pixy.blocks[0].height;
-        blockWidth = pixy.blocks[0].width;
-        blockX = pixy.blocks[0].x;
-        blockY = pixy.blocks[0].y;
-        return true;
-    }
-    return false;
+    // Serial.println("pixy Go");
+    blockHeight = pixy.blocks[0].height;
+    blockWidth = pixy.blocks[0].width;
+    blockX = pixy.blocks[0].x;
+    blockY = pixy.blocks[0].y;
+    return true;
 }
 
 double RotationController::getCompass(){
