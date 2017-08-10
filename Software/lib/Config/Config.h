@@ -13,9 +13,9 @@
 #define SPEED_VAL 60
 #define COME_BACK_IN_SPD 30
 //PIXY
-#define PIXY_MULTIPLIER 1.45
+#define PIXY_MULTIPLIER 2.5
 //SOLENOID
-#define KICK false
+#define KICK true
 
 //-----------------------------------------------------------------------------
 

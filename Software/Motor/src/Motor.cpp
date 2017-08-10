@@ -41,6 +41,7 @@ void setup(){
 }
 
 void loop(){
+    // Serial.println("Moving");
     digitalWrite(TSOP_SS, LOW);
     delay(1);
     int tsopData = SPI.transfer16(512);

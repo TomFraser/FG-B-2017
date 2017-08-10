@@ -32,10 +32,21 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
         return true;
     }else{
         if(angle != NO_BALL){
-            motorA.set((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
-            motorB.set((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
-            motorC.set((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
-            motorD.set((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            double motorAPWM = (cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
+            double motorBPWM = (cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
+            double motorCPWM = (cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
+            double motorDPWM = (cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
+
+            double scaledSpeed = (double) 150 / doubleAbs(fmax(fmax(fmax(doubleAbs(motorAPWM), doubleAbs(motorBPWM)), doubleAbs(motorCPWM)), doubleAbs(motorDPWM)));
+
+            motorA.set(motorAPWM * scaledSpeed);
+            motorB.set(motorBPWM * scaledSpeed);
+            motorC.set(motorCPWM * scaledSpeed);
+            motorD.set(motorDPWM * scaledSpeed);
+            // motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            // motorB.set((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            // motorC.set((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + rotation);
+            // motorD.set((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + rotation);
             return false;
         }else{
             motorA.set(0 + rotation);
@@ -45,4 +56,12 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
             return false;
         }
     }
+}
+
+int MotorController::sign(double value) {
+    return value >= 0 ? 1 : -1;
+}
+
+double MotorController::doubleAbs(double value) {
+    return value * sign(value);
 }

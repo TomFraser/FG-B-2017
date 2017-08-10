@@ -15,6 +15,9 @@ public:
     bool playDefense(double goalAngle, double lightAngle, double ballRotation, double speed);// If this method returns true, the ball is being seen
     bool playOffense(double angle, double lightAngle, double rotation, double speed); //If this method returns true, then for the next 0.5 seconds, the speed needs to be set to 30
 
+    double doubleAbs(double value);
+    int sign(double value);
+
     Motor motorD = Motor(MOTOR_A_PWM, MOTOR_A_DIR, MOTOR_A_BRK, MOTOR_A_REV);
     Motor motorC = Motor(MOTOR_B_PWM, MOTOR_B_DIR, MOTOR_B_BRK, MOTOR_B_REV);
     Motor motorA = Motor(MOTOR_C_PWM, MOTOR_C_DIR, MOTOR_C_BRK, MOTOR_C_REV);
