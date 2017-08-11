@@ -32,7 +32,7 @@ void ReadTSOPS::read(){
         if(values[i] < TSOP_MIN_THRESHOLD){
             values[i] = 0;
         }
-        if(values[i] > 300){
+        if(values[i] > 325){
             values[i] = 0;
         }
         if(values[i] > value_index){

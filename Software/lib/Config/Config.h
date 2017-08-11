@@ -14,7 +14,7 @@
 #define SPEED_VAL 60
 #define COME_BACK_IN_SPD 30
 //PIXY
-#define PIXY_MULTIPLIER 2.5
+#define PIXY_MULTIPLIER 3
 //SOLENOID
 #define KICK true
 //DELAY
@@ -70,6 +70,8 @@
 
 //Pixy
 #define CANT_SEE_GOAL 65506
+#define PIXY_ABS_MAX 250 //80
+#define PIXY_ABS_MAX_NEG -250 //-80
 
 //Kicker
 #define KICKER_DELAY 1000L

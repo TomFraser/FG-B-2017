@@ -62,7 +62,7 @@ void loop(){
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
 
     //OFFENSE
-    direction.calcMotors(tsopData, lightData, 0.00, 0.00, 0.00);
+    direction.calcMotors(tsopData, 0.00, 0.00, 0.00, 0.00);
 
     if(analogRead(A12) < LIGHTGATE_THRESHOLD && millis() >= lastKick + 1000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();
