@@ -56,7 +56,7 @@
 #define MOTOR_C_REV 1
 #define MOTOR_D_REV 0
 //
-// //Motor Pins FOR O_BOT
+//Motor Pins FOR O_BOT
 // #define MOTOR_A_PWM 3
 // #define MOTOR_B_PWM 4
 // #define MOTOR_C_PWM 5

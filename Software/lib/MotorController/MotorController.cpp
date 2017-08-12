@@ -23,6 +23,34 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
     //     speed = SPEED_VAL; //Defaulting to normal speed
     // }
 
+    int lowerBoundLight = mod((lightAngle - 60), 360);
+    int upperBoundLight = mod((lightAngle + 60), 360);
+    if(lightAngle == 0.00){
+        Serial.println("LIGHT ANGLE");
+        angle = angle;
+        lightAngle = 0.00;
+    }else{
+        if(smallestAngleBetween(angle, lightAngle) > 60){ //We need to move on a bound
+
+            if((mod(lightAngle + 180, 360) - angle) > 0 && (mod(lightAngle + 180, 360) - angle) < 180){
+                angle = upperBoundLight;
+                lightAngle = 0.00;
+
+                Serial.println("SMALLEST U");
+            }else{
+                angle = lowerBoundLight;
+                lightAngle = 0.00;
+
+                Serial.println("SMALLEST L");
+            }
+        }else{
+            Serial.println("OTHER");
+            angle=angle;
+            lightAngle = 0.00;
+        }
+    }
+
+    Serial.println(angle);
 
     if(lightAngle != NO_LIGHT){
         motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (COME_BACK_IN_SPD*2.55) + rotation);
@@ -37,7 +65,7 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
             double motorCPWM = (cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
             double motorDPWM = (cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (SPEED_VAL*2.55) + rotation;
 
-            double scaledSpeed = (double) 150 / doubleAbs(fmax(fmax(fmax(doubleAbs(motorAPWM), doubleAbs(motorBPWM)), doubleAbs(motorCPWM)), doubleAbs(motorDPWM)));
+            double scaledSpeed = (double) 120 / doubleAbs(fmax(fmax(fmax(doubleAbs(motorAPWM), doubleAbs(motorBPWM)), doubleAbs(motorCPWM)), doubleAbs(motorDPWM)));
 
             motorA.set(motorAPWM * scaledSpeed);
             motorB.set(motorBPWM * scaledSpeed);

@@ -6,6 +6,7 @@
 #include <Defines.h>
 #include <Arduino.h>
 #include <Motor.h>
+#include <Common.h>
 
 //This library needs to be able to both play 'follow the ball' and face the ball modes because the defender robot will track the ball when defending and once it recieves the ball, it will
 //go into an offensive mode.
