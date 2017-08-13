@@ -19,7 +19,9 @@ void DirectionController::calcMotors(double angle, double lightAngle, double rot
 
     //====OFFENSE
     rotation = rotationController.rotate();
+    // Serial.println(rotation);
     motorController.playOffense(angle, lightAngle, rotation, setSpeed);
+
 
     //====DEFENSE
     // motorController.playDefense(angle, lightAngle, rotation, setSpeed);

@@ -14,11 +14,11 @@
 #define SPEED_VAL 60
 #define COME_BACK_IN_SPD 30
 //PIXY
-#define PIXY_MULTIPLIER 3
+#define PIXY_MULTIPLIER 1
 //SOLENOID
 #define KICK true
 //DELAY
-#define MAIN_LOOP_DELAY 0
+#define MAIN_LOOP_DELAY 5
 
 //-----------------------------------------------------------------------------
 
