@@ -65,19 +65,25 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
             double motorCPWM = (cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad)));
             double motorDPWM = (cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad)));
 
-            double scaledSpeed = (double) 45/(fmax(fmax(fmax(doubleAbs(motorAPWM), doubleAbs(motorBPWM)), doubleAbs(motorCPWM)), doubleAbs(motorDPWM)));
-            scaledSpeed = scaledSpeed * 2.55;
+            double scaledSpeed = (double) SPEED_VAL/doubleAbs(fmax(fmax(fmax(doubleAbs(motorAPWM), doubleAbs(motorBPWM)), doubleAbs(motorCPWM)), doubleAbs(motorDPWM)));
+
+            int motorASpeed = round(motorAPWM * scaledSpeed) + rotation;
+            int motorBSpeed = round(motorBPWM * scaledSpeed) + rotation;
+            int motorCSpeed = round(motorCPWM * scaledSpeed) + rotation;
+            int motorDSpeed = round(motorDPWM * scaledSpeed) + rotation;
+
+            double scaledSpeed2 = (double) 255/doubleAbs(fmax(fmax(fmax(doubleAbs(motorASpeed), doubleAbs(motorBSpeed)), doubleAbs(motorCSpeed)), doubleAbs(motorDSpeed)));
 
             if(angle == 0.00){
-                motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation);
-                motorB.set((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation);
-                motorC.set((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation);
-                motorD.set((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation);
+                motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation, 255));
+                motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation, 255));
+                motorC.set(min((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation, 255));
+                motorD.set(min((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (100*2.55) + rotation, 255));
             }else{
-                motorA.set(min(motorAPWM * scaledSpeed + rotation, 255));
-                motorB.set(min(motorBPWM * scaledSpeed + rotation, 255));
-                motorC.set(min(motorCPWM * scaledSpeed + rotation, 255));
-                motorD.set(min(motorDPWM * scaledSpeed + rotation, 255));
+                motorA.set(motorASpeed * scaledSpeed2);
+                motorB.set(motorBSpeed * scaledSpeed2);
+                motorC.set(motorCSpeed * scaledSpeed2);
+                motorD.set(motorDSpeed * scaledSpeed2);
             }
 
             // motorA.set((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (SPEED_VAL*2.55) + rotation);

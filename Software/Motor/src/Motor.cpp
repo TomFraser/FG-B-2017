@@ -19,7 +19,7 @@ Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
 
 void setup(){
-    Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
+    Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
     Wire1.setDefaultTimeout(200000); // 200ms
 
     direction.init();

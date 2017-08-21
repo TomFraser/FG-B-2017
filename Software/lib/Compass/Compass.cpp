@@ -32,7 +32,7 @@ double Compass::calibrate(){
 }
 
 Vector3D Compass::read(){
-    Serial.println(micros()/1000);
+    // Serial.println(micros()/1000);
     uint8_t buffer[14];
     I2Cread(IMU_ADDRESS, 0x3B, 14, buffer);
     int16_t gx = -(buffer[8] << 8 | buffer[1]);
