@@ -4,7 +4,7 @@
 //Critical Stuff
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT 0
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -83,5 +83,8 @@
 //Defender
 #define DEFENDER_SPEED 40
 #define DEFENDER_MULTIPLIER 2.30
+
+#define P2_bot 0
+#define O_bot 1
 
 #endif
