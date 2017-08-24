@@ -86,7 +86,7 @@
 //ball
 #define NO_BALL 65506.00
 #define NO_ROTATION 0.00
-#define NO_LIGHT 0
+#define NO_LIGHT 65506.00
 #define NO_SPEED 0
 
 #endif
