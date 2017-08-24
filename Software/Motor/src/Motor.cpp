@@ -18,6 +18,15 @@ long initialTime, currentTime, lastKick = 0;
 Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
 
+extern unsigned long _estack;
+uint32_t FreeRam() { // for Teensy 3.0
+    uint32_t heapTop;
+    void* foo = malloc(1);
+    heapTop = (uint32_t) foo;
+    free(foo);
+    return (unsigned long)&_estack - heapTop;
+}
+
 void setup(){
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
     Wire1.setDefaultTimeout(200000); // 200ms
@@ -68,4 +77,5 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
+    Serial.println(FreeRam());
 }
