@@ -83,11 +83,10 @@
 #define light19x 0.9510565162951535
 #define light19y -0.3090169943749476
 
-//=================SPI====================
-//TSOP
-#define TSOP_REQ_NOBALL 0
-#define TSOP_REQ_BALL 1
-//LIGHT
-#define LIGHT_REQ_NOLINE 0
-#define LIGHT_REQ_LINE 1
+//ball
+#define NO_BALL 65506.00
+#define NO_ROTATION 0.00
+#define NO_LIGHT 0
+#define NO_SPEED 0
+
 #endif

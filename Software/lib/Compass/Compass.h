@@ -33,10 +33,6 @@ private:
     void I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data);
 
     double convertRawGyro(int16_t raw) {
-        // Since we are using 500 degrees/seconds range
-        // -500 maps to a raw value of -32768
-        // +500 maps to a raw value of 32767
-
         return (raw * 500.0) / 32768.0;
     }
 

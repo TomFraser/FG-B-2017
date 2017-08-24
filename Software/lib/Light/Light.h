@@ -29,8 +29,11 @@ public:
     //Read the light sensors
     void readLight();
 
-    //Get angles
+    //Get current angle to avoid line
     double getAngle();
+
+    //Get processed direction to move
+    double getDirection();
 
 private:
     // Function Definitions
@@ -80,6 +83,14 @@ private:
         {light18x, light18y},
         {light19x, light19y}
     };
+
+    // For line tracking
+    bool seeingLine = false;
+    double lineInitDirection = 0;
+    double lastLightVal = 0;
+
+    //For angle countback and filtering
+    double countback[NUM_COUNTBACK];
 
 };
 #endif

@@ -1,62 +1,37 @@
-const fs = require('fs')
 
-function log() {
-    var angle = 90;
-    var dirNum = 4;
-    var angToRad = 0.01745329251;
-    var radToAng = 57.2957795131;
-    var array = [60, 180, 300];
+// function calculateTheoreticalOrbit(){
+//     for(let i = 0; i < 12; i++){
+//         var angleIn = i*30;
+//         // console.log("Angle: " + angleIn)
+//         if(angleIn <= 301 || angleIn >= 59){
+//             //-50cos3x+50 (Maybe) [Confirmed]
+//             // Serial.println(angleIn < 180 ? (-50*cos(3*angleIn)+50) : -(-50*cos(3*angleIn)+50));
+//              console.log(angleIn < 180 ? (-50*Math.cos(3*angleIn)+50) : -(-50*Math.cos(3*angleIn)+50));
+//         }else{
+//             let tsop = angleIn/30;
+//             let frontalChange = tsop < 6 ? (tsop) : (12 - tsop);
+//             console.log(tsop < 6 ? (constrain(angleIn + 20 * frontalChange, 0.00, 270)) : (constrain(angleIn - 20 * frontalChange, 90.00, 360)));
+//         }
+//     }
+// }
+//
+// calculateTheoreticalOrbit();
+//
 
-    var newAngle = (Math.abs(Math.round(angle / (360 * 1 / dirNum)))) * (360 *
-        1 / dirNum);
+// console.log(360-(-50*Math.cos(2*(300*(Math.PI/180)))+50))
 
-    var newNum = Math.cos(((array[0] + 90) * angToRad) - (newAngle * angToRad)); //Nice
-
-    console.log(newNum * 255);
-}
-
-function run() {
-    var dou = 79.91;
-    var mega = Math.trunc(dou);
-
-    console.log(mega);
-}
-
-function calulcateIfs(){
-    for(let i = 0; i < 301; i++){
-
-    }
-}
-
-function calculateTheoreticalOrbit(){
-    var values = [0,0,0,0,0,0,0,0,0,0,0,0]
-    /*
-Dat C++ Tho
-
-                int selectedTsop = angleIn/30;
-                int inVar = angleIn <= 180.00 ? (selectedTsop) : (TSOP_NUM - selectedTsop);
-                int variableRotate = angleIn <= 180.00 ? (TSOP_VARIABLE_ANGLE * inVar + 90) : (360 - TSOP_VARIABLE_ANGLE * inVar - 90);
-                // int variableRotate = constrain(TSOP_VARIABLE_ANGLE * inVar, 0.00, angleIn < 180.00 ? (angleIn - TSOP_ORBIT_ANGLE) : (angleIn + TSOP_ORBIT_ANGLE));
-                return variableRotate;
-    */
-
-    for(var i = 0; i <= 12; i++){
-        var selectedTsop = i
-        var angle = i * 30
-        if(angle < 180){
-            var inVar = selectedTsop
-            var variableRotate = 18 * inVar + 90
+function calcOrbit(){
+    let angToRad = 0.01745329251
+    for(let i = 0; i < 24; i++){
+        let tsopAngle = i*15
+        if(tsopAngle <= 60 || tsopAngle >= 300){ //Front
+            // return angleIn < 180 ? angleIn +((0.5 * cos(2*(angleIn*angToRad))+0.5) * 90) : angleIn + ((0.5 * cos(2*((360 * angToRad) - angleIn*angToRad))+0.5) * 90);
+            console.log(tsopAngle < 180 ? ((-0.5 * Math.cos(3*(tsopAngle * angToRad))+0.5) * (tsopAngle + 90)) : 360 - ((-0.5 * Math.cos(3*(tsopAngle*angToRad))+0.5) * (360-tsopAngle + 90)))
+            //---> Final C++ Line // return angleIn < 180 ? ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (angleIn + 90)) : ((-0.5 * cos(2*(angleIn * angToRad)) + 0.5) * (angleIn - 90));
         }else{
-            var inVar = 12 - selectedTsop
-            var variableRotate = 360 - 18 * inVar - 90
+            console.log(tsopAngle < 180 ? (tsopAngle + 90) : (tsopAngle - 90))
         }
-        values[i] = variableRotate
     }
-    console.log(values)
-    //[ 90, 108, 126, 144, 162, 180, 198, 180, 198, 216, 234, 252, 270 ] Theoretical Values
-
 }
 
-calculateTheoreticalOrbit()
-
-//ahhhhhhhhhH
+calcOrbit()

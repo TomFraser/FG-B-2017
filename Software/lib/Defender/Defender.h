@@ -29,17 +29,23 @@
 class Defender{
 public:
     bool init();
-    Vect2D getPixy();
+    Vect2D getPixy(int pixyIn);
     double aimBall(int angle);
-    Vect2D calcScale();
-    Vect2D calcDirection(int angle);
-    Vect2D calcVector(Vect2D X, Vect2D Y, double rotation);
+    Vect2D calcScale(int pixyIn);
+    Vector3D calcDirection(int angle);
+    Vector3D calcVector(Vect2D X, Vect2D Y, double rotation);
+    Vector3D determineDefense(int ballAngle);
 
     double getCompassGlobal(); //Global compass
 private:
     double getCompass(); //Read compass
     PixyI2C pixy;
-    pixyData initial;
-    Vect2D nothing = {0,0};
+    pixyData firstRead = {0,0,0,0,0};
+    Vect2D nothing = {65565,0};
+    bool doneRead = true;
     Compass compass = Compass();
+
+    // Vect2D X,Y;
+    double rotationFromPixy;
+    int pixyBlocks;
 };

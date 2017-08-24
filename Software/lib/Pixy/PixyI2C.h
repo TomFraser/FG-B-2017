@@ -61,7 +61,7 @@ public:
   int8_t send(uint8_t *data, uint8_t len){
     Wire1.beginTransmission(addr);
     Wire1.write(data, len);
-	Wire1.endTransmission();
+    Wire1.endTransmission();
 	return len;
   }
 

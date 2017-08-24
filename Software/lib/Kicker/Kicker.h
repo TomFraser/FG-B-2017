@@ -22,6 +22,8 @@ public:
     void checkLightGate();
     //Kick the ball
     void kickBall();
+    bool controlKick();
+    bool hasBall();
 private:
     kickerStatus status;
     long currentMSec, lastKick;

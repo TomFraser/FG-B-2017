@@ -40,7 +40,7 @@ private:
 
     int blockHeight, blockWidth, blockX, blockY;
 
-    double compassHeading;
+    double compassHeading, absCompassHeading;
     double newTarget;
 
 };
