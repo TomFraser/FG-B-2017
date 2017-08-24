@@ -1,5 +1,5 @@
-#ifndef LightController_h
-#define LightController_h
+#ifndef Light_h
+#define Light_h
 
 #include <Config.h>
 #include <Pins.h>
@@ -47,12 +47,13 @@ private:
     // Other Stuff
 
     //init stuff
-    //o_bot
-    // int thresholds[19] = {112, 116, 109, 117, 100, 120, 168, 214, 171, 110, 140, 193, 191, 164, 142, 188, 183, 142, 119};
-
-    //p2_bot
-    int thresholds[19] = {133, 138, 176, 176, 115, 121, 201, 209, 157, 194, 231, 194, 176, 146, 147, 153, 208, -1, 187};
-
+    #if ROBOT
+      //o_bot
+      int thresholds[19] = {112, 116, 109, 117, 100, 120, 168, 214, 171, 110, 140, 193, 191, 164, 142, 188, 183, 142, 119};
+    #else
+      //p2_bot
+      int thresholds[19] = {133, 138, 176, 176, 115, 121, 201, 209, 157, 194, 231, 194, 176, 146, 147, 153, 208, -1, 187};
+    #endif
 
 
     int lightSensors[19];
