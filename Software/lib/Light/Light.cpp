@@ -98,26 +98,18 @@ void Light::readLight(){
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]
 void Light::singleCluster(cluster *returnClus, int startNum, int begin){
-  if(seeingWhite[startNum]){
-    if(startNum+1 < LIGHTSENSOR_NUM){ // if were not at the end of the array
-      if(seeingWhite[(startNum+1)]){ // if the next lightsenor sees the line
-        singleCluster(returnClus, startNum+1, begin); // recursive bitch
-      }
-      else{ //if it dosent see the line -> return what we got
-        returnClus->exist = true;
-        returnClus->begin = begin;
-        returnClus->end = startNum;
-        return;
-      }
+  if(seeingWhite[startNum%LIGHTSENSOR_NUM]){
+    if(seeingWhite[(startNum+1)%LIGHTSENSOR_NUM]){
+      singleCluster(returnClus, startNum+1, begin);
     }
-    else{ //if were at the end of the array -> return what we got
+    else{
       returnClus->exist = true;
       returnClus->begin = begin;
       returnClus->end = startNum;
       return;
     }
   }
-  else{ //if we didnt see any line
+  else{
     returnClus->exist = false;
     return;
   }
@@ -144,6 +136,15 @@ void Light::findClusters(cluster *foundClusters){
       num++;
     }
   }
+
+  index --; //index is now at the last index of clusters
+
+  if(foundClusters[index].end > 18 && foundClusters[0].begin == 0){
+    // then we have a wrapped cluster so replace the first with the last etc
+    foundClusters[0] = foundClusters[index];
+    foundClusters[index] = temp; // temp is a blank cluster
+  }
+
 
 
   // print all found clusters
