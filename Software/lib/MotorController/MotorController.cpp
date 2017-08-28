@@ -1,5 +1,9 @@
 #include <MotorController.h>
 
+double MotorController::getCompass(){
+  return 
+}
+
 bool MotorController::playDefense(double goalAngle, double lightAngle, double ballRotation, double speed){
     // In this mode we need to take angle as rotation and ignore the actual rotation.
     if(goalAngle != NO_BALL){

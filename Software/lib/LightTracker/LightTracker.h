@@ -10,7 +10,12 @@ class LightTracker{
 
 public:
     LightTracker();
+
+    double getDirection();
 private:
-    // nothing
+    // for tracking
+    double lineInitDirection;
+    bool seeingLine = false;
+
 };
 #endif

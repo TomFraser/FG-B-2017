@@ -19,6 +19,8 @@ public:
     double doubleAbs(double value);
     int sign(double value);
 
+    double getCompass();
+
     #if ROBOT
     //OBot
     Motor motorD = Motor(MOTOR_A_PWM, MOTOR_A_DIR, MOTOR_A_BRK, MOTOR_A_REV); //Really Motor D

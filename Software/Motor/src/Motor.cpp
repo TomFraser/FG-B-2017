@@ -8,6 +8,7 @@
 #include <Pins.h>
 // #include <Defender.h>
 #include <SPI.h>
+#include <LightTracker.h>
 
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 volatile uint16_t dataIn[DATA_LENGTH] = {};
@@ -17,6 +18,7 @@ long initialTime, currentTime, lastKick = 0;
 // Defender defender = Defender();
 Kicker kicker = Kicker();
 DirectionController direction = DirectionController();
+LightTracker lightTracker = LightTracker();
 
 extern unsigned long _estack;
 uint32_t FreeRam() { // for Teensy 3.0
@@ -69,6 +71,8 @@ void loop(){
     // Serial.print("Angle: ");
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+
+    Serial.println(lineTracker.getDirection(lightData, tsopData, ));
 
     //OFFENSE
     direction.calcMotors(tsopData, lightData, 0.00, 0.00, 0.00);
