@@ -65,7 +65,8 @@ void loop(){
     Serial.println(lineTracker.getDirection(lightData, tsopData, ));
 
     //OFFENSE
-    motorController.playOffense(tsopData, lightData, 0.00, 0.00);
+    rotation = rotationController.rotate();
+    motorController.playOffense(tsopData, lightData, rotation, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();
