@@ -1,12 +1,12 @@
 #include <Config.h>
-#include <DirectionController.h>
+#include <MotorController.h>
+#include <RotationController.h>
 #include <Kicker.h>
 #include <Buzzer.h>
 #include <fgbcommon.h>
 #include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
-// #include <Defender.h>
 #include <SPI.h>
 #include <LightTracker.h>
 
@@ -17,23 +17,13 @@ long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
 Kicker kicker = Kicker();
-DirectionController direction = DirectionController();
 LightTracker lightTracker = LightTracker();
-
-extern unsigned long _estack;
-uint32_t FreeRam() { // for Teensy 3.0
-    uint32_t heapTop;
-    void* foo = malloc(1);
-    heapTop = (uint32_t) foo;
-    free(foo);
-    return (unsigned long)&_estack - heapTop;
-}
+RotationController rotationController = RotationController();
+MotorController motorController = MotorController();
 
 void setup(){
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
     Wire1.setDefaultTimeout(200000); // 200ms
-
-    direction.init();
 
     pinMode(A12, INPUT);
 
@@ -75,11 +65,10 @@ void loop(){
     Serial.println(lineTracker.getDirection(lightData, tsopData, ));
 
     //OFFENSE
-    direction.calcMotors(tsopData, lightData, 0.00, 0.00, 0.00);
+    motorController.playOffense(tsopData, lightData, 0.00, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();
         lastKick = millis();
     }
-    Serial.println(FreeRam());
 }

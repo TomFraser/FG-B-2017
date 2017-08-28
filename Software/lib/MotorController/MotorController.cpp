@@ -1,7 +1,7 @@
 #include <MotorController.h>
 
 double MotorController::getCompass(){
-  return 
+  return
 }
 
 bool MotorController::playDefense(double goalAngle, double lightAngle, double ballRotation, double speed){
