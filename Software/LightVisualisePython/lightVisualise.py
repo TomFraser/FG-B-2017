@@ -4,6 +4,7 @@ import serial.tools.list_ports
 
 #turtle imports
 from turtle import *
+from math import sin, cos, radians as rad
 
 for port in serial.tools.list_ports.comports():
     print(port)
@@ -20,6 +21,7 @@ screen = Screen()
 tracer(0, 0)
 penup()
 hideturtle()
+pensize(10)
 
 #sensordata
 sensor_data = [0 for i in range(19)]
@@ -47,17 +49,26 @@ sensor_coords = [[1.0,0.0],
                 [0.8090169943749473, -0.5877852522924734],
                 [0.9510565162951535, -0.3090169943749476]]
 
-sensor_color = {0:"grey", 1:"black"}
+sensor_color = {0:"grey", 1:"red"}
 sensor_size = 20
 
 
 
 
 while True:
+    clear()
+
     data = teensy.readline()
 
     try:
         data = float(data)
+        data = (90-data)%360
+        data = rad(data)
+        penup()
+        goto(0, 0)
+        pendown()
+        goto(radius * cos(data), radius * sin(data))
+        penup()
     except ValueError:
         try:
             #not an angle number - must be sensor data
@@ -75,8 +86,10 @@ while True:
             goto(coords[0]*radius, coords[1]*radius)
             dot(sensor_size, sensor_color[sensor_data[sensor_num]])
     except KeyError:
-        print("key error") #if the serial fucks up dont wanna break shit
+        # print("key error") #if the serial fucks up dont wanna break shit
+        pass
     except IndexError:
-        print("index error")
+        # print("index error")
+        pass
 
     update()
