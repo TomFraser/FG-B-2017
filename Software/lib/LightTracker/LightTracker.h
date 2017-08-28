@@ -11,7 +11,7 @@ class LightTracker{
 public:
     LightTracker();
 
-    double getDirection();
+    double getDirection(double lightAngle, double tsopAngle, double compassAngle);
 private:
     // for tracking
     double lineInitDirection;
