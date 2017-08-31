@@ -41,5 +41,6 @@ void setup(){
 
 int lightValues[19];
 void loop(){
-    // Serial.println(Light.getAngle());
+    Serial.println(Light.getAngle());
+    // Light.getAngle();
 }
