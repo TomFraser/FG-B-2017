@@ -5,6 +5,7 @@
 #include <Pins.h>
 #include <Defines.h>
 #include <Arduino.h>
+#include <Common.h>
 
 class LightTracker{
 
@@ -14,8 +15,12 @@ public:
     double getDirection(double lightAngle, double tsopAngle, double compassAngle);
 private:
     // for tracking
-    double lineInitDirection;
-    bool seeingLine = false;
+    double lineInitDirection = 0;
+
+    // line memeory
+    bool wasSeeingLine = false;
+    double lastAngle = 0;
+
 
 };
 #endif

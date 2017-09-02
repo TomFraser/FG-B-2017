@@ -64,8 +64,8 @@ void loop(){
 
     double rotation = rotationController.rotate();
 
-    Serial.println(rotation);
-    // Serial.println(lightTracker.getDirection(lightData, tsopData, rotation));
+    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    Serial.println(lightTracker.getDirection(lightData, tsopData, rotation));
 
     //OFFENSE
     motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
