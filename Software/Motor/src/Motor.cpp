@@ -23,7 +23,7 @@ MotorController motorController = MotorController();
 
 void setup(){
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
-    Wire1.setDefaultTimeout(200000); // 200ms
+    Wire1.setDefaultTimeout(50000); // 200ms
 
     pinMode(A12, INPUT);
 
@@ -37,23 +37,32 @@ void setup(){
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     // defender.init();
 
+    rotationController.init();
+
     pinMode(13, OUTPUT);
     digitalWrite(13, HIGH);
 }
 
 void loop(){
-    // Serial.println("Moving");
-    digitalWrite(TSOP_SS, LOW);
-    delay(1);
-    int tsopData = SPI.transfer16(512);
-    digitalWrite(TSOP_SS, HIGH);
+    Serial.println(micros());
 
+    // Serial.println("Moving");
     delay(MAIN_LOOP_DELAY);
 
+    SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
+    digitalWrite(TSOP_SS, LOW);
+    int tsopData = SPI.transfer16(512);
+    digitalWrite(TSOP_SS, HIGH);
+    SPI.endTransaction();
+
+    delay(1);
+
+    SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
     int lightData = SPI.transfer16(512);
     digitalWrite(LIGHT_SS, HIGH);
+    SPI.endTransaction();
 
     //DEFENSE
     // Vector3D defenderGo = defender.calcDirection(response); //This method returns a 2dvector where the direction is the direction and the strength is the rotation. I didnt want to make another struct.
@@ -63,12 +72,14 @@ void loop(){
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
 
     double rotation = rotationController.rotate();
+    // Serial.println(rotation);
 
-    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
-    Serial.println(lightTracker.getDirection(lightData, tsopData, rotation));
+    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    // Serial.println(lightTracker.getDirection(lightData, tsopData, rotation));
 
     //OFFENSE
     motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
+    // motorController.playOffense(tsopData, 65506.00, 0.00, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();

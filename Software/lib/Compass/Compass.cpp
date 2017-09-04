@@ -32,7 +32,6 @@ double Compass::calibrate(){
 }
 
 Vector3D Compass::read(){
-    // Serial.println(micros()/1000);
     uint8_t buffer[14];
     I2Cread(IMU_ADDRESS, 0x3B, 14, buffer);
     int16_t gx = -(buffer[8] << 8 | buffer[1]);
@@ -45,10 +44,10 @@ Vector3D Compass::read(){
 void Compass::update() {
     double reading = (double) read().z;
 
-	long currentTime = micros();
+	  long currentTime = micros();
     heading += (((double)(currentTime - previousTime) / 1000000.0) * (reading - calibration));
-	heading = doubleMod(heading, 360.0);
-	previousTime = currentTime;
+	  heading = doubleMod(heading, 360.0);
+	  previousTime = currentTime;
 }
 
 void Compass::setTarget(double target_){
@@ -69,15 +68,22 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
 {
 
   // Set register address
+  Serial.print("a");
   Wire1.beginTransmission(Address);
   Wire1.write(Register);
   Wire1.endTransmission();
+  Serial.print("b");
 
   // Read Nbytes
   Wire1.requestFrom(Address, Nbytes);
+  Serial.print("c");
   uint8_t index=0;
-  while (Wire1.available())
+  Serial.println(Wire1.available());
+  while (Wire1.available()){
+    Serial.print("d");
     Data[index++]=Wire1.read();
+  }
+  Serial.print("e");
 }
 
 // Write a byte (Data) in device (Address) at register (Register)

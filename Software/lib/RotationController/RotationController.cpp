@@ -1,7 +1,7 @@
 #include <RotationController.h>
 
 RotationController::RotationController(){
-
+  
 }
 
 void RotationController::init(){
@@ -54,7 +54,8 @@ double RotationController::rotate(){
 
     delay(1);
 
-    if(pixy.getBlocks()){
+    // if(pixy.getBlocks()){
+    if(true == false){
         // Serial.println(calcPixy() * PIXY_MULTIPLIER);
         // return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
         int pixyHeading = calcPixy() * PIXY_MULTIPLIER;
