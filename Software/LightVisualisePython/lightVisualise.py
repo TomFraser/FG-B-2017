@@ -56,9 +56,8 @@ sensor_size = 20
 
 
 while True:
-    clear()
-
     data = teensy.readline()
+    clear()
 
     try:
         data = float(data)

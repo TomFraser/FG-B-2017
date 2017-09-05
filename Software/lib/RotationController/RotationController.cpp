@@ -26,6 +26,11 @@ double RotationController::getCompass(){
     return compassHeading;
 }
 
+double RotationController::rawCompass(){
+    compass.update();
+    return compass.getHeading();
+}
+
 
 double RotationController::calcPixy(){
     if(getPixy()){
@@ -55,7 +60,7 @@ double RotationController::rotate(){
     delay(1);
 
     // if(pixy.getBlocks()){
-    if(false == true)
+    if(false == true){
         // Serial.println(calcPixy() * PIXY_MULTIPLIER);
         // return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
         int pixyHeading = calcPixy() * PIXY_MULTIPLIER;

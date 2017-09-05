@@ -10,10 +10,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
 
       // adjust the lightAngle to compass (not currently doing this cause
       // compass is spac)
-      // double absAngle = lightAngle + compassAngle;
-
-      // do this just so i can implement ^^ easy when compass is fixed
-      double absAngle = lightAngle;
+      double absAngle = lightAngle + compassAngle;
 
       if(!wasSeeingLine){
         // just started seeing the line
@@ -24,7 +21,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
       wasSeeingLine = true;
 
       if(smallestAngleBetween(lineInitDirection, absAngle) < 90){
-        // we have moved a bit (ie maybe hit a corner or something) - set a new heading
+        // we might have moved a bit (ie maybe hit a corner or something) - set a new heading
         lineInitDirection = absAngle;
         wasSeeingLine = true;
 
@@ -32,8 +29,8 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         return lineInitDirection;
       }
       else{
-        // flipped over the line, this is priority
-        return lineInitDirection;
+        // flipped over the line, this is priority (adusted for compass)
+        return lineInitDirection - compassAngle;
       }
 
     }
@@ -55,8 +52,8 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         // dont reset line memeory cause that will get changed if we hit the
         // line
 
-        // make sure to do a correction when we add in the compass stuff
-        return lineInitDirection;
+        // go back in (adjusted for compass)
+        return lineInitDirection - compassAngle;
 
       }
     }

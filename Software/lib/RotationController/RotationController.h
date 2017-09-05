@@ -31,6 +31,8 @@ public:
     //The final rotation to add to the motors
     double rotate();
 
+    double rawCompass();
+
 private:
     PixyI2C pixy;
     Compass compass = Compass();

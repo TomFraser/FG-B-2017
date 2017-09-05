@@ -72,10 +72,11 @@ void loop(){
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
 
     double rotation = rotationController.rotate();
+    double compass = rotationController.rawCompass();
     // Serial.println(rotation);
 
     // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
-    // Serial.println(lightTracker.getDirection(lightData, tsopData, rotation));
+    // Serial.println(lightTracker.getDirection(lightData, tsopData, compass));
 
     //OFFENSE
     motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
