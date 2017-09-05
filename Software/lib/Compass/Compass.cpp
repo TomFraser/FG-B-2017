@@ -75,13 +75,14 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
   Serial.print("b");
 
   // Read Nbytes
-  Wire1.requestFrom(Address, Nbytes);
+  Serial.println(Wire1.requestFrom(Address, Nbytes));
   Serial.print("c");
   uint8_t index=0;
   Serial.println(Wire1.available());
   while (Wire1.available()){
     Serial.print("d");
-    Data[index++]=Wire1.read();
+    Data[index]=Wire1.read();
+    index++;
   }
   Serial.print("e");
 }
