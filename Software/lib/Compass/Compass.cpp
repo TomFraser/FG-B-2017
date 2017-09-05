@@ -32,12 +32,10 @@ double Compass::calibrate(){
 }
 
 Vector3D Compass::read(){
-    uint8_t buffer[14];
-    I2Cread(IMU_ADDRESS, 0x3B, 14, buffer);
-    int16_t gx = -(buffer[8] << 8 | buffer[1]);
-    int16_t gy = -(buffer[10] << 8 | buffer[11]);
-    int16_t gz = buffer[12] << 8 | buffer[13];
-    Vector3D returnVector = {convertRawGyro(gx), convertRawGyro(gy), convertRawGyro(gz)};
+    uint8_t buffer[2];
+    I2Cread(IMU_ADDRESS, 0x47, 2, buffer);
+    int16_t gz = buffer[0] << 8 | buffer[1];
+    Vector3D returnVector = {0, 0, convertRawGyro(gz)};
     return returnVector;
 }
 
@@ -81,7 +79,8 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
   Serial.println(Wire1.available());
   while (Wire1.available()){
     Serial.print("d");
-    Data[index++]=Wire1.read();
+    Data[index]=Wire1.read();
+    index++;
   }
   Serial.print("e");
 }
