@@ -12,11 +12,7 @@ void RotationController::init(){
 
 bool RotationController::getPixy(){
     // Serial.println("pixy Go");
-    blockHeight = pixy.blocks[0].height;
-    blockWidth = pixy.blocks[0].width;
-    blockX = pixy.blocks[0].x;
-    blockY = pixy.blocks[0].y;
-    return true;
+    return false;
 }
 
 double RotationController::getCompass(){
@@ -33,7 +29,11 @@ double RotationController::rawCompass(){
 
 
 double RotationController::calcPixy(){
-    if(getPixy()){
+    if(pixy.getBlocks()){
+        blockHeight = pixy.blocks[0].height;
+        blockWidth = pixy.blocks[0].width;
+        blockX = pixy.blocks[0].x;
+        blockY = pixy.blocks[0].y;
         if(blockX >= PIXY_CENTRE_X){
             return rotationToAdd = -1*(PIXY_CENTRE_X - blockX);
         }
@@ -59,11 +59,9 @@ double RotationController::rotate(){
 
     delay(1);
 
-    // if(pixy.getBlocks()){
-    if(false == true){
-        // Serial.println(calcPixy() * PIXY_MULTIPLIER);
-        // return (calcPixy() * PIXY_MULTIPLIER); //Returns Pixy rotation when seeing goal
-        int pixyHeading = calcPixy() * PIXY_MULTIPLIER;
+    int pixyHeading = calcPixy();
+    if(pixyHeading != 0.00){
+        int pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 
         if(pixyHeading <= 0){
             if(pixyHeading < PIXY_ABS_MAX_NEG){
