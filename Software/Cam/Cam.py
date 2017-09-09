@@ -1,4 +1,4 @@
-# Untitled - By: Thomas - Fri Sep 8 2017
+# Cam - By: Thomas - Fri Sep 8 2017
 from pyb import SPI
 from machine import Pin
 import sensor
@@ -14,14 +14,15 @@ sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA)
 sensor.skip_frames()
 
-getBallDirection(input):
+def getBallDirection(input=None):
     if input == None:
         return ballLoc
     else:
+        #Do some cheeky calulation stuff
         ballLoc = input
-        
+
 def hasSPIRequest():
-    ballDirection = getBallDirection(input=None)
+    ballDirection = getBallDirection()
     spi.send(ballDirection, timeout=100)
 
 while(True):
