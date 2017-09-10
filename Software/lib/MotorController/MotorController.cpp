@@ -17,7 +17,7 @@ bool MotorController::playDefense(double goalAngle, double lightAngle, double ba
     }
 }
 
-bool MotorController::playOffense(double angle, double lightAngle, double rotation, double speed){ //<-- The rotation passed here is external rotastion and compass will
+bool MotorController::playOffense(double angle, double lightAngle, double rotation, int speed){ //<-- The rotation passed here is external rotastion and compass will
     //still be done unless this value is greater than 0.
     // if(speed == NO_SPEED){
     //     speed = SPEED_VAL; //Defaulting to normal speed
@@ -67,10 +67,10 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
 
         double scaledSpeed2 = (double) 255/doubleAbs(fmax(fmax(fmax(doubleAbs(motorASpeed), doubleAbs(motorBSpeed)), doubleAbs(motorCSpeed)), doubleAbs(motorDSpeed)));
 
-        int finalSpeedA = (motorASpeed * scaledSpeed2)/100 * SPEED_VAL;
-        int finalSpeedB = (motorBSpeed * scaledSpeed2)/100 * SPEED_VAL;
-        int finalSpeedC = (motorCSpeed * scaledSpeed2)/100 * SPEED_VAL;
-        int finalSpeedD = (motorDSpeed * scaledSpeed2)/100 * SPEED_VAL;
+        int finalSpeedA = (motorASpeed * scaledSpeed2)/100 * speed;
+        int finalSpeedB = (motorBSpeed * scaledSpeed2)/100 * speed;
+        int finalSpeedC = (motorCSpeed * scaledSpeed2)/100 * speed;
+        int finalSpeedD = (motorDSpeed * scaledSpeed2)/100 * speed;
 
         if(angle == 0.00){
             motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (85*2.55) + rotation, 255));

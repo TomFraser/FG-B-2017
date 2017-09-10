@@ -7,7 +7,7 @@ int lightValues[19];
 
 int numCycles = 10000;
 
-int offset = -30;
+int offset = -50;
 
 int greenMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int whiteMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

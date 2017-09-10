@@ -4,13 +4,18 @@ LightTracker::LightTracker(){
   // init
 };
 
+int LightTracker::getSpeed(){
+  return speed;
+}
+
 double LightTracker::getDirection(double lightAngle, double tsopAngle, double compassAngle){
     if(lightAngle != 65506.00){
       // if we can see the line
 
       // adjust the lightAngle to compass (not currently doing this cause
       // compass is spac)
-      double absAngle = lightAngle + compassAngle;
+      // double absAngle = lightAngle + compassAngle;
+      double absAngle = lightAngle;
 
       if(!wasSeeingLine){
         // just started seeing the line
@@ -25,12 +30,15 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         lineInitDirection = absAngle;
         wasSeeingLine = true;
 
+
+        speed = SPEED_ON_LINE;
         // need to do the fancy limit tsop angle stuff. for now just return lightAngle
         return lineInitDirection;
       }
       else{
+        speed = SPEED_ON_LINE;
         // flipped over the line, this is priority (adusted for compass)
-        return lineInitDirection - compassAngle;
+        return lineInitDirection;
       }
 
     }
@@ -43,6 +51,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         wasSeeingLine = false;
         lineInitDirection = 0;
 
+        speed = SPEED_VAL;
         // return tsops to just do normal game play
         return tsopAngle;
       }
@@ -52,12 +61,14 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         // dont reset line memeory cause that will get changed if we hit the
         // line
 
+        speed = SPEED_OVER_LINE;
         // go back in (adjusted for compass)
-        return lineInitDirection - compassAngle;
+        return lineInitDirection;
 
       }
     }
     else{
+      speed = SPEED_VAL;
       // cant see line and wasnt seeing line - just to normal gameplay
       return tsopAngle;
     }
