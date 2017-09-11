@@ -13,6 +13,7 @@ public:
     LightTracker();
 
     double getDirection(double lightAngle, double tsopAngle, double compassAngle);
+    int getSpeed();
 private:
     // for tracking
     double lineInitDirection = 0;
@@ -20,6 +21,9 @@ private:
     // line memeory
     bool wasSeeingLine = false;
     double lastAngle = 0;
+
+    // speed
+    int speed;
 
 
 };

@@ -44,7 +44,10 @@ void setup(){
 }
 
 void loop(){
+<<<<<<< HEAD
 
+=======
+>>>>>>> 90af48cf2bc7418775321f0e8ab32d67803692a8
     // Serial.println("Moving");
     delay(MAIN_LOOP_DELAY);
 
@@ -73,12 +76,15 @@ void loop(){
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
 
-    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
-    // Serial.println(lightTracker.getDirection(lightData, tsopData, compass));
+    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+
+    double finalDirecton = lightTracker.getDirection(lightData, tsopData, compass);
+    int speed = lightTracker.getSpeed();
+    Serial.println(finalDirecton);
 
     //OFFENSE
-    motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
-    // motorController.playOffense(tsopData, 65506.00, 0.00, 0.00);
+    motorController.playOffense(finalDirecton, 65506.00, rotation, speed);
+    // motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();
