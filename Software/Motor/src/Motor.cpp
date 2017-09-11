@@ -44,10 +44,6 @@ void setup(){
 }
 
 void loop(){
-<<<<<<< HEAD
-
-=======
->>>>>>> 90af48cf2bc7418775321f0e8ab32d67803692a8
     // Serial.println("Moving");
     delay(MAIN_LOOP_DELAY);
 
