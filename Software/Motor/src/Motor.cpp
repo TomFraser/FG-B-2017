@@ -44,7 +44,6 @@ void setup(){
 }
 
 void loop(){
-    Serial.println(micros());
 
     // Serial.println("Moving");
     delay(MAIN_LOOP_DELAY);
@@ -73,7 +72,6 @@ void loop(){
 
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
-    // Serial.println(rotation);
 
     // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
     // Serial.println(lightTracker.getDirection(lightData, tsopData, compass));

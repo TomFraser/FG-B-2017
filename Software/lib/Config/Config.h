@@ -4,7 +4,7 @@
 //Critical Stuff
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -14,7 +14,7 @@
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 65
 //MOTORS
-#define SPEED_VAL 60
+#define SPEED_VAL 75
 #define COME_BACK_IN_SPD 30
 //PIXY
 #define PIXY_MULTIPLIER 2

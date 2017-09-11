@@ -29,22 +29,16 @@ double RotationController::rawCompass(){
 
 
 double RotationController::calcPixy(){
-    if(pixy.getBlocks()){
-        blockHeight = pixy.blocks[0].height;
-        blockWidth = pixy.blocks[0].width;
-        blockX = pixy.blocks[0].x;
-        blockY = pixy.blocks[0].y;
-        if(blockX >= PIXY_CENTRE_X){
-            return rotationToAdd = -1*(PIXY_CENTRE_X - blockX);
-        }
-        else if(blockX <= PIXY_CENTRE_X){
+        if(millis() > prevTime + 20){
+            Serial.println("Slow");
+            blockX = pixy.blocks[0].x;
+            prevTime = millis();
             prevReturn = -1*(PIXY_CENTRE_X - blockX);
             return -1*(PIXY_CENTRE_X - blockX);
+        }else{
+            Serial.println("Fast");
+            return prevReturn;
         }
-    }
-    else{
-        return 0.00;
-    }
 }
 
 void RotationController::calcRotation(){
@@ -57,11 +51,9 @@ double RotationController::rotate(){
     compassHeading = compass.getHeading();
     compassHeading = (compassHeading * COMPASS_MULTIPLIER);
 
-    delay(1);
-
-    int pixyHeading = calcPixy();
-    if(pixyHeading != 0.00){
-        int pixyHeading = pixyHeading * PIXY_MULTIPLIER;
+    if(pixy.getBlocks()){
+        int pixyHeading = calcPixy();
+        pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 
         if(pixyHeading <= 0){
             if(pixyHeading < PIXY_ABS_MAX_NEG){

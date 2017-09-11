@@ -39,6 +39,7 @@ private:
     int rotationToAdd;
     int finalRotation;
     double prevReturn;
+    long prevTime = 0;
 
     int blockHeight, blockWidth, blockX, blockY;
 
