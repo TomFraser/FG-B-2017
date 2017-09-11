@@ -31,12 +31,27 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         wasSeeingLine = true;
 
 
-        speed = SPEED_ON_LINE;
-        // need to do the fancy limit tsop angle stuff. for now just return lightAngle
-        return lineInitDirection;
+        if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND){
+          speed = SPEED_VAL;
+          return tsopAngle;
+
+          // this is stuff for smallestAngleBetween > LIGHT_BOUND
+          // if((mod(lineInitDirection + 180, 360) - tsopAngle) > 0 && (mod(lineInitDirection + 180, 360) - tsopAngle) < 180){
+          //   // need to move on upper bound
+          //   return mod((lightAngle + LIGHT_BOUND), 360);
+          // }
+          // else{
+          //   // lower bound
+          //   return mod((lightAngle - LIGHT_BOUND), 360);
+          // }
+        }
+        else{
+          speed = SPEED_ON_LINE;
+          return lineInitDirection;
+        }
       }
       else{
-        speed = SPEED_ON_LINE;
+        speed = SPEED_OVER_LINE;
         // flipped over the line, this is priority (adusted for compass)
         return lineInitDirection;
       }

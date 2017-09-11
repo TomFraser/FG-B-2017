@@ -73,6 +73,8 @@ void loop(){
     double compass = rotationController.rawCompass();
     // Serial.println(rotation);
 
+    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+
     double finalDirecton = lightTracker.getDirection(lightData, tsopData, compass);
     int speed = lightTracker.getSpeed();
     Serial.println(finalDirecton);

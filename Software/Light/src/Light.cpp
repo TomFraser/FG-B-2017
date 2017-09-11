@@ -36,11 +36,11 @@ void setup(){
     digitalWrite(13, HIGH);
 
     // NVIC_ENABLE_IRQ(IRQ_SPI0);
-    // attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
+    attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
 }
 
 int lightValues[19];
 void loop(){
-    Serial.println(Light.getAngle());
+    // Serial.println(Light.getAngle());
     // Light.getAngle();
 }

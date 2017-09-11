@@ -59,8 +59,9 @@ double RotationController::rotate(){
 
     delay(1);
 
-    int pixyHeading = calcPixy();
-    if(pixyHeading != 0.00){
+    // int pixyHeading = calcPixy();
+    // if(pixyHeading != 0.00){
+    if(false){
         int pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 
         if(pixyHeading <= 0){
