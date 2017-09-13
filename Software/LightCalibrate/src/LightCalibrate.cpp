@@ -123,6 +123,10 @@ void loop(){
       calb[i] = greenMax[i] + (int)(diff[i]/2) + offset;
     }
 
+    #if !ROBOT
+      calb[17] = -1;
+    #endif
+
     Serial.println("Final:");
 
     for(int k=0; k < 19; k++){
