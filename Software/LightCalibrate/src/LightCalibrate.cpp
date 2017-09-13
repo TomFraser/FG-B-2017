@@ -35,6 +35,7 @@ void loop(){
           greenMax[j] = lightValues[j];
         }
       }
+      delay(1);
       Serial.println(numCycles-i);
     }
 
