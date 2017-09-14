@@ -39,8 +39,9 @@ void setup(){
     attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
 }
 
-int lightValues[19];
+bool results[19];
 void loop(){
     // Serial.println(Light.getAngle());
     // Light.getAngle();
+    Serial.println("debug");
 }
