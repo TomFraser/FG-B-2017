@@ -44,7 +44,7 @@ double RotationController::rotate(){
     compass.update();
     compassHeading = compass.getHeading();
     compassHeading = (compassHeading * COMPASS_MULTIPLIER);
-    if(millis() > prevTime + 20){
+    if(millis() > prevTime + 30){
         if(pixy.getBlocks()){
             int pixyHeading = calcPixy();
             pixyHeading = pixyHeading * PIXY_MULTIPLIER;
@@ -79,6 +79,14 @@ double RotationController::rotate(){
             return absCompassHeading; //Returns compass when no goal is seen
         }
     }else{
-        return prevReturn;
+        // double __return = prevReturn * PIXY_MULTIPLIER;
+        // if(__return > 60){
+        //     return 60;
+        // }else if(__return < -60){
+        //     return -60;
+        // }else{
+        //     return __return;
+        // }
+        return 0.00;
     }
 }

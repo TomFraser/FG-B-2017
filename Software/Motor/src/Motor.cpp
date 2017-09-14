@@ -39,8 +39,6 @@ void setup(){
 
     rotationController.init();
 
-    pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
 }
 
 void loop(){
@@ -68,7 +66,6 @@ void loop(){
     // Serial.print("Angle: ");
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
-
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
 
@@ -79,7 +76,7 @@ void loop(){
     Serial.println(finalDirecton);
 
     //OFFENSE
-    motorController.playOffense(finalDirecton, 65506.00, rotation, speed);
+    motorController.playOffense(finalDirecton, 65506.0, rotation, speed);
     // motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
