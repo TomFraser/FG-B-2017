@@ -29,16 +29,10 @@ double RotationController::rawCompass(){
 
 
 double RotationController::calcPixy(){
-        if(millis() > prevTime + 20){
-            Serial.println("Slow");
-            blockX = pixy.blocks[0].x;
-            prevTime = millis();
-            prevReturn = -1*(PIXY_CENTRE_X - blockX);
-            return -1*(PIXY_CENTRE_X - blockX);
-        }else{
-            Serial.println("Fast");
-            return prevReturn;
-        }
+        blockX = pixy.blocks[0].x;
+        prevTime = millis();
+        prevReturn = -1*(PIXY_CENTRE_X - blockX);
+        return -1*(PIXY_CENTRE_X - blockX);
 }
 
 void RotationController::calcRotation(){
@@ -50,38 +44,41 @@ double RotationController::rotate(){
     compass.update();
     compassHeading = compass.getHeading();
     compassHeading = (compassHeading * COMPASS_MULTIPLIER);
+    if(millis() > prevTime + 20){
+        if(pixy.getBlocks()){
+            int pixyHeading = calcPixy();
+            pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 
-    if(pixy.getBlocks()){
-        int pixyHeading = calcPixy();
-        pixyHeading = pixyHeading * PIXY_MULTIPLIER;
-
-        if(pixyHeading <= 0){
-            if(pixyHeading < PIXY_ABS_MAX_NEG){
-                return PIXY_ABS_MAX_NEG;
+            if(pixyHeading <= 0){
+                if(pixyHeading < PIXY_ABS_MAX_NEG){
+                    return PIXY_ABS_MAX_NEG;
+                }else{
+                    return pixyHeading;
+                }
             }else{
-                return pixyHeading;
+                if(pixyHeading > PIXY_ABS_MAX){
+                    return PIXY_ABS_MAX;
+                }else{
+                    return pixyHeading;
+                }
             }
         }else{
-            if(pixyHeading > PIXY_ABS_MAX){
-                return PIXY_ABS_MAX;
+            if(compassHeading <= 0){ //Negative
+                if(compassHeading < COMPASS_ABS_MAX_NEG){
+                    return COMPASS_ABS_MAX_NEG;
+                }else{
+                    return compassHeading;
+                }
             }else{
-                return pixyHeading;
+                if(compassHeading > COMPASS_ABS_MAX){
+                    return COMPASS_ABS_MAX;
+                }else{
+                    return compassHeading;
+                }
             }
+            return absCompassHeading; //Returns compass when no goal is seen
         }
     }else{
-        if(compassHeading <= 0){ //Negative
-            if(compassHeading < COMPASS_ABS_MAX_NEG){
-                return COMPASS_ABS_MAX_NEG;
-            }else{
-                return compassHeading;
-            }
-        }else{
-            if(compassHeading > COMPASS_ABS_MAX){
-                return COMPASS_ABS_MAX;
-            }else{
-                return compassHeading;
-            }
-        }
-        return absCompassHeading; //Returns compass when no goal is seen
+        return prevReturn;
     }
 }
