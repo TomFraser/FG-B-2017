@@ -87,7 +87,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         // line
 
         speed = SPEED_OVER_LINE;
-        // go back in (adjusted for compass)
+        // go back in
         return lineInitDirection;
 
       }

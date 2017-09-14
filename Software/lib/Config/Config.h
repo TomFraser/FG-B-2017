@@ -16,7 +16,7 @@
 //MOTORS
 #define SPEED_VAL 60
 #define SPEED_ON_LINE 0
-#define SPEED_OVER_LINE 60
+#define SPEED_OVER_LINE 40
 #define SPEED_SLIDE 40
 
 //PIXY
@@ -71,7 +71,7 @@
 #define LIGHTSENSOR_NUM 19
 #define DETECTED_NUMBER_LIGHT 3
 #define NUM_COUNTBACK 2
-#define LIGHT_BOUND1 70
+#define LIGHT_BOUND1 60
 #define LIGHT_BOUND2 120
 
 //Pixy
