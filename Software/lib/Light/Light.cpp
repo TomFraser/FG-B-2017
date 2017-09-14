@@ -226,7 +226,7 @@ double Light::getAngle(){
     // check the countback for if all the values are greater than 0 if we are greater than 0
     if(directionAngle != 65506){
       bool allGood = true;
-      for(int i; i < NUM_COUNTBACK; i++){
+      for(int i=0; i < NUM_COUNTBACK; i++){
         if(countback[i] < 0){
           allGood = false;
         }

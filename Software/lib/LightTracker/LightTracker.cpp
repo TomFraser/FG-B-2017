@@ -25,13 +25,13 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
       lastAngle = absAngle;
       wasSeeingLine = true;
 
-      if(smallestAngleBetween(lineInitDirection, absAngle) < 90){
+      if(smallestAngleBetween(lineInitDirection, absAngle) < 60){
         // we might have moved a bit (ie maybe hit a corner or something) - set a new heading
         lineInitDirection = absAngle;
         wasSeeingLine = true;
 
 
-        if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND){
+        if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND && tsopAngle != 65506.00){
           speed = SPEED_VAL;
           return tsopAngle;
 
