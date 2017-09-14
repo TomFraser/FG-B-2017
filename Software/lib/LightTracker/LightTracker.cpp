@@ -31,21 +31,31 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         wasSeeingLine = true;
 
 
-        if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND && tsopAngle != 65506.00){
+        if(tsopAngle == 65506.00){
+          // if we cant see the ball -> just go on the line
+          speed = SPEED_ON_LINE;
+          return lineInitDirection;
+        }
+        else if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND1){
+          // first light bound -> just go on tsop angle
           speed = SPEED_VAL;
           return tsopAngle;
 
-          // this is stuff for smallestAngleBetween > LIGHT_BOUND
-          // if((mod(lineInitDirection + 180, 360) - tsopAngle) > 0 && (mod(lineInitDirection + 180, 360) - tsopAngle) < 180){
-          //   // need to move on upper bound
-          //   return mod((lightAngle + LIGHT_BOUND), 360);
-          // }
-          // else{
-          //   // lower bound
-          //   return mod((lightAngle - LIGHT_BOUND), 360);
-          // }
+        }
+        else if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND2){
+          // second light bound -> go on bound
+          speed = SPEED_SLIDE;
+          if((mod(lineInitDirection + 180, 360) - tsopAngle) > 0 && (mod(lineInitDirection + 180, 360) - tsopAngle) < 180){
+            // need to move on upper bound
+            return mod((lightAngle + LIGHT_BOUND1), 360);
+          }
+          else{
+            // lower bound
+            return mod((lightAngle - LIGHT_BOUND1), 360);
+          }
         }
         else{
+          // if tsops are way out -> go at speed on line (currently stop)
           speed = SPEED_ON_LINE;
           return lineInitDirection;
         }

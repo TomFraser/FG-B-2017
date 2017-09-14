@@ -69,8 +69,6 @@ void loop(){
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
 
-    tsopData = 60;
-
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
 

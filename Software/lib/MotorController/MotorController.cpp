@@ -52,7 +52,7 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
 
     // Serial.println(angle);
 
-    if(angle != NO_BALL){
+    if(angle != NO_BALL && speed != 0){
         double motorAPWM = (cos(((angleArray[0] + 90 - angle) * angToRad)));
         double motorBPWM = (cos(((angleArray[1] + 90 - angle) * angToRad)));
         double motorCPWM = (cos(((angleArray[2] + 90 - angle) * angToRad)));
