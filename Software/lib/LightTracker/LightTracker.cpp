@@ -12,58 +12,64 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
     if(lightAngle != 65506.00){
       // if we can see the line
 
-      // adjust the lightAngle to compass (not currently doing this cause
-      // compass is spac)
-      // double absAngle = lightAngle + compassAngle;
-      double absAngle = lightAngle;
+      // adjust the lightAngle to compass
+      double absLight = mod(lightAngle - compassAngle, 360);
+      double absTsop = mod(tsopAngle - compassAngle, 360);
+
+      // Serial.println(absLight);
+      // Serial.println(absTsop);
+      // Serial.println(smallestAngleBetween(absLight, absTsop));
+      // Serial.println(compassAngle);
+      // Serial.println();
+
 
       if(!wasSeeingLine){
         // just started seeing the line
-        lineInitDirection = absAngle;
+        lineInitDirection = absLight;
       }
 
-      lastAngle = absAngle;
+      lastAngle = absLight;
       wasSeeingLine = true;
 
-      if(smallestAngleBetween(lineInitDirection, absAngle) < 60){
+      if(smallestAngleBetween(lineInitDirection, absLight) < 60){
         // we might have moved a bit (ie maybe hit a corner or something) - set a new heading
-        lineInitDirection = absAngle;
+        lineInitDirection = absLight;
         wasSeeingLine = true;
 
 
         if(tsopAngle == 65506.00){
           // if we cant see the ball -> just go on the line
           speed = SPEED_ON_LINE;
-          return lineInitDirection;
+          return lineInitDirection + compassAngle;
         }
-        else if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND1){
+        else if(smallestAngleBetween(lineInitDirection, absTsop) < LIGHT_BOUND1){
           // first light bound -> just go on tsop angle
           speed = SPEED_VAL;
           return tsopAngle;
 
         }
-        else if(smallestAngleBetween(lineInitDirection, tsopAngle) < LIGHT_BOUND2){
+        else if(smallestAngleBetween(lineInitDirection, absTsop) < LIGHT_BOUND2){
           // second light bound -> go on bound
           speed = SPEED_SLIDE;
           if((mod(lineInitDirection + 180, 360) - tsopAngle) > 0 && (mod(lineInitDirection + 180, 360) - tsopAngle) < 180){
             // need to move on upper bound
-            return mod((lightAngle + LIGHT_BOUND1), 360);
+            return mod((lightAngle + LIGHT_BOUND1), 360) + compassAngle;
           }
           else{
             // lower bound
-            return mod((lightAngle - LIGHT_BOUND1), 360);
+            return mod((lightAngle - LIGHT_BOUND1), 360) + compassAngle;
           }
         }
         else{
           // if tsops are way out -> go at speed on line (currently stop)
           speed = SPEED_ON_LINE;
-          return lineInitDirection;
+          return lineInitDirection + compassAngle;
         }
       }
       else{
         speed = SPEED_OVER_LINE;
         // flipped over the line, this is priority (adusted for compass)
-        return lineInitDirection;
+        return lineInitDirection + compassAngle;
       }
 
     }
@@ -88,7 +94,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
 
         speed = SPEED_OVER_LINE;
         // go back in
-        return lineInitDirection;
+        return lineInitDirection + compassAngle;
 
       }
     }

@@ -5,7 +5,9 @@ Light Light;
 
 int lightValues[19];
 
-int numCycles = 10000;
+int numGreenCycles = 10000;
+int numWhiteCycles = 20000;
+
 
 int offset = -40;
 
@@ -28,7 +30,7 @@ void loop(){
     Serial.print("5 ");delay(1000); Serial.print("4 ");delay(1000);Serial.print("3 ");delay(1000); Serial.print("2 ");delay(1000);Serial.println("1 ");
 
 
-    for(int i=0; i<numCycles; i++){
+    for(int i=0; i<numGreenCycles; i++){
       Light.getVals(lightValues);
       for(int j=0; j<19; j++){
         if(lightValues[j] > greenMax[j]){
@@ -36,7 +38,7 @@ void loop(){
         }
       }
       delay(1);
-      Serial.println(numCycles-i);
+      Serial.println(numGreenCycles-i);
     }
 
     // ===================== White =====================
@@ -45,7 +47,7 @@ void loop(){
     Serial.print("5 ");delay(1000); Serial.print("4 ");delay(1000);Serial.print("3 ");delay(1000); Serial.print("2 ");delay(1000);Serial.println("1 ");
 
 
-    for(int i=0; i<numCycles; i++){
+    for(int i=0; i<numWhiteCycles; i++){
       Light.getVals(lightValues);
       for(int j=0; j<19; j++){
         if(lightValues[j] > whiteMax[j]){
@@ -53,7 +55,7 @@ void loop(){
         }
       }
       delay(1);
-      Serial.println(numCycles-i);
+      Serial.println(numWhiteCycles-i);
     }
 
     // ===================== Prints =======================

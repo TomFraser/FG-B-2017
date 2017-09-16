@@ -69,11 +69,11 @@ void loop(){
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
 
-    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
 
     double finalDirecton = lightTracker.getDirection(lightData, tsopData, compass);
     int speed = lightTracker.getSpeed();
-    Serial.println(finalDirecton);
+    // Serial.println(finalDirecton);
 
     //OFFENSE
     motorController.playOffense(finalDirecton, 65506.0, rotation, speed);

@@ -43,5 +43,4 @@ bool results[19];
 void loop(){
     // Serial.println(Light.getAngle());
     // Light.getAngle();
-    Serial.println("debug");
 }
