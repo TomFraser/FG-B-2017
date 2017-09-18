@@ -49,7 +49,8 @@ void loop(){
 
     SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
     digitalWrite(TSOP_SS, LOW);
-    int tsopData = SPI.transfer16(512);
+    delay(1);
+    int tsopData = SPI.transfer16(255);
     digitalWrite(TSOP_SS, HIGH);
     SPI.endTransaction();
 
@@ -58,8 +59,17 @@ void loop(){
     SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
     digitalWrite(LIGHT_SS, LOW);
     delay(1);
-    int lightData = SPI.transfer16(512);
+    int lightData = SPI.transfer16(255);
     digitalWrite(LIGHT_SS, HIGH);
+    SPI.endTransaction();
+
+    delay(2);
+
+    SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
+    digitalWrite(TSOP_SS, LOW);
+    delay(1);
+    int rotationData = SPI.transfer16(512);
+    digitalWrite(TSOP_SS, HIGH);
     SPI.endTransaction();
 
     //DEFENSE
@@ -69,8 +79,8 @@ void loop(){
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
 
-    double rotation = rotationController.rotate();
-    double compass = rotationController.rawCompass();
+    double rotation = rotationController.rotate(((rotationData-180)));
+    double compass = rotationData;
 
     // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
 
@@ -79,7 +89,7 @@ void loop(){
     // Serial.println(finalDirecton);
 
     //OFFENSE
-    motorController.playOffense(finalDirecton, 65506.0, rotation, speed);
+    motorController.playOffense(tsopData, 65506.0, rotation, speed);
     // motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
 
     if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second

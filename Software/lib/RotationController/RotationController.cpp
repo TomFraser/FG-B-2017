@@ -5,9 +5,7 @@ RotationController::RotationController(){
 }
 
 void RotationController::init(){
-    compass.init();
     delay(10);
-    compass.calibrate();
 }
 
 bool RotationController::getPixy(){
@@ -16,15 +14,11 @@ bool RotationController::getPixy(){
 }
 
 double RotationController::getCompass(){
-    compass.update();
-    compassHeading = compass.getHeading();
-    compassHeading = (compassHeading * COMPASS_MULTIPLIER);
-    return compassHeading;
+    return 0.00;
 }
 
 double RotationController::rawCompass(){
-    compass.update();
-    return compass.getHeading();
+    return 0.00;
 }
 
 
@@ -36,14 +30,12 @@ double RotationController::calcPixy(){
 }
 
 void RotationController::calcRotation(){
-    newTarget = compassHeading > 180 ? compassHeading - rotationToAdd : compassHeading + rotationToAdd;
-    compass.setTarget(newTarget);
+    // newTarget = compassHeading > 180 ? compassHeading - rotationToAdd : compassHeading + rotationToAdd;
+    // compass.setTarget(newTarget);
 }
 
-double RotationController::rotate(){
-    compass.update();
-    compassHeading = compass.getHeading();
-    compassHeading = (compassHeading * COMPASS_MULTIPLIER);
+double RotationController::rotate(int rotationData){
+    compassHeading = (rotationData * COMPASS_MULTIPLIER);
 
     if(millis() > prevTime + 30){
         if(pixy.getBlocks(1)){

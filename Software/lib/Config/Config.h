@@ -24,7 +24,7 @@
 //SOLENOID
 #define KICK false
 //DELAY
-#define MAIN_LOOP_DELAY 5
+#define MAIN_LOOP_DELAY 0
 
 //----------------------------------------------------------------------------
 

@@ -7,7 +7,6 @@
 #include <Defines.h>
 #include <Arduino.h>
 #include <PixyI2C.h>
-#include <Compass.h>
 
 class RotationController{
 
@@ -29,13 +28,12 @@ public:
     double getCompass();
 
     //The final rotation to add to the motors
-    double rotate();
+    double rotate(int rotationData);
 
     double rawCompass();
 
 private:
     PixyI2C pixy;
-    Compass compass = Compass();
     int rotationToAdd;
     int finalRotation;
     double prevReturn;
