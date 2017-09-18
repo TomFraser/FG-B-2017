@@ -13,8 +13,8 @@
 // end license header
 //
 // This file is for defining the Block struct and the Pixy template class.
-// (TPixy).  TPixy takes a communication link as a template parameter so that 
-// all communication modes (SPI, I2C and UART) can share the same code.  
+// (TPixy).  TPixy takes a communication link as a template parameter so that
+// all communication modes (SPI, I2C and UART) can share the same code.
 //
 
 #ifndef _TPIXY_H
@@ -42,21 +42,21 @@
 #define PIXY_RCS_MAX_POS            1000L
 #define PIXY_RCS_CENTER_POS         ((PIXY_RCS_MAX_POS-PIXY_RCS_MIN_POS)/2)
 
- 
+
 enum BlockType
 {
 	NORMAL_BLOCK,
 	CC_BLOCK
 };
 
-struct Block 
+struct Block
 {
   // print block structure!
   void print()
   {
     int i, j;
     char buf[128], sig[6], d;
-	bool flag;	
+	bool flag;
     if (signature>PIXY_MAX_SIGNATURE) // color code! (CC)
 	{
       // convert signature number to an octal string
@@ -68,12 +68,12 @@ struct Block
         if (flag)
           sig[j++] = d + '0';
       }
-      sig[j] = '\0';	
+      sig[j] = '\0';
       sprintf(buf, "CC block! sig: %s (%d decimal) x: %d y: %d width: %d height: %d angle %d\n", sig, signature, x, y, width, height, angle);
-    }			
+    }
 	else // regular block.  Note, angle is always zero, so no need to print
-      sprintf(buf, "sig: %d x: %d y: %d width: %d height: %d\n", signature, x, y, width, height);		
-    Serial.print(buf); 
+      sprintf(buf, "sig: %d x: %d y: %d width: %d height: %d\n", signature, x, y, width, height);
+    Serial.print(buf);
   }
   uint16_t signature;
   uint16_t x;
@@ -90,15 +90,15 @@ template <class LinkType> class TPixy
 public:
   TPixy(uint16_t arg=PIXY_DEFAULT_ARGVAL);
   ~TPixy();
-	
+
   uint16_t getBlocks(uint16_t maxBlocks=1000);
   int8_t setServos(uint16_t s0, uint16_t s1);
   int8_t setBrightness(uint8_t brightness);
   int8_t setLED(uint8_t r, uint8_t g, uint8_t b);
   void init();
-  
+
   Block *blocks;
-	
+
 private:
   boolean getStart();
   void resize();
@@ -133,17 +133,24 @@ template <class LinkType> TPixy<LinkType>::~TPixy()
 template <class LinkType> boolean TPixy<LinkType>::getStart()
 {
   uint16_t w, lastw;
- 
+
   lastw = 0xffff;
-  
+
   while(true)
   {
     w = link.getWord();
+
+		// fix we have added to deal with some wierd values
+		if(w == 65535){
+			return false;
+		}
+
+
     if (w==0 && lastw==0)
 	{
       delayMicroseconds(10);
 	  return false;
-	}		
+	}
     else if (w==PIXY_START_WORD && lastw==PIXY_START_WORD)
 	{
       blockType = NORMAL_BLOCK;
@@ -159,7 +166,7 @@ template <class LinkType> boolean TPixy<LinkType>::getStart()
 	  Serial.println("reorder");
 	  link.getByte(); // resync
 	}
-	lastw = w; 
+	lastw = w;
   }
 }
 
@@ -167,14 +174,14 @@ template <class LinkType> void TPixy<LinkType>::resize()
 {
   blockArraySize += PIXY_INITIAL_ARRAYSIZE;
   blocks = (Block *)realloc(blocks, sizeof(Block)*blockArraySize);
-}  
-		
+}
+
 template <class LinkType> uint16_t TPixy<LinkType>::getBlocks(uint16_t maxBlocks)
 {
   uint8_t i;
   uint16_t w, checksum, sum;
   Block *block;
-  
+
   if (!skipStart)
   {
     if (getStart()==false)
@@ -182,7 +189,7 @@ template <class LinkType> uint16_t TPixy<LinkType>::getBlocks(uint16_t maxBlocks
   }
   else
 	skipStart = false;
-	
+
   for(blockCount=0; blockCount<maxBlocks && blockCount<PIXY_MAXIMUM_ARRAYSIZE;)
   {
     checksum = link.getWord();
@@ -201,15 +208,15 @@ template <class LinkType> uint16_t TPixy<LinkType>::getBlocks(uint16_t maxBlocks
 	}
     else if (checksum==0)
       return blockCount;
-    
+
 	if (blockCount>blockArraySize)
 		resize();
-	
+
 	block = blocks + blockCount;
-	
+
     for (i=0, sum=0; i<sizeof(Block)/sizeof(uint16_t); i++)
     {
-	  if (blockType==NORMAL_BLOCK && i>=5) // skip 
+	  if (blockType==NORMAL_BLOCK && i>=5) // skip
 	  {
 		block->angle = 0;
 		break;
@@ -223,7 +230,7 @@ template <class LinkType> uint16_t TPixy<LinkType>::getBlocks(uint16_t maxBlocks
       blockCount++;
     else
       Serial.println("cs error");
-	
+
 	w = link.getWord();
 	if (w==PIXY_START_WORD)
 	  blockType = NORMAL_BLOCK;
@@ -237,36 +244,36 @@ template <class LinkType> uint16_t TPixy<LinkType>::getBlocks(uint16_t maxBlocks
 template <class LinkType> int8_t TPixy<LinkType>::setServos(uint16_t s0, uint16_t s1)
 {
   uint8_t outBuf[6];
-   
+
   outBuf[0] = 0x00;
-  outBuf[1] = 0xff; 
+  outBuf[1] = 0xff;
   *(uint16_t *)(outBuf + 2) = s0;
   *(uint16_t *)(outBuf + 4) = s1;
-  
+
   return link.send(outBuf, 6);
 }
 
 template <class LinkType> int8_t TPixy<LinkType>::setBrightness(uint8_t brightness)
 {
   uint8_t outBuf[3];
-   
+
   outBuf[0] = 0x00;
-  outBuf[1] = 0xfe; 
+  outBuf[1] = 0xfe;
   outBuf[2] = brightness;
-  
+
   return link.send(outBuf, 3);
 }
 
 template <class LinkType> int8_t TPixy<LinkType>::setLED(uint8_t r, uint8_t g, uint8_t b)
 {
   uint8_t outBuf[5];
-  
+
   outBuf[0] = 0x00;
-  outBuf[1] = 0xfd; 
+  outBuf[1] = 0xfd;
   outBuf[2] = r;
   outBuf[3] = g;
   outBuf[4] = b;
-  
+
   return link.send(outBuf, 5);
 }
 

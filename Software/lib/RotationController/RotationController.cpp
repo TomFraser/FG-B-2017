@@ -44,8 +44,9 @@ double RotationController::rotate(){
     compass.update();
     compassHeading = compass.getHeading();
     compassHeading = (compassHeading * COMPASS_MULTIPLIER);
+
     if(millis() > prevTime + 30){
-        if(pixy.getBlocks()){
+        if(pixy.getBlocks(1)){
             int pixyHeading = calcPixy();
             pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 

@@ -42,8 +42,10 @@ void setup(){
 }
 
 void loop(){
-    // Serial.println("Moving");
     delay(MAIN_LOOP_DELAY);
+
+
+    // Serial.println(millis());
 
     SPI.beginTransaction(SPISettings(12000000, MSBFIRST, SPI_MODE0));
     digitalWrite(TSOP_SS, LOW);
@@ -66,6 +68,7 @@ void loop(){
     // Serial.print("Angle: ");
     // Serial.println(defenderGo.x);
     // direction.calcMotors(defenderGo.x, 0.00, defenderGo.z, defenderGo.y, response);
+
     double rotation = rotationController.rotate();
     double compass = rotationController.rawCompass();
 
@@ -83,4 +86,6 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
+
+    // Serial.println();
 }

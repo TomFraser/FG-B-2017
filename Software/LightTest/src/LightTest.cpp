@@ -9,7 +9,7 @@ bool results[19];
 int threshold = 0;
 int counter = 0;
 
-int mode = 1; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle
+int mode = 2; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
 
 
 void setup(){
@@ -62,5 +62,26 @@ void loop(){
   }
   else if(mode == 2){
     Serial.println(Light.getAngle());
+  }
+  else if(mode == 3){
+    // // === Print out on white ===
+    Light.readLight();
+    Light.getOnWhite(results);
+    bool print = false;
+
+    for(int i=0; i < 19; i++){
+      if(results[i] > 0){
+        print = true;
+      }
+    }
+
+    if(print){
+      for(int i=0; i < 19; i++){
+        Serial.print(results[i]);
+        Serial.print("   ");
+      }
+      Serial.println();
+
+    }
   }
 }
