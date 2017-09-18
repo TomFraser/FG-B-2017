@@ -5,7 +5,7 @@ thresholds = [(36, 69, 39, 89, 9, 43),
               (0, 30, 0, 64, -128, 0)]
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QVGA)
+sensor.set_framesize(sensor.QQVGA)
 sensor.skip_frames(time = 2000)
 sensor.set_auto_gain(False)
 sensor.set_auto_whitebal(False)
