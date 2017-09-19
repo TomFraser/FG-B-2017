@@ -2,6 +2,7 @@
 #include <Config.h>
 #include <Arduino.h>
 #include <Light.h>
+#include <Blink.h>
 
 Light Light;
 
@@ -33,7 +34,6 @@ void setup(){
     LIGHT.setCTAR_SLAVE(16, SPI_MODE0);
 
     pinMode(13, OUTPUT);
-    digitalWrite(13, HIGH);
 
     // NVIC_ENABLE_IRQ(IRQ_SPI0);
     attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
@@ -43,4 +43,5 @@ bool results[19];
 void loop(){
     // Serial.println(Light.getAngle());
     // Light.getAngle();
+    blink();
 }

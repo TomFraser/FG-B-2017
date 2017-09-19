@@ -4,6 +4,7 @@
 #include <Config.h>
 #include <Pins.h>
 #include <Compass.h>
+#include <Blink.h>
 
 
 #include <t3spi.h>
@@ -37,14 +38,16 @@ void setup(){
     compass.init();
     delay(10);
     compass.calibrate();
+    compass.update();
 
     TSOP.begin_SLAVE(ALT_SCK, MOSI, MISO, CS0);
     TSOP.setCTAR_SLAVE(16, SPI_MODE0);
     attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
 
-    digitalWrite(13, HIGH); //Lets us know the teensy is ready
+    pinMode(13, OUTPUT);
 }
 
 void loop(){
     compass.update();
+    blink();
 }
