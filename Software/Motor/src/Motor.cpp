@@ -10,6 +10,12 @@
 #include <SPI.h>
 #include <LightTracker.h>
 
+#if ROBOT
+#define LIGHTGATE_THRESHOLD 100
+#else
+#define LIGHTGATE_THRESHOLD 250
+#endif
+
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 
@@ -89,10 +95,10 @@ void loop(){
     // Serial.println(finalDirecton);
 
     //OFFENSE
-    motorController.playOffense(tsopData, 65506.0, rotation, speed);
+    motorController.playOffense(finalDirecton, 65506.0, rotation, speed);
     // motorController.playOffense(tsopData, 65506.00, rotation, 0.00);
 
-    if(tsopData == 0.00 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
+    if(analogRead(A12) < LIGHTGATE_THRESHOLD && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
         kicker.kickBall();
         lastKick = millis();
     }

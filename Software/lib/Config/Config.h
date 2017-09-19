@@ -22,7 +22,7 @@
 //PIXY
 #define PIXY_MULTIPLIER 2
 //SOLENOID
-#define KICK false
+#define KICK true
 //DELAY
 #define MAIN_LOOP_DELAY 0
 
