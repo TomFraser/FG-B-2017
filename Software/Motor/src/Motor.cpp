@@ -46,7 +46,6 @@ void setup(){
     // defender.init();
 
     rotationController.init();
-
 }
 
 void loop(){
@@ -54,21 +53,17 @@ void loop(){
 
     //SPI Transactions
     digitalWrite(TSOP_SS, LOW);
-    delay(1);
+    delayMicroseconds(200);
     int tsopData = SPI.transfer16(255);
     digitalWrite(TSOP_SS, HIGH);
 
-    delay(1);
-
     digitalWrite(LIGHT_SS, LOW);
-    delay(1);
+    delayMicroseconds(200);
     int lightData = SPI.transfer16(255);
     digitalWrite(LIGHT_SS, HIGH);
 
-    delay(2);
-
     digitalWrite(TSOP_SS, LOW);
-    delay(1);
+    delayMicroseconds(200);
     int rotationData = SPI.transfer16(512);
     digitalWrite(TSOP_SS, HIGH);
 
