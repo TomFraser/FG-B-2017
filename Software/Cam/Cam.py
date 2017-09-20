@@ -1,5 +1,5 @@
 import sensor, image, time, math, pyb
-from pyb import SPI, Pin, LED, delay
+from pyb import SPI, Pin, LED, delay, ExtInt
 from math import atan2, sqrt, pi
 
 #Ball Thresholds
@@ -16,20 +16,45 @@ ledIR = LED(4)
 ledIR.off()
 
 
+
 #SPI Stuff
 #Init Bus as Slave
-spi = SPI(2, SPI.SLAVE, baudrate=600000, polarity=1, phase=0, crc=0x7)
+#spi = SPI(2, SPI.SLAVE, baudrate=600000, polarity=1, phase=0, crc=0x7)
+
+#spi.init(SPI.SLAVE, )
 
 #Interupt Function
-def spiSend():
-    ledRed.on()
-    recv = spi.recv()
-    spi.send(angle,timeout=200)
-    delay(100)
-    ledRed.off()
+#def spiSend():
+#    print("called")
+#    spi.send(52,timeout=200)
 
 #Attach Interupt
-Interupt = pyb.ExtInt(Pin('P3'), pyb.ExtInt.IRQ_FALLING, pyb.Pin.PULL_NONE, spiSend)
+#Interupt = ExtInt(Pin('P4'), pyb.ExtInt.IRQ_FALLING, pyb.Pin.PULL_UP, spiSend)
+
+
+
+#Orbit Constants
+strengthThreshold = 40
+ORBIT_FRONT_DENOMINATOR = 120
+ORBIT_FRONT_RATIO = 60
+ORBIT_SIDE_RATIO = 45
+ORBIT_FORWARD_LOWER = 90
+ORBIT_FORWARD_UPPER = 270
+
+#Orbit Function
+def calcOrbit(angle, strength):
+    if strength > strengthThreshold or angle == 65506:
+        return angle
+    elif angle < ORBIT_FORWARD_LOWER:
+        return angle + (angle / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
+    elif angle > ORBIT_FORWARD_UPPER:
+        return angle - ((360 - angle) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
+    elif angle <= 180:
+        return angle + ORBIT_SIDE_RATIO
+    elif angle > 180:
+        return angle - ORBIT_SIDE_RATIO
+    else:
+        return 65506
 
 #Image Sensor Stuff
 sensor.reset()
@@ -68,11 +93,15 @@ while(True):
     else:
         angle = (atan2(y,x) * (180 / pi) - 90)%360
 
+    orbitAngle = calcOrbit(angle, strength)
+
     #Prints
-    print("angle:")
+    print("Angle:")
     print(angle)
     print()
-    print("strength")
+    print("Strength:")
     print(strength)
     print()
+    print("Orbit Angle:")
+    print(orbitAngle)
     print(clock.fps())
