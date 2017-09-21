@@ -13,8 +13,6 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 double lightAngle;
 
 void transfer(){
-  Light.readLight();
-
   if(Light.getError()){
     digitalWrite(13, LOW);
   }
@@ -41,6 +39,5 @@ void setup(){
 
 bool results[19];
 void loop(){
-    // Serial.println(Light.getAngle());
-    // Light.getAngle();
+    Light.readLight();
 }

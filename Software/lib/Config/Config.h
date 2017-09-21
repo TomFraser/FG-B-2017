@@ -4,7 +4,7 @@
 //Critical Stuff
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
