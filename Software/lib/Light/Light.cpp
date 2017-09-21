@@ -140,32 +140,8 @@ void Light::findClusters(cluster *foundClusters){
   index --; //index is now at the last index of clusters
 
   if(foundClusters[index].end > 18 && foundClusters[0].begin == 0){
-    // // then we have a wrapped cluster so replace the first with the last etc
+    // // then we have a wrapped cluster so make the first cluster invalid
     foundClusters[0] = {true, -1, -1};
-    // foundClusters[0].begin = foundClusters[index].begin;
-    // foundClusters[0].end = foundClusters[index].end;
-    // foundClusters[0].exist = foundClusters[index].exist;
-    //
-    // foundClusters[index].begin = temp.begin; // temp is a blank cluster
-    // foundClusters[index].end = temp.end; // temp is a blank cluster
-    // foundClusters[index].exist = temp.exist; // temp is a blank cluster
-
-    // int clusBegin = foundClusters[index].begin;
-    // int clusEnd = foundClusters[index].end;
-    //
-    // cluster temp = {false, 0, 0};
-    // for(int i = 0; i < maxNumClusters; i++){
-    //   foundClusters[i] = temp;
-    // }
-    //
-    // cluster newClus = {true, clusBegin, clusEnd};
-    //
-    // foundClusters[0] = newClus;
-
-
-
-
-
   }
 
 
@@ -178,9 +154,6 @@ void Light::findClusters(cluster *foundClusters){
 }
 
 double Light::getAngle(){
-    // update sensors just incase
-    readLight();
-
     // get all the current clusters
     cluster foundClusters[maxNumClusters];
     findClusters(foundClusters);

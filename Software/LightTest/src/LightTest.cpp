@@ -61,6 +61,7 @@ void loop(){
     Serial.println();
   }
   else if(mode == 2){
+    Light.readLight();
     Serial.println(Light.getAngle());
   }
   else if(mode == 3){
