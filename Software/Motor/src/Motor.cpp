@@ -77,7 +77,7 @@ void loop(){
     int speed = lightTracker.getSpeed();
 
     //Moving on angle
-    motorController.playOffense(finalDirecton, 65506.0, rotation, SPEED_VAL);
+    motorController.playOffense(finalDirecton, 65506.0, rotation, speed);
 
     //Checking if we can kick
     if(analogRead(A12) < 1000 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second

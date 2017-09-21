@@ -39,11 +39,8 @@ void setup(){
 
 bool results[19];
 void loop(){
-<<<<<<< HEAD
     // Serial.println(Light.getAngle());
     // Light.getAngle();
     blink();
-=======
     Light.readLight();
->>>>>>> ca688584b61392d8e72267a6407aa8da2cd526c9
 }
