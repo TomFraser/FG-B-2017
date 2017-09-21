@@ -32,6 +32,11 @@ public:
 
     double rawCompass();
 
+    double PIDRotation(double rotationIn);
+
+    long lastTime = 0;
+    double lastAngle = 0;
+
 private:
     PixyI2C pixy;
     int rotationToAdd;

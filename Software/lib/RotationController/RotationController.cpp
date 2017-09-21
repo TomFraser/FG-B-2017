@@ -36,6 +36,7 @@ void RotationController::calcRotation(){
 
 double RotationController::rotate(int rotationData){
     compassHeading = (rotationData * COMPASS_MULTIPLIER);
+    compassHeading = PIDRotation(compassHeading);
 
     if(millis() > prevTime + 30){
         if(pixy.getBlocks(1)){
@@ -82,4 +83,11 @@ double RotationController::rotate(int rotationData){
         // }
         return 0.00;
     }
+}
+
+double RotationController::PIDRotation(double rotationIn){
+    double derivative = (rotationIn - lastAngle) / (millis() - lastTime);
+    lastTime = millis();
+    lastAngle = rotationIn;
+    return rotationIn * CONST_K + derivative * CONST_J;
 }
