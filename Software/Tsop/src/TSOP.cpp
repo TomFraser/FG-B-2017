@@ -19,13 +19,8 @@ volatile uint16_t dataIn[DATA_LENGTH] = {};
 volatile uint16_t dataOut[2] = {};
 
 void transfer(){
-    if(SPI0_POPR <= 255){
         SPI0_PUSHR_SLAVE = (compass.getHeading()+180);
         SPI0_SR |= SPI_SR_RFDF;
-    }else{
-        SPI0_PUSHR_SLAVE = tsops.getAngle();
-        SPI0_SR |= SPI_SR_RFDF;
-    }
 }
 
 void setup(){
@@ -47,6 +42,5 @@ void setup(){
 
 void loop(){
     compass.update();
-    tsops.moveAngle();
     blink();
 }
