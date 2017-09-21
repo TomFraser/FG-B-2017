@@ -11,6 +11,8 @@
 #include <LightTracker.h>
 #include <Blink.h>
 
+long oscillateTime = 0;
+int mode = 0;
 long firstTime = 0;
 int tsopData;
 // #if ROBOT
@@ -31,6 +33,20 @@ RotationController rotationController = RotationController();
 MotorController motorController = MotorController();
 
 PixyI2C pixy;
+
+void oscillateOrbit(){
+    if(millis() > oscillateTime + 1000){
+        if(mode == 0){
+            mode = 1;
+            oscillateTime = millis();
+            tsopData = 215;
+        }else{
+            mode = 0;
+            oscillateTime = millis();
+            tsopData = 155;
+        }
+    }
+}
 
 void setup(){
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
@@ -76,26 +92,25 @@ void loop(){
         int isBlocks = pixy.getBlocks();
         if(isBlocks){
             int blockX = pixy.blocks[0].x;
-            if(blockX > (PIXY_CENTRE_X - 85) && blockX < (PIXY_CENTRE_X + 85)){
-                tsopData = 0;
+            if(blockX - PIXY_CENTRE_X > 0){
+                tsopData = (-0.5 * cos((((blockX - PIXY_CENTRE_X)*PI)/160)) + 0.5)*90;
                 speed = 60;
-            }else if(blockX <= (PIXY_CENTRE_X - 85)){
-                tsopData = 270;
-                speed = 50;
-            }else if(blockX >= (PIXY_CENTRE_X + 85)){
-                tsopData = 90;
-                speed = 50;
+            }else if(blockX - PIXY_CENTRE_X < 0){
+                tsopData = 360- ((-0.5 * cos((((blockX - PIXY_CENTRE_X)*PI)/160)) + 0.5)*90);
+                speed = 60;
             }else{
-                tsopData = 180;
+                oscillateOrbit();
                 speed = 40;
             }
         }else{
-            tsopData = 180;
+            oscillateOrbit();
             speed = 40;
         }
         firstTime = millis();
     }
 
+
+    Serial.println(tsopData);
     //Calculating absolute rotation
     double rotation = rotationController.rotate((rotationData-180));
     double compass = rotationData;
