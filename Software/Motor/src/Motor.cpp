@@ -46,6 +46,7 @@ void setup(){
     // defender.init();
 
     rotationController.init();
+    delay(2100);
 }
 
 void loop(){
@@ -67,17 +68,22 @@ void loop(){
     int rotationData = SPI.transfer16(512);
     digitalWrite(TSOP_SS, HIGH);
 
+    // Serial.print("TSOP: ");
+    // Serial.println(lightData);
+    // Serial.print("Rotation: ");
+    // Serial.println(rotationData);
+
     //Calculating absolute rotation
     double rotation = rotationController.rotate(((rotationData-180)));
-    double compass = rotationData;
+    double compass = (rotationData-180);
 
     //Calulating absolute angle
     // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
-    double finalDirecton = lightTracker.getDirection(lightData, tsopData, compass);
+    double finalDirection = lightTracker.getDirection(lightData, tsopData, compass);
     int speed = lightTracker.getSpeed();
 
     //Moving on angle
-    motorController.playOffense(finalDirecton, 65506.0, rotation, speed);
+    motorController.playOffense(finalDirection, 65506.0, rotation, speed);
 
     //Checking if we can kick
     if(analogRead(A12) < 1000 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
