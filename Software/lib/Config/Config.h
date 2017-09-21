@@ -14,7 +14,7 @@
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 65
 //MOTORS
-#define SPEED_VAL 60
+#define SPEED_VAL 95
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 40
 #define SPEED_SLIDE 40
@@ -24,7 +24,7 @@
 //SOLENOID
 #define KICK true
 //DELAY
-#define MAIN_LOOP_DELAY 0
+#define MAIN_LOOP_DELAY 5
 
 //----------------------------------------------------------------------------
 
