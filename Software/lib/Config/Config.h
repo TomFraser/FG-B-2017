@@ -23,6 +23,13 @@
 #define PIXY_MULTIPLIER 2
 //SOLENOID
 #define KICK false
+#if ROBOT
+  // o_bot
+  #define KICK_THRESHOLD 250
+#else
+  #define KICK_THRESHOLD 1000
+#endif
+
 //DELAY
 #define MAIN_LOOP_DELAY 5
 
