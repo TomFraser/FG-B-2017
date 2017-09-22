@@ -6,7 +6,7 @@
 #define CONST_J 52
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -25,13 +25,7 @@
 //PIXY
 #define PIXY_MULTIPLIER 2
 //SOLENOID
-#define KICK false
-#if ROBOT
-  // o_bot
-  #define KICK_THRESHOLD 250
-#else
-  #define KICK_THRESHOLD 1000
-#endif
+#define KICK true
 
 //DELAY
 #define MAIN_LOOP_DELAY 5
@@ -91,7 +85,15 @@
 
 //Kicker
 #define KICKER_DELAY 1000L
-#define LIGHTGATE_THRESHOLD 250
+#if ROBOT
+  // o_bot
+  #define KICK_THRESHOLD 250
+#else
+  // P2_bot
+  #define KICK_THRESHOLD 980
+#endif
+
+
 
 //Defender
 #define DEFENDER_SPEED 40

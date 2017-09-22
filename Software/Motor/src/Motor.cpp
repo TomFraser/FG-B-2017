@@ -11,12 +11,6 @@
 #include <LightTracker.h>
 #include <Blink.h>
 
-// #if ROBOT
-// #define LIGHTGATE_THRESHOLD 100
-// #else
-// #define LIGHTGATE_THRESHOLD 250
-// #endif
-
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 
@@ -86,7 +80,7 @@ void loop(){
     motorController.playOffense(finalDirection, 65506.0, rotation, speed);
 
     //Checking if we can kick
-    if(analogRead(A12) < 1000 && millis() >= lastKick + 2000 && KICK == true){ //Limits kicks to 1 per second
+    if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
         kicker.kickBall();
         lastKick = millis();
     }

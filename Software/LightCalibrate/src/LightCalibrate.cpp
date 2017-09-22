@@ -9,7 +9,7 @@ int numGreenCycles = 10000;
 int numWhiteCycles = 20000;
 
 
-int offset = -10;
+int offset = -40;
 
 int greenMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int whiteMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
