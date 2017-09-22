@@ -23,7 +23,7 @@
 #define SPEED_SLIDE 40
 
 //PIXY
-#define PIXY_MULTIPLIER 2
+#define PIXY_MULTIPLIER 1.75
 //SOLENOID
 #define KICK true
 
@@ -85,16 +85,7 @@
 
 //Kicker
 #define KICKER_DELAY 1000L
-#if ROBOT
-  // o_bot
-  #define KICK_THRESHOLD 250
-#else
-  // P2_bot
-  #define KICK_THRESHOLD 980
-#endif
-
-
-
+#define KICK_THRESHOLD 0
 //Defender
 #define DEFENDER_SPEED 40
 #define DEFENDER_MULTIPLIER 2.30

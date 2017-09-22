@@ -11,6 +11,15 @@
 #include <LightTracker.h>
 #include <Blink.h>
 
+#if ROBOT
+  // o_bot
+  #define KICK_THRESHOLD 250
+#else
+  // P2_bot
+  #define KICK_THRESHOLD 980
+#endif
+
+
 volatile uint16_t dataOut[DATA_LENGTH] = {};
 volatile uint16_t dataIn[DATA_LENGTH] = {};
 
