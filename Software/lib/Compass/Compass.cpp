@@ -8,7 +8,7 @@ void Compass::init(){
 
     I2CwriteByte(IMU_ADDRESS, 29, 0x06);
     I2CwriteByte(IMU_ADDRESS, 26, 0x06);
-    I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_500_DPS);
+    I2CwriteByte(IMU_ADDRESS, 27, GYRO_FULL_SCALE_1000_DPS);
     I2CwriteByte(IMU_ADDRESS, 28, ACC_FULL_SCALE_2_G);
     I2CwriteByte(IMU_ADDRESS, 0x37, 0x02);
     I2CwriteByte(MAG_ADDRESS, 0x0A, 0x16);
@@ -66,15 +66,15 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
 {
 
   // Set register address
-  Wire1.beginTransmission(Address);
-  Wire1.write(Register);
-  Wire1.endTransmission();
+  Wire.beginTransmission(Address);
+  Wire.write(Register);
+  Wire.endTransmission();
 
   // Read Nbytes
-  Wire1.requestFrom(Address, Nbytes);
+  Wire.requestFrom(Address, Nbytes);
   uint8_t index=0;
-  while (Wire1.available()){
-    Data[index]=Wire1.read();
+  while (Wire.available()){
+    Data[index]=Wire.read();
     index++;
   }
 }
@@ -83,8 +83,8 @@ void Compass::I2Cread(uint8_t Address, uint8_t Register, uint8_t Nbytes, uint8_t
 void Compass::I2CwriteByte(uint8_t Address, uint8_t Register, uint8_t Data)
 {
   // Set register address
-  Wire1.beginTransmission(Address);
-  Wire1.write(Register);
-  Wire1.write(Data);
-  Wire1.endTransmission();
+  Wire.beginTransmission(Address);
+  Wire.write(Register);
+  Wire.write(Data);
+  Wire.endTransmission();
 }

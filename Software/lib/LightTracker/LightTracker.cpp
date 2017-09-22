@@ -16,7 +16,6 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
       double absLight = mod(lightAngle - compassAngle, 360);
       double absTsop = mod(tsopAngle - compassAngle, 360);
 
-      // Serial.println(absLight);
       // Serial.println(absTsop);
       // Serial.println(smallestAngleBetween(absLight, absTsop));
       // Serial.println(compassAngle);
@@ -94,6 +93,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
 
         speed = SPEED_OVER_LINE;
         // go back in
+        Serial.println(lineInitDirection);
         return lineInitDirection + compassAngle;
 
       }

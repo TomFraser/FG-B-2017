@@ -2,19 +2,22 @@
 #define Config_h
 
 //Critical Stuff
+#define CONST_K 3
+#define CONST_J 52
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT P2_bot
+#define ROBOT O_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
 #define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit
 //ORBIT
-#define TSOP_ORBIT_FRONT_DENOMINATOR 120
+#define TSOP_ORBIT_FRONT_DENOMINATOR 100
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 65
 //MOTORS
-#define SPEED_VAL 60
+#define SPEED_VAL 70
+#define FORWARD_SPEED 70
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 40
 #define SPEED_SLIDE 40
@@ -44,7 +47,7 @@
 #define TSOP_FORWARD_UPPER 300 //Simple Orbit
 #define TSOP_ORBIT_ANGLE 45
 #define TSOP_ORBIT_ANGLE_15 10
-#define TSOP_MIN_THRESHOLD 110
+#define TSOP_MIN_THRESHOLD 60
 #define TSOP_VARIABLE_ANGLE 18
 #define TSOP_MIN_VAL_INDEX 180 //THIS ONE TO ORBIT CLOSE
 
@@ -62,11 +65,11 @@
 #define SS_MULTIPLIER 1.00
 
 //Compass
-#define COMPASS_CALIBRATION_TIME 2000
+#define COMPASS_CALIBRATION_TIME 500
 #define COMPASS_CALIBRATION_NUMBER 50
 #define COMPASS_MULTIPLIER 1.5
-#define COMPASS_ABS_MAX 60
-#define COMPASS_ABS_MAX_NEG -60
+#define COMPASS_ABS_MAX 150
+#define COMPASS_ABS_MAX_NEG -150
 
 //SPI
 #define DATA_LENGTH 1
@@ -83,8 +86,8 @@
 
 //Pixy
 #define CANT_SEE_GOAL 65506
-#define PIXY_ABS_MAX 60 //80
-#define PIXY_ABS_MAX_NEG -60 //-80
+#define PIXY_ABS_MAX 40 //80
+#define PIXY_ABS_MAX_NEG -40 //-80
 
 //Kicker
 #define KICKER_DELAY 1000L

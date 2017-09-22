@@ -26,7 +26,7 @@ void ReadTSOPS::read(){
     // values[6] = 0;
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(1000);
+    delayMicroseconds(500);
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
         if(values[i] < TSOP_MIN_THRESHOLD){
@@ -59,13 +59,17 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-int ReadTSOPS::moveAngle(){
+void ReadTSOPS::moveAngle(){
     read();
     angleToBall = index * 30.00;
 
-    return (int)calculateOrbitSimple(angleToBall, false);
+    bestAngle = (int)calculateOrbitSimple(angleToBall, false);
     // return (int)calculateOrbitComplex(angleToBall);
     // return (int)calculateTSOPAverage();
+}
+
+int ReadTSOPS::getAngle(){
+    return bestAngle;
 }
 
 double ReadTSOPS::calculateStrength(){
