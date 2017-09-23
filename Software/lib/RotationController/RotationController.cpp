@@ -38,21 +38,25 @@ double RotationController::rotate(int rotationData){
     compassHeading = (rotationData * COMPASS_MULTIPLIER);
     compassHeading = PIDRotation(compassHeading);
 
-    if(millis() > prevTime + 30){
-        if(pixy.getBlocks(1)){
+    if(millis() > prevTime + 20){
+        if(pixy.getBlocks()){
             int pixyHeading = calcPixy();
             pixyHeading = pixyHeading * PIXY_MULTIPLIER;
 
             if(pixyHeading <= 0){
                 if(pixyHeading < PIXY_ABS_MAX_NEG){
+                    prevPixy = PIXY_ABS_MAX_NEG;
                     return PIXY_ABS_MAX_NEG;
                 }else{
+                    prevPixy = pixyHeading;
                     return pixyHeading;
                 }
             }else{
                 if(pixyHeading > PIXY_ABS_MAX){
+                    prevPixy = PIXY_ABS_MAX;
                     return PIXY_ABS_MAX;
                 }else{
+                    prevPixy = pixyHeading;
                     return pixyHeading;
                 }
             }
@@ -81,7 +85,7 @@ double RotationController::rotate(int rotationData){
         // }else{
         //     return __return;
         // }
-        return 0.00;
+        return prevPixy/2.25;
     }
 }
 

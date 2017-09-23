@@ -23,7 +23,7 @@
 #define SPEED_SLIDE 40
 
 //PIXY
-#define PIXY_MULTIPLIER 1.75
+#define PIXY_MULTIPLIER 2
 //SOLENOID
 #define KICK true
 
