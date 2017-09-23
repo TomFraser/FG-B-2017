@@ -9,7 +9,10 @@ int numGreenCycles = 10000;
 int numWhiteCycles = 20000;
 
 
-int offset = -40;
+// int offset = -40;
+double percentage = 0.2;
+
+// MADE A CHANGE TO THE ALGORITHM - MAKE SURE IT WORKS
 
 int greenMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int whiteMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
@@ -123,7 +126,8 @@ void loop(){
     int calb[19];
     for(int i=0; i<19; i++)
     {
-      calb[i] = greenMax[i] + (int)(diff[i]/2) + offset;
+      // calb[i] = greenMax[i] + (int)(diff[i]/2) + offset;
+      calb[i] = greenMax[i] + (int)((diff[i]/2)*percentage);
     }
 
     #if !ROBOT
