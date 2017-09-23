@@ -78,11 +78,7 @@ void Light::readLight(){
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
       if(thresholds[i] != -1){
         int val = analogRead(lightSensors[i]);
-        if(val >= brickedThreshold){
-          seeingWhite[i] = false;
-          error = true;
-        }
-        else if(val >= thresholds[i]){
+        if(val >= thresholds[i]){
             seeingWhite[i] = true;
             detectedNumber++;
         }
