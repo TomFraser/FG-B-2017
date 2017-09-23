@@ -6,7 +6,7 @@
 #define CONST_J 52
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -14,7 +14,7 @@
 //ORBIT
 #define TSOP_ORBIT_FRONT_DENOMINATOR 100
 #define TSOP_ORBIT_FRONT_RATIO 90
-#define TSOP_ORBIT_SIDE_RATIO 65
+#define TSOP_ORBIT_SIDE_RATIO 120
 //MOTORS
 #define SPEED_VAL 70
 #define FORWARD_SPEED 70

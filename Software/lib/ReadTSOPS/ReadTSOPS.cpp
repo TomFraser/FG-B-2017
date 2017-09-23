@@ -120,21 +120,21 @@ double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
     //     }
         return angleIn;
     }else{
-        // if(angleIn == -30){
-        //     return angleIn;
-        // }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-        //     return angleIn < 180 ? (angleIn + (angleIn/TSOP_ORBIT_FRONT_DENOMINATOR * TSOP_ORBIT_FRONT_RATIO)) : (angleIn - ((360-angleIn)/TSOP_ORBIT_FRONT_DENOMINATOR * TSOP_ORBIT_FRONT_RATIO));
-        // }else{
-        //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_SIDE_RATIO) : (angleIn - TSOP_ORBIT_SIDE_RATIO);
-        // }
-
         if(angleIn == -30){
             return angleIn;
         }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
-            return angleIn < 180 ? (angleIn + (-0.5*cos((angleIn*PI)/60) + 0.5)) : (angleIn - (-0.5*cos((angleIn*PI)/60) + 0.5));
+            return angleIn < 180 ? (angleIn + (angleIn/TSOP_ORBIT_FRONT_DENOMINATOR * TSOP_ORBIT_FRONT_RATIO)) : (angleIn - ((360-angleIn)/TSOP_ORBIT_FRONT_DENOMINATOR * TSOP_ORBIT_FRONT_RATIO));
         }else{
             return angleIn < 180 ? (angleIn + TSOP_ORBIT_SIDE_RATIO) : (angleIn - TSOP_ORBIT_SIDE_RATIO);
         }
+
+        // if(angleIn == -30){
+        //     return angleIn;
+        // }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        //     return angleIn < 180 ? (angleIn + (-0.5*cos((angleIn*PI)/60) + 0.5)) : (angleIn - (-0.5*cos((angleIn*PI)/60) + 0.5));
+        // }else{
+        //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_SIDE_RATIO) : (angleIn - TSOP_ORBIT_SIDE_RATIO);
+        // }
     }
 }
 
