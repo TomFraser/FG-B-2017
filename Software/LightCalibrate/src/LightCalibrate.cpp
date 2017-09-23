@@ -10,7 +10,7 @@ int numWhiteCycles = 20000;
 
 
 // int offset = -40;
-double percentage = 0.3;
+double percentage = 0.2;
 
 // MADE A CHANGE TO THE ALGORITHM - MAKE SURE IT WORKS
 

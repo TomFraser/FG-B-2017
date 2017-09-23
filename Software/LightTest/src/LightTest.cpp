@@ -9,7 +9,7 @@ bool results[19];
 int threshold = 0;
 int counter = 0;
 
-int mode = 1; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
+int mode = 0; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
 
 
 void setup(){
@@ -37,6 +37,9 @@ void loop(){
         Serial.print(" ");
       }
       if(lightValues[i]<100){
+        Serial.print(" ");
+      }
+      if(lightValues[i] < 1000){
         Serial.print(" ");
       }
       Serial.print(" ");
