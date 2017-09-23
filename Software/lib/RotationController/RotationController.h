@@ -36,6 +36,7 @@ public:
 
     long lastTime = 0;
     double lastAngle = 0;
+    int prevPixy = 0;
 
 private:
     PixyI2C pixy;
