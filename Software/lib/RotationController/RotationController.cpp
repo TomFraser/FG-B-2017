@@ -24,6 +24,12 @@ double RotationController::rawCompass(){
 
 double RotationController::calcPixy(){
         blockX = pixy.blocks[0].x;
+        // Serial.print("W: "); Serial.print(pixy.blocks[0].width); Serial.print(" H: "); Serial.println(pixy.blocks[0].height);
+        // // if(pixy.blocks[0].width > 100 && pixy.blocks[0].height < 45){
+        // if(pixy.blocks[0].height < 50){
+        //   Serial.println("doing pixy");
+        // }
+
         prevTime = millis();
         prevReturn = -1*(PIXY_CENTRE_X - blockX);
         return -1*(PIXY_CENTRE_X - blockX);
@@ -39,6 +45,7 @@ double RotationController::rotate(int rotationData){
     compassHeading = PIDRotation(compassHeading);
 
     if(millis() > prevTime + 20){
+        // if(pixy.getBlocks() && pixy.blocks[0].height < 50){
         if(pixy.getBlocks()){
             int pixyHeading = calcPixy();
             pixyHeading = pixyHeading * PIXY_MULTIPLIER;

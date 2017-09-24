@@ -90,6 +90,17 @@ void Light::readLight(){
         seeingWhite[i] = false;
       }
     }
+
+    // A thing for the sensors that dont work
+    #if ROBOT
+      if(seeingWhite[3] && seeingWhite[5]){
+        seeingWhite[4] = true;
+      }
+    #else
+      if(seeingWhite[16] && seeingWhite[18]){
+        seeingWhite[17] = true;
+      }
+    #endif
 }
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]

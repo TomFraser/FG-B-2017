@@ -8,6 +8,10 @@ int LightTracker::getSpeed(){
   return speed;
 }
 
+double LightTracker::adjustLightReturn(double lightAngle, double compassAngle){
+  return mod(lightAngle + compassAngle, 360);
+}
+
 double LightTracker::getDirection(double lightAngle, double tsopAngle, double compassAngle){
     if(lightAngle != 65506.00){
       // if we can see the line
@@ -30,7 +34,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
       lastAngle = absLight;
       wasSeeingLine = true;
 
-      if(smallestAngleBetween(lineInitDirection, absLight) < 60){
+      if(smallestAngleBetween(lineInitDirection, absLight) < ANGLE_CUTOFF){
         // we might have moved a bit (ie maybe hit a corner or something) - set a new heading
         lineInitDirection = absLight;
         wasSeeingLine = true;
@@ -62,13 +66,13 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
         else{
           // if tsops are way out -> go at speed on line (currently stop)
           speed = SPEED_ON_LINE;
-          return lineInitDirection + compassAngle;
+          return adjustLightReturn(lineInitDirection, compassAngle);
         }
       }
       else{
         speed = SPEED_OVER_LINE;
         // flipped over the line, this is priority (adusted for compass)
-        return lineInitDirection + compassAngle;
+        return adjustLightReturn(lineInitDirection, compassAngle);
       }
 
     }
@@ -93,8 +97,7 @@ double LightTracker::getDirection(double lightAngle, double tsopAngle, double co
 
         speed = SPEED_OVER_LINE;
         // go back in
-        Serial.println(lineInitDirection);
-        return lineInitDirection + compassAngle;
+        return adjustLightReturn(lineInitDirection, compassAngle);
 
       }
     }

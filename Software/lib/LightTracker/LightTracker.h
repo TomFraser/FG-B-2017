@@ -15,6 +15,8 @@ public:
     double getDirection(double lightAngle, double tsopAngle, double compassAngle);
     int getSpeed();
 private:
+    double adjustLightReturn(double lightAngle, double compassAngle);
+
     // for tracking
     double lineInitDirection = 0;
 
