@@ -16,7 +16,7 @@
   #define KICK_THRESHOLD 300
 #else
   // P2_bot
-  #define KICK_THRESHOLD 1000
+  #define KICK_THRESHOLD 980
 #endif
 
 
