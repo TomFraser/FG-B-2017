@@ -13,10 +13,10 @@
 
 #if ROBOT
   // o_bot
-  #define KICK_THRESHOLD 250
+  #define KICK_THRESHOLD 300
 #else
   // P2_bot
-  #define KICK_THRESHOLD 980
+  #define KICK_THRESHOLD 1000
 #endif
 
 

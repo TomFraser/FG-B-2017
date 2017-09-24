@@ -29,6 +29,8 @@ void ReadTSOPS::read(){
     delayMicroseconds(500);
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
+        // Serial.print(values[i]); Serial.print(" ");
+
         if(values[i] < TSOP_MIN_THRESHOLD){
             values[i] = 0;
         }
@@ -42,8 +44,9 @@ void ReadTSOPS::read(){
         values[i] = 0;
     }
     bestSensor = index;
+    // Serial.println();
     // Serial.println(bestSensor);
-    // Serial.println(value_index);
+    // Serial.print(value_index); Serial.print(" ");Serial.println();
 }
 
 void ReadTSOPS::reset(){
