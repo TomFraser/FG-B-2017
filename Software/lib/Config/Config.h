@@ -6,7 +6,7 @@
 #define CONST_J 52
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -25,7 +25,7 @@
 //PIXY
 #define PIXY_MULTIPLIER 2
 //SOLENOID
-#define KICK false
+#define KICK true
 
 //DELAY
 #define MAIN_LOOP_DELAY 5
@@ -75,6 +75,7 @@
 #define LIGHTSENSOR_NUM 19
 #define DETECTED_NUMBER_LIGHT 3
 #define NUM_COUNTBACK 2
+#define ANGLE_CUTOFF 70
 #define LIGHT_BOUND1 60
 #define LIGHT_BOUND2 120
 

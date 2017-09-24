@@ -81,9 +81,11 @@ void loop(){
     double compass = (rotationData-180);
 
     //Calulating absolute angle
-    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
     double finalDirection = lightTracker.getDirection(lightData, tsopData, compass);
     int speed = lightTracker.getSpeed();
+
+    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    // Serial.println(finalDirection);
 
     //Moving on angle
     motorController.playOffense(finalDirection, 65506.0, rotation, speed);
