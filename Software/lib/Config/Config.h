@@ -16,8 +16,8 @@
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 50
 //MOTORS
-#define SPEED_VAL 100
-#define FORWARD_SPEED 100
+#define SPEED_VAL 70
+#define FORWARD_SPEED 80
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 40
 #define SPEED_SLIDE 40
@@ -80,8 +80,8 @@
 
 //Pixy
 #define CANT_SEE_GOAL 65506
-#define PIXY_ABS_MAX 40 //80
-#define PIXY_ABS_MAX_NEG -40 //-80
+#define PIXY_ABS_MAX 60 //80
+#define PIXY_ABS_MAX_NEG -60 //-80
 
 //Kicker
 #define KICKER_DELAY 1000L
