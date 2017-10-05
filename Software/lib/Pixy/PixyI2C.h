@@ -34,8 +34,8 @@ class LinkI2C
 {
 public:
   void init(){
-      Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 400000);
-      Wire1.setDefaultTimeout(200000); // 200ms
+    //   Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 100000);
+    //   Wire1.setDefaultTimeout(200000); // 200ms
   }
   void setArg(uint16_t arg){
     if (arg==PIXY_DEFAULT_ARGVAL)

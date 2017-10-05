@@ -9,14 +9,13 @@ bool results[19];
 int threshold = 0;
 int counter = 0;
 
+int mode = 2; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
+
 
 void setup(){
     Light.init();
 
     Serial.begin(9600);
-    delay(3000);
-    Serial.println("end setup");
-
 
     //um what the fuck is this lol
     //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
@@ -28,53 +27,65 @@ void setup(){
 }
 
 void loop(){
-    // // === Print out raw values ===
-    // Light.getVals(lightValues);
-    // for(int i=0; i < 19; i++){
-    //   // if(i==3){
-    //   //   Serial.print("fuk");
-    //   // }
-    //   // else{
-    //   //   Serial.print(lightValues[i]);
-    //   // }
-    //   Serial.print(lightValues[i]);
-    //
-    //   if(lightValues[i]<10){
-    //     Serial.print(" ");
-    //   }
-    //   if(lightValues[i]<100){
-    //     Serial.print(" ");
-    //   }
-    //   Serial.print(" ");
-    // }
-    // Serial.println();
+  if(mode == 0){
+    // === Print out raw values ===
+    Light.getVals(lightValues);
+    for(int i=0; i < 19; i++){
+      Serial.print(lightValues[i]);
 
-    // === Print out on white ===
+      if(lightValues[i]<10){
+        Serial.print(" ");
+      }
+      if(lightValues[i]<100){
+        Serial.print(" ");
+      }
+      if(lightValues[i] < 1000){
+        Serial.print(" ");
+      }
+      Serial.print(" ");
+    }
+    Serial.println();
+    delay(100);
+  }
+  else if(mode == 1){
+    // // === Print out on white ===
     Light.readLight();
     Light.getOnWhite(results);
     for(int i=0; i < 19; i++){
-      if(results[1] > 0){
-        Serial.print(results[i]);
-      }
-      else{
-        Serial.print(" ");
-      }
+      // if(results[1] > 0){
+      //   Serial.print(results[i]);
+      // }
+      // else{
+      //   Serial.print(" ");
+      // }
       Serial.print(results[i]);
       Serial.print("   ");
     }
     Serial.println();
+  }
+  else if(mode == 2){
+    Light.readLight();
+    Serial.println(Light.getAngle());
+  }
+  else if(mode == 3){
+    // // === Print out on white ===
+    Light.readLight();
+    Light.getOnWhite(results);
+    bool print = false;
 
-    // === Print out other stuff
-    // Light.readLight();
-    // double lightAngle = Light.getDirection();
-    // Serial.println(lightAngle);
-    // if(lightAngle > -1){
-    //   Serial.println(counter);
-    //   Serial.println(lightAngle);
-    //   counter = 0;
-    // }
-    // else{
-    //   counter ++;
-    // }
+    for(int i=0; i < 19; i++){
+      if(results[i] > 0){
+        print = true;
+      }
+    }
 
+    if(print){
+      for(int i=0; i < 19; i++){
+        Serial.print(results[i]);
+        Serial.print("   ");
+      }
+      Serial.println();
+
+    }
+  }
 }

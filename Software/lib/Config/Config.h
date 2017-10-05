@@ -2,25 +2,35 @@
 #define Config_h
 
 //Critical Stuff
+#define CONST_K 3
+#define CONST_J 52
+
+//ROBOT NUM (0 is P2_bot, 1 is O_bot)
+#define ROBOT P2_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
 #define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit
 //ORBIT
-#define TSOP_ORBIT_FRONT_DENOMINATOR 120
+#define TSOP_ORBIT_FRONT_DENOMINATOR 100
 #define TSOP_ORBIT_FRONT_RATIO 90
-#define TSOP_ORBIT_SIDE_RATIO 65
+#define TSOP_ORBIT_SIDE_RATIO 50
 //MOTORS
-#define SPEED_VAL 60
-#define COME_BACK_IN_SPD 30
+#define SPEED_VAL 90
+#define FORWARD_SPEED 100
+#define SPEED_ON_LINE 0
+#define SPEED_OVER_LINE 40
+#define SPEED_SLIDE 40
+
 //PIXY
-#define PIXY_MULTIPLIER 1
+#define PIXY_MULTIPLIER 2
 //SOLENOID
-#define KICK false
+#define KICK true
+
 //DELAY
 #define MAIN_LOOP_DELAY 5
 
-//-----------------------------------------------------------------------------
+//----------------------------------------------------------------------------
 
 //Tsops
 #define TSOP_NUM 12
@@ -31,7 +41,7 @@
 #define TSOP_FORWARD_UPPER 300 //Simple Orbit
 #define TSOP_ORBIT_ANGLE 45
 #define TSOP_ORBIT_ANGLE_15 10
-#define TSOP_MIN_THRESHOLD 110
+#define TSOP_MIN_THRESHOLD 60
 #define TSOP_VARIABLE_ANGLE 18
 #define TSOP_MIN_VAL_INDEX 180 //THIS ONE TO ORBIT CLOSE
 
@@ -49,11 +59,11 @@
 #define SS_MULTIPLIER 1.00
 
 //Compass
-#define COMPASS_CALIBRATION_TIME 2000
+#define COMPASS_CALIBRATION_TIME 500
 #define COMPASS_CALIBRATION_NUMBER 50
-#define COMPASS_MULTIPLIER 0.85
-#define COMPASS_ABS_MAX 40
-#define COMPASS_ABS_MAX_NEG -40
+#define COMPASS_MULTIPLIER 1.5
+#define COMPASS_ABS_MAX 150
+#define COMPASS_ABS_MAX_NEG -150
 
 //SPI
 #define DATA_LENGTH 1
@@ -63,22 +73,25 @@
 
 //Lightsensors
 #define LIGHTSENSOR_NUM 19
-#define LIGHTSENSOR_AVG 100
-#define LIGHTSENSOR_THRESHOLD 80
 #define DETECTED_NUMBER_LIGHT 3
 #define NUM_COUNTBACK 2
+#define ANGLE_CUTOFF 45
+#define LIGHT_BOUND1 60
+#define LIGHT_BOUND2 120
 
 //Pixy
 #define CANT_SEE_GOAL 65506
-#define PIXY_ABS_MAX 40 //80
-#define PIXY_ABS_MAX_NEG -40 //-80
+#define PIXY_ABS_MAX 60 //80
+#define PIXY_ABS_MAX_NEG -60 //-80
 
 //Kicker
 #define KICKER_DELAY 1000L
-#define LIGHTGATE_THRESHOLD 250
-
+#define KICK_THRESHOLD 0
 //Defender
 #define DEFENDER_SPEED 40
 #define DEFENDER_MULTIPLIER 2.30
+
+#define P2_bot 0
+#define O_bot 1
 
 #endif

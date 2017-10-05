@@ -18,7 +18,7 @@ void Kicker::kickerReady(){
 }
 
 void Kicker::checkLightGate(){
-    if(analogRead(LIGHTGATE_PIN) <= LIGHTGATE_THRESHOLD && status == kickerStatus::waitingForLightGate){
+    if(analogRead(LIGHTGATE_PIN) <= KICK_THRESHOLD && status == kickerStatus::waitingForLightGate){
         status = kickerStatus::ready;
     }
 }
@@ -38,7 +38,7 @@ bool Kicker::controlKick(){
 }
 
 bool Kicker::hasBall(){
-    if(analogRead(LIGHTGATE_PIN) <= LIGHTGATE_THRESHOLD){
+    if(analogRead(LIGHTGATE_PIN) <= KICK_THRESHOLD){
         return true;
     }else{
         return false;

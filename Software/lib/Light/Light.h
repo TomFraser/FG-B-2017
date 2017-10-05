@@ -1,5 +1,5 @@
-#ifndef LightController_h
-#define LightController_h
+#ifndef Light_h
+#define Light_h
 
 #include <Config.h>
 #include <Pins.h>
@@ -32,8 +32,8 @@ public:
     //Get current angle to avoid line
     double getAngle();
 
-    //Get processed direction to move
-    double getDirection();
+    // get if theres an error (if a sensor has bricked)
+    bool getError();
 
 private:
     // Function Definitions
@@ -42,21 +42,28 @@ private:
     void singleCluster(cluster *, int, int);
 
     //Find all the clusters
-    void findCluster(cluster *);
-
-    //Find what quadrant an angle is in
-    int identifyQuadrant(double);
+    void findClusters(cluster *);
 
     // Other Stuff
 
     //init stuff
-    int thresholds[19];
+    #if ROBOT
+      //o_bot
+      int thresholds[19] = {1000, 1000, 1000, 1000, 900, 1000, 1000, 1000, 1000, 900, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
+    #else
+      //p2_bot
+      int thresholds[19] = {1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000, -1, 1000};
+    #endif
+
     int lightSensors[19];
+
+    //bricked threshold
+    int brickedThreshold = 700;
+
+    bool error = false;
 
     //for reading light
     int detectedNumber;
-
-    bool onWhite = false;
 
     // bool seeingWhite[19] = {true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     bool seeingWhite[19];
@@ -84,13 +91,7 @@ private:
         {light19x, light19y}
     };
 
-    // For line tracking
-    bool seeingLine = false;
-    double lineInitDirection = 0;
-    double lastLightVal = 0;
-
     //For angle countback and filtering
     double countback[NUM_COUNTBACK];
-
 };
 #endif

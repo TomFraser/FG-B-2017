@@ -26,9 +26,11 @@ void ReadTSOPS::read(){
     // values[6] = 0;
     digitalWrite(POWER_PIN_1, LOW);
     digitalWrite(POWER_PIN_2, LOW);
-    delayMicroseconds(1000);
+    delayMicroseconds(500);
     for(int i = 0; i < TSOP_NUM; i++){
         // Filtering
+        // Serial.print(values[i]); Serial.print(" ");
+
         if(values[i] < TSOP_MIN_THRESHOLD){
             values[i] = 0;
         }
@@ -42,8 +44,9 @@ void ReadTSOPS::read(){
         values[i] = 0;
     }
     bestSensor = index;
+    // Serial.println();
     // Serial.println(bestSensor);
-    // Serial.println(value_index);
+    // Serial.print(value_index); Serial.print(" ");Serial.println();
 }
 
 void ReadTSOPS::reset(){
@@ -59,13 +62,17 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-int ReadTSOPS::moveAngle(){
+void ReadTSOPS::moveAngle(){
     read();
     angleToBall = index * 30.00;
 
-    return (int)calculateOrbitSimple(angleToBall, false);
+    bestAngle = (int)calculateOrbitSimple(angleToBall, false);
     // return (int)calculateOrbitComplex(angleToBall);
     // return (int)calculateTSOPAverage();
+}
+
+int ReadTSOPS::getAngle(){
+    return bestAngle;
 }
 
 double ReadTSOPS::calculateStrength(){
@@ -123,6 +130,14 @@ double ReadTSOPS::calculateOrbitSimple(double angleIn, bool useFirst){
         }else{
             return angleIn < 180 ? (angleIn + TSOP_ORBIT_SIDE_RATIO) : (angleIn - TSOP_ORBIT_SIDE_RATIO);
         }
+
+        // if(angleIn == -30){
+        //     return angleIn;
+        // }else if(angleIn <= TSOP_FORWARD_LOWER || angleIn >= TSOP_FORWARD_UPPER){
+        //     return angleIn < 180 ? (angleIn + (-0.5*cos((angleIn*PI)/60) + 0.5)) : (angleIn - (-0.5*cos((angleIn*PI)/60) + 0.5));
+        // }else{
+        //     return angleIn < 180 ? (angleIn + TSOP_ORBIT_SIDE_RATIO) : (angleIn - TSOP_ORBIT_SIDE_RATIO);
+        // }
     }
 }
 
