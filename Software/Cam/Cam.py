@@ -41,6 +41,7 @@ ORBIT_SIDE_RATIO = 50
 ORBIT_FORWARD_LOWER = 90
 ORBIT_FORWARD_UPPER = 270
 
+
 #Orbit Function
 def calcOrbit(angle, strength):
     if strength > strengthThreshold or angle == 65506:
