@@ -20,8 +20,10 @@ bool angleIsInside(double angleBoundCounterClockwise, double angleBoundClockwise
     }
 }
 
+// angleBetween(from, to) - going clockwise
 double angleBetween(double angleCounterClockwise, double angleClockwise) {
     return mod(angleClockwise - angleCounterClockwise, 360);
+    // mod(to - from, 360)
 }
 
 double smallestAngleBetween(double angle1, double angle2) {

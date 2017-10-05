@@ -19,6 +19,7 @@ volatile uint16_t dataIn[DATA_LENGTH] = {};
 volatile uint16_t dataOut[2] = {};
 
 void transfer(){
+    // Serial.println(compass.getHeading());
     if(SPI0_POPR <= 255){
         SPI0_PUSHR_SLAVE = (compass.getHeading()+180);
         SPI0_SR |= SPI_SR_RFDF;

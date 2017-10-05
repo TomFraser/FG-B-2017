@@ -6,7 +6,7 @@
 #define CONST_J 52
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT P2_bot
+#define ROBOT O_bot
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -19,8 +19,8 @@
 #define SPEED_VAL 90
 #define FORWARD_SPEED 100
 #define SPEED_ON_LINE 0
-#define SPEED_OVER_LINE 40
-#define SPEED_SLIDE 40
+#define SPEED_OVER_LINE 60
+#define SPEED_SLIDE 60
 
 //PIXY
 #define PIXY_MULTIPLIER 2
@@ -76,8 +76,12 @@
 #define DETECTED_NUMBER_LIGHT 3
 #define NUM_COUNTBACK 2
 #define ANGLE_CUTOFF 45
-#define LIGHT_BOUND1 60
-#define LIGHT_BOUND2 120
+#define IDENTIFY_THRESHOLD 45
+#define SLIDE_ANGLE 80
+#define STOP_BOUND 150
+#define SIDE_STOP_BOUND_MIN 135
+#define SIDE_STOP_BOUND_MAX 160
+
 
 //Pixy
 #define CANT_SEE_GOAL 65506
