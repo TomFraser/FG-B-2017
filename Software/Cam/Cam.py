@@ -1,9 +1,10 @@
 import sensor, image, time, math, pyb
 from pyb import SPI, Pin, LED, delay, ExtInt, I2C
-from math import atan2, sqrt, pi
+import ustruct
+from math import atan2, sqrt, pi, log
 
 #Ball Thresholds
-thresholds = [(55, 83, 0, 22, 44, 127)]
+thresholds = [(81, 38, 35, 63, -25, 69)]
 
 #LED's
 ledRed = LED(1)
@@ -16,9 +17,7 @@ ledIR = LED(4)
 ledIR.off()
 
 #I2C Stuff
-i2c = pyb.I2C(2, pyb.I2C.SLAVE, addr=0x12)
-i2c.deinit()
-i2c = pyb.I2C(2, pyb.I2C.SLAVE, addr=0x12)
+i2c = pyb.I2C(2, pyb.I2C.MASTER, baudrate=20000)
 
 #Orbit Constants
 strengthThreshold = 40
@@ -48,7 +47,7 @@ def calcOrbit(angle, strength):
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QQVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
-sensor.skip_frames(time = 500) #Start Delay
+sensor.skip_frames(time = 3000) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 clock = time.clock()
@@ -69,7 +68,7 @@ while(True):
 
     #Find Ball
     img = sensor.snapshot()
-    for blob in img.find_blobs([thresholds[0]], pixels_threshold=10, area_threshold=10, merge=True):
+    for blob in img.find_blobs([thresholds[0]], pixels_threshold=2, area_threshold=2, merge=True):
         img.draw_cross(blob.cx(), blob.cy())
         x = -(blob.cx() - 80)
         y = blob.cy() - 60
@@ -82,23 +81,18 @@ while(True):
         angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     orbitAngle = calcOrbit(angle, strength)
-
     try:
-        i2c.send(ustruct.pack("<h", len(orbitAngle)), timeout=100)
-        try:
-            i2c.send(orbitAngle, timeout=100)
-        except OSError as err:
-            pass
-    execpt OSError as err:
-        pass
+        i2c.send(int(orbitAngle), timeout=100, addr=0x01)
+    except OSError as err:
+        print(err.args[0])
 
     #Prints
-    print("Angle:")
-    print(angle)
-    print()
-    print("Strength:")
-    print(strength)
-    print()
-    print("Orbit Angle:")
-    print(orbitAngle)
-    print(clock.fps())
+    #print("Angle:")
+    #print(angle)
+    #print()
+    #print("Strength:")
+    #print(strength)
+    #print()
+    #print("Orbit Angle:")
+    #print(orbitAngle)
+    #print(clock.fps())
