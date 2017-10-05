@@ -16,27 +16,9 @@ ledIR = LED(4)
 ledIR.off()
 
 #I2C Stuff
-i2c = I2C(2)
-i2c.init(I2C.SLAVE, baudrate=20000, addr=0x42)
-
-
-
-
-#SPI Stuff
-#Init Bus as Slave
-#spi = SPI(2, SPI.SLAVE, baudrate=600000, polarity=1, phase=0, crc=0x7)
-
-#spi.init(SPI.SLAVE, )
-
-#Interupt Function
-#def spiSend():
-#    print("called")
-#    spi.send(52,timeout=200)
-
-#Attach Interupt
-#Interupt = ExtInt(Pin('P4'), pyb.ExtInt.IRQ_FALLING, pyb.Pin.PULL_UP, spiSend)
-
-
+i2c = pyb.I2C(2, pyb.I2C.SLAVE, addr=0x12)
+i2c.deinit()
+i2c = pyb.I2C(2, pyb.I2C.SLAVE, addr=0x12)
 
 #Orbit Constants
 strengthThreshold = 40
@@ -100,6 +82,15 @@ while(True):
         angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     orbitAngle = calcOrbit(angle, strength)
+
+    try:
+        i2c.send(ustruct.pack("<h", len(orbitAngle)), timeout=100)
+        try:
+            i2c.send(orbitAngle, timeout=100)
+        except OSError as err:
+            pass
+    execpt OSError as err:
+        pass
 
     #Prints
     print("Angle:")
