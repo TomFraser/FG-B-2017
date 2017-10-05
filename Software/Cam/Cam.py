@@ -1,5 +1,5 @@
 import sensor, image, time, math, pyb
-from pyb import SPI, Pin, LED, delay, ExtInt
+from pyb import SPI, Pin, LED, delay, ExtInt, I2C
 from math import atan2, sqrt, pi
 
 #Ball Thresholds
@@ -14,6 +14,11 @@ ledBlue = LED(3)
 ledBlue.on()
 ledIR = LED(4)
 ledIR.off()
+
+#I2C Stuff
+i2c = I2C(2)
+i2c.init(I2C.SLAVE, baudrate=20000, addr=0x42)
+
 
 
 
