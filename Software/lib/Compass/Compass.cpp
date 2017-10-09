@@ -35,7 +35,7 @@ Vector3D Compass::read(){
     uint8_t buffer[2];
     I2Cread(IMU_ADDRESS, 0x47, 2, buffer);
     int16_t gz = buffer[0] << 8 | buffer[1];
-    Vector3D returnVector = {0, 0, convertRawGyro(gz)};
+    Vector3D returnVector = {0, 0, convertRawGyro(gz) * 2};
     return returnVector;
 }
 
