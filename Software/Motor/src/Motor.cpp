@@ -85,8 +85,8 @@ void loop(){
     int speed = lightTracker.getSpeed();
 
     // Serial.println(compass);
-    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
-    // Serial.println(finalDirection);
+    Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    Serial.println(finalDirection);
 
     //Moving on angle
     motorController.playOffense(finalDirection, 65506.0, rotation, speed);

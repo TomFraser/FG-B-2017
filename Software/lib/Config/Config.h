@@ -20,7 +20,7 @@
 #define FORWARD_SPEED 80
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 60
-#define SPEED_SLIDE 60
+#define SPEED_SLIDE 40
 
 //PIXY
 #define PIXY_MULTIPLIER 2
