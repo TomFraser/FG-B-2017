@@ -1,5 +1,5 @@
 import sensor, image, time, math, pyb
-from pyb import SPI, Pin, LED, delay, ExtInt, I2C
+from pyb import *
 import ustruct
 from math import atan2, sqrt, pi, log
 
@@ -16,8 +16,8 @@ ledBlue.on()
 ledIR = LED(4)
 ledIR.off()
 
-#I2C Stuff
-i2c = pyb.I2C(2, pyb.I2C.MASTER, baudrate=20000)
+#SPI Stuff
+
 
 #Orbit Constants
 strengthThreshold = 40
@@ -47,7 +47,7 @@ def calcOrbit(angle, strength):
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QQVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
-sensor.skip_frames(time = 3000) #Start Delay
+sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 clock = time.clock()
@@ -68,10 +68,11 @@ while(True):
 
     #Find Ball
     img = sensor.snapshot()
+
     for blob in img.find_blobs([thresholds[0]], pixels_threshold=2, area_threshold=2, merge=True):
         img.draw_cross(blob.cx(), blob.cy())
-        x = -(blob.cx() - 80)
-        y = blob.cy() - 60
+        x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        y = blob.cy() - (img.height() / 2)
         strength = sqrt(x*x + y*y) #Calculate Ball Distance
 
     #If not seeing ball, angle = 65506, else calculate ball angle
@@ -80,11 +81,9 @@ while(True):
     else:
         angle = (atan2(y,x) * (180 / pi) - 90)%360
 
-    orbitAngle = calcOrbit(angle, strength)
-    try:
-        i2c.send(int(orbitAngle), timeout=100, addr=0x01)
-    except OSError as err:
-        print(err.args[0])
+
+    ##### Communicate Angle over SPI #####
+
 
     #Prints
     #print("Angle:")
