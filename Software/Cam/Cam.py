@@ -55,7 +55,7 @@ clock = time.clock()
 #LED's all turn off after boot up is done
 ledRed.off()
 ledGreen.off()
-ledBlue.off()
+ledBlue.on()
 
 #Main Loop
 while(True):
