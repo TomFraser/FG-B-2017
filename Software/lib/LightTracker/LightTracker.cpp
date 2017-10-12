@@ -75,7 +75,7 @@ double LightTracker::getDirection(double lightAngle, double ballAngle, double co
             onSide = true;
 
           }
-          else if(smallestAngleBetween(lineInitDirection, 180) < IDENTIFY_THRESHOLD){
+          else if(smallestAngleBetween(lineInitDirection, 270) < IDENTIFY_THRESHOLD){
             // on left - from line to ball
             angBetween = angleBetween(lineInitDirection, absBall);
             onSide = true;
