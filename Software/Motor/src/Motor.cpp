@@ -9,7 +9,7 @@
 // #include <Pins.h>
 // #include <SPI.h>
 // #include <LightTracker.h>
-// #include <Blink.h>
+#include <Blink.h>
 //
 // #if ROBOT
 //   // o_bot
@@ -128,21 +128,23 @@
  // }
 
  #include <SPI.h>
- #define SS_PIN 10
- #define BAUD_RATE 9600
+ #define SS_PIN 16
+ #define BAUD_RATE 19200
  #define CHAR_BUF 128
 
  void setup() {
    pinMode(SS_PIN, OUTPUT);
    Serial.begin(BAUD_RATE);
    SPI.begin();
+   SPI.setSCK(14);
    SPI.setBitOrder(MSBFIRST);
-   SPI.setClockDivider(SPI_CLOCK_DIV64);
+   SPI.setClockDivider(SPI_CLOCK_DIV32);
    SPI.setDataMode(SPI_MODE0);
    delay(1000); // Give the OpenMV Cam time to bootup.
  }
 
  void loop() {
+     blink();
    int32_t temp = 0;
    char buff[CHAR_BUF] = {0};
    digitalWrite(SS_PIN, LOW);
@@ -162,4 +164,4 @@
    digitalWrite(SS_PIN, HIGH);
    Serial.println(buff);
    delay(1); // Don't loop to quickly.
- }
+}
