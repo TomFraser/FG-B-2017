@@ -10,7 +10,7 @@
 
 import pyb, ustruct, utime
 from pyb import LED
-text = "Hello World!\n"
+text = "65506"
 data = ustruct.pack("<bi%ds" % len(text), 85, len(text), text) # 85 is a sync char.
 # Use "ustruct" to build data packets to send.
 # "<" puts the data in the struct in little endian order.
