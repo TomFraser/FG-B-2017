@@ -10,9 +10,8 @@
 
 import pyb, ustruct, utime
 from pyb import LED
-text = 255
-#text = str(text)
-data = ustruct.pack("<bi" % ustruct.calcsize(text), 85, ustruct.calcsize(text), text) # 85 is a sync char.
+text = "65506"
+data = ustruct.pack("<bi%ds" % len(text), 85, len(text), text) # 85 is a sync char.
 # Use "ustruct" to build data packets to send.
 # "<" puts the data in the struct in little endian order.
 # "b" puts a signed char in the data stream.
@@ -22,8 +21,6 @@ data = ustruct.pack("<bi" % ustruct.calcsize(text), 85, ustruct.calcsize(text), 
 
 # Zero pad data to a multiple of 4 bytes plus 4 bytes.
 data += "\x00" * (4 + (len(data) % 4))
-
-led = LED(1)
 
 # READ ME!!!
 #
@@ -50,8 +47,6 @@ print("Waiting for Arduino...")
 # Note that for sync up to work correctly the OpenMV Cam must be running this script before the
 # Arduino starts to poll the OpenMV Cam for data. Otherwise the SPI byte framing gets messed up,
 # and etc. So, keep the Arduino in reset until the OpenMV Cam is "Waiting for Arduino...".
-
-led.on()
 
 while(True):
     while(pin.value()): pass
