@@ -138,12 +138,13 @@
    SPI.begin();
    SPI.setSCK(14);
    SPI.setBitOrder(MSBFIRST);
-   SPI.setClockDivider(SPI_CLOCK_DIV32);
+   SPI.setClockDivider(SPI_CLOCK_DIV128);
    SPI.setDataMode(SPI_MODE0);
    delay(1000); // Give the OpenMV Cam time to bootup.
  }
 
  void loop() {
+     delay(10);
      blink();
    int32_t temp = 0;
    char buff[CHAR_BUF] = {0};
@@ -162,6 +163,10 @@
    }
 
    digitalWrite(SS_PIN, HIGH);
-   Serial.println(buff);
+   int n = atoi(buff);
+   // if(n != 0){
+   //    Serial.println(n);
+   // }
+   Serial.println(n);
    delay(1); // Don't loop to quickly.
 }
