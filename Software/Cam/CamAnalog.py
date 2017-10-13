@@ -45,12 +45,8 @@ def calcOrbit(angle, strength):
 
 #Analog
 dac = DAC("P6")
-
-
-#SPI
-spi = pyb.SPI(2, pyb.SPI.SLAVE, polarity=0, phase=0)
-#pin = pyb.Pin("P3", pyb.Pin.IN, pull=pyb.Pin.PULL_UP)
-print("Waiting for Arduino...")
+digital1 = Pin("P0", pyb.Pin.OUT_PP)
+digital2 = Pin("P1", pyb.Pin.OUT_PP)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -85,17 +81,23 @@ while(True):
         strength = sqrt(x*x + y*y) #Calculate Ball Distance
 
     #If not seeing ball, angle = 65506, else calculate ball angle
-    if strength == 0:
-        angle = 65506
-    else:
-        angle = float((atan2(y,x) * (180 / pi) - 90)%360)
+    angle = float((atan2(y,x) * (180 / pi) - 90)%360)
 
-    if angle == 0: angle = 360
+    if strength == 0:
+        digital1.value(0)
+        digital2.value(0)
+    elif angle <= 180:
+        digital1.value(1)
+        digital2.value(0)
+    else:
+        digital1.value(0)
+        digital2.value(1)
+
 
     ##### Communication ######
-    send = int((255/360)*angle)
+    send = int((255/180)*(angle%180))
     dac.write(send)
-    #print(angle)
+    print(angle)
     #Prints
     #print("Angle:")
     #print(angle)
@@ -105,7 +107,7 @@ while(True):
     #print()
     #print("Orbit Angle:")
     #print(orbitAngle)
-    print(clock.fps())
+    #print(clock.fps())
 
 ################# TEENSY CODE ####################
 #   int val = analogRead(A2);

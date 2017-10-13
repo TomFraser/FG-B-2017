@@ -128,45 +128,29 @@
  // }
 
  #include <SPI.h>
- #define SS_PIN 16
+ #define AnalogPin A2
+ #define Digital1 11
+ #define Digital2 12
  #define BAUD_RATE 19200
  #define CHAR_BUF 128
 
+float direction;
+
  void setup() {
-   pinMode(SS_PIN, OUTPUT);
    Serial.begin(BAUD_RATE);
-   SPI.begin();
-   SPI.setSCK(14);
-   SPI.setBitOrder(MSBFIRST);
-   SPI.setClockDivider(SPI_CLOCK_DIV128);
-   SPI.setDataMode(SPI_MODE0);
-   delay(1000); // Give the OpenMV Cam time to bootup.
+   pinMode(Digital1, INPUT);
+   pinMode(Digital2, INPUT);
  }
 
  void loop() {
-     delay(10);
-     blink();
-   int32_t temp = 0;
-   char buff[CHAR_BUF] = {0};
-   digitalWrite(SS_PIN, LOW);
-   delay(1); // Give the OpenMV Cam some time to setup to send data.
-
-   if(SPI.transfer(1) == 85) { // saw sync char?
-     SPI.transfer(&temp, 4); // get length
-     int zero_legnth = 4 + ((temp + 1) % 4);
-     if (temp) {
-       SPI.transfer(&buff, min(temp, CHAR_BUF));
-       temp -= min(temp, CHAR_BUF);
-     }
-     while (temp--) SPI.transfer(0); // eat any remaining bytes
-     while (zero_legnth--) SPI.transfer(0); // eat zeros.
+   if (digitalRead(Digital1) && !digitalRead(Digital2)) {
+     direction = (analogRead(AnalogPin) * 0.17578125);
    }
-
-   digitalWrite(SS_PIN, HIGH);
-   int n = atoi(buff);
-   // if(n != 0){
-   //    Serial.println(n);
-   // }
-   Serial.println(n);
-   delay(1); // Don't loop to quickly.
+   else if (digitalRead(Digital2) && !digitalRead(Digital1)) {
+     direction = (analogRead(AnalogPin) * 0.17578125) + 180;
+   }
+   else {
+     direction = 65506;
+   }
+   Serial.println(direction);
 }
