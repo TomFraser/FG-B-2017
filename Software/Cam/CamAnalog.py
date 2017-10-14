@@ -87,25 +87,34 @@ while(True):
     if strength == 0:
         digital1.value(0)
         digital2.value(0)
+        mode = 0
     elif angle < 180:
         digital1.value(1)
         digital2.value(0)
-    else:
+        mode = 1
+    elif angle > 180 and angle < 360:
         digital1.value(0)
         digital2.value(1)
+        mode = 2
+    else:
+        digital1.value(0)
+        digital2.value(0)
+        mode = 0
 
 
     ##### Communication ######
-    send = int((255/180)*(angle))
+    send = int((1.422222222222222)*(angle))
     dac.write(send)
-    print(angle)
+
     #Prints
-    #print("Angle:")
-    #print(angle)
-    #print()
+    print("Angle:")
+    print(angle)
+    print()
     #print("Strength:")
     #print(strength)
     #print()
+    print("Mode:")
+    print(mode)
     #print("Orbit Angle:")
     #print(orbitAngle)
     #print(clock.fps())

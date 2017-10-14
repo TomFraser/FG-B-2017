@@ -134,7 +134,7 @@
  #define BAUD_RATE 19200
  #define CHAR_BUF 128
 
-float direction;
+float angle;
 
  void setup() {
    Serial.begin(BAUD_RATE);
@@ -143,14 +143,21 @@ float direction;
  }
 
  void loop() {
-   if (digitalRead(Digital1) && !digitalRead(Digital2)) {
-     direction = (analogRead(AnalogPin) * 0.1759530791788856);
+   int pinChoice = (digitalRead(Digital1) ? 1 : 0) + (digitalRead(Digital2) ? -1 : 0);
+
+   switch(pinChoice){
+     case 1:
+        angle = analogRead(AnalogPin) * 0.1759530791788856;
+        break;
+     case -1:
+        angle = (analogRead(AnalogPin) * 0.1759530791788856) + 180;
+        break;
+     case 0:
+        angle = 65506;
+        break;
+     default:
+        angle = 65506;
+        break;
    }
-   else if (digitalRead(Digital2) && !digitalRead(Digital1)) {
-     direction = (analogRead(AnalogPin) * 0.1759530791788856) + 180;
-   }
-   else {
-     direction = 65506;
-   }
-   Serial.println(direction);
+   Serial.println(angle);
 }
