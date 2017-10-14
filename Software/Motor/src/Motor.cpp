@@ -144,10 +144,10 @@ float direction;
 
  void loop() {
    if (digitalRead(Digital1) && !digitalRead(Digital2)) {
-     direction = (analogRead(AnalogPin) * 0.17578125);
+     direction = (analogRead(AnalogPin) * 0.1759530791788856);
    }
    else if (digitalRead(Digital2) && !digitalRead(Digital1)) {
-     direction = (analogRead(AnalogPin) * 0.17578125) + 180;
+     direction = (analogRead(AnalogPin) * 0.1759530791788856) + 180;
    }
    else {
      direction = 65506;

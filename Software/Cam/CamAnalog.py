@@ -80,13 +80,14 @@ while(True):
         y = blob.cy() - (img.height() / 2)
         strength = sqrt(x*x + y*y) #Calculate Ball Distance
 
+    img.draw_cross(int(img.width() / 2), int(img.height() / 2))
     #If not seeing ball, angle = 65506, else calculate ball angle
     angle = float((atan2(y,x) * (180 / pi) - 90)%360)
 
     if strength == 0:
         digital1.value(0)
         digital2.value(0)
-    elif angle <= 180:
+    elif angle < 180:
         digital1.value(1)
         digital2.value(0)
     else:
@@ -95,7 +96,7 @@ while(True):
 
 
     ##### Communication ######
-    send = int((255/180)*(angle%180))
+    send = int((255/180)*(angle))
     dac.write(send)
     print(angle)
     #Prints
