@@ -1,23 +1,23 @@
 #include <Config.h>
-// #include <MotorController.h>
-// // #include <RotationController.h>
-// #include <Kicker.h>
-// #include <Buzzer.h>
-// #include <fgbcommon.h>
-// #include <PixyI2C.h>
-// #include <Motor.h>
-// #include <Pins.h>
-// #include <SPI.h>
-// #include <LightTracker.h>
+#include <MotorController.h>
+// #include <RotationController.h>
+#include <Kicker.h>
+#include <Buzzer.h>
+#include <fgbcommon.h>
+#include <PixyI2C.h>
+#include <Motor.h>
+#include <Pins.h>
+#include <SPI.h>
+#include <LightTracker.h>
 #include <Blink.h>
 //
-// #if ROBOT
-//   // o_bot
-//   #define KICK_THRESHOLD 300
-// #else
-//   // P2_bot
-//   #define KICK_THRESHOLD 980
-// #endif
+#if ROBOT
+  // o_bot
+  #define KICK_THRESHOLD 300
+#else
+  // P2_bot
+  #define KICK_THRESHOLD 980
+#endif
 
  // #define BAUD_RATE 19200
  // #define CHAR_BUF 128
@@ -28,10 +28,10 @@
 // long initialTime, currentTime, lastKick = 0;
 //
 // // Defender defender = Defender();
-// Kicker kicker = Kicker();
-// LightTracker lightTracker = LightTracker();
-// // RotationController rotationController = RotationController();
-// MotorController motorController = MotorController();
+Kicker kicker = Kicker();
+LightTracker lightTracker = LightTracker();
+// RotationController rotationController = RotationController();
+MotorController motorController = MotorController();
 
 // void setup(){
 //     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 19200);
@@ -144,7 +144,7 @@ float angle;
 
  void loop() {
    int pinChoice = (digitalRead(Digital1) ? 1 : 0) + (digitalRead(Digital2) ? -1 : 0);
-
+   Serial.println(pinChoice);
    switch(pinChoice){
      case 1:
         angle = analogRead(AnalogPin) * 0.1759530791788856;
@@ -160,4 +160,5 @@ float angle;
         break;
    }
    Serial.println(angle);
+   motorController.playOffense(angle, 65506.0, 0, 50);
 }
