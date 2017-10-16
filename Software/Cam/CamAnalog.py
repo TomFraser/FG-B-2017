@@ -27,6 +27,7 @@ ORBIT_FRONT_RATIO = 90
 ORBIT_SIDE_RATIO = 50
 ORBIT_FORWARD_LOWER = 90
 ORBIT_FORWARD_UPPER = 270
+STRENGTH_MAX = 85
 
 
 #Orbit Function
@@ -34,13 +35,13 @@ def calcOrbit(angle, strength):
     if strength > strengthThreshold or angle == 65506:
         return angle
     elif angle < ORBIT_FORWARD_LOWER:
-        return angle + (angle / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
+        return angle + (angle / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)
     elif angle > ORBIT_FORWARD_UPPER:
-        return angle - ((360 - angle) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
+        return angle - ((360 - angle) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)
     elif angle <= 180:
-        return angle + ORBIT_SIDE_RATIO
+        return angle + ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)
     elif angle > 180:
-        return angle - ORBIT_SIDE_RATIO
+        return angle - ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)
     else:
         return 65506
 
