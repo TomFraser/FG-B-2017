@@ -83,7 +83,7 @@ while(True):
 
     img.draw_cross(int(img.width() / 2), int(img.height() / 2))
     #If not seeing ball, angle = 65506, else calculate ball angle
-    angle = float((atan2(y,x) * (180 / pi) - 90)%360)
+    angle = calcOrbit(float((atan2(y,x) * (180 / pi) - 90)%360), strength)
 
     if strength == 0:
         digital1.value(0)
