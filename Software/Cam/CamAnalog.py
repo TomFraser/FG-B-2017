@@ -5,8 +5,7 @@ from math import atan2, sqrt, pi, log
 
 #Ball Thresholds
 #thresholds = [(81, 38, 35, 63, -25, 69)]
-thresholds = [(9, 34, 20, 49, 14, 43)]
-
+thresholds = [(17, 33, 10, 44, 11, 37)]
 #LED's
 ledRed = LED(1)
 ledRed.on()
@@ -53,8 +52,8 @@ digital2 = Pin("P1", pyb.Pin.OUT_PP)
 #Image Sensor Stuff
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.HQVGA)
-sensor.set_windowing((int(sensor.width() / 2) - 90,0,180,sensor.height()))
+sensor.set_framesize(sensor.QVGA)
+sensor.set_windowing((int((sensor.width() / 2) - int(sensor.height() / 2)),0,sensor.height(),sensor.height()))
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
@@ -77,7 +76,7 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs([thresholds[0]], pixels_threshold=2, area_threshold=2, merge=True):
+    for blob in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, merge=True):
         img.draw_cross(blob.cx(), blob.cy())
         x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = blob.cy() - (img.height() / 2)
@@ -111,7 +110,7 @@ while(True):
 
     #Prints
     #print("Angle:")
-    print(angle)
+    #print(angle)
     #print()
     #print("Strength:")
     #print(strength)
@@ -120,7 +119,7 @@ while(True):
     #print(mode)
     #print("Orbit Angle:")
     #print(orbitAngle)
-    #print(clock.fps())
+    print(clock.fps())
 
 ################# TEENSY CODE ####################
 #   int val = analogRead(A2);
