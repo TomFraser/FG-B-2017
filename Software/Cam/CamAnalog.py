@@ -27,21 +27,21 @@ ORBIT_FRONT_RATIO = 90
 ORBIT_SIDE_RATIO = 50
 ORBIT_FORWARD_LOWER = 90
 ORBIT_FORWARD_UPPER = 270
-STRENGTH_MAX = 85
+STRENGTH_MAX = 61
 
 
 #Orbit Function
-def calcOrbit(angle, strength):
-    if strength > strengthThreshold or angle == 65506:
-        return angle
-    elif angle < ORBIT_FORWARD_LOWER:
-        return angle + (angle / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)
-    elif angle > ORBIT_FORWARD_UPPER:
-        return angle - ((360 - angle) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)
-    elif angle <= 180:
-        return angle + ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)
-    elif angle > 180:
-        return angle - ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)
+def calcOrbit(ang, strength):
+    if strength < strengthThreshold or ang == 65506 or strength == 0:
+        return ang
+    elif ang < ORBIT_FORWARD_LOWER:
+        return ang + (ang / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)**5
+    elif ang > ORBIT_FORWARD_UPPER:
+        return ang - ((360 - ang) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)**5
+    elif ang <= 180:
+        return ang + ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)**5
+    elif ang > 180:
+        return ang - ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)**5
     else:
         return 65506
 
@@ -53,7 +53,8 @@ digital2 = Pin("P1", pyb.Pin.OUT_PP)
 #Image Sensor Stuff
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QQVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
+sensor.set_framesize(sensor.HQVGA)
+sensor.set_windowing((int(sensor.width() / 2) - 90,0,180,sensor.height()))
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
@@ -109,14 +110,14 @@ while(True):
     dac.write(send)
 
     #Prints
-    print("Angle:")
+    #print("Angle:")
     print(angle)
-    print()
+    #print()
     #print("Strength:")
     #print(strength)
     #print()
-    print("Mode:")
-    print(mode)
+    #print("Mode:")
+    #print(mode)
     #print("Orbit Angle:")
     #print(orbitAngle)
     #print(clock.fps())
