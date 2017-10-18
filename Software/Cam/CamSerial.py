@@ -49,7 +49,7 @@ uart = UART(3, 9600)
 #Image Sensor Stuff
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
-sensor.set_framesize(sensor.QQVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
+sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
@@ -68,16 +68,32 @@ while(True):
     x = 0
     y = 0
     strength = 0
+    Goal1size = 0
+    Goal2size = 0
 
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs([thresholds[0]], pixels_threshold=2, area_threshold=2, merge=True):
+    for blob in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, merge=True):
         img.draw_cross(blob.cx(), blob.cy())
         x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = blob.cy() - (img.height() / 2)
         strength = sqrt(x*x + y*y) #Calculate Ball Distance
         angle = (atan2(y,x) * (180 / pi) - 90)%360
+
+    for blob in img.find_blobs([thresholds[1]], x_stride=5, y_stride=5, merge=True):
+        img.draw_cross(blob.cx(), blob.cy())
+        Goal1x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        Goal1y = blob.cy() - (img.height() / 2)
+        Goal1size = blob.area()
+        Goal1angle = (atan2(Goal1y,Goal1x) * (180 / pi) - 90)%360
+
+    for blob in img.find_blobs([thresholds[2]], x_stride=5, y_stride=5, merge=True):
+        img.draw_cross(blob.cx(), blob.cy())
+        Goal2x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        Goal2y = blob.cy() - (img.height() / 2)
+        Goal2size = blob.area()
+        Goal2angle = (atan2(Goal2y,Goal2x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
     if strength == 0:
@@ -85,10 +101,12 @@ while(True):
 
     if angle == 0: angle = 360
 
-    ballData = [calcOrbit(angle, strength), strength]
+    if Goal1size == 0: Goal1angle = 500
+    if Goal2size == 0: Goal2angle = 500
 
-    goal1Data = [1,2]
-    goal2Data = [3,4]
+    ballData = [calcOrbit(angle, strength), strength]
+    goal1Data = [Goal1angle,Goal2size]
+    goal2Data = [Goal2angle,Goal2size]
 
 
 
@@ -148,4 +166,4 @@ while(True):
     #print()
     #print("Orbit Angle:")
     #print(orbitAngle)
-    #print(clock.fps())
+    print(clock.fps())

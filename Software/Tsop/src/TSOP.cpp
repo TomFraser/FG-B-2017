@@ -79,8 +79,11 @@ void loop() {
     switch(recieveData[0]){
       case 255:
         sendData[0] = 255 + recieveData[1];
-        break;
       default:
+        if (sendData[0] = 500){
+          sendData[0] = 65506;
+          break;
+        }
         sendData[0] = recieveData[0];
         break;
     }
@@ -90,8 +93,11 @@ void loop() {
     switch(recieveData[2]){
       case 255:
         sendData[2] = 255 + recieveData[3];
-        break;
       default:
+        if (sendData[2] = 500){
+          sendData[2] = 65506;
+          break;
+        }
         sendData[2] = recieveData[2];
         break;
     }
@@ -101,24 +107,26 @@ void loop() {
     switch(recieveData[5]){
       case 255:
         sendData[4] = 255 + recieveData[6];
-        break;
       default:
+        if (sendData[4] = 500){
+          sendData[4] = 65506;
+          break;
+        }
         sendData[4] = recieveData[5];
         break;
     }
 
     sendData[5] = recieveData[7];
 
-    // Serial.print(sendData[0]);
-    // Serial.print(" ");
-    // Serial.print(sendData[1]);
-    // Serial.print(" ");
-    // Serial.print(sendData[2]);
-    // Serial.print(" ");
-    // Serial.print(sendData[3]);
-    // Serial.print(" ");
-    // Serial.print(sendData[4]);
-    // Serial.print(" ");
-    // Serial.println(sendData[5]);
+    Serial.print(sendData[0]);
+    Serial.print(" ");
+    Serial.print(sendData[1]);
+    Serial.print(" ");
+    Serial.print(sendData[2]);
+    Serial.print(" ");
+    Serial.print(sendData[3]);
+    Serial.print(" ");
+    Serial.print(sendData[4]);
+    Serial.println(sendData[5]);
   }
 }
