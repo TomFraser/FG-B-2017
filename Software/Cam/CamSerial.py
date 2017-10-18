@@ -3,8 +3,10 @@ from pyb import *
 import ustruct, utime
 from math import atan2, sqrt, pi, log
 
-#Thresholds     Ball                   Goal 1 (Attack)  Goal 2 (Defend)
-thresholds = [(81, 38, 35, 63, -25, 69),(0,0,0,0,0,0),(0,0,0,0,0,0)]
+#Thresholds
+thresholds = [(81, 38, 35, 63, -25, 69), #Ball
+(0,0,0,0,0,0), #Goal 1
+(0,0,0,0,0,0)] # Goal 2
 
 #LED's
 ledRed = LED(1)
@@ -44,7 +46,7 @@ def calcOrbit(ang, strength):
         return 65506
 
 #UART Init
-uart = UART(3, 9600)
+uart = UART(3, 256000)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -74,33 +76,23 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, merge=True):
+    for blob in img.find_blobs(thresholds, x_stride=3, y_stride=3, merge=False):
         img.draw_cross(blob.cx(), blob.cy())
         x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = blob.cy() - (img.height() / 2)
-        strength = sqrt(x*x + y*y) #Calculate Ball Distance
-        angle = (atan2(y,x) * (180 / pi) - 90)%360
-
-    for blob in img.find_blobs([thresholds[1]], x_stride=5, y_stride=5, merge=True):
-        img.draw_cross(blob.cx(), blob.cy())
-        Goal1x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
-        Goal1y = blob.cy() - (img.height() / 2)
-        Goal1size = blob.area()
-        Goal1angle = (atan2(Goal1y,Goal1x) * (180 / pi) - 90)%360
-
-    for blob in img.find_blobs([thresholds[2]], x_stride=5, y_stride=5, merge=True):
-        img.draw_cross(blob.cx(), blob.cy())
-        Goal2x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
-        Goal2y = blob.cy() - (img.height() / 2)
-        Goal2size = blob.area()
-        Goal2angle = (atan2(Goal2y,Goal2x) * (180 / pi) - 90)%360
+        if blob.code() == 1: #2^0
+            strength = sqrt(x*x + y*y) #Calculate Ball Distance
+            angle = (atan2(y,x) * (180 / pi) - 90)%360
+        if blob.code() == 2: #2^1
+            Goal1size = blob.area()
+            Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
+        if blob.code() == 4: #2^2
+            Goal2size = blob.area()
+            Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
-    if strength == 0:
-        angle = 500
-
+    if strength == 0: angle = 500
     if angle == 0: angle = 360
-
     if Goal1size == 0: Goal1angle = 500
     if Goal2size == 0: Goal2angle = 500
 
@@ -140,6 +132,10 @@ while(True):
         sendBuff[7] = int(goal2Data[0] % 255)
 
     sendBuff[8] = goal2Data[1]
+
+    for i in range(0,10):
+        if sendBuff[i] == 42 and i != 0:
+            sendBuff[i] = 43
 
     ##### Send Buffer Over Serial #####
     uart.writechar(sendBuff[0])

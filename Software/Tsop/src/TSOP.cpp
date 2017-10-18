@@ -45,7 +45,7 @@ void setup() {
   pinMode(13, OUTPUT);
 
    Serial.begin(9600);
-   camSerial.begin(9600);
+   camSerial.begin(256000);
  }
 
 void loop() {
@@ -76,17 +76,11 @@ void loop() {
     // Serial.print(", ");
     // Serial.println(recieveData[7]);
 
-
     sendData[0] = (recieveData[0] + recieveData[1]) == 500 ? (65505) : (recieveData[0] + recieveData[1]);
-
-    sendData[1] = 65506; //Compass
-
+    sendData[1] = compass.getHeading() + 180; //Compass
     sendData[2] = (recieveData[2] + recieveData[3]) == 500 ? (65505) : (recieveData[2] + recieveData[3]);
-
     sendData[3] = recieveData[4];
-
     sendData[4] = (recieveData[5] + recieveData[6]) == 500 ? (65505) : (recieveData[5] + recieveData[6]);
-
     sendData[5] = recieveData[7];
 
     Serial.print(sendData[0]);
