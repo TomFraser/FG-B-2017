@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(42, 67, 24, 83, 31, 76), #Ball
-(0,0,0,0,0,0), #Goal 1
+thresholds = [(32, 43, -4, 19, 10, 11), #Ball
+(27, 73, 15, 64, 8, 35), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -54,7 +54,7 @@ sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
-sensor.set_auto_whitebal(False) #Must remain false for blob tracking
+sensor.set_auto_whitebal(True) #Must remain false for blob tracking
 clock = time.clock()
 
 #LED's all turn off after boot up is done

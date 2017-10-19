@@ -67,7 +67,7 @@ void loop(){
 
     digitalWrite(TSOP_SS, LOW);
     delayMicroseconds(200);
-    int tsopData = SPI.transfer16(1);
+    int tsopData = SPI.transfer16(0);
     digitalWrite(TSOP_SS, HIGH);
 
     // Serial.println(rotationData);
