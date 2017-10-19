@@ -6,7 +6,7 @@
 #include <i2c_t3.h>
 #include <Defines.h>
 #include <Arduino.h>
-#include <PixyI2C.h>
+// #include <PixyI2C.h>
 
 class RotationController{
 
@@ -39,7 +39,7 @@ public:
     int prevPixy = 0;
 
 private:
-    PixyI2C pixy;
+    // PixyI2C pixy;
     int rotationToAdd;
     int finalRotation;
     double prevReturn;

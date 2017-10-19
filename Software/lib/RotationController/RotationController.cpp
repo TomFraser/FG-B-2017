@@ -22,18 +22,18 @@ double RotationController::rawCompass(){
 }
 
 
-double RotationController::calcPixy(){
-        blockX = pixy.blocks[0].x;
-        // Serial.print("W: "); Serial.print(pixy.blocks[0].width); Serial.print(" H: "); Serial.println(pixy.blocks[0].height);
-        // // if(pixy.blocks[0].width > 100 && pixy.blocks[0].height < 45){
-        // if(pixy.blocks[0].height < 50){
-        //   Serial.println("doing pixy");
-        // }
-
-        prevTime = millis();
-        prevReturn = -1*(PIXY_CENTRE_X - blockX);
-        return -1*(PIXY_CENTRE_X - blockX);
-}
+// double RotationController::calcPixy(){
+//         blockX = pixy.blocks[0].x;
+//         // Serial.print("W: "); Serial.print(pixy.blocks[0].width); Serial.print(" H: "); Serial.println(pixy.blocks[0].height);
+//         // // if(pixy.blocks[0].width > 100 && pixy.blocks[0].height < 45){
+//         // if(pixy.blocks[0].height < 50){
+//         //   Serial.println("doing pixy");
+//         // }
+//
+//         prevTime = millis();
+//         prevReturn = -1*(PIXY_CENTRE_X - blockX);
+//         return -1*(PIXY_CENTRE_X - blockX);
+// }
 
 void RotationController::calcRotation(){
     // newTarget = compassHeading > 180 ? compassHeading - rotationToAdd : compassHeading + rotationToAdd;
@@ -44,30 +44,30 @@ double RotationController::rotate(int rotationData){
     compassHeading = (rotationData * COMPASS_MULTIPLIER);
     compassHeading = PIDRotation(compassHeading);
 
-    if(millis() > prevTime + 20){
+    // if(millis() > prevTime + 20){
         // if(pixy.getBlocks() && pixy.blocks[0].height < 50){
-        if(pixy.getBlocks()){
-            int pixyHeading = calcPixy();
-            pixyHeading = pixyHeading * PIXY_MULTIPLIER;
-
-            if(pixyHeading <= 0){
-                if(pixyHeading < PIXY_ABS_MAX_NEG){
-                    prevPixy = PIXY_ABS_MAX_NEG;
-                    return PIXY_ABS_MAX_NEG;
-                }else{
-                    prevPixy = pixyHeading;
-                    return pixyHeading;
-                }
-            }else{
-                if(pixyHeading > PIXY_ABS_MAX){
-                    prevPixy = PIXY_ABS_MAX;
-                    return PIXY_ABS_MAX;
-                }else{
-                    prevPixy = pixyHeading;
-                    return pixyHeading;
-                }
-            }
-        }else{
+        // if(pixy.getBlocks()){
+        //     int pixyHeading = calcPixy();
+        //     pixyHeading = pixyHeading * PIXY_MULTIPLIER;
+        //
+        //     if(pixyHeading <= 0){
+        //         if(pixyHeading < PIXY_ABS_MAX_NEG){
+        //             prevPixy = PIXY_ABS_MAX_NEG;
+        //             return PIXY_ABS_MAX_NEG;
+        //         }else{
+        //             prevPixy = pixyHeading;
+        //             return pixyHeading;
+        //         }
+        //     }else{
+        //         if(pixyHeading > PIXY_ABS_MAX){
+        //             prevPixy = PIXY_ABS_MAX;
+        //             return PIXY_ABS_MAX;
+        //         }else{
+        //             prevPixy = pixyHeading;
+        //             return pixyHeading;
+        //         }
+        //     }
+        // }else{
             if(compassHeading <= 0){ //Negative
                 if(compassHeading < COMPASS_ABS_MAX_NEG){
                     return COMPASS_ABS_MAX_NEG;
@@ -82,18 +82,18 @@ double RotationController::rotate(int rotationData){
                 }
             }
             return absCompassHeading; //Returns compass when no goal is seen
-        }
-    }else{
-        // double __return = prevReturn * PIXY_MULTIPLIER;
-        // if(__return > 60){
-        //     return 60;
-        // }else if(__return < -60){
-        //     return -60;
-        // }else{
-        //     return __return;
         // }
-        return prevPixy/2.25;
-    }
+    // }else{
+    //     // double __return = prevReturn * PIXY_MULTIPLIER;
+    //     // if(__return > 60){
+    //     //     return 60;
+    //     // }else if(__return < -60){
+    //     //     return -60;
+    //     // }else{
+    //     //     return __return;
+    //     // }
+    //     return prevPixy/2.25;
+    // }
 }
 
 double RotationController::PIDRotation(double rotationIn){
