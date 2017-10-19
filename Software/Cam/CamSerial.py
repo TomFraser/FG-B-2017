@@ -4,7 +4,7 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(81, 38, 35, 63, -25, 69), #Ball
+thresholds = [(42, 67, 24, 83, 31, 76), #Ball
 (0,0,0,0,0,0), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
@@ -24,24 +24,24 @@ ledIR.off()
 strengthThreshold = 40
 ORBIT_FRONT_DENOMINATOR = 120
 ORBIT_FRONT_RATIO = 90
-ORBIT_SIDE_RATIO = 50
+ORBIT_SIDE_RATIO = 75
 ORBIT_FORWARD_LOWER = 90
 ORBIT_FORWARD_UPPER = 270
-STRENGTH_MAX = 61
+STRENGTH_MAX = 51
 
 
 #Orbit Function
-def calcOrbit(ang, strength):
-    if strength < strengthThreshold or ang == 65506 or strength == 0:
+def calcOrbit(ang, stre):
+    if stre < strengthThreshold or ang == 65506 or stre == 0:
         return ang
     elif ang < ORBIT_FORWARD_LOWER:
-        return ang + (ang / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)**5
+        return ang + (ang / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
     elif ang > ORBIT_FORWARD_UPPER:
-        return ang - ((360 - ang) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO * (STRENGTH_MAX/strength)**5
+        return ang - ((360 - ang) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
     elif ang <= 180:
-        return ang + ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)**5
+        return ang + ORBIT_SIDE_RATIO
     elif ang > 180:
-        return ang - ORBIT_SIDE_RATIO * (STRENGTH_MAX/strength)**5
+        return ang - ORBIT_SIDE_RATIO
     else:
         return 65506
 
@@ -76,7 +76,7 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs(thresholds, x_stride=3, y_stride=3, merge=False):
+    for blob in img.find_blobs(thresholds, x_stride=2, y_stride=2, merge=False):
         img.draw_cross(blob.cx(), blob.cy())
         x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = blob.cy() - (img.height() / 2)
@@ -96,7 +96,9 @@ while(True):
     if Goal1size == 0: Goal1angle = 500
     if Goal2size == 0: Goal2angle = 500
 
-    ballData = [calcOrbit(angle, strength), strength]
+    angleOrbit = calcOrbit(angle,strength)
+
+    ballData = [angleOrbit, strength]
     goal1Data = [Goal1angle,Goal2size]
     goal2Data = [Goal2angle,Goal2size]
 
@@ -108,12 +110,12 @@ while(True):
     sendBuff[0] = 42
     sendBuff[9] = 72
 
-    if ballData[0] <= 255:
-        sendBuff[1] = int(ballData[0])
+    if angleOrbit <= 255:
+        sendBuff[1] = int(angleOrbit)
         sendBuff[2] = 0
     else:
         sendBuff[1] = 255
-        sendBuff[2] = int(ballData[0] % 255)
+        sendBuff[2] = int(angleOrbit % 255)
 
     if goal1Data[0] <= 255:
         sendBuff[3] = int(goal1Data[0])
@@ -149,17 +151,18 @@ while(True):
     uart.writechar(sendBuff[8])
     uart.writechar(sendBuff[9])
 
-    print(sendBuff)
+    #print(sendBuff)
 
     pyb.delay(1)
 
     #Prints
-    #print("Angle:")
-    #print(angle)
+    print("Angle:")
+    print(angle)
+    print(angleOrbit)
     #print()
     #print("Strength:")
     #print(strength)
     #print()
     #print("Orbit Angle:")
     #print(orbitAngle)
-    print(clock.fps())
+    #print(clock.fps())

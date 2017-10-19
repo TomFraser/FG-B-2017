@@ -17,15 +17,15 @@ ReadTSOPS tsops;
 
 int recieveData[8] = {};
 //Data will be: Ball Angle, Compass Angle, Goal 1 Angle, Goal 1 Size, Goal 2 Angle, Gaal 2 Size
-int sendData[6] = {};
 
 T3SPI TSOP;
 
 volatile uint16_t recieveDataIn[DATA_LENGTH] = {};
 volatile uint16_t recieveDataOut[DATA_LENGTH] = {};
+volatile uint16_t sendData[6] = {};
 
 void transfer(){
-  SPI0_PUSHR_SLAVE = sendData[(SPI0_POPR-1)];
+  SPI0_PUSHR_SLAVE = sendData[SPI0_POPR];
   SPI0_SR |= SPI_SR_RFDF;
 }
 
@@ -49,7 +49,7 @@ void setup() {
  }
 
 void loop() {
-  blink();
+  //blink();
   compass.update();
 
   if (camSerial.available()) {
@@ -76,11 +76,11 @@ void loop() {
     // Serial.print(", ");
     // Serial.println(recieveData[7]);
 
-    sendData[0] = (recieveData[0] + recieveData[1]) == 500 ? (65505) : (recieveData[0] + recieveData[1]);
+    sendData[0] = (recieveData[0] + recieveData[1]) == 500 ? (-30) : (recieveData[0] + recieveData[1]);
     sendData[1] = compass.getHeading() + 180; //Compass
-    sendData[2] = (recieveData[2] + recieveData[3]) == 500 ? (65505) : (recieveData[2] + recieveData[3]);
+    sendData[2] = (recieveData[2] + recieveData[3]) == 500 ? (-30) : (recieveData[2] + recieveData[3]);
     sendData[3] = recieveData[4];
-    sendData[4] = (recieveData[5] + recieveData[6]) == 500 ? (65505) : (recieveData[5] + recieveData[6]);
+    sendData[4] = (recieveData[5] + recieveData[6]) == 500 ? (-30) : (recieveData[5] + recieveData[6]);
     sendData[5] = recieveData[7];
 
     Serial.print(sendData[0]);
