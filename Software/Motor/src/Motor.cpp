@@ -58,16 +58,22 @@ void loop(){
     digitalWrite(TSOP_SS, LOW);
     delayMicroseconds(200);
     int rotationData = SPI.transfer16(0);
+    rotationData = SPI.transfer16(0);
+    rotationData = SPI.transfer16(0);
     digitalWrite(TSOP_SS, HIGH);
 
     digitalWrite(LIGHT_SS, LOW);
     delayMicroseconds(200);
     int lightData = SPI.transfer16(255);
+    lightData = SPI.transfer16(255);
+    lightData = SPI.transfer16(255);
     digitalWrite(LIGHT_SS, HIGH);
 
     digitalWrite(TSOP_SS, LOW);
     delayMicroseconds(200);
-    int tsopData = SPI.transfer16(0);
+    int tsopData = SPI.transfer16(1);
+    tsopData = SPI.transfer16(1);
+    tsopData = SPI.transfer16(1);
     digitalWrite(TSOP_SS, HIGH);
 
     // Serial.println(rotationData);
@@ -81,16 +87,16 @@ void loop(){
     int speed = lightTracker.getSpeed();
 
 
-    // Serial.print(lightData); Serial.print(" | "); Serial.println(tsopData);
+    Serial.println(lightData); Serial.println(tsopData); Serial.println(rotation); Serial.println("--------------");
     // Serial.println(finalDirection);
 
     //Moving on angle
     motorController.playOffense(finalDirection, 65506.0, rotation, speed);
 
     //Checking if we can kick
-    if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
-        kicker.kickBall();
-        lastKick = millis();
-    }
+    // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+    //     kicker.kickBall();
+    //     lastKick = millis();
+    // }
     blink();
 }

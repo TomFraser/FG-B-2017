@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(32, 43, -4, 19, 10, 11), #Ball
-(27, 73, 15, 64, 8, 35), #Goal 1
+thresholds = [(21, 36, 30, 72, 4, 44), #Ball
+(0,0,0,0,0,0), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -46,7 +46,7 @@ def calcOrbit(ang, stre):
         return 65506
 
 #UART Init
-uart = UART(3, 256000)
+uart = UART(3, 9600)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -156,9 +156,9 @@ while(True):
     pyb.delay(1)
 
     #Prints
-    print("Angle:")
-    print(angle)
-    print(angleOrbit)
+    #print("Angle:")
+    #print(angle)
+    #print(angleOrbit)
     #print()
     #print("Strength:")
     #print(strength)
