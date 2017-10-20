@@ -29,6 +29,18 @@ ORBIT_FORWARD_LOWER = 90
 ORBIT_FORWARD_UPPER = 270
 STRENGTH_MAX = 51
 
+global lastTime
+global currentTime
+lastTime = 500
+
+def blink():
+    global lastTime
+    global currentTime
+    currentTime = pyb.millis()
+    if currentTime > (lastTime):
+        ledBlue.toggle()
+        lastTime = currentTime + 500
+
 
 #Orbit Function
 def calcOrbit(ang, stre):
@@ -46,7 +58,7 @@ def calcOrbit(ang, stre):
         return 65506
 
 #UART Init
-uart = UART(3, 9600)
+uart = UART(3, 9600, timeout_char=10)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -65,6 +77,7 @@ ledBlue.on()
 #Main Loop
 while(True):
     clock.tick()
+    blink()
 
     #Reset Variables
     x = 0
@@ -151,7 +164,7 @@ while(True):
     uart.writechar(sendBuff[8])
     uart.writechar(sendBuff[9])
 
-    #print(sendBuff)
+    print(sendBuff)
 
     pyb.delay(1)
 
