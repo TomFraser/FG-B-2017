@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(21, 36, 30, 72, 4, 44), #Ball
-(0,0,0,0,0,0), #Goal 1
+thresholds = [(40, 68, 44, 80, -58, 127), #Ball
+(25, 61, -23, -1, -32, -5), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -67,6 +67,7 @@ sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(True) #Must remain false for blob tracking
+sensor.set_contrast(3)
 clock = time.clock()
 
 #LED's all turn off after boot up is done
@@ -89,18 +90,21 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs(thresholds, x_stride=2, y_stride=2, merge=False):
-        img.draw_cross(blob.cx(), blob.cy())
-        x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
-        y = blob.cy() - (img.height() / 2)
-        if blob.code() == 1: #2^0
-            strength = sqrt(x*x + y*y) #Calculate Ball Distance
-            angle = (atan2(y,x) * (180 / pi) - 90)%360
-        if blob.code() == 2: #2^1
-            Goal1size = blob.area()
+    for ball in img.find_blobs(thresholds[0], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
+        img.draw_cross(ball.cx(), ball.cy())
+        x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        y = ball.cy() - (img.height() / 2)
+
+    for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, merge=True):
+        img.draw_cross(goal.cx(), goal.cy())
+        x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        y = goal.cy() - (img.height() / 2)
+        if goal.code() == 2: #2^1
+            Goal1size = goal.area()
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
+
         if blob.code() == 4: #2^2
-            Goal2size = blob.area()
+            Goal2size = goal.area()
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
@@ -164,7 +168,7 @@ while(True):
     uart.writechar(sendBuff[8])
     uart.writechar(sendBuff[9])
 
-    print(sendBuff)
+    #print(sendBuff)
 
     pyb.delay(1)
 
