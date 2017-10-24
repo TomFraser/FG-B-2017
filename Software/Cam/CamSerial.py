@@ -73,12 +73,12 @@ clock = time.clock()
 #LED's all turn off after boot up is done
 ledRed.off()
 ledGreen.off()
-ledBlue.on()
+ledBlue.off()
 
 #Main Loop
 while(True):
     clock.tick()
-    blink()
+    #blink()
 
     #Reset Variables
     x = 0
@@ -90,10 +90,12 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for ball in img.find_blobs(thresholds[0], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
+    for ball in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
         img.draw_cross(ball.cx(), ball.cy())
         x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = ball.cy() - (img.height() / 2)
+        angle = (atan2(y,x) * (180 / pi) - 90)%360
+        strength = sqrt(x**2 + y**2)
 
     for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, merge=True):
         img.draw_cross(goal.cx(), goal.cy())
@@ -103,7 +105,7 @@ while(True):
             Goal1size = goal.area()
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
 
-        if blob.code() == 4: #2^2
+        if goal.code() == 4: #2^2
             Goal2size = goal.area()
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 

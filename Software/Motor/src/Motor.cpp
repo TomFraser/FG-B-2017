@@ -1,6 +1,6 @@
 #include <Config.h>
 #include <MotorController.h>
-#include <RotationController.h>
+
 #include <Kicker.h>
 #include <Buzzer.h>
 #include <fgbcommon.h>
@@ -27,7 +27,6 @@ long initialTime, currentTime, lastKick = 0;
 // Defender defender = Defender();
 Kicker kicker = Kicker();
 LightTracker lightTracker = LightTracker();
-RotationController rotationController = RotationController();
 MotorController motorController = MotorController();
 
 void setup(){
@@ -47,7 +46,7 @@ void setup(){
     SPI.setClockDivider(SPI_CLOCK_DIV8);
     // defender.init();
 
-    rotationController.init();
+
     delay(5000);
 }
 
@@ -57,9 +56,9 @@ void loop(){
     //SPI Transactions
     digitalWrite(TSOP_SS, LOW);
     delayMicroseconds(200);
-    int rotationData = SPI.transfer16(0);
-    rotationData = SPI.transfer16(0);
-    rotationData = SPI.transfer16(0);
+    int rotationData = SPI.transfer16(1);
+    rotationData = SPI.transfer16(1);
+    rotationData = SPI.transfer16(1);
     digitalWrite(TSOP_SS, HIGH);
 
     digitalWrite(LIGHT_SS, LOW);
@@ -71,9 +70,9 @@ void loop(){
 
     digitalWrite(TSOP_SS, LOW);
     delayMicroseconds(200);
-    int tsopData = SPI.transfer16(1);
-    tsopData = SPI.transfer16(1);
-    tsopData = SPI.transfer16(1);
+    int tsopData = SPI.transfer16(0);
+    tsopData = SPI.transfer16(0);
+    tsopData = SPI.transfer16(0);
     digitalWrite(TSOP_SS, HIGH);
 
     // Serial.println(rotationData);

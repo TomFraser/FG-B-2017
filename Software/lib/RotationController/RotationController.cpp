@@ -40,60 +40,43 @@ void RotationController::calcRotation(){
     // compass.setTarget(newTarget);
 }
 
-double RotationController::rotate(int rotationData){
+double RotationController::rotate(int rotationData, int goalData, int goalSize){
     compassHeading = (rotationData * COMPASS_MULTIPLIER);
     compassHeading = PIDRotation(compassHeading);
 
-    // if(millis() > prevTime + 20){
-        // if(pixy.getBlocks() && pixy.blocks[0].height < 50){
-        // if(pixy.getBlocks()){
-        //     int pixyHeading = calcPixy();
-        //     pixyHeading = pixyHeading * PIXY_MULTIPLIER;
-        //
-        //     if(pixyHeading <= 0){
-        //         if(pixyHeading < PIXY_ABS_MAX_NEG){
-        //             prevPixy = PIXY_ABS_MAX_NEG;
-        //             return PIXY_ABS_MAX_NEG;
-        //         }else{
-        //             prevPixy = pixyHeading;
-        //             return pixyHeading;
-        //         }
-        //     }else{
-        //         if(pixyHeading > PIXY_ABS_MAX){
-        //             prevPixy = PIXY_ABS_MAX;
-        //             return PIXY_ABS_MAX;
-        //         }else{
-        //             prevPixy = pixyHeading;
-        //             return pixyHeading;
-        //         }
-        //     }
-        // }else{
-            if(compassHeading <= 0){ //Negative
-                if(compassHeading < COMPASS_ABS_MAX_NEG){
-                    return COMPASS_ABS_MAX_NEG;
-                }else{
-                    return compassHeading;
-                }
-            }else{
-                if(compassHeading > COMPASS_ABS_MAX){
-                    return COMPASS_ABS_MAX;
-                }else{
-                    return compassHeading;
-                }
-            }
-            return absCompassHeading; //Returns compass when no goal is seen
-        // }
-    // }else{
-    //     // double __return = prevReturn * PIXY_MULTIPLIER;
-    //     // if(__return > 60){
-    //     //     return 60;
-    //     // }else if(__return < -60){
-    //     //     return -60;
-    //     // }else{
-    //     //     return __return;
-    //     // }
-    //     return prevPixy/2.25;
-    // }
+    if (goalSize < GOAL_SIZE_THRESHOLD){ //If not seeing goal, do compass
+      if(compassHeading <= 0){ //Negative
+        if(compassHeading < COMPASS_ABS_MAX_NEG){
+          return COMPASS_ABS_MAX_NEG;
+        }else{
+          return compassHeading;
+        }
+      }else{
+        if(compassHeading > COMPASS_ABS_MAX){
+          return COMPASS_ABS_MAX;
+        }else{
+          return compassHeading;
+        }
+      }
+      return absCompassHeading; //Returns compass when no goal is seen
+    }
+    else{ //If seeing goal, do goal facing
+      goalHeading = (goalData * GOAL_MULTIPLIER);
+      if(goalHeading <= 0){ //Negative
+        if(goalHeading < COMPASS_ABS_MAX_NEG){
+          return COMPASS_ABS_MAX_NEG;
+        }else{
+          return compassHeading;
+        }
+      }else{
+        if(goalHeading > COMPASS_ABS_MAX){
+          return COMPASS_ABS_MAX;
+        }else{
+          return goalHeading;
+        }
+      }
+      return goalHeading;
+    }
 }
 
 double RotationController::PIDRotation(double rotationIn){
