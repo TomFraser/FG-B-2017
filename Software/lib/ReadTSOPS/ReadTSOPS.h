@@ -19,6 +19,7 @@ public:
     void moveAngle();
     int getAngle();
     double calculateStrength();
+    double calculateOrbitSimple(double angleIn, bool useFirst);
 
     int bestSensor, secondSensor, thirdSensor;
     double angleToBall;
@@ -33,7 +34,6 @@ private:
     double scaled90;
 
     int mod(int x, int m);
-    double calculateOrbitSimple(double angleIn, bool useFirst);
     double calculateOrbitComplex(double angleIn);
     double calculateTSOPAverage();
 };

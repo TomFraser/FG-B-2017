@@ -62,14 +62,12 @@ void ReadTSOPS::stop(){
     digitalWrite(POWER_PIN_2, LOW);
 }
 
-void ReadTSOPS::moveAngle(){
-    read();
-    angleToBall = index * 30.00;
-
-    bestAngle = (int)calculateOrbitSimple(angleToBall, false);
-    // return (int)calculateOrbitComplex(angleToBall);
-    // return (int)calculateTSOPAverage();
-}
+// void ReadTSOPS::moveAngle(int ballAngle){
+//
+//     bestAngle = (int)calculateOrbitSimple(ballAngle, false);
+//     // return (int)calculateOrbitComplex(angleToBall);
+//     // return (int)calculateTSOPAverage();
+// }
 
 int ReadTSOPS::getAngle(){
     return bestAngle;
