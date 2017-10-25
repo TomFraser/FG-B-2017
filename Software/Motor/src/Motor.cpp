@@ -68,7 +68,7 @@ void loop(){
     int compassData = transaction(3, TSOP_SS);
     int xData = transaction(4, TSOP_SS);
     int yData = transaction(5, TSOP_SS);
-    int lightData = transaction(255, LIGHT_SS);
+    int lightData = 65506; //transaction(255, LIGHT_SS);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);

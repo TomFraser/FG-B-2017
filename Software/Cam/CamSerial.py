@@ -5,7 +5,7 @@ from math import atan2, sqrt, pi, log
 
 #Thresholds
 thresholds = [(40, 68, 44, 80, -58, 127), #Ball
-(11, 20, -30, -6, -13, 2), #Goal 1
+(0,0,0,0,0,0), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -98,7 +98,7 @@ while(True):
         strength = sqrt(x**2 + y**2)
 
     for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
-        img.draw_cross(goal.cx(), goal.cy())
+        #img.draw_cross(goal.cx(), goal.cy())
         x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = goal.cy() - (img.height() / 2)
         s = sqrt(goal.area())
@@ -122,7 +122,7 @@ while(True):
     goal1Data = [Goal1angle,int(Goal1size)]
     goal2Data = [Goal2angle,int(Goal2size)]
 
-    print(Goal1size)
+    #print(Goal1size)
 
 
 
@@ -173,7 +173,7 @@ while(True):
     uart.writechar(sendBuff[8])
     uart.writechar(sendBuff[9])
 
-    #print(sendBuff)
+    print(sendBuff)
 
     pyb.delay(1)
 

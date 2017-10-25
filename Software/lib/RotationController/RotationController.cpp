@@ -61,21 +61,24 @@ double RotationController::rotate(int rotationData, int goalData, int goalSize){
         return absCompassHeading; //Returns compass when no goal is seen
     }else{ //If seeing goal, do goal facing
         goalHeading = ((((int)goalData + 180)%360) - 180);
+        //Serial.println(goalHeading);
         goalHeading = (goalHeading * GOAL_MULTIPLIER);
-        if(goalHeading <= 0){ //Negative
+        if(goalHeading <= 0 && goalData != -30){ //Negative
             if(goalHeading < COMPASS_ABS_MAX_NEG){
                 return COMPASS_ABS_MAX_NEG;
             }else{
                 return compassHeading;
             }
-        }else{
+        }else if(goalData != -30){
             if(goalHeading > COMPASS_ABS_MAX){
                 return COMPASS_ABS_MAX;
             }else{
                 return goalHeading;
             }
         }
-        return goalHeading;
+        else{
+            return 0;
+        }
     }
 }
 
