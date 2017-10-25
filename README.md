@@ -21,4 +21,4 @@ The **Master** branch contains IR Ball codebase for both robots
 
 The **360Cam** branch contains the Passive Ball codebase for both robots
 
-the **defender** branch contains the Defender codebasae for either robot
+The **defender** branch contains the Defender codebasae for either robot
