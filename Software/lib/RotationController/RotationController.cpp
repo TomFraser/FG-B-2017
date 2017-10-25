@@ -44,7 +44,11 @@ double RotationController::rotate(int rotationData, int goalData, int goalSize){
     compassHeading = (rotationData * COMPASS_MULTIPLIER);
     compassHeading = PIDRotation(compassHeading);
 
-    if (goalSize < GOAL_SIZE_THRESHOLD){ //If not seeing goal, do compass
+    goalHeading = ((((int)goalData + 180)%360) - 180);
+    goalHeading = (goalHeading * GOAL_MULTIPLIER);
+    //Serial.println(goalHeading);
+
+    if (goalData == -30){ //If not seeing goal, do compass
         if(compassHeading <= 0){ //Negative
             if(compassHeading < COMPASS_ABS_MAX_NEG){
                 return COMPASS_ABS_MAX_NEG;
@@ -60,24 +64,18 @@ double RotationController::rotate(int rotationData, int goalData, int goalSize){
         }
         return absCompassHeading; //Returns compass when no goal is seen
     }else{ //If seeing goal, do goal facing
-        goalHeading = ((((int)goalData + 180)%360) - 180);
-        //Serial.println(goalHeading);
-        goalHeading = (goalHeading * GOAL_MULTIPLIER);
-        if(goalHeading <= 0 && goalData != -30){ //Negative
+        if(goalHeading <= 0){ //Negative
             if(goalHeading < COMPASS_ABS_MAX_NEG){
                 return COMPASS_ABS_MAX_NEG;
             }else{
-                return compassHeading;
+                return goalHeading;
             }
-        }else if(goalData != -30){
+        }else{
             if(goalHeading > COMPASS_ABS_MAX){
                 return COMPASS_ABS_MAX;
             }else{
                 return goalHeading;
             }
-        }
-        else{
-            return 0;
         }
     }
 }
