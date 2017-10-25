@@ -71,8 +71,8 @@ void loop(){
     int yData = transaction(5, TSOP_SS);
 
     //Calculating absolute rotation
-    double rotation = rotationData - 180;
-    double compass = (rotationData-180);
+    double rotation = (rotationData - 180);
+    double compass = (compassData - 180);
 
     //Calulating absolute angle
     double finalDirection = lightTracker.getDirection(65506, tsopData, compass);
