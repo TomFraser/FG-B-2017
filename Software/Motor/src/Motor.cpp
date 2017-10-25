@@ -31,7 +31,7 @@ T3SPI spi;
 
 uint16_t transaction(uint16_t command, int cs) {
     dataOut[0] = command;
-    for (int i = 0; i < 3; i++) {
+    for (int i = 0; i < 5; i++) {
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
     }
     return dataIn[0];
@@ -64,11 +64,11 @@ void loop(){
 
     //SPI Transactions
     int tsopData = transaction(1, TSOP_SS);
-    int lightData = transaction(255, LIGHT_SS);
     int rotationData = transaction(2, TSOP_SS);
     int compassData = transaction(3, TSOP_SS);
     int xData = transaction(4, TSOP_SS);
     int yData = transaction(5, TSOP_SS);
+    int lightData = transaction(255, LIGHT_SS);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
@@ -79,7 +79,7 @@ void loop(){
     int speed = lightTracker.getSpeed();
 
 
-    Serial.println(lightData); Serial.println(tsopData); Serial.println(rotation); Serial.println("--------------");
+    Serial.println(lightData); Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(xData); Serial.println(yData); Serial.println("--------------");
     // Serial.println(finalDirection);
 
     //Moving on angle
