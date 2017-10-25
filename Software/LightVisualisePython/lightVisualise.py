@@ -61,18 +61,18 @@ while True:
 
     try:
         data = float(data)
-        data = (90-data)%360
-        data = rad(data)
-        penup()
-        goto(0, 0)
-        pendown()
-        goto(radius * cos(data), radius * sin(data))
-        penup()
+        if(data != 65506):
+            data = (90-data)%360
+            data = rad(data)
+            penup()
+            goto(0, 0)
+            pendown()
+            goto(radius * cos(data), radius * sin(data))
+            penup()
     except ValueError:
         try:
             #not an angle number - must be sensor data
-            sensor_data = data.decode("utf-8").split()
-            sensor_data = [int(i) for i in sensor_data]
+            sensor_data = [int(i) for i in data.decode("utf-8").split()]
         except ValueError:
             #if serial shat itself
             pass

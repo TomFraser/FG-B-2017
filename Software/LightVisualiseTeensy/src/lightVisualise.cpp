@@ -40,4 +40,6 @@ void loop(){
   Serial.println();
 
   Serial.println(Light.getAngle());
+
+  delay(10); // delay so the computer can keep up
 }

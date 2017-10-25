@@ -177,28 +177,42 @@ double Light::getAngle(){
       double xavg = 0;
       double yavg = 0;
 
+      double numClusters = 0;
+
       for(int i=0; i < maxNumClusters; i++){
         if(!foundClusters[i].exist){
           break;
         }
-        clusXavg = 0;
-        clusYavg = 0;
-        for(int j=foundClusters[i].begin; j<=foundClusters[i].end; j++){
-          clusXavg += lightCoords[j%LIGHTSENSOR_NUM][0];
-          clusYavg += lightCoords[j%LIGHTSENSOR_NUM][1];
+
+        if(foundClusters[i].begin != -1){
+          numClusters ++;
+          clusXavg = 0;
+          clusYavg = 0;
+          for(int j=foundClusters[i].begin; j<=foundClusters[i].end; j++){
+            clusXavg += lightCoords[j%LIGHTSENSOR_NUM][0];
+            clusYavg += lightCoords[j%LIGHTSENSOR_NUM][1];
+          }
+
+          clusXavg /= foundClusters[i].end-foundClusters[i].begin + 1;
+          clusYavg /= foundClusters[i].end-foundClusters[i].begin + 1;
+
+          xavg += clusXavg;
+          yavg += clusYavg;
         }
-
-        clusXavg /= foundClusters[i].end-foundClusters[i].begin + 1;
-        clusYavg /= foundClusters[i].end-foundClusters[i].begin + 1;
-
-        xavg += clusXavg;
-        yavg += clusYavg;
       }
 
-      double lineAngle = -atan2(yavg, xavg)*radToAng; //0-180/-180 on east
-      lineAngle += lineAngle < 0 ? 360 : 0; //lineAngle is now a 0-360 value on east
-      lineAngle = fmod(lineAngle + 90, 360); //convert to 0-360 on north
-      directionAngle = fmod(lineAngle + 180, 360); //make it the opposite direction
+      if(numClusters > 0){
+        xavg /= numClusters;
+        yavg /= numClusters;
+
+        double lineAngle = -atan2(yavg, xavg)*radToAng; //0-180/-180 on east
+        lineAngle += lineAngle < 0 ? 360 : 0; //lineAngle is now a 0-360 value on east
+        lineAngle = fmod(lineAngle + 90, 360); //convert to 0-360 on north
+        directionAngle = fmod(lineAngle + 180, 360); //make it the opposite direction
+      }
+      else{
+        directionAngle = 65506;
+      }
     }
 
     double countbackVal = directionAngle;
