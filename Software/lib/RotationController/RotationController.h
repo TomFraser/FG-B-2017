@@ -28,7 +28,7 @@ public:
     double getCompass();
 
     //The final rotation to add to the motors
-    double rotate(int rotationData);
+    double rotate(int rotationData, int goalData, int goalSize);
 
     double rawCompass();
 
@@ -47,7 +47,7 @@ private:
 
     int blockHeight, blockWidth, blockX, blockY;
 
-    double compassHeading, absCompassHeading;
+    double compassHeading, absCompassHeading, goalHeading;
     double newTarget;
 
 };

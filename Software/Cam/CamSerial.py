@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(42, 67, 24, 83, 31, 76), #Ball
-(0,0,0,0,0,0), #Goal 1
+thresholds = [(20, 48, 17, 70, 3, 58), #Ball
+(18, 27, -13, -2, -18, -1), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -18,35 +18,20 @@ ledBlue.on()
 ledIR = LED(4)
 ledIR.off()
 
+global lastTime
+global currentTime
+lastTime = 500
 
-
-#Orbit Constants
-strengthThreshold = 40
-ORBIT_FRONT_DENOMINATOR = 120
-ORBIT_FRONT_RATIO = 90
-ORBIT_SIDE_RATIO = 75
-ORBIT_FORWARD_LOWER = 90
-ORBIT_FORWARD_UPPER = 270
-STRENGTH_MAX = 51
-
-
-#Orbit Function
-def calcOrbit(ang, stre):
-    if stre < strengthThreshold or ang == 65506 or stre == 0:
-        return ang
-    elif ang < ORBIT_FORWARD_LOWER:
-        return ang + (ang / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
-    elif ang > ORBIT_FORWARD_UPPER:
-        return ang - ((360 - ang) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
-    elif ang <= 180:
-        return ang + ORBIT_SIDE_RATIO
-    elif ang > 180:
-        return ang - ORBIT_SIDE_RATIO
-    else:
-        return 65506
+def blink():
+    global lastTime
+    global currentTime
+    currentTime = pyb.millis()
+    if currentTime > (lastTime):
+        ledBlue.toggle()
+        lastTime = currentTime + 500
 
 #UART Init
-uart = UART(3, 256000)
+uart = UART(3, 9600, timeout_char=10)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -54,17 +39,19 @@ sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
-sensor.set_auto_whitebal(False) #Must remain false for blob tracking
+sensor.set_auto_whitebal(True) #Must remain false for blob tracking
+sensor.set_contrast(3)
 clock = time.clock()
 
 #LED's all turn off after boot up is done
 ledRed.off()
 ledGreen.off()
-ledBlue.on()
+ledBlue.off()
 
 #Main Loop
 while(True):
     clock.tick()
+    #blink()
 
     #Reset Variables
     x = 0
@@ -76,18 +63,24 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
-    for blob in img.find_blobs(thresholds, x_stride=2, y_stride=2, merge=False):
-        img.draw_cross(blob.cx(), blob.cy())
-        x = -(blob.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
-        y = blob.cy() - (img.height() / 2)
-        if blob.code() == 1: #2^0
-            strength = sqrt(x*x + y*y) #Calculate Ball Distance
-            angle = (atan2(y,x) * (180 / pi) - 90)%360
-        if blob.code() == 2: #2^1
-            Goal1size = blob.area()
+    for ball in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
+        img.draw_cross(ball.cx(), ball.cy())
+        x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        y = ball.cy() - (img.height() / 2)
+        angle = (atan2(y,x) * (180 / pi) - 90)%360
+        strength = sqrt(x**2 + y**2)
+
+    for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
+        img.draw_cross(goal.cx(), goal.cy())
+        x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
+        y = goal.cy() - (img.height() / 2)
+        s = sqrt(goal.area())
+        if goal.code() == 2 and s > 15: #2^1
+            Goal1size =  sqrt(goal.area())
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
-        if blob.code() == 4: #2^2
-            Goal2size = blob.area()
+
+        if goal.code() == 4 and s > 15: #2^2
+            Goal2size =  sqrt(goal.area())
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
@@ -96,11 +89,11 @@ while(True):
     if Goal1size == 0: Goal1angle = 500
     if Goal2size == 0: Goal2angle = 500
 
-    angleOrbit = calcOrbit(angle,strength)
+    ballData = [angle, strength]
+    goal1Data = [Goal1angle,int(Goal1size)]
+    goal2Data = [Goal2angle,int(Goal2size)]
 
-    ballData = [angleOrbit, strength]
-    goal1Data = [Goal1angle,Goal2size]
-    goal2Data = [Goal2angle,Goal2size]
+    #print(Goal1size)
 
 
 
@@ -110,12 +103,12 @@ while(True):
     sendBuff[0] = 42
     sendBuff[9] = 72
 
-    if angleOrbit <= 255:
-        sendBuff[1] = int(angleOrbit)
+    if angle <= 255:
+        sendBuff[1] = int(angle)
         sendBuff[2] = 0
     else:
         sendBuff[1] = 255
-        sendBuff[2] = int(angleOrbit % 255)
+        sendBuff[2] = int(angle % 255)
 
     if goal1Data[0] <= 255:
         sendBuff[3] = int(goal1Data[0])
@@ -151,14 +144,14 @@ while(True):
     uart.writechar(sendBuff[8])
     uart.writechar(sendBuff[9])
 
-    #print(sendBuff)
+    print(sendBuff)
 
     pyb.delay(1)
 
     #Prints
-    print("Angle:")
-    print(angle)
-    print(angleOrbit)
+    #print("Angle:")
+    #print(angle)
+    #print(angleOrbit)
     #print()
     #print("Strength:")
     #print(strength)
