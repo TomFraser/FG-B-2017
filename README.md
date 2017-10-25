@@ -17,8 +17,8 @@
 -------------------------------------------------------------
 ## Branches
 
-The **Master** branch contains a basic version of all code for the robots.
+The **Master** branch contains IR Ball codebase for both robots
 
-The **O_bot** branch contains code specified for the first robot built, lovingly named "O".
+The **360Cam** branch contains the Passive Ball codebase for both robots
 
-The **P2_bot** branch contains code specified for the second robot built, named "P2".
+the **defender** branch contains the Defender codebasae for either robot
