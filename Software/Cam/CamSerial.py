@@ -5,7 +5,7 @@ from math import atan2, sqrt, pi, log
 
 #Thresholds
 thresholds = [(40, 68, 44, 80, -58, 127), #Ball
-(25, 61, -23, -1, -32, -5), #Goal 1
+(11, 20, -30, -6, -13, 2), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -97,16 +97,17 @@ while(True):
         angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
 
-    for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, merge=True):
+    for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
         img.draw_cross(goal.cx(), goal.cy())
         x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = goal.cy() - (img.height() / 2)
-        if goal.code() == 2: #2^1
-            Goal1size = goal.area()
+        s = sqrt(goal.area())
+        if goal.code() == 2 and s > 15: #2^1
+            Goal1size =  sqrt(goal.area())
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
 
-        if goal.code() == 4: #2^2
-            Goal2size = goal.area()
+        if goal.code() == 4 and s > 15: #2^2
+            Goal2size =  sqrt(goal.area())
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
@@ -118,8 +119,10 @@ while(True):
     angleOrbit = calcOrbit(angle,strength)
 
     ballData = [angleOrbit, strength]
-    goal1Data = [Goal1angle,Goal2size]
-    goal2Data = [Goal2angle,Goal2size]
+    goal1Data = [Goal1angle,int(Goal1size)]
+    goal2Data = [Goal2angle,int(Goal2size)]
+
+    print(Goal1size)
 
 
 
