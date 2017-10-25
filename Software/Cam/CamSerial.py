@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(40, 68, 44, 80, -58, 127), #Ball
-(0,0,0,0,0,0), #Goal 1
+thresholds = [(20, 48, 17, 70, 3, 58), #Ball
+(18, 27, -13, -2, -18, -1), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -18,17 +18,6 @@ ledBlue.on()
 ledIR = LED(4)
 ledIR.off()
 
-
-
-#Orbit Constants
-strengthThreshold = 40
-ORBIT_FRONT_DENOMINATOR = 120
-ORBIT_FRONT_RATIO = 90
-ORBIT_SIDE_RATIO = 75
-ORBIT_FORWARD_LOWER = 90
-ORBIT_FORWARD_UPPER = 270
-STRENGTH_MAX = 51
-
 global lastTime
 global currentTime
 lastTime = 500
@@ -40,22 +29,6 @@ def blink():
     if currentTime > (lastTime):
         ledBlue.toggle()
         lastTime = currentTime + 500
-
-
-#Orbit Function
-def calcOrbit(ang, stre):
-    if stre < strengthThreshold or ang == 65506 or stre == 0:
-        return ang
-    elif ang < ORBIT_FORWARD_LOWER:
-        return ang + (ang / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
-    elif ang > ORBIT_FORWARD_UPPER:
-        return ang - ((360 - ang) / ORBIT_FRONT_DENOMINATOR) * ORBIT_FRONT_RATIO
-    elif ang <= 180:
-        return ang + ORBIT_SIDE_RATIO
-    elif ang > 180:
-        return ang - ORBIT_SIDE_RATIO
-    else:
-        return 65506
 
 #UART Init
 uart = UART(3, 9600, timeout_char=10)
@@ -98,7 +71,7 @@ while(True):
         strength = sqrt(x**2 + y**2)
 
     for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
-        #img.draw_cross(goal.cx(), goal.cy())
+        img.draw_cross(goal.cx(), goal.cy())
         x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = goal.cy() - (img.height() / 2)
         s = sqrt(goal.area())
@@ -116,9 +89,7 @@ while(True):
     if Goal1size == 0: Goal1angle = 500
     if Goal2size == 0: Goal2angle = 500
 
-    angleOrbit = calcOrbit(angle,strength)
-
-    ballData = [angleOrbit, strength]
+    ballData = [angle, strength]
     goal1Data = [Goal1angle,int(Goal1size)]
     goal2Data = [Goal2angle,int(Goal2size)]
 
@@ -132,12 +103,12 @@ while(True):
     sendBuff[0] = 42
     sendBuff[9] = 72
 
-    if angleOrbit <= 255:
-        sendBuff[1] = int(angleOrbit)
+    if angle <= 255:
+        sendBuff[1] = int(angle)
         sendBuff[2] = 0
     else:
         sendBuff[1] = 255
-        sendBuff[2] = int(angleOrbit % 255)
+        sendBuff[2] = int(angle % 255)
 
     if goal1Data[0] <= 255:
         sendBuff[3] = int(goal1Data[0])
