@@ -16,7 +16,7 @@ public:
     CoordCalc();
 
 
-    void update(int goalArea, int goalAngle);
+    bool update(int goalArea, int goalAngle);
 
 private:
   int calcDistance(int goalArea);
@@ -26,6 +26,20 @@ private:
 
   //value to store our current y
   int yCoord;
+
+  //value to store current attack x
+  int xAttack;
+
+  //value to store current attack y
+  int yAttack;
+
+  //value to store current defense x
+  int xDefense;
+
+  //value to store current defense y
+  int xDefense;
+
+
 
 
 };
