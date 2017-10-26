@@ -18,8 +18,12 @@ public:
 
     bool update(int goalArea, int goalAngle);
 
+    int calcDistance(int goalArea, int goalArea);
+
+    int getX();
+    int getY();
+
 private:
-  int calcDistance(int goalArea);
 
   //value to store our current x
   int xCoord;

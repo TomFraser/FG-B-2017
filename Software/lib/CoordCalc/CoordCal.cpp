@@ -8,8 +8,7 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle){
-  //do some hectic maths stuff
-  return 20; //cm //#lol #hardcodelyf
+  return 0.03*goalArea^2 - 4.36*goalArea + 163.61
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
@@ -22,11 +21,10 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
   bool attackGoal = (angleA != -30)
   bool defenseGoal = (angleD != -30)
 
-  int distance = calcDistance();
-
-
   // attack calulations
   if(attackGoal){
+    int distance = calcDistance(areaA, angleA);
+
     int xGoal = distance*sin(angleToRad*angleA);
     int yGoal = distance*cos(angleToRad*angleA);
 
@@ -36,6 +34,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
 
   // defense calulations
   if(defenseGoal){
+    int distance = calcDistance(areaD, angleD);
+
     int xGoal = distance*sin(angleToRad*angleD);
     int yGoal = distance*cos(angleToRad*angleD);
 
