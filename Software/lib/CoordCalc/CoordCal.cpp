@@ -8,7 +8,7 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle){
-  return 0.03*goalArea^2 - 4.36*goalArea + 163.61
+  return 0.03*goalArea*goalArea - 4.36*goalArea + 163.61;
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
@@ -18,15 +18,15 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
 
 
   //-30 is the 'no goal' angle
-  bool attackGoal = (angleA != -30)
-  bool defenseGoal = (angleD != -30)
+  bool attackGoal = (angleA != -30);
+  bool defenseGoal = (angleD != -30);
 
   // attack calulations
   if(attackGoal){
     int distance = calcDistance(areaA, angleA);
 
-    int xGoal = distance*sin(angleToRad*angleA);
-    int yGoal = distance*cos(angleToRad*angleA);
+    int xGoal = distance*sin(angToRad*angleA);
+    int yGoal = distance*cos(angToRad*angleA);
 
     xAttack = ATTACK_GOAL_X-xGoal;
     yAttack = ATTACK_GOAL_Y-yGoal;
@@ -36,8 +36,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
   if(defenseGoal){
     int distance = calcDistance(areaD, angleD);
 
-    int xGoal = distance*sin(angleToRad*angleD);
-    int yGoal = distance*cos(angleToRad*angleD);
+    int xGoal = distance*sin(angToRad*angleD);
+    int yGoal = distance*cos(angToRad*angleD);
 
     xDefense = DEFENSE_GOAL_X-xGoal;
     yDefense = DEFENSE_GOAL_Y-yGoal;
@@ -50,8 +50,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
     // one is correct and the other is a meme
 
     // just gonna average for now
-    xCoord = (int)round((xAttack + xDefense)/2)
-    yCoord = (int)round((yAttack + yDefense)/2)
+    xCoord = (int)round((xAttack + xDefense)*0.5);
+    yCoord = (int)round((yAttack + yDefense)*0.5);
   }
   else if(attackGoal){
     // only attack goal can be seen
@@ -69,7 +69,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
   }
 
   // make sure our coords are within the field
-  return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y)
+  return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y);
 
 
 

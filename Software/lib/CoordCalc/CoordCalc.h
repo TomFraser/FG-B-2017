@@ -10,15 +10,15 @@
 #include <Arduino.h>
 #include <Common.h>
 
-class CoordiCalc{
+class CoordCalc{
 
 public:
     CoordCalc();
 
 
-    bool update(int goalArea, int goalAngle);
+    bool update(int areaA, int angleA, int areaD, int angleD);
 
-    int calcDistance(int goalArea, int goalArea);
+    int calcDistance(int goalArea, int goalAngle);
 
     int getX();
     int getY();
@@ -42,9 +42,5 @@ private:
 
   //value to store current defense y
   int yDefense;
-
-
-
-
 };
 #endif
