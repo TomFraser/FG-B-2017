@@ -40,7 +40,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
     int yGoal = distance*cos(angleToRad*angleD);
 
     xDefense = DEFENSE_GOAL_X-xGoal;
-    yDefense = DEFENSE_GOAL_Y+yGoal;
+    yDefense = DEFENSE_GOAL_Y-yGoal;
   }
 
   if(attackGoal && defenseGoal){
