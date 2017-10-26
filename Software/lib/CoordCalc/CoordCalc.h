@@ -37,7 +37,7 @@ private:
   int xDefense;
 
   //value to store current defense y
-  int xDefense;
+  int yDefense;
 
 
 
