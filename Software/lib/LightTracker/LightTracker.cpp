@@ -2,7 +2,7 @@
 
 LightTracker::LightTracker(){
   // init
-};
+}
 
 int LightTracker::getSpeed(){
   return speed;

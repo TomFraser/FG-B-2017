@@ -89,4 +89,24 @@
 #define NO_LIGHT 65506.00
 #define NO_SPEED 0
 
+// ================ Coordinate Calulations ==========
+#define FRONT_LEFT_X -60
+#define FRONT_LEFT_Y 90
+
+#define FRONT_RIGHT_X 60
+#define FRONT_RIGHT_Y 90
+
+#define BACK_LEFT_X -60
+#define BACK_LEFT_Y -90
+
+#define BACK_RIGHT_X 60
+#define BACK_RIGHT_Y -90
+
+#define ATTACK_GOAL_X 0
+#define ATTACK_GOAL_Y 90
+
+#define DEFENSE_GOAL_X 0
+#define DEFENSE_GOAL_Y -90
+
+
 #endif
