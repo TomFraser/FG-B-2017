@@ -133,16 +133,24 @@ while(True):
             sendBuff[i] = 43
 
     ##### Send Buffer Over Serial #####
-    uart.writechar(sendBuff[0])
-    uart.writechar(sendBuff[1])
-    uart.writechar(sendBuff[2])
-    uart.writechar(sendBuff[3])
-    uart.writechar(sendBuff[4])
-    uart.writechar(sendBuff[5])
-    uart.writechar(sendBuff[6])
-    uart.writechar(sendBuff[7])
-    uart.writechar(sendBuff[8])
-    uart.writechar(sendBuff[9])
+    for buf in sendBuff:
+        while True:
+            try:
+                uart.writechar(buff)
+                break
+            except:
+                pass
+
+    # uart.writechar(sendBuff[0])
+    # uart.writechar(sendBuff[1])
+    # uart.writechar(sendBuff[2])
+    # uart.writechar(sendBuff[3])
+    # uart.writechar(sendBuff[4])
+    # uart.writechar(sendBuff[5])
+    # uart.writechar(sendBuff[6])
+    # uart.writechar(sendBuff[7])
+    # uart.writechar(sendBuff[8])
+    # uart.writechar(sendBuff[9])
 
     print(sendBuff)
 
