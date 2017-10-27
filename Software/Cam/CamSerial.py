@@ -5,7 +5,7 @@ from math import atan2, sqrt, pi, log
 
 #Thresholds
 thresholds = [(38, 77, 30, 73, 7, 61), #Ball
-(52, 89, -16, 19, 21, 61), #Goal 1
+(45, 64, -16, 0, 12, 36), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -39,7 +39,7 @@ sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
-sensor.set_auto_whitebal(True) #Must remain false for blob tracking
+sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 sensor.set_contrast(3)
 clock = time.clock()
 
@@ -71,15 +71,16 @@ while(True):
         strength = sqrt(x**2 + y**2)
 
     for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
-        img.draw_cross(goal.cx(), goal.cy())
         x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = goal.cy() - (img.height() / 2)
         s = sqrt(goal.pixels())
         if goal.code() == 2 and s > 10: #2^1
+            img.draw_cross(goal.cx(), goal.cy())
             Goal1size =  sqrt(goal.pixels())
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
 
         if goal.code() == 4 and s > 10: #2^2
+            img.draw_cross(goal.cx(), goal.cy())
             Goal2size =  sqrt(goal.pixels())
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
