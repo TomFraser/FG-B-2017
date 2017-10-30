@@ -9,6 +9,8 @@
 #include <Pins.h>
 #include <LightTracker.h>
 #include <Blink.h>
+#include <DirectionController.h>
+
 //
 #if ROBOT
   // o_bot
