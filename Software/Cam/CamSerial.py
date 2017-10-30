@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(20, 48, 17, 70, 3, 58), #Ball
-(18, 27, -13, -2, -18, -1), #Goal 1
+thresholds = [(38, 77, 30, 73, 7, 61), #Ball
+(45, 64, -16, 0, 12, 36), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
@@ -27,11 +27,11 @@ def blink():
     global currentTime
     currentTime = pyb.millis()
     if currentTime > (lastTime):
-        ledBlue.toggle()
+        ledGreen.toggle()
         lastTime = currentTime + 500
 
 #UART Init
-uart = UART(3, 9600, timeout_char=10)
+uart = UART(3, 9600, timeout_char=1000)
 
 #Image Sensor Stuff
 sensor.reset()
@@ -39,7 +39,7 @@ sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 500) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
-sensor.set_auto_whitebal(True) #Must remain false for blob tracking
+sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 sensor.set_contrast(3)
 clock = time.clock()
 
@@ -51,7 +51,7 @@ ledBlue.off()
 #Main Loop
 while(True):
     clock.tick()
-    #blink()
+    blink()
 
     #Reset Variables
     x = 0
@@ -71,16 +71,17 @@ while(True):
         strength = sqrt(x**2 + y**2)
 
     for goal in img.find_blobs(thresholds, x_stride=10, y_stride=10, area_threshold=50, pixel_threshold=50, merge=True):
-        img.draw_cross(goal.cx(), goal.cy())
         x = -(goal.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = goal.cy() - (img.height() / 2)
-        s = sqrt(goal.area())
-        if goal.code() == 2 and s > 15: #2^1
-            Goal1size =  sqrt(goal.area())
+        s = sqrt(goal.pixels())
+        if goal.code() == 2 and s > 10: #2^1
+            img.draw_cross(goal.cx(), goal.cy())
+            Goal1size =  sqrt(goal.pixels())
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
 
-        if goal.code() == 4 and s > 15: #2^2
-            Goal2size =  sqrt(goal.area())
+        if goal.code() == 4 and s > 10: #2^2
+            img.draw_cross(goal.cx(), goal.cy())
+            Goal2size =  sqrt(goal.pixels())
             Goal2angle = (atan2(y,x) * (180 / pi) - 90)%360
 
     #If not seeing ball, angle = 65506, else calculate ball angle
@@ -136,9 +137,10 @@ while(True):
     for buf in sendBuff:
         while True:
             try:
-                uart.writechar(buff)
+                uart.writechar(buf)
                 break
-            except:
+            except Exception as e:
+                print(e)
                 pass
 
     # uart.writechar(sendBuff[0])
