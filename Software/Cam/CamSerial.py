@@ -4,23 +4,24 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(38, 77, 30, 73, 7, 61), #Ball
-(36, 63, -5, 10, 6, 36), #Goal 1
+thresholds = [(12, 65, 16, 76, 16, 58), #Ball
+(36, 51, -12, 21, 3, 44), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
 ledRed = LED(1)
-ledRed.on()
+ledRed.off()
 ledGreen = LED(2)
-ledGreen.on()
+ledGreen.off()
 ledBlue = LED(3)
-ledBlue.on()
+ledBlue.off()
 ledIR = LED(4)
 ledIR.off()
 
 global lastTime
 global currentTime
 lastTime = 500
+ledRed.on()
 
 def blink():
     global lastTime
@@ -37,7 +38,7 @@ uart = UART(3, 9600, timeout_char=1000)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
-sensor.skip_frames(time = 500) #Start Delay
+sensor.skip_frames(time = 1000) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 sensor.set_contrast(3)
@@ -63,6 +64,8 @@ while(True):
     #Find Ball
     img = sensor.snapshot()
 
+
+
     for ball in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
         img.draw_cross(ball.cx(), ball.cy())
         x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
@@ -75,6 +78,7 @@ while(True):
         y = goal.cy() - (img.height() / 2)
         s = sqrt(goal.pixels())
         if goal.code() == 2 and s > 10: #2^1
+            img.draw_rectangle(goal.rect())
             img.draw_cross(goal.cx(), goal.cy())
             Goal1size =  sqrt(goal.pixels())
             Goal1angle = (atan2(y,x) * (180 / pi) - 90)%360
