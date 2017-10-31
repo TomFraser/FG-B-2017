@@ -70,9 +70,6 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
 
   // make sure our coords are within the field
   return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y);
-
-
-
 }
 
 int CoordCalc::getX(){
