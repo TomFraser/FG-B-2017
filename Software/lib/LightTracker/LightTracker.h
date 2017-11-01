@@ -12,10 +12,12 @@ class LightTracker{
 public:
     LightTracker();
 
-    double getDirection(double lightAngle, double ballAngle, double compassAngle);
+    void update(double lightAngle, double moveAngle, bool isBallAngle, double compassAngle);
     int getSpeed();
+    double getDirection();
+    bool getSeeingLine();
 private:
-    double adjustLightReturn(double lightAngle, double compassAngle);
+    double adjustDirectionReturn(double lightAngle, double compassAngle);
     double calulateBounds(double lightAngle, double ballAngle);
 
     // for tracking
@@ -27,6 +29,9 @@ private:
 
     // speed
     int speed;
+
+    // direction
+    double direction;
 
 
 };
