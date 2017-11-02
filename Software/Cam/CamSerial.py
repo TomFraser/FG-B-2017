@@ -4,7 +4,7 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(43, 83, 8, 69, 9, 50), #Ball
+thresholds = [(59, 89, 16, 71, 9, 54), #Ball
 (12,0,0,0,0,0), #Goal 1
 (12,0,0,0,0,0)] # Goal 2
 
@@ -32,7 +32,7 @@ def blink():
         lastTime = currentTime + 500
 
 #UART Init
-uart = UART(3, 9600, timeout_char=1000)
+uart = UART(3, 9600, timeout_char=10)
 
 #Image Sensor Stuff
 sensor.reset()
