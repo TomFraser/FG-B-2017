@@ -7,7 +7,7 @@
 #include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
-#include <LightTracker.h>
+//#include <LightTracker.h>
 #include <Blink.h>
 #include <DirectionController.h>
 
@@ -27,7 +27,7 @@ long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
 Kicker kicker = Kicker();
-LightTracker lightTracker = LightTracker();
+//LightTracker lightTracker = LightTracker();
 MotorController motorController = MotorController();
 T3SPI spi;
 
@@ -35,6 +35,7 @@ uint16_t transaction(uint16_t command, int cs) {
     dataOut[0] = command;
     for (int i = 0; i < 5; i++) {
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
+        delayMicroseconds(100);
     }
     return dataIn[0];
 }
@@ -77,15 +78,15 @@ void loop(){
     double compass = (compassData - 180);
 
     //Calulating absolute angle
-    double finalDirection = lightTracker.getDirection(65506, tsopData, compass);
-    int speed = lightTracker.getSpeed();
+    //double finalDirection = lightTracker.getDirection(65506, tsopData, compass);
+    //int speed = lightTracker.getSpeed();
 
 
-    Serial.println(lightData); Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(xData); Serial.println(yData); Serial.println("--------------");
+    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(xData); Serial.println(yData); Serial.println("--------------");
     // Serial.println(finalDirection);
 
     //Moving on angle
-    motorController.playOffense(finalDirection, 65506.0, rotation, speed);
+    motorController.playOffense(tsopData, 65506.0, rotation, 50);
 
     //Checking if we can kick
     // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second

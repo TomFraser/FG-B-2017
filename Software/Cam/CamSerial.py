@@ -4,8 +4,8 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(12, 65, 16, 76, 16, 58), #Ball
-(36, 51, -12, 21, 3, 44), #Goal 1
+thresholds = [(55, 79, 21, 61, 2, 39), #Ball
+(0,0,0,0,0,0), #Goal 1
 (0,0,0,0,0,0)] # Goal 2
 
 #LED's
