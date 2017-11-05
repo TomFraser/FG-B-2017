@@ -31,7 +31,7 @@ double LightTracker::calulateBounds(double lightAngle, double ballAngle){
   }
 }
 
-void LightTracker::update(double lightAngle, double moveAngle, bool isBallAngle, double compassAngle){
+void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed, bool isBallAngle, double compassAngle){
     if(lightAngle != 65506.00){
       // if we can see the line
 
@@ -75,7 +75,7 @@ void LightTracker::update(double lightAngle, double moveAngle, bool isBallAngle,
         }
         else if(smallestAngleBetween(lineInitDirection, absMove) < SLIDE_ANGLE){
           // not within the angle of a slide -> just go at ball angle
-          speed = SPEED_VAL;
+          speed = isBallAngle ? SPEED_VAL : moveSpeed;
           direction = adjustDirectionReturn(absMove, compassAngle);
         }
         else{
@@ -140,7 +140,7 @@ void LightTracker::update(double lightAngle, double moveAngle, bool isBallAngle,
         wasSeeingLine = false;
         lineInitDirection = 0;
 
-        speed = SPEED_VAL;
+        speed = isBallAngle ? SPEED_VAL : moveAngle;
         // return ball angle to just do normal game play
         direction = adjustDirectionReturn(absMove, compassAngle);
       }
@@ -157,7 +157,7 @@ void LightTracker::update(double lightAngle, double moveAngle, bool isBallAngle,
       }
     }
     else{
-      speed = SPEED_VAL;
+      speed = isBallAngle ? SPEED_VAL : moveSpeed;
       // cant see line and wasnt seeing line - just do normal gameplay
       direction = adjustDirectionReturn(absMove, compassAngle);
     }
