@@ -7,7 +7,6 @@
 #include <PixyI2C.h>
 #include <Motor.h>
 #include <Pins.h>
-//#include <LightTracker.h>
 #include <Blink.h>
 #include <DirectionController.h>
 
@@ -27,7 +26,7 @@ long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
 Kicker kicker = Kicker();
-//LightTracker lightTracker = LightTracker();
+DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
 T3SPI spi;
 

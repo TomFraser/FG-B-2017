@@ -32,6 +32,15 @@ double LightTracker::calulateBounds(double lightAngle, double ballAngle){
 }
 
 void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed, bool isBallAngle, double compassAngle){
+    // adjust move angle
+    double absMove;
+    if(isBallAngle){ // ball angle is relative to robot rotation but all other directions are abs
+      double absMove = mod(moveAngle - compassAngle, 360);
+    }
+    else{
+      double absMove = moveAngle;
+    }
+
     if(lightAngle != 65506.00){
       // if we can see the line
 
@@ -39,13 +48,6 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
 
       // adjust the lightAngle to compass
       double absLight = mod(lightAngle - compassAngle, 360);
-
-      if(isBallAngle){ // ball angle is relative to robot rotation but all other directions are abs
-        double absMove = mod(moveAngle - compassAngle, 360);
-      }
-      else{
-        double absMove = moveAngle;
-      }
 
       // Serial.println(absMove);
       // Serial.println(smallestAngleBetween(absLight, absMove));
@@ -120,7 +122,7 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
             else{
               // stop
               speed = SPEED_ON_LINE; //speed on line is stop
-              direciton = adjustDirectionReturn(lineInitDirection, compassAngle);
+              direction = adjustDirectionReturn(lineInitDirection, compassAngle);
             }
           }
         }

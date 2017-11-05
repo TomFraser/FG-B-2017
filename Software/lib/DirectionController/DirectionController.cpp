@@ -31,9 +31,9 @@ void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, in
 void DirectionController::calulate(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
-    lightTracker.update(lightAngle, ballAngle, true, compassAngle);
+    lightTracker.update(lightAngle, ballAngle, 0, true, compassAngle);
     direction = lightTracker.getDirection();
-    speed = lightTracker.speed();
+    speed = lightTracker.getSpeed();
   }
   else{
     // cant see ball, need to figure out where we are
