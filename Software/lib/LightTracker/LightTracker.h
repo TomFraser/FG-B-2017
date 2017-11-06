@@ -17,7 +17,8 @@ public:
     double getDirection();
     bool getSeeingLine();
 private:
-    double adjustDirectionReturn(double lightAngle, double compassAngle);
+    double adjustDirectionReturn(double lightAngle, double compassAngle, bool isBallAngle);
+    double adjustLightReturn(double lightAngle, double compassAngle);
     double calulateBounds(double lightAngle, double ballAngle);
 
     // for tracking

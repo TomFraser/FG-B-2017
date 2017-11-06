@@ -16,7 +16,11 @@ bool LightTracker::getSeeingLine(){
   return wasSeeingLine;
 }
 
-double LightTracker::adjustDirectionReturn(double lightAngle, double compassAngle){
+double LightTracker::adjustDirectionReturn(double lightAngle, double compassAngle, bool isBallAngle){
+  return mod(lightAngle + (compassAngle * (isBallAngle ? 1 : -1)), 360);
+}
+
+double LightTracker::adjustLightReturn(double lightAngle, double compassAngle){
   return mod(lightAngle + compassAngle, 360);
 }
 
@@ -35,10 +39,10 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
     // adjust move angle
     double absMove;
     if(isBallAngle){ // ball angle is relative to robot rotation but all other directions are abs
-      double absMove = mod(moveAngle - compassAngle, 360);
+      absMove = mod(moveAngle - compassAngle, 360);
     }
     else{
-      double absMove = moveAngle;
+      absMove = moveAngle;
     }
 
     if(lightAngle != 65506.00){
@@ -73,12 +77,12 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
         if(moveAngle == 65506.00){
           // if we dont have any directions -> just go on the line
           speed = SPEED_ON_LINE;
-          direction = adjustDirectionReturn(lineInitDirection, compassAngle);
+          direction = adjustLightReturn(lineInitDirection, compassAngle);
         }
         else if(smallestAngleBetween(lineInitDirection, absMove) < SLIDE_ANGLE){
           // not within the angle of a slide -> just go at ball angle
           speed = isBallAngle ? SPEED_VAL : moveSpeed;
-          direction = adjustDirectionReturn(absMove, compassAngle);
+          direction = adjustDirectionReturn(absMove, compassAngle, isBallAngle);
         }
         else{
           // need to decide whether to slide or to stop
@@ -104,12 +108,12 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
             if(angBetween < SIDE_STOP_BOUND_MAX && angBetween > SIDE_STOP_BOUND_MIN){
               // if within the stop area -> stop
               speed = SPEED_ON_LINE; //speed on line is stop
-              direction = adjustDirectionReturn(lineInitDirection, compassAngle);
+              direction = adjustLightReturn(lineInitDirection, compassAngle);
             }
             else{
               // slide on slide angle
               speed = SPEED_SLIDE;
-              direction = adjustDirectionReturn(calulateBounds(absLight, absMove), compassAngle);
+              direction = adjustLightReturn(calulateBounds(absLight, absMove), compassAngle);
             }
           }
           else{
@@ -117,12 +121,12 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
             if(smallestAngleBetween(lineInitDirection, absMove) < STOP_BOUND){
               // not within stop -> do tha slide
               speed = SPEED_SLIDE;
-              direction = adjustDirectionReturn(calulateBounds(absLight, absMove), compassAngle);
+              direction = adjustLightReturn(calulateBounds(absLight, absMove), compassAngle);
             }
             else{
               // stop
               speed = SPEED_ON_LINE; //speed on line is stop
-              direction = adjustDirectionReturn(lineInitDirection, compassAngle);
+              direction = adjustLightReturn(lineInitDirection, compassAngle);
             }
           }
         }
@@ -130,7 +134,7 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
       else{
         speed = SPEED_OVER_LINE;
         // flipped over the line, this is priority (adusted for compass)
-        direction = adjustDirectionReturn(lineInitDirection, compassAngle);
+        direction = adjustLightReturn(lineInitDirection, compassAngle);
       }
     }
     else if(wasSeeingLine == true){
@@ -144,7 +148,7 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
 
         speed = isBallAngle ? SPEED_VAL : moveAngle;
         // return ball angle to just do normal game play
-        direction = adjustDirectionReturn(absMove, compassAngle);
+        direction = adjustDirectionReturn(absMove, compassAngle, isBallAngle);
       }
       else{
         // oops, out on the wrong side - this is priority
@@ -154,13 +158,13 @@ void LightTracker::update(double lightAngle, double moveAngle, double moveSpeed,
 
         speed = SPEED_OVER_LINE;
         // go back in
-        direction = adjustDirectionReturn(lineInitDirection, compassAngle);
+        direction = adjustLightReturn(lineInitDirection, compassAngle);
 
       }
     }
     else{
       speed = isBallAngle ? SPEED_VAL : moveSpeed;
       // cant see line and wasnt seeing line - just do normal gameplay
-      direction = adjustDirectionReturn(absMove, compassAngle);
+      direction = adjustDirectionReturn(absMove, compassAngle, isBallAngle);
     }
 }

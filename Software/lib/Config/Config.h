@@ -25,8 +25,8 @@
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y 0
-#define COORD_SPEED_SCALE 0.5 // scaler to convert coordinate dist to speed
-#define DISTANCE_CUTOFF 10 
+#define COORD_SPEED_SCALE 1 // scaler to convert coordinate dist to speed
+#define DISTANCE_CUTOFF 10
 
 //PIXY
 #define PIXY_MULTIPLIER 2

@@ -7,8 +7,9 @@ void setup(){
 }
 
 void loop(){
-  directionController.updateGameData(65506, 65506, 0);
-  directionController.updateGoalData(114, 360, 0, -30);
+  directionController.updateGameData(65506, 90, 0);
+  // directionController.updateGoalData(0, -30, 0, -30);
+  directionController.updateGoalData(114, 280.3, 0, -30);
   directionController.calulate();
 
   // atan2(dx, dy)
