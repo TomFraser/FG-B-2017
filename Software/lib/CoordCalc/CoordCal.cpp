@@ -68,8 +68,9 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD){
     return false;
   }
 
-  // make sure our coords are within the field
-  return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y);
+  // make sure our coords are within the field - ceebs doing this, i dont think its good
+  // return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y);
+  return true;
 }
 
 int CoordCalc::getX(){

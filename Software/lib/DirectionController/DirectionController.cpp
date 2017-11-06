@@ -37,23 +37,29 @@ void DirectionController::calulate(){
   }
   else{
     // cant see ball, need to figure out where we are
-    coordCalc.update(areaA, angleA, areaD, angleD); // can check the response of this but ceebs
-    int currX = coordCalc.getX();
-    int currY = coordCalc.getY();
+    if(coordCalc.update(areaA, angleA, areaD, angleD)){ // returns false if cant see any goal
+      int currX = coordCalc.getX();
+      int currY = coordCalc.getY();
 
-    // now we know where we are, gotta figure out how to where we wanna be
-    int deltaX = TARGET_X - currX;
-    int deltaY = TARGET_Y - currY;
-    int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
-    distance = distance < DISTANCE_CUTOFF ? 0 : distance;
+      // now we know where we are, gotta figure out how to where we wanna be
+      int deltaX = TARGET_X - currX;
+      int deltaY = TARGET_Y - currY;
+      int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
+      distance = distance < DISTANCE_CUTOFF ? 0 : distance;
 
-    double coordDirection = atan2(deltaY, deltaX) * radToAng;
-    int coordSpeed = (int) (distance*COORD_SPEED_SCALE);
+      double coordDirection = atan2(deltaY, deltaX) * radToAng;
+      int coordSpeed = (int) (distance*COORD_SPEED_SCALE);
 
-    // make sure our great overlord the light tracker is happy
-    lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
-    direction = lightTracker.getDirection();
-    speed = lightTracker.getSpeed();
+      // make sure our great overlord the light tracker is happy
+      lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
+      direction = lightTracker.getDirection();
+      speed = lightTracker.getSpeed();
+    }
+    else{
+      // coords didnt work out, just chill here till we ok again
+      speed = 0;
+      direction = 0;
+    }
   }
 
 }
