@@ -94,10 +94,10 @@ void loop(){
             int blockX = pixy.blocks[0].x;
             if(blockX - PIXY_CENTRE_X > 0){
                 tsopData = (-0.5 * cos((((blockX - PIXY_CENTRE_X)*PI)/160)) + 0.5)*90;
-                speed = 60;
+                speed = 50;
             }else if(blockX - PIXY_CENTRE_X < 0){
                 tsopData = 360- ((-0.5 * cos((((blockX - PIXY_CENTRE_X)*PI)/160)) + 0.5)*90);
-                speed = 60;
+                speed = 50;
             }else{
                 oscillateOrbit();
                 speed = 40;
@@ -110,7 +110,7 @@ void loop(){
     }
 
 
-    Serial.println(tsopData);
+    Serial.println(rotationData);
     //Calculating absolute rotation
     double rotation = rotationController.rotate((rotationData-180));
     double compass = rotationData;
