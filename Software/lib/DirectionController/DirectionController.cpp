@@ -47,8 +47,16 @@ void DirectionController::calulate(){
       int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
       distance = distance < DISTANCE_CUTOFF ? 0 : distance;
 
-      double coordDirection = atan2(deltaY, deltaX) * radToAng;
+      Serial.println(deltaX);
+      Serial.println(deltaY);
+
+      double coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
+      // convert to 0-360
+      coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
+
       int coordSpeed = (int) (distance*COORD_SPEED_SCALE);
+
+      Serial.print("CoordDir: "); Serial.print(coordDirection); Serial.print(" CoordSpeed: "); Serial.println(coordSpeed);
 
       // make sure our great overlord the light tracker is happy
       lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
