@@ -16,7 +16,7 @@ public:
     CoordCalc();
 
 
-    bool update(int areaA, int angleA, int areaD, int angleD);
+    bool update(int areaA, int angleA, int areaD, int angleD, double compassAngle);
 
     int calcDistance(int goalArea, int goalAngle);
 

@@ -37,8 +37,7 @@ void DirectionController::calulate(){
   }
   else{
     // cant see ball, need to figure out where we are
-    // HOLY CRAP NEED TO ADJUST THE ANGLES FOR COMPASS - TODO
-    if(coordCalc.update(areaA, angleA, areaD, angleD)){ // returns false if cant see any goal
+    if(coordCalc.update(areaA, angleA, areaD, angleD, compassAngle)){ // returns false if cant see any goal
       int currX = coordCalc.getX();
       int currY = coordCalc.getY();
 
