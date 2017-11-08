@@ -3,10 +3,9 @@ from turtle import *
 from math import sin, cos, radians as rad
 
 #turtle setup
-screen = Screen()
-# tracer(0, 0)
+tracer(False)
 penup()
-# hideturtle()
+hideturtle()
 pensize(10)
 
 #sensordata
@@ -43,16 +42,14 @@ sensor_size = 20
 # sensor_data = [0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
 def updateSensorVals(x, y):
-    print(x, y)
     for sensor_num in range(len(sensor_coords)):
-        coords = sensor_coords[sensor_num]
+        coords = list(sensor_coords[sensor_num])
         coords[0] *= radius
         coords[1] *= radius
         if(coords[0]-sensor_size <= x <= coords[0]+sensor_size and coords[1]-sensor_size <= y <= coords[1]+sensor_size):
             #clicked in the button
             sensor_data[sensor_num] = int(not sensor_data[sensor_num])
     updateScreen()
-    return
 
 def updateScreen():
     clear()
@@ -60,10 +57,10 @@ def updateScreen():
         coords = sensor_coords[sensor_num]
         goto(coords[0]*radius, coords[1]*radius)
         dot(sensor_size, sensor_color[sensor_data[sensor_num]])
-    update()
+
 
 onscreenclick(updateSensorVals)
+
 updateScreen()
-# sensor_data = [0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-# updateScreen()
+
 mainloop()
