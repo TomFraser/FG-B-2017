@@ -41,7 +41,7 @@ void DirectionController::calulate(){
       int currX = coordCalc.getX();
       int currY = coordCalc.getY();
 
-      Serial.print("X: "); Serial.print(currX); Serial.print(" Y: "); Serial.println(currY);
+      // Serial.print("X: "); Serial.print(currX); Serial.print(" Y: "); Serial.println(currY);
 
       // now we know where we are, gotta figure out how to where we wanna be
       int deltaX = TARGET_X - currX;
@@ -55,12 +55,22 @@ void DirectionController::calulate(){
 
       int coordSpeed = (int) (distance*COORD_SPEED_SCALE);
 
+      // Serial.print("Dir: "); Serial.println(coordDirection);
+      // Serial.print("Speed: "); Serial.println(coordSpeed);
+
+      direction = coordDirection;
+      speed = coordSpeed;
+
       // Serial.print("CoordDir: "); Serial.print(coordDirection); Serial.print(" CoordSpeed: "); Serial.println(coordSpeed);
 
       // make sure our great overlord the light tracker is happy
       lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
       direction = lightTracker.getDirection();
       speed = lightTracker.getSpeed();
+
+
+      // Serial.println(direction);
+      // Serial.println(speed);
     }
     else{
       // coords didnt work out, just chill here till we ok again
