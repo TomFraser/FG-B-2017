@@ -8,7 +8,12 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle){
-  return 0.03*goalArea*goalArea - 4.36*goalArea + 163.61;
+  if(goalArea < 30){
+    return 0.2463157579*goalArea*goalArea - 15.1362757297*goalArea + 287.7937274186;
+  }
+  else{
+    return 0.0247334755*goalArea*goalArea - 3.7345415778*goalArea + 144.9840085288;
+  }
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double compassAngle){
