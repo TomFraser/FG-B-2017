@@ -29,20 +29,12 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
   // attack calulations
   if(attackGoal){
 
-    // Serial.print("Angle: "); Serial.println(angleA);
-    // Serial.print("Compass: "); Serial.println(compassAngle);
-
     angleA = mod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA);
 
-    // Serial.print("Angle Adj: "); Serial.println(angleA);
-    // Serial.print("Dist: "); Serial.println(distance);
-
     int xGoal = distance*sin(angToRad*angleA);
     int yGoal = distance*cos(angToRad*angleA);
-
-    // Serial.println(xGoal);
 
     xAttack = ATTACK_GOAL_X-xGoal;
     yAttack = ATTACK_GOAL_Y-yGoal;

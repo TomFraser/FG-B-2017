@@ -82,6 +82,9 @@ void loop(){
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.calulate();
 
+    // Serial.print("D: "); Serial.println(directionController.getDirection());
+    // Serial.print("S: "); Serial.println(directionController.getSpeed());
+
     //Moving on angle
     motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
 
