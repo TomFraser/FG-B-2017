@@ -34,7 +34,7 @@ uint16_t transaction(uint16_t command, int cs) {
     dataOut[0] = command;
     for (int i = 0; i < 5; i++) {
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
-        delayMicroseconds(100);
+        delayMicroseconds(200);
     }
     return dataIn[0];
 }
@@ -51,7 +51,7 @@ void setup(){
     pinMode(TSOP_SS, OUTPUT);
 
     spi.begin_MASTER(14, MOSI, MISO, TSOP_SS, CS_ActiveLOW);
-    spi.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV16);
+    spi.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV32);
 
     spi.enableCS(TSOP_SS, CS_ActiveLOW);
     spi.enableCS(LIGHT_SS, CS_ActiveLOW);
