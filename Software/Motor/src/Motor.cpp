@@ -78,7 +78,7 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    directionController.updateGameData(tsopData, lightData, compass);
+    directionController.updateGameData(tsopData, lightData, 0);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.calulate();
 

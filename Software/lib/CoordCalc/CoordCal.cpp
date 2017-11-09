@@ -28,14 +28,21 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
   // attack calulations
   if(attackGoal){
-    Serial.println(angleA);
+
+    // Serial.print("Angle: "); Serial.println(angleA);
+    // Serial.print("Compass: "); Serial.println(compassAngle);
 
     angleA = mod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA);
 
+    // Serial.print("Angle Adj: "); Serial.println(angleA);
+    // Serial.print("Dist: "); Serial.println(distance);
+
     int xGoal = distance*sin(angToRad*angleA);
     int yGoal = distance*cos(angToRad*angleA);
+
+    // Serial.println(xGoal);
 
     xAttack = ATTACK_GOAL_X-xGoal;
     yAttack = ATTACK_GOAL_Y-yGoal;
@@ -60,9 +67,16 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     // what happens when one memes tho? we cant really tell which
     // one is correct and the other is a meme
 
-    // just gonna average for now
-    xCoord = (int)round((xAttack + xDefense)*0.5);
-    yCoord = (int)round((yAttack + yDefense)*0.5);
+    // take the larger goal
+    if(areaA > areaD){
+      xCoord = xAttack;
+      yCoord = yAttack;
+    }
+    else{
+      xCoord = xDefense;
+      yCoord = yDefense;
+    }
+
   }
   else if(attackGoal){
     // only attack goal can be seen

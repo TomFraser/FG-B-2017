@@ -5,7 +5,7 @@ from math import atan2, sqrt, pi, log
 
 #Thresholds
 thresholds = [(37, 79, 24, 102, 18, 68), #Ball
-(44, 68, -35, -1, -48, -10), #Goal 1
+(32, 63, -19, 3, -28, -4), #Goal 1
 (51, 93, -11, 20, 17, 50)] # Goal 2
 
 #LED's
@@ -35,7 +35,8 @@ def blink():
 uart = UART(3, 9600, timeout_char=10)
 
 #Image Sensor Stuff
-sensor.reset()
+sensor.res    Serial.print("Dist: "); Serial.println(distance);
+et()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
 sensor.skip_frames(time = 1000) #Start Delay
