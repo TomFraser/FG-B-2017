@@ -24,7 +24,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
   // attack calulations
   if(attackGoal){
     angleA = mod(angleA + compassAngle, 360); // CHECK THIS
-s
+
     int distance = calcDistance(areaA, angleA);
 
     int xGoal = distance*sin(angToRad*angleA);
