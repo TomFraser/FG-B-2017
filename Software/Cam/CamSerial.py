@@ -4,9 +4,9 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(55, 90, 16, 57, -3, 20), #Ball
-(0,0,0,0,0,0), #Goal 1
-(81, 98, -6, 7, 12, 127)] # Goal 2
+thresholds = [(37, 79, 24, 102, 18, 68), #Ball
+(44, 68, -35, -1, -48, -10), #Goal 1
+(51, 93, -11, 20, 17, 50)] # Goal 2
 
 #LED's
 ledRed = LED(1)
@@ -63,6 +63,7 @@ while(True):
 
     #Find Ball
     img = sensor.snapshot()
+    #img.draw_cross(int(img.width() / 2), int(img.height() / 2))
 
 
 
@@ -91,7 +92,7 @@ while(True):
     if(len(goalsA) > 0):
         goalA = sorted(goalsA, key= lambda goal: goal.pixels(), reverse=True)[0]
 
-        if(sqrt(goalA.pixels())>5000):
+        if(sqrt(goalA.pixels())>10):
             x = -(goalA.cx() - (img.width() / 2))
             y = goalA.cy() - (img.height() / 2)
             goalAangle = (atan2(y,x) * (180 / pi) - 90)%360
