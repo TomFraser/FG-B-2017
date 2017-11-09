@@ -28,7 +28,9 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
   // attack calulations
   if(attackGoal){
-    angleA = mod(angleA + compassAngle, 360); // CHECK THIS
+    Serial.println(angleA);
+
+    angleA = mod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA);
 
@@ -41,7 +43,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
   // defense calulations
   if(defenseGoal){
-    angleD = mod(angleA + compassAngle, 360); // CHECK THIS
+    angleD = mod(angleD - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaD, angleD);
 

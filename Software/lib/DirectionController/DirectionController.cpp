@@ -41,6 +41,8 @@ void DirectionController::calulate(){
       int currX = coordCalc.getX();
       int currY = coordCalc.getY();
 
+      Serial.print("X: "); Serial.print(currX); Serial.print(" Y: "); Serial.println(currY);
+
       // now we know where we are, gotta figure out how to where we wanna be
       int deltaX = TARGET_X - currX;
       int deltaY = TARGET_Y - currY;

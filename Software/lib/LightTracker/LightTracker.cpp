@@ -17,7 +17,7 @@ bool LightTracker::getSeeingLine(){
 }
 
 double LightTracker::adjustDirectionReturn(double lightAngle, double compassAngle, bool isBallAngle){
-  return mod(lightAngle + (compassAngle * (isBallAngle ? 1 : -1)), 360);
+  return mod(lightAngle + (compassAngle * (isBallAngle ? 1 : 1)), 360);
 }
 
 double LightTracker::adjustLightReturn(double lightAngle, double compassAngle){

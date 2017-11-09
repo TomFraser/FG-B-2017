@@ -68,24 +68,22 @@ void loop(){
     int tsopData = transaction(1, TSOP_SS);
     int rotationData = transaction(2, TSOP_SS);
     int compassData = transaction(3, TSOP_SS);
-    int xData = transaction(4, TSOP_SS);
-    int yData = transaction(5, TSOP_SS);
+    int goalAttackAngle = transaction(4, TSOP_SS);
+    int goalAttackSize = transaction(5, TSOP_SS);
+    int goalDefendAngle = transaction(6, TSOP_SS);
+    int goalDefendSize = transaction(7, TSOP_SS);
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    //Calulating absolute angle
-    //double finalDirection = lightTracker.getDirection(65506, tsopData, compass);
-    //int speed = lightTracker.getSpeed();
-
-
-    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(xData); Serial.println(yData); Serial.println("--------------");
-    // Serial.println(finalDirection);
+    directionController.updateGameData(tsopData, lightData, compass);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    directionController.calulate();
 
     //Moving on angle
-    motorController.playOffense(tsopData, 65506.0, rotation, 50);
+    motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
 
     //Checking if we can kick
     // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
