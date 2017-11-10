@@ -47,13 +47,13 @@ void DirectionController::calulate(){
       int deltaX = TARGET_X - currX;
       int deltaY = TARGET_Y - currY;
       int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
-      distance = distance < DISTANCE_CUTOFF ? 0 : distance;
+      // distance = distance < DISTANCE_CUTOFF ? 0 : distance;
 
       double coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
       // convert to 0-360
       coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
 
-      int coordSpeed = (int) (distance*COORD_SPEED_SCALE);
+      int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
 
       // Serial.print("Dir: "); Serial.println(coordDirection);
       // Serial.print("Speed: "); Serial.println(coordSpeed);

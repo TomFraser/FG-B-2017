@@ -23,10 +23,11 @@
 #define SPEED_SLIDE 40
 
 // IF CANT SEE BALL
-#define TARGET_X 30 // target center for now, just testing
-#define TARGET_Y 40
+#define TARGET_X 0 // target center for now, just testing
+#define TARGET_Y -15
 #define COORD_SPEED_SCALE 0.75 // scaler to convert coordinate dist to speed
-#define DISTANCE_CUTOFF 15
+#define DISTANCE_CUTOFF 10
+#define CUTOFF_SPEED_SCALE 0.25
 
 //PIXY
 #define PIXY_MULTIPLIER 2

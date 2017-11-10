@@ -23,8 +23,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
 
   //-30 is the 'no goal' angle
-  bool attackGoal = (angleA != -30);
-  bool defenseGoal = (angleD != -30);
+  bool attackGoal = (angleA != 65506);
+  bool defenseGoal = (angleD != 65506);
 
   // attack calulations
   if(attackGoal){
