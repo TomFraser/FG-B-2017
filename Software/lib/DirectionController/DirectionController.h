@@ -18,6 +18,9 @@ public:
   DirectionController();
   double getDirection();
   int getSpeed();
+  int getX();
+  int getY();
+  void setTarget(int x, int y);
   void updateGameData(double ballAngle_, double lightAngle_, double compassAngle_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
   void calulate();
@@ -37,6 +40,14 @@ private:
 
   int areaD; // defense goal
   int angleD;
+
+  // target coordinates
+  int targetX;
+  int targetY;
+
+  //current coords
+  int currX;
+  int currY;
 
   // light tracker object
   LightTracker lightTracker = LightTracker();

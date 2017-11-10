@@ -57,9 +57,16 @@ void setup(){
     spi.enableCS(LIGHT_SS, CS_ActiveLOW);
     // defender.init();
 
+    directionController.setTarget(TARGET_X, TARGET_Y);
 
     delay(5000);
 }
+
+int xVal = 0;
+int yVal = -65;
+double oscilator = 1;
+int xRange = 60;
+int yRange = 30;
 
 void loop(){
     delay(MAIN_LOOP_DELAY);
@@ -80,7 +87,14 @@ void loop(){
 
     // Serial.println(compass);
 
-    directionController.updateGameData(tsopData, lightData, compass);
+    if(xVal > xRange || xVal < -xRange){
+      oscilator *= -1;
+    }
+    xVal += oscilator;
+
+    directionController.setTarget(xVal, yVal);
+
+    directionController.updateGameData(65506, lightData, compass);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.calulate();
 
