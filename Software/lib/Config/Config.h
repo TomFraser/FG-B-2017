@@ -29,6 +29,9 @@
 #define DISTANCE_CUTOFF 10
 #define CUTOFF_SPEED_SCALE 0.25
 
+// Goalie
+#define X_MULTIPLIER 0.2
+
 //PIXY
 #define PIXY_MULTIPLIER 2
 //SOLENOID
