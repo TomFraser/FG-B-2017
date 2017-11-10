@@ -89,6 +89,8 @@ void DirectionController::calulate(){
       // coords didnt work out, just chill here till we ok again
       speed = 0;
       direction = 0;
+
+      
     }
   }
 

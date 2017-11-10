@@ -9,6 +9,7 @@
 #include <Pins.h>
 #include <Blink.h>
 #include <DirectionController.h>
+#include <Goalie.h>
 
 //
 #if ROBOT
@@ -24,17 +25,21 @@ volatile uint16_t dataIn[1] = {};
 
 long initialTime, currentTime, lastKick = 0;
 
+int targetX = TARGET_X;
+int targetY = TARGET_Y;
+
 // Defender defender = Defender();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
+Goalie goalie = Goalie();
 T3SPI spi;
 
 uint16_t transaction(uint16_t command, int cs) {
     dataOut[0] = command;
     for (int i = 0; i < 5; i++) {
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
-        delayMicroseconds(200);
+        delayMicroseconds(50);
     }
     return dataIn[0];
 }
@@ -57,19 +62,11 @@ void setup(){
     spi.enableCS(LIGHT_SS, CS_ActiveLOW);
     // defender.init();
 
-    directionController.setTarget(TARGET_X, TARGET_Y);
-
     delay(5000);
 }
 
-int xVal = 0;
-int yVal = -65;
-double oscilator = 1;
-int xRange = 60;
-int yRange = 30;
-
 void loop(){
-    delay(MAIN_LOOP_DELAY);
+    //delay(MAIN_LOOP_DELAY);
 
     //SPI Transactions
     int tsopData = transaction(1, TSOP_SS);
@@ -79,24 +76,25 @@ void loop(){
     int goalAttackSize = transaction(5, TSOP_SS);
     int goalDefendAngle = transaction(6, TSOP_SS);
     int goalDefendSize = transaction(7, TSOP_SS);
+    int rawBallData = transaction(8, TSOP_SS);
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    // Serial.println(compass);
-
-    if(xVal > xRange || xVal < -xRange){
-      oscilator *= -1;
-    }
-    xVal += oscilator;
-
-    directionController.setTarget(xVal, yVal);
+    Serial.println(compass);
+    directionController.setTarget(targetX, targetY);
 
     directionController.updateGameData(65506, lightData, compass);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.calulate();
+
+    goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData);
+    targetX = goalie.getX();
+    targetY = goalie.getY();
+
+
 
     // Serial.print("D: "); Serial.println(directionController.getDirection());
     // Serial.print("S: "); Serial.println(directionController.getSpeed());

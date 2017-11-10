@@ -9,7 +9,7 @@
 
 class Goalie{
 public:
-    bool init();
+    Goalie();
     void calcTarget(int currentX, int currentY, int ballData);
     int getX();
     int getY();
