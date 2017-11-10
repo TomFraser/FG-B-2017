@@ -8,6 +8,9 @@
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
+// if is Goalie
+#define GOALIE true
+
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
 #define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit

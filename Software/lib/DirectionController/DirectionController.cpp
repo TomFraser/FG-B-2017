@@ -34,14 +34,50 @@ void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, in
   angleA = angleA_;
   areaD = areaD_;
   angleD = angleD_;
+
+  updateCoordinates();
 }
 
-void DirectionController::setTarget(int x, int y){
-  targetX = x;
-  targetY = y;
+void DirectionController::updateCoordinates(){
+  if(coordCalc.update(areaA, angleA, areaD, angleD, compassAngle)){ // returns false if cant see any goal
+    currX = coordCalc.getX();
+    currY = coordCalc.getY();
+  }
+  else{
+    currX = 65506;
+    currY = 65506;
+  }
 }
 
-void DirectionController::calulate(){
+void DirectionController::goToCoords(int targetX, int targetY){
+  // if coordinates = 65506, cant see goal and cant figure out where we are -> stop
+  if(currX == 65506 || currY == 65506){
+    direction = 65506;
+    speed = 0;
+  }
+  else{
+    // all good -> go for it
+    // we know where we are, gotta figure out how to where we wanna be
+    int deltaX = targetX - currX;
+    int deltaY = targetY - currY;
+    int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
+    // distance = distance < DISTANCE_CUTOFF ? 0 : distance;
+
+    double coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
+    // convert to 0-360
+    coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
+
+    // do a PID in here i rekon
+    int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
+
+    // make sure our great overlord the light tracker is happy
+    lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
+    direction = lightTracker.getDirection();
+    speed = lightTracker.getSpeed();
+  }
+}
+
+void DirectionController::calulateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
     lightTracker.update(lightAngle, ballAngle, 0, true, compassAngle);
@@ -49,49 +85,7 @@ void DirectionController::calulate(){
     speed = lightTracker.getSpeed();
   }
   else{
-    // cant see ball, need to figure out where we are
-    if(coordCalc.update(areaA, angleA, areaD, angleD, compassAngle)){ // returns false if cant see any goal
-      currX = coordCalc.getX();
-      currY = coordCalc.getY();
-
-      // Serial.print("X: "); Serial.print(currX); Serial.print(" Y: "); Serial.println(currY);
-
-      // now we know where we are, gotta figure out how to where we wanna be
-      int deltaX = targetX - currX;
-      int deltaY = targetY - currY;
-      int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
-      // distance = distance < DISTANCE_CUTOFF ? 0 : distance;
-
-      double coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
-      // convert to 0-360
-      coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
-
-      int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
-
-      // Serial.print("Dir: "); Serial.println(coordDirection);
-      // Serial.print("Speed: "); Serial.println(coordSpeed);
-
-      direction = coordDirection;
-      speed = coordSpeed;
-
-      // Serial.print("CoordDir: "); Serial.print(coordDirection); Serial.print(" CoordSpeed: "); Serial.println(coordSpeed);
-
-      // make sure our great overlord the light tracker is happy
-      lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
-      direction = lightTracker.getDirection();
-      speed = lightTracker.getSpeed();
-
-
-      // Serial.println(direction);
-      // Serial.println(speed);
-    }
-    else{
-      // coords didnt work out, just chill here till we ok again
-      speed = 0;
-      direction = 0;
-
-      
-    }
+    // cant see ball -> go to predefined pos
+    goToCoords(TARGET_X, TARGET_Y);
   }
-
 }

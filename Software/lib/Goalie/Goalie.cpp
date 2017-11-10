@@ -1,4 +1,9 @@
 #include <Goalie.h>
+// need to deal with 65506 x, y
+
+// this library needs to:
+// take in current x, y coords and raw ball angle
+// and return x, y coords to go to
 
 Goalie::Goalie(){
   // yeet

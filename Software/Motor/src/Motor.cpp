@@ -25,9 +25,6 @@ volatile uint16_t dataIn[1] = {};
 
 long initialTime, currentTime, lastKick = 0;
 
-int targetX = TARGET_X;
-int targetY = TARGET_Y;
-
 // Defender defender = Defender();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
@@ -83,24 +80,24 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    Serial.println(compass);
-    directionController.setTarget(targetX, targetY);
-
-    directionController.updateGameData(65506, lightData, compass);
+    // update the direction controller with everything it needs -> it know knows everything required to do everything
+    directionController.updateGameData(tsopData, lightData, compass);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    directionController.calulate();
 
-    goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData);
-    targetX = goalie.getX();
-    targetY = goalie.getY();
+    #if GOALIE
+    // ---------------- GOALIE MAIN LOGIC -----------------------
+      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData);
 
+      directionController.goToCoords(goalie.getX(), goalie.getY());
 
+      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
 
-    // Serial.print("D: "); Serial.println(directionController.getDirection());
-    // Serial.print("S: "); Serial.println(directionController.getSpeed());
+    #else
+    // -------------------- ATTACKER MAIN LOGIC -------------------
+      directionController.calulateAttack();
 
-    //Moving on angle
-    motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+    #endif
 
     //Checking if we can kick
     // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second

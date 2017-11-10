@@ -1,6 +1,8 @@
 // UNLESS YOU ARE AL DO NOT TOUCH OR I WILL END YOU SLOWLY AND
 // PAINFULLY BY MAKING YOU DO THE MERGE
 
+// TODO: need to write a thing to deal with it spazzing out at the sides
+
 #include <CoordCalc.h>
 
 CoordCalc::CoordCalc(){

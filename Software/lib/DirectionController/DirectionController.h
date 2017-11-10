@@ -20,12 +20,14 @@ public:
   int getSpeed();
   int getX();
   int getY();
-  void setTarget(int x, int y);
   void updateGameData(double ballAngle_, double lightAngle_, double compassAngle_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
-  void calulate();
+  void goToCoords(int targetX, int targetY);
+  void calulateAttack();
 
 private:
+  void updateCoordinates();
+
   int speed;
   double direction;
 
