@@ -6,7 +6,7 @@ from math import atan2, sqrt, pi, log
 #Thresholds
 thresholds = [(37, 79, 24, 102, 18, 68), #Ball
 (31, 64, -20, 4, -29, -3), #Goal 1
-(51, 93, -11, 20, 17, 50)] # Goal 2
+(63, 95, -4, 27, 9, 54)] # Goal 2
 
 #LED's
 ledRed = LED(1)
@@ -92,7 +92,7 @@ while(True):
     if(len(goalsA) > 0):
         goalA = sorted(goalsA, key= lambda goal: goal.pixels(), reverse=True)[0]
 
-        if(sqrt(goalA.pixels())>10):
+        if(sqrt(goalA.pixels())>5000):
             x = -(goalA.cx() - (img.width() / 2))
             y = goalA.cy() - (img.height() / 2)
             goalAangle = (atan2(y,x) * (180 / pi) - 90)%360

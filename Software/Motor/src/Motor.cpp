@@ -76,6 +76,20 @@ void loop(){
     int rawBallData = transaction(8, TSOP_SS);
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
+    if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
+      spi.end();
+      delay(1);
+      spi.start();
+      int tsopData = transaction(1, TSOP_SS);
+      int rotationData = transaction(2, TSOP_SS);
+      int compassData = transaction(3, TSOP_SS);
+      int goalAttackAngle = transaction(4, TSOP_SS);
+      int goalAttackSize = transaction(5, TSOP_SS);
+      int goalDefendAngle = transaction(6, TSOP_SS);
+      int goalDefendSize = transaction(7, TSOP_SS);
+      int lightData = 65506; //transaction(255, LIGHT_SS);
+    }
+
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
