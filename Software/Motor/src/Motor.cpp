@@ -95,7 +95,7 @@ void loop(){
     double compass = (compassData - 180);
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    directionController.updateGameData(tsopData, lightData, compass);
+    directionController.updateGameData(tsopData, lightData, 0);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
 
     #if GOALIE

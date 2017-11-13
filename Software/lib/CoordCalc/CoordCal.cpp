@@ -9,17 +9,22 @@ CoordCalc::CoordCalc(){
   // init
 }
 
-int CoordCalc::calcDistance(int goalArea, int goalAngle){
-  goalArea -= 0.0091708543*goalAngle*goalAngle - 0.306281407*goalAngle + 0.1055276382;
+int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
+  int goalDiff;
+
+  if(attack){
+    goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
+  }
+  else{
+    // defense so back angle
+    goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
+  }
+
+  if(goalDiff > 40){
+    goalArea += 0.0009702068*goalDiff*goalDiff*goalDiff - 0.159890341*goalDiff*goalDiff + 8.8953257223*goalDiff - 159.3540633919;
+  }
 
   return -0.0004831603*goalArea*goalArea*goalArea + 0.0745118988*goalArea*goalArea - 5.0391683715*goalArea + 150.2067141813;
-
-  // if(goalArea < 30){
-  //   return 0.2463157579*goalArea*goalArea - 15.1362757297*goalArea + 287.7937274186;
-  // }
-  // else{
-  //   return 0.0247334755*goalArea*goalArea - 3.7345415778*goalArea + 144.9840085288;
-  // }
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double compassAngle){
@@ -37,7 +42,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     angleA = mod(angleA - compassAngle, 360); // CHECK THIS
 
-    int distance = calcDistance(areaA, angleA);
+    int distance = calcDistance(areaA, angleA, true);
 
     int xGoal = distance*sin(angToRad*angleA);
     int yGoal = distance*cos(angToRad*angleA);
@@ -50,7 +55,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
   if(defenseGoal){
     angleD = mod(angleD - compassAngle, 360); // CHECK THIS
 
-    int distance = calcDistance(areaD, angleD);
+    int distance = calcDistance(areaD, angleD, false);
 
     int xGoal = distance*sin(angToRad*angleD);
     int yGoal = distance*cos(angToRad*angleD);

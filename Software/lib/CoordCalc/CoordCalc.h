@@ -18,7 +18,7 @@ public:
 
     bool update(int areaA, int angleA, int areaD, int angleD, double compassAngle);
 
-    int calcDistance(int goalArea, int goalAngle);
+    int calcDistance(int goalArea, int goalAngle, bool attack);
 
     int getX();
     int getY();
