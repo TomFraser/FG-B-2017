@@ -8,6 +8,9 @@
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
+// if is Goalie
+#define GOALIE true
+
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
 #define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit
@@ -25,12 +28,12 @@
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y -15
-#define COORD_SPEED_SCALE 0.75 // scaler to convert coordinate dist to speed
-#define DISTANCE_CUTOFF 10
-#define CUTOFF_SPEED_SCALE 0.25
+#define COORD_SPEED_SCALE 2 // scaler to convert coordinate dist to speed
+#define DISTANCE_CUTOFF 0
+#define CUTOFF_SPEED_SCALE 1
 
 // Goalie
-#define X_MULTIPLIER 0.2
+#define X_MULTIPLIER 1.5
 
 //PIXY
 #define PIXY_MULTIPLIER 2
@@ -70,7 +73,7 @@
 
 //Rotation
 #define COMPASS_CALIBRATION_TIME 500
-#define COMPASS_CALIBRATION_NUMBER 50
+#define COMPASS_CALIBRATION_NUMBER 500
 #define COMPASS_MULTIPLIER 1.5
 #define COMPASS_ABS_MAX 150
 #define COMPASS_ABS_MAX_NEG -150

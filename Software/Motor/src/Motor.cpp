@@ -9,6 +9,7 @@
 #include <Pins.h>
 #include <Blink.h>
 #include <DirectionController.h>
+#include <Goalie.h>
 
 //
 #if ROBOT
@@ -28,13 +29,14 @@ long initialTime, currentTime, lastKick = 0;
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
+Goalie goalie = Goalie();
 T3SPI spi;
 
 uint16_t transaction(uint16_t command, int cs) {
     dataOut[0] = command;
     for (int i = 0; i < 5; i++) {
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
-        delayMicroseconds(200);
+        delayMicroseconds(50);
     }
     return dataIn[0];
 }
@@ -57,12 +59,11 @@ void setup(){
     spi.enableCS(LIGHT_SS, CS_ActiveLOW);
     // defender.init();
 
-
     delay(5000);
 }
 
 void loop(){
-    delay(MAIN_LOOP_DELAY);
+    //delay(MAIN_LOOP_DELAY);
 
     //SPI Transactions
     int tsopData = transaction(1, TSOP_SS);
@@ -72,6 +73,7 @@ void loop(){
     int goalAttackSize = transaction(5, TSOP_SS);
     int goalDefendAngle = transaction(6, TSOP_SS);
     int goalDefendSize = transaction(7, TSOP_SS);
+    int rawBallData = transaction(8, TSOP_SS);
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
     if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
@@ -92,17 +94,24 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    // Serial.println(compass);
-
+    // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, lightData, compass);
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    directionController.calulate();
 
-    // Serial.print("D: "); Serial.println(directionController.getDirection());
-    // Serial.print("S: "); Serial.println(directionController.getSpeed());
+    #if GOALIE
+    // ---------------- GOALIE MAIN LOGIC -----------------------
+      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData);
 
-    //Moving on angle
-    motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+      directionController.goToCoords(goalie.getX(), goalie.getY());
+
+      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+
+    #else
+    // -------------------- ATTACKER MAIN LOGIC -------------------
+      directionController.calulateAttack();
+
+      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+    #endif
 
     //Checking if we can kick
     // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
