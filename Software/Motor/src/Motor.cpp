@@ -77,7 +77,7 @@ void loop(){
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
     if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
-      spi.end();
+      spi.stop();
       delay(1);
       spi.start();
       int tsopData = transaction(1, TSOP_SS);
@@ -87,6 +87,7 @@ void loop(){
       int goalAttackSize = transaction(5, TSOP_SS);
       int goalDefendAngle = transaction(6, TSOP_SS);
       int goalDefendSize = transaction(7, TSOP_SS);
+      int rawBallData = transaction(8, TSOP_SS);
       int lightData = 65506; //transaction(255, LIGHT_SS);
     }
 
@@ -94,17 +95,19 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
+    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println();
+
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    directionController.updateGameData(tsopData, lightData, 0);
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    directionController.updateGameData(tsopData, lightData, compass);
+    directionController.updateGoalData(goalAttackSize, 65506, goalDefendSize, goalDefendAngle);
 
     #if GOALIE
     // ---------------- GOALIE MAIN LOGIC -----------------------
-      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData);
+      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle);
 
       directionController.goToCoords(goalie.getX(), goalie.getY());
 
-      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+      motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
 
     #else
     // -------------------- ATTACKER MAIN LOGIC -------------------
@@ -114,9 +117,9 @@ void loop(){
     #endif
 
     //Checking if we can kick
-    // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
-    //     kicker.kickBall();
-    //     lastKick = millis();
-    // }
+    if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+        kicker.kickBall();
+        lastKick = millis();
+    }
     blink();
 }

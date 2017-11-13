@@ -10,10 +10,13 @@
 class Goalie{
 public:
     Goalie();
-    void calcTarget(int currentX, int currentY, int ballData);
+    void calcTarget(int currentX, int currentY, int ballData, int goalAngle);
     int getX();
     int getY();
+    int getGoalAngle();
 private:
   int xTarget;
   int yTarget;
+  int _defendGoalAngle;
+  int correctedAngle;
 };

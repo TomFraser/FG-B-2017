@@ -72,6 +72,7 @@
 	do { \
 		while ((SPI0_SR & SPI_SR_TXCTR) >= 0x00004000); \
 		SPI0_PUSHR = ((w)&0xffff) | SPI_PUSHR_CTAS(CTARn) | SPI_PUSHR_PCS(0x1f & PCS); \
+		delayMicroseconds(100); \
 	} while(0)
 
 
