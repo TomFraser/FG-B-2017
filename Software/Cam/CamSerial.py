@@ -63,7 +63,7 @@ while(True):
 
     #Find Ball
     img = sensor.snapshot()
-    #img.draw_cross(int(img.width() / 2), int(img.height() / 2))
+    img.draw_cross(int(img.width() / 2), int(img.height() / 2))
 
 
 

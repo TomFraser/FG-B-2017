@@ -10,12 +10,16 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle){
-  if(goalArea < 30){
-    return 0.2463157579*goalArea*goalArea - 15.1362757297*goalArea + 287.7937274186;
-  }
-  else{
-    return 0.0247334755*goalArea*goalArea - 3.7345415778*goalArea + 144.9840085288;
-  }
+  goalArea -= 0.0091708543*goalAngle*goalAngle - 0.306281407*goalAngle + 0.1055276382;
+
+  return -0.0004831603*goalArea*goalArea*goalArea + 0.0745118988*goalArea*goalArea - 5.0391683715*goalArea + 150.2067141813;
+
+  // if(goalArea < 30){
+  //   return 0.2463157579*goalArea*goalArea - 15.1362757297*goalArea + 287.7937274186;
+  // }
+  // else{
+  //   return 0.0247334755*goalArea*goalArea - 3.7345415778*goalArea + 144.9840085288;
+  // }
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double compassAngle){
