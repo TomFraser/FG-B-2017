@@ -9,7 +9,7 @@
 #define ROBOT P2_bot
 
 // if is Goalie
-#define GOALIE true
+#define GOALIE false
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit

@@ -99,7 +99,7 @@ void loop(){
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, lightData, compass);
-    directionController.updateGoalData(goalAttackSize, 65506, goalDefendSize, goalDefendAngle);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
 
     #if GOALIE
     // ---------------- GOALIE MAIN LOGIC -----------------------
