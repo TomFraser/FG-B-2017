@@ -11,6 +11,8 @@
 #include <Common.h>
 #include <LightTracker.h>
 #include <CoordCalc.h>
+#include <PID.h>
+
 
 class DirectionController{
 
@@ -56,5 +58,17 @@ private:
 
   // CoordCalc object
   CoordCalc coordCalc = CoordCalc();
+
+  // PID stuff
+  double pidSetpoint = 0;
+  double pidInput;
+  double pidOutput;
+
+  double Kp = 0;
+  double Ki = 0;
+  double Kd = 0;
+
+  PID pid = PID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, DIRECT);
+
 };
 #endif

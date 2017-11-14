@@ -4,7 +4,11 @@
 #include <DirectionController.h>
 
 DirectionController::DirectionController(){
-  // init
+  // setup PID
+  pidInput = 0;
+  pid.SetMode(AUTOMATIC);
+  pid.SetOutputLimits(0, 100); // speed is 0-100
+  // pid.SetSampleTime(); //CHECK IF I NEED TO SET THIS TO SMALLER THAN 200mS
 }
 
 double DirectionController::getDirection(){
@@ -67,11 +71,12 @@ void DirectionController::goToCoords(int targetX, int targetY){
     // convert to 0-360
     coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
 
-    // do a PID in here i rekon
-    int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
+    // int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
+    pidInput = distance;
+    pid.Compute();
 
     // make sure our great overlord the light tracker is happy
-    lightTracker.update(lightAngle, coordDirection, coordSpeed, false, compassAngle);
+    lightTracker.update(lightAngle, coordDirection, pidOutput, false, compassAngle);
     direction = lightTracker.getDirection();
     speed = lightTracker.getSpeed();
   }
