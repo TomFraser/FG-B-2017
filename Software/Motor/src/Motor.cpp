@@ -103,7 +103,7 @@ void loop(){
 
     #if GOALIE
     // ---------------- GOALIE MAIN LOGIC -----------------------
-      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle);
+      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
 
       directionController.goToCoords(goalie.getX(), goalie.getY());
 

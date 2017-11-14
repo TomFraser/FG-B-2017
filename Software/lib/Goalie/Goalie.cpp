@@ -9,11 +9,16 @@ Goalie::Goalie(){
   // yeet
 }
 
-void Goalie::calcTarget(int currentX, int currentY, int ballData, int goalAngle) {
+void Goalie::calcTarget(int currentX, int currentY, int ballData, int goalAngle, int _compass) {
   if (ballData != 65506){
       correctedAngle = (((ballData+180)%360)-180);
-  } else{
+      lastBallData = correctedAngle;
+  } else if (lastBallData == 65506){
       correctedAngle = 65506;
+      lastBallData = 65506;
+  } else{
+      correctedAngle = lastBallData;
+      lastBallData = 65506;
   }
 
   correctedAngle = abs(correctedAngle) < 120 ? correctedAngle : 65506;
@@ -23,17 +28,18 @@ void Goalie::calcTarget(int currentX, int currentY, int ballData, int goalAngle)
     yTarget = -50;
   } else{
     xTarget = currentX + correctedAngle * X_MULTIPLIER;
-    if (xTarget > 40) xTarget = 40;
-    if (xTarget < -40) xTarget = -40;
+    if (xTarget > xRange) xTarget = xRange;
+    if (xTarget < -xRange) xTarget = -xRange;
 
     yTarget = -50;
   }
   if (goalAngle == 65506 || goalAngle == 0)
   {
-      _defendGoalAngle = 180;
+      _defendGoalAngle = _compass + 180;
   } else{
       _defendGoalAngle = goalAngle;
   }
+  if (ballData == 65506) _defendGoalAngle = _compass + 180;
 }
 
 int Goalie::getX() {

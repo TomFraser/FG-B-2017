@@ -10,7 +10,7 @@
 class Goalie{
 public:
     Goalie();
-    void calcTarget(int currentX, int currentY, int ballData, int goalAngle);
+    void calcTarget(int currentX, int currentY, int ballData, int goalAngle, int _compass);
     int getX();
     int getY();
     int getGoalAngle();
@@ -19,4 +19,7 @@ private:
   int yTarget;
   int _defendGoalAngle;
   int correctedAngle;
+  int lastBallData;
+
+  int xRange = 35;
 };
