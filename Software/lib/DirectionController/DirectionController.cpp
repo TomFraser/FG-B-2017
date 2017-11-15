@@ -5,10 +5,9 @@
 
 DirectionController::DirectionController(){
   // setup PID
-  pidInput = 0;
   pid.SetMode(AUTOMATIC);
   pid.SetOutputLimits(0, 100); // speed is 0-100
-  // pid.SetSampleTime(); //CHECK IF I NEED TO SET THIS TO SMALLER THAN 200mS
+  pid.SetSampleTime(25); //CHECK IF I NEED TO SET THIS TO SMALLER THAN 200mS
 }
 
 double DirectionController::getDirection(){
@@ -73,7 +72,9 @@ void DirectionController::goToCoords(int targetX, int targetY){
 
     // int coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
     pidInput = distance;
+    // Serial.print(pidInput); Serial.print(" ");
     pid.Compute();
+    // Serial.println(pidOutput);
 
     // make sure our great overlord the light tracker is happy
     lightTracker.update(lightAngle, coordDirection, pidOutput, false, compassAngle);

@@ -60,15 +60,15 @@ private:
   CoordCalc coordCalc = CoordCalc();
 
   // PID stuff
-  double pidSetpoint = 0;
+  double pidSetpoint;
   double pidInput;
   double pidOutput;
 
-  double Kp = 0;
+  double Kp = 2;
   double Ki = 0;
-  double Kd = 0;
+  double Kd = 1;
 
-  PID pid = PID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, DIRECT);
+  PID pid = PID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, REVERSE);
 
 };
 #endif
