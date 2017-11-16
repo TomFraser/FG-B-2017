@@ -31,6 +31,7 @@
 #define COORD_SPEED_SCALE 1.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
+#define ENABLE_PID false
 
 // Goalie
 #define X_MULTIPLIER 1.25
