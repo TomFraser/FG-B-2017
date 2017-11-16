@@ -33,10 +33,10 @@ Goalie goalie = Goalie();
 T3SPI spi;
 
 uint16_t transaction(uint16_t command, int cs) {
-    dataOut[0] = command;
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 10; i++) {
+        dataOut[0] = command;
         spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
-        delayMicroseconds(50);
+        // delayMicroseconds(50);
     }
     return dataIn[0];
 }
@@ -95,6 +95,8 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
+    Serial.println(rotationData);
+
     // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
@@ -121,5 +123,5 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
-    blink();
+    // blink();
 }

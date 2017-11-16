@@ -27,7 +27,11 @@ void Goalie::calcTarget(int currentX, int currentY, int ballData, int goalAngle,
     xTarget = 0;
     yTarget = -50;
   } else{
-    xTarget = currentX + correctedAngle * X_MULTIPLIER;
+      if(correctedAngle > 50){
+          xTarget = currentX + correctedAngle * X_MULTIPLIER_LARGE;
+      }else{
+          xTarget = currentX + correctedAngle * X_MULTIPLIER_SMOL;
+      }
     if (xTarget > xRange) xTarget = xRange;
     if (xTarget < -xRange) xTarget = -xRange;
 

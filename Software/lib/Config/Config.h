@@ -9,7 +9,7 @@
 #define ROBOT P2_bot
 
 // if is Goalie
-#define GOALIE false
+#define GOALIE true
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -33,7 +33,8 @@
 #define CUTOFF_SPEED_SCALE 1
 
 // Goalie
-#define X_MULTIPLIER 1.25
+#define X_MULTIPLIER_LARGE 1.75
+#define X_MULTIPLIER_SMOL 1
 
 //PIXY
 #define PIXY_MULTIPLIER 2
