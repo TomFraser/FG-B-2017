@@ -27,10 +27,11 @@
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
-#define TARGET_Y -15
+#define TARGET_Y 0
 #define COORD_SPEED_SCALE 1.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
+#define ENABLE_PID false
 
 // Goalie
 #define X_MULTIPLIER_LARGE 1.75
