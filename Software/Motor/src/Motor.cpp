@@ -1,6 +1,6 @@
 #include <Config.h>
 #include <MotorController.h>
-#include <t3spi.h>
+#include <SPI.h>
 #include <Kicker.h>
 #include <Buzzer.h>
 #include <fgbcommon.h>
@@ -30,15 +30,13 @@ Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
 Goalie goalie = Goalie();
-T3SPI spi;
 
 uint16_t transaction(uint16_t command, int cs) {
-    for (int i = 0; i < 10; i++) {
-        dataOut[0] = command;
-        spi.txrx16(dataOut, dataIn, 1, CTAR_0, cs);
-        // delayMicroseconds(50);
-    }
-    return dataIn[0];
+    digitalWrite(cs, LOW);
+    delayMicroseconds(200);
+    int data = SPI.transfer16(command);
+    digitalWrite(cs, HIGH);
+    return data;
 }
 
 void setup(){
@@ -48,16 +46,14 @@ void setup(){
     pinMode(A12, INPUT);
     pinMode(13, OUTPUT);
     //
-    // //SPI SETUP
+    //SPI SETUP
     pinMode(LIGHT_SS, OUTPUT);
     pinMode(TSOP_SS, OUTPUT);
-
-    spi.begin_MASTER(14, MOSI, MISO, TSOP_SS, CS_ActiveLOW);
-    spi.setCTAR(CTAR_0, 16, SPI_MODE0, LSB_FIRST, SPI_CLOCK_DIV32);
-
-    spi.enableCS(TSOP_SS, CS_ActiveLOW);
-    spi.enableCS(LIGHT_SS, CS_ActiveLOW);
-    // defender.init();
+    SPI.begin();
+    digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(LIGHT_SS, HIGH);
+    SPI.setSCK(ALT_SCK);
+    SPI.setClockDivider(SPI_CLOCK_DIV8);
 
     delay(5000);
 }
@@ -76,20 +72,17 @@ void loop(){
     int rawBallData = transaction(8, TSOP_SS);
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
-    if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
-      spi.stop();
-      delay(1);
-      spi.start();
-      int tsopData = transaction(1, TSOP_SS);
-      int rotationData = transaction(2, TSOP_SS);
-      int compassData = transaction(3, TSOP_SS);
-      int goalAttackAngle = transaction(4, TSOP_SS);
-      int goalAttackSize = transaction(5, TSOP_SS);
-      int goalDefendAngle = transaction(6, TSOP_SS);
-      int goalDefendSize = transaction(7, TSOP_SS);
-      int rawBallData = transaction(8, TSOP_SS);
-      int lightData = 65506; //transaction(255, LIGHT_SS);
-    }
+    // if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
+    //   int tsopData = transaction(1, TSOP_SS);
+    //   int rotationData = transaction(2, TSOP_SS);
+    //   int compassData = transaction(3, TSOP_SS);
+    //   int goalAttackAngle = transaction(4, TSOP_SS);
+    //   int goalAttackSize = transaction(5, TSOP_SS);
+    //   int goalDefendAngle = transaction(6, TSOP_SS);
+    //   int goalDefendSize = transaction(7, TSOP_SS);
+    //   int rawBallData = transaction(8, TSOP_SS);
+    //   int lightData = 65506; //transaction(255, LIGHT_SS);
+    // }
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
