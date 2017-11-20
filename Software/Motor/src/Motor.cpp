@@ -33,7 +33,7 @@ Goalie goalie = Goalie();
 
 uint16_t transaction(uint16_t command, int cs) {
     digitalWrite(cs, LOW);
-    delayMicroseconds(200);
+    delayMicroseconds(400);
     int data = SPI.transfer16(command);
     digitalWrite(cs, HIGH);
     return data;
@@ -63,13 +63,20 @@ void loop(){
 
     //SPI Transactions
     int tsopData = transaction(1, TSOP_SS);
-    int rotationData = transaction(2, TSOP_SS);
-    int compassData = transaction(3, TSOP_SS);
-    int goalAttackAngle = transaction(4, TSOP_SS);
-    int goalAttackSize = transaction(5, TSOP_SS);
-    int goalDefendAngle = transaction(6, TSOP_SS);
-    int goalDefendSize = transaction(7, TSOP_SS);
-    int rawBallData = transaction(8, TSOP_SS);
+    // int rotationData = transaction(2, TSOP_SS);
+    // int compassData = transaction(3, TSOP_SS);
+    // int goalAttackAngle = transaction(4, TSOP_SS);
+    // int goalAttackSize = transaction(5, TSOP_SS);
+    // int goalDefendAngle = transaction(6, TSOP_SS);
+    // int goalDefendSize = transaction(7, TSOP_SS);
+    // int rawBallData = transaction(8, TSOP_SS);
+    int rotationData = 65506;
+    int compassData = 65506;
+    int goalAttackAngle = 65506;
+    int goalAttackSize = 65506;
+    int goalDefendAngle = 65506;
+    int goalDefendSize = 65506;
+    int rawBallData = 65506;
     int lightData = 65506; //transaction(255, LIGHT_SS);
 
     // if (tsopData == 0 || rotationData == 0 || compassData == 0 || goalAttackAngle == 0 || goalAttackSize == 0 || goalDefendAngle == 0 || goalDefendSize == 0 || lightData == 0) {
@@ -88,7 +95,7 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println();
+    Serial.println(tsopData); //Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(65506, lightData, compass);
