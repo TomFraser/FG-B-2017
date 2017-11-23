@@ -6,7 +6,7 @@ from math import atan2, sqrt, pi, log
 #Thresholds
 thresholds = [(37, 79, 24, 102, 18, 68), #Ball
 (31, 64, -20, 4, -29, -3), #Goal 1
-(63, 95, -4, 27, 9, 54)] # Goal 2
+(63, 95, -4, 27, 9, 53)] # Goal 2
 
 #LED's
 ledRed = LED(1)
