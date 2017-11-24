@@ -31,7 +31,7 @@ void setup(){
     pinMode(13, OUTPUT);
 
     // NVIC_ENABLE_IRQ(IRQ_SPI0);
-    attachInterrupt(digitalPinToInterrupt(10), transfer, LOW);
+    attachInterrupt(digitalPinToInterrupt(10), transfer, FALLING);
 }
 
 bool results[19];
