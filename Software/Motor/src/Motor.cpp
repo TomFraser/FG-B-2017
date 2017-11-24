@@ -52,53 +52,47 @@ void setup(){
 }
 
 void loop(){
-    //delay(MAIN_LOOP_DELAY);
+    delay(MAIN_LOOP_DELAY);
 
     //SPI Transactions
+   digitalWrite(13, HIGH);
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int tsopData = SPI.transfer16(1);
+   int tsopData = SPI.transfer16(3);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int rotationData = SPI.transfer16(2);
+   int rotationData = SPI.transfer16(4);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int compassData = SPI.transfer16(3);
+   int compassData = SPI.transfer16(5);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int goalAttackAngle = SPI.transfer16(4);
+   int goalAttackAngle = SPI.transfer16(6);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int goalAttackSize = SPI.transfer16(5);
+   int goalAttackSize = SPI.transfer16(7);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int goalDefendAngle = SPI.transfer16(6);
+   int goalDefendAngle = SPI.transfer16(8);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int goalDefendSize= SPI.transfer16(7);
+   int goalDefendSize= SPI.transfer16(1);
    digitalWrite(TSOP_SS, HIGH);
 
    digitalWrite(TSOP_SS, LOW);
-   delayMicroseconds(200);
-   int rawBallData = SPI.transfer16(8);
+   int rawBallData = SPI.transfer16(2);
    digitalWrite(TSOP_SS, HIGH);
-
+   delayMicroseconds(200);
    digitalWrite(LIGHT_SS, LOW);
    delayMicroseconds(200);
    int lightData = SPI.transfer16(255);
    digitalWrite(LIGHT_SS, HIGH);
+   digitalWrite(13, LOW);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
@@ -130,5 +124,4 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
-    blink();
 }
