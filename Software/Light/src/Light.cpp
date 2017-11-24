@@ -14,9 +14,10 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 double lightAngle;
 
 void transfer(){
-  dataOut[0] = Light.getAngle();
-  SPI0_PUSHR_SLAVE = dataOut[0]; //Push response to SPI Coms? Maybe?
-  SPI0_SR |= SPI_SR_RFDF; //Signals end of transmission?
+  dataOut[0] = 450;
+  LIGHT.rxtx16(dataIn, dataOut, 1);
+  Serial.println("interupted");
+
 }
 
 void setup(){
