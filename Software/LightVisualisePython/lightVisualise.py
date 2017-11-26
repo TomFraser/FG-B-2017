@@ -18,7 +18,7 @@ teensy.write(bytes([200]))
 
 #turtle setup
 screen = Screen()
-tracer(0, 0)
+tracer(False)
 penup()
 hideturtle()
 pensize(10)

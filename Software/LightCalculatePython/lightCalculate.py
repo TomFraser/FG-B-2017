@@ -1,12 +1,26 @@
+# serial imports
+import serial
+import serial.tools.list_ports
+
 #turtle imports
 from turtle import *
 from math import sin, cos, radians as rad
 
+for port in serial.tools.list_ports.comports():
+    print(port)
+
+device = "/dev/ttyACM" + input("Device name: /dev/ttyACM")
+
+teensy = serial.Serial(device)
+
+# send connection
+teensy.write(bytes([200]))
+
 #turtle setup
 screen = Screen()
-# tracer(0, 0)
+tracer(False)
 penup()
-# hideturtle()
+hideturtle()
 pensize(10)
 
 #sensordata
@@ -42,10 +56,17 @@ sensor_size = 20
 
 # sensor_data = [0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+def calulateAngle(sensorData):
+    # teensy.write() #NEED TO FIGURE OUT HOW TO SEND THE ARRAY
+    # once its sent, get the response
+    return float(teensy.readline())
+
+
+
+
 def updateSensorVals(x, y):
-    print(x, y)
     for sensor_num in range(len(sensor_coords)):
-        coords = sensor_coords[sensor_num]
+        coords = list(sensor_coords[sensor_num])
         coords[0] *= radius
         coords[1] *= radius
         if(coords[0]-sensor_size <= x <= coords[0]+sensor_size and coords[1]-sensor_size <= y <= coords[1]+sensor_size):
@@ -60,10 +81,19 @@ def updateScreen():
         coords = sensor_coords[sensor_num]
         goto(coords[0]*radius, coords[1]*radius)
         dot(sensor_size, sensor_color[sensor_data[sensor_num]])
+
+    angle = calulateAngle(sensor_data)
+    if(angle != 65506):
+        angle = (90-angle)%360
+        angle = rad(angle)
+        goto(0, 0)
+        pendown()
+        goto(radius * cos(angle), radius * sin(angle))
+        penup()
+
+
     update()
 
 onscreenclick(updateSensorVals)
 updateScreen()
-# sensor_data = [0, 0, 0, 0 ,0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-# updateScreen()
 mainloop()

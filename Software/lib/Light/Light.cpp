@@ -64,6 +64,12 @@ void Light::getOnWhite(bool *vals){
   }
 }
 
+void Light::setOnWhite(bool *vals){
+  for(int i=0; i < LIGHTSENSOR_NUM; i++){
+    seeingWhite[i] = vals[i];
+  }
+}
+
 bool Light::getError(){
   return error;
 }
