@@ -66,7 +66,7 @@ private:
     bool seeingWhite[19];
 
     //cluster stuff
-    double lightCoords[19][2] = {
+    double lightCoords[20][2] = {
         {light1x, light1y},
         {light2x, light2y},
         {light3x, light3y},
