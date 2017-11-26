@@ -9,26 +9,26 @@
 
 //========Light Pins=======
 //NOTE: SENSOR 1 IS THE RIGHT HAND ONE AND THEN THEY GO ANTICLOCKWISE AROUND THE CIRCLE
-//(excluding the top most one - ask Al if ur unsure)
 #define LIGHT_1 A6
 #define LIGHT_2 A5
 #define LIGHT_3 A4
 #define LIGHT_4 A3
 #define LIGHT_5 A2
-#define LIGHT_6 A20
-#define LIGHT_7 A19
-#define LIGHT_8 A18
-#define LIGHT_9 A17
-#define LIGHT_10 A16
-#define LIGHT_11 A15
-#define LIGHT_12 A14
-#define LIGHT_13 A13
-#define LIGHT_14 A12
-#define LIGHT_15 A11
-#define LIGHT_16 A10
-#define LIGHT_17 A9
-#define LIGHT_18 A8
-#define LIGHT_19 A7
+#define LIGHT_6 A1
+#define LIGHT_7 A20
+#define LIGHT_8 A19
+#define LIGHT_9 A18
+#define LIGHT_10 A17
+#define LIGHT_11 A16
+#define LIGHT_12 A15
+#define LIGHT_13 A14
+#define LIGHT_14 A13
+#define LIGHT_15 A12
+#define LIGHT_16 A11
+#define LIGHT_17 A10
+#define LIGHT_18 A9
+#define LIGHT_19 A8
+#define LIGHT_20 A7
 
 //============Kicker pins==========
 #define LIGHTGATE_PIN A12

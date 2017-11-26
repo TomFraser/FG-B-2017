@@ -89,7 +89,7 @@
 #define ALT_SCK 14
 
 //Lightsensors
-#define LIGHTSENSOR_NUM 19
+#define LIGHTSENSOR_NUM 20
 #define DETECTED_NUMBER_LIGHT 3
 #define NUM_COUNTBACK 2
 #define ANGLE_CUTOFF 45
