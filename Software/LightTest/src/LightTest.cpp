@@ -1,4 +1,3 @@
-// #include <t3spi.h>
 #include <Light.h>
 
 Light Light;
@@ -16,17 +15,10 @@ void setup(){
     Light.init();
 
     Serial.begin(9600);
-
-    //um what the fuck is this lol
-    //LightSPI.begin_SLAVE(ALT_SCK, MOSI, MISO, CS1); //Might be wrong CS pin.
-    //LightSPI.setCTAR_SLAVE(16, SPI_MODE0);
-
-    //WOO HOO THIS WORKS
-    //Serial.println(Light.getAngle());
-
 }
 
 void loop(){
+  Light.readLight();
   if(mode == 0){
     // === Print out raw values ===
     Light.getVals(lightValues);
@@ -49,7 +41,6 @@ void loop(){
   }
   else if(mode == 1){
     // // === Print out on white ===
-    Light.readLight();
     Light.getOnWhite(results);
     for(int i=0; i < 19; i++){
       // if(results[1] > 0){
@@ -64,12 +55,10 @@ void loop(){
     Serial.println();
   }
   else if(mode == 2){
-    Light.readLight();
     Serial.println(Light.getAngle());
   }
   else if(mode == 3){
     // // === Print out on white ===
-    Light.readLight();
     Light.getOnWhite(results);
     bool print = false;
 

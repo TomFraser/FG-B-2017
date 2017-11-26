@@ -57,15 +57,12 @@ private:
 
     int lightSensors[19];
 
-    //bricked threshold
-    int brickedThreshold = 700;
-
     bool error = false;
 
     //for reading light
     int detectedNumber;
 
-    // bool seeingWhite[19] = {true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+    // bool seeingWhite[19] = {true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     bool seeingWhite[19];
 
     //cluster stuff
@@ -88,7 +85,8 @@ private:
         {light16x, light16y},
         {light17x, light17y},
         {light18x, light18y},
-        {light19x, light19y}
+        {light19x, light19y},
+        {light20x, light20y}
     };
 
     //For angle countback and filtering
