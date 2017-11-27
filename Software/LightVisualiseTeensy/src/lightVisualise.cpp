@@ -3,8 +3,8 @@
 
 Light Light;
 
-int lightValues[19];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-bool results[19];
+int lightValues[LIGHTSENSOR_NUM];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+bool results[LIGHTSENSOR_NUM];
 
 int threshold = 0;
 int counter = 0;
@@ -34,7 +34,7 @@ void loop(){
   // // === Print out on white ===
   Light.readLight();
   Light.getOnWhite(results);
-  for(int i=0; i < 19; i++){
+  for(int i=0; i < LIGHTSENSOR_NUM; i++){
     Serial.print(results[i]); Serial.print(" ");
   }
   Serial.println();

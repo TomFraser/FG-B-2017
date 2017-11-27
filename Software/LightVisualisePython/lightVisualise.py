@@ -18,13 +18,13 @@ teensy.write(bytes([200]))
 
 #turtle setup
 screen = Screen()
-tracer(0, 0)
+tracer(False)
 penup()
 hideturtle()
 pensize(10)
 
 #sensordata
-sensor_data = [0 for i in range(19)]
+sensor_data = [0 for i in range(20)]
 
 #radius of circle
 radius = 200
@@ -34,6 +34,7 @@ sensor_coords = [[1.0,0.0],
                 [0.8090169943749475, 0.5877852522924731],
                 [0.587785252292473, 0.8090169943749475],
                 [0.30901699437494745, 0.9510565162951535],
+                [0.0, 1.0],
                 [-0.30901699437494756, 0.9510565162951535],
                 [-0.587785252292473, 0.8090169943749475],
                 [-0.8090169943749473, 0.5877852522924732],
@@ -62,6 +63,7 @@ while True:
     try:
         data = float(data)
         if(data != 65506):
+            print(data)
             data = (90-data)%360
             data = rad(data)
             penup()

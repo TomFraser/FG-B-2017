@@ -21,6 +21,7 @@ Light::Light(){
     pinMode(LIGHT_17, INPUT);
     pinMode(LIGHT_18, INPUT);
     pinMode(LIGHT_19, INPUT);
+    pinMode(LIGHT_20, INPUT);
 
     lightSensors[0] = LIGHT_1;
     lightSensors[1] = LIGHT_2;
@@ -41,6 +42,7 @@ Light::Light(){
     lightSensors[16] = LIGHT_17;
     lightSensors[17] = LIGHT_18;
     lightSensors[18] = LIGHT_19;
+    lightSensors[19] = LIGHT_20;
 
     for(int i = 0; i < NUM_COUNTBACK; i++){
       countback[i] = -1;
@@ -52,7 +54,6 @@ Light::Light(){
 //====================Getter Dump Functions===========================
 void Light::getVals(int *vals){
   for(int i = 0; i < LIGHTSENSOR_NUM; i++){
-      // Serial.println(analogRead(lightSensors[i]));
       vals[i] = analogRead(lightSensors[i]);
   }
 }
@@ -69,8 +70,24 @@ bool Light::getError(){
 
 //=============================Other Functions=====================
 void Light::init(){
-    // actually does nothing lol, in here just incase i feel like doing
-    // something sometime
+    // set calubrations based on init values
+    delay(10);
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
+      thresholds[i] = 0;
+    }
+
+    for(int t=0; t < LIGHT_CALB_LOOPS; t++){
+      int vals[LIGHTSENSOR_NUM];
+      getVals(vals);
+      for(int i=0; i < LIGHTSENSOR_NUM; i++){
+        thresholds[i] += vals[i];
+      }
+    }
+
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
+      thresholds[i] /= LIGHT_CALB_LOOPS;
+      thresholds[i] += THRESHOLD_OFFSET;
+    }
 }
 
 void Light::readLight(){
@@ -90,17 +107,6 @@ void Light::readLight(){
         seeingWhite[i] = false;
       }
     }
-
-    // A thing for the sensors that dont work
-    #if ROBOT
-      if(seeingWhite[9] && seeingWhite[11]){
-        seeingWhite[10] = true;
-      }
-    #else
-      if(seeingWhite[16] && seeingWhite[18]){
-        seeingWhite[17] = true;
-      }
-    #endif
 }
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]

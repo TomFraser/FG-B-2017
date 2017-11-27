@@ -32,6 +32,10 @@
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID false
+#define PID_P 1
+#define PID_I 0
+#define PID_D 0
+
 
 // Goalie
 #define X_MULTIPLIER 1.25
@@ -89,8 +93,10 @@
 #define ALT_SCK 14
 
 //Lightsensors
-#define LIGHTSENSOR_NUM 19
+#define LIGHTSENSOR_NUM 20
 #define DETECTED_NUMBER_LIGHT 3
+#define THRESHOLD_OFFSET 7
+#define LIGHT_CALB_LOOPS 1000
 #define NUM_COUNTBACK 2
 #define ANGLE_CUTOFF 45
 #define IDENTIFY_THRESHOLD 45

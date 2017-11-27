@@ -3,19 +3,17 @@
 
 Light Light;
 
-int lightValues[19];
+int lightValues[LIGHTSENSOR_NUM];
 
 int numGreenCycles = 10000;
 int numWhiteCycles = 20000;
 
 
 // int offset = -40;
-double percentage = 0.2;
+double percentage = 0.5;
 
-// MADE A CHANGE TO THE ALGORITHM - MAKE SURE IT WORKS
-
-int greenMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int whiteMax[19] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int greenMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int whiteMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 void setup(){
@@ -35,7 +33,7 @@ void loop(){
 
     for(int i=0; i<numGreenCycles; i++){
       Light.getVals(lightValues);
-      for(int j=0; j<19; j++){
+      for(int j=0; j<LIGHTSENSOR_NUM; j++){
         if(lightValues[j] > greenMax[j]){
           greenMax[j] = lightValues[j];
         }
@@ -52,7 +50,7 @@ void loop(){
 
     for(int i=0; i<numWhiteCycles; i++){
       Light.getVals(lightValues);
-      for(int j=0; j<19; j++){
+      for(int j=0; j<LIGHTSENSOR_NUM; j++){
         if(lightValues[j] > whiteMax[j]){
           whiteMax[j] = lightValues[j];
         }
@@ -65,7 +63,7 @@ void loop(){
 
     Serial.println("Green Max:");
 
-    for(int k=0; k < 19; k++){
+    for(int k=0; k < LIGHTSENSOR_NUM; k++){
       Serial.print(greenMax[k]);
       if(greenMax[k]<10){
         Serial.print(" ");
@@ -82,7 +80,7 @@ void loop(){
 
     Serial.println("White Max:");
 
-    for(int k=0; k < 19; k++){
+    for(int k=0; k < LIGHTSENSOR_NUM; k++){
       Serial.print(whiteMax[k]);
       if(whiteMax[k]<10){
         Serial.print(" ");
@@ -98,15 +96,15 @@ void loop(){
     Serial.println();
 
     // ===================== Difference White - Green ==================
-    int diff[19];
-    for(int i=0; i<19; i++)
+    int diff[LIGHTSENSOR_NUM];
+    for(int i=0; i<LIGHTSENSOR_NUM; i++)
     {
       diff[i] = whiteMax[i] - greenMax[i];
     }
 
     Serial.println("Diff:");
 
-    for(int k=0; k < 19; k++){
+    for(int k=0; k < LIGHTSENSOR_NUM; k++){
       Serial.print(diff[k]);
       if(diff[k]<10){
         Serial.print(" ");
@@ -123,20 +121,16 @@ void loop(){
 
 
     // ======================== Usable Calibration =====================
-    int calb[19];
-    for(int i=0; i<19; i++)
+    int calb[LIGHTSENSOR_NUM];
+    for(int i=0; i<LIGHTSENSOR_NUM; i++)
     {
       // calb[i] = greenMax[i] + (int)(diff[i]/2) + offset;
       calb[i] = greenMax[i] + (int)((diff[i]/2)*percentage);
     }
 
-    #if !ROBOT
-      calb[17] = -1;
-    #endif
-
     Serial.println("Final:");
 
-    for(int k=0; k < 19; k++){
+    for(int k=0; k < LIGHTSENSOR_NUM; k++){
       Serial.print(calb[k]);
       if(calb[k]<10){
         Serial.print(" ");

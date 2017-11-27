@@ -47,29 +47,27 @@ private:
     // Other Stuff
 
     //init stuff
-    #if ROBOT
-      //o_bot
-      int thresholds[19] = {1000, 1000, 1000, 1000, 900, 1000, 1000, 1000, 1000, 900, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, -1};
-    #else
-      //p2_bot
-      int thresholds[19] = {1000, 1000, 1000, 1000, 870, 1000, 1000, 1000, 1000, 880, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
-    #endif
+    int thresholds[LIGHTSENSOR_NUM];
+    // #if ROBOT
+    //   //o_bot
+    //   int thresholds[LIGHTSENSOR_NUM] = {1000, 1000, 1000, 1000, 900, 1000, 1000, 1000, 1000, 900, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, -1};
+    // #else
+    //   //p2_bot
+    //   int thresholds[LIGHTSENSOR_NUM] = {100, 85, 86, 127, 91, 74, 93, 120, 123, 118, 177, 127, 79, 65, 69, 63, 110, 115, 78};
+    // #endif
 
-    int lightSensors[19];
-
-    //bricked threshold
-    int brickedThreshold = 700;
+    int lightSensors[LIGHTSENSOR_NUM];
 
     bool error = false;
 
     //for reading light
     int detectedNumber;
 
-    // bool seeingWhite[19] = {true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
-    bool seeingWhite[19];
+    // bool seeingWhite[LIGHTSENSOR_NUM] = {true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
+    bool seeingWhite[LIGHTSENSOR_NUM];
 
     //cluster stuff
-    double lightCoords[19][2] = {
+    double lightCoords[20][2] = {
         {light1x, light1y},
         {light2x, light2y},
         {light3x, light3y},
@@ -88,7 +86,8 @@ private:
         {light16x, light16y},
         {light17x, light17y},
         {light18x, light18y},
-        {light19x, light19y}
+        {light19x, light19y},
+        {light20x, light20y}
     };
 
     //For angle countback and filtering

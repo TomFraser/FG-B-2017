@@ -14,10 +14,9 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 double lightAngle;
 
 void transfer(){
-  dataOut[0] = 450;
+  dataOut[0] = 65506;
+  // dataOut[0] = Light.getAngle();
   LIGHT.rxtx16(dataIn, dataOut, 1);
-  Serial.println("interupted");
-
 }
 
 void setup(){
@@ -34,10 +33,6 @@ void setup(){
     attachInterrupt(digitalPinToInterrupt(10), transfer, FALLING);
 }
 
-bool results[19];
 void loop(){
-    // Serial.println(Light.getAngle());
-    // Light.getAngle();
-    blink();
     Light.readLight();
 }
