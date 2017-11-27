@@ -71,8 +71,8 @@
 #define MOTOR_C_DIR 8
 #define MOTOR_D_DIR 22
 //
-#define MOTOR_A_BRK 0
-#define MOTOR_B_BRK 1
+#define MOTOR_A_BRK 18
+#define MOTOR_B_BRK 19
 #define MOTOR_C_BRK 2
 #define MOTOR_D_BRK 20
 //
