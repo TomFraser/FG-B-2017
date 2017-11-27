@@ -44,11 +44,18 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     int distance = calcDistance(areaA, angleA, true);
 
-    int xGoal = distance*sin(angToRad*angleA);
-    int yGoal = distance*cos(angToRad*angleA);
+    if(distance < 100 && distance > 0)
+    {
+      int xGoal = distance*sin(angToRad*angleA);
+      int yGoal = distance*cos(angToRad*angleA);
 
-    xAttack = ATTACK_GOAL_X-xGoal;
-    yAttack = ATTACK_GOAL_Y-yGoal;
+      xAttack = ATTACK_GOAL_X-xGoal;
+      yAttack = ATTACK_GOAL_Y-yGoal;
+    }
+    else{
+      attackGoal = false;
+    }
+
   }
 
   // defense calulations
@@ -57,11 +64,17 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     int distance = calcDistance(areaD, angleD, false);
 
-    int xGoal = distance*sin(angToRad*angleD);
-    int yGoal = distance*cos(angToRad*angleD);
+    if(distance < 100 && distance > 0)
+    {
+      int xGoal = distance*sin(angToRad*angleD);
+      int yGoal = distance*cos(angToRad*angleD);
 
-    xDefense = DEFENSE_GOAL_X-xGoal;
-    yDefense = DEFENSE_GOAL_Y-yGoal;
+      xDefense = DEFENSE_GOAL_X-xGoal;
+      yDefense = DEFENSE_GOAL_Y-yGoal;
+    }
+    else{
+      defenseGoal = false;
+    }
   }
 
   if(attackGoal && defenseGoal){
