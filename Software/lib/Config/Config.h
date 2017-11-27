@@ -32,6 +32,9 @@
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID false
+#define PID_P 1
+#define PID_I 0
+#define PID_D 0
 
 // Goalie
 #define X_MULTIPLIER 1.25
