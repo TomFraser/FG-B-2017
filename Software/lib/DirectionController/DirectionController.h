@@ -64,11 +64,6 @@ private:
   double pidInput;
   double pidOutput;
 
-  double Kp = 2;
-  double Ki = 0;
-  double Kd = 1;
-
-  PID pid = PID(&pidInput, &pidOutput, &pidSetpoint, Kp, Ki, Kd, REVERSE);
-
+  PID pid = PID(&pidInput, &pidOutput, &pidSetpoint, PID_P, PID_I, PID_D, REVERSE);
 };
 #endif

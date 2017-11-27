@@ -55,50 +55,50 @@ void loop(){
     delay(MAIN_LOOP_DELAY);
 
     //SPI Transactions
-   digitalWrite(13, HIGH);
-   digitalWrite(TSOP_SS, LOW);
-   int tsopData = SPI.transfer16(3);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(13, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int tsopData = SPI.transfer16(3);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int rotationData = SPI.transfer16(4);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int rotationData = SPI.transfer16(4);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int compassData = SPI.transfer16(5);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int compassData = SPI.transfer16(5);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int goalAttackAngle = SPI.transfer16(6);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int goalAttackAngle = SPI.transfer16(6);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int goalAttackSize = SPI.transfer16(7);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int goalAttackSize = SPI.transfer16(7);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int goalDefendAngle = SPI.transfer16(8);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int goalDefendAngle = SPI.transfer16(8);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int goalDefendSize= SPI.transfer16(1);
-   digitalWrite(TSOP_SS, HIGH);
+    digitalWrite(TSOP_SS, LOW);
+    int goalDefendSize= SPI.transfer16(1);
+    digitalWrite(TSOP_SS, HIGH);
 
-   digitalWrite(TSOP_SS, LOW);
-   int rawBallData = SPI.transfer16(2);
-   digitalWrite(TSOP_SS, HIGH);
-   delayMicroseconds(200);
-   digitalWrite(LIGHT_SS, LOW);
-   delayMicroseconds(200);
-   int lightData = SPI.transfer16(255);
-   digitalWrite(LIGHT_SS, HIGH);
-   digitalWrite(13, LOW);
+    digitalWrite(TSOP_SS, LOW);
+    int rawBallData = SPI.transfer16(2);
+    digitalWrite(TSOP_SS, HIGH);
+    delayMicroseconds(200);
+    digitalWrite(LIGHT_SS, LOW);
+    delayMicroseconds(200);
+    int lightData = SPI.transfer16(255);
+    digitalWrite(LIGHT_SS, HIGH);
+    digitalWrite(13, LOW);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(rawBallData); Serial.println(lightData); Serial.println();
+    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(rawBallData); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(65506, lightData, compass);
@@ -114,6 +114,15 @@ void loop(){
 
     #else
     // -------------------- ATTACKER MAIN LOGIC -------------------
+      // Serial.println(rawBallData);
+      // Serial.print(directionController.getX()); Serial.print(" ");
+      // Serial.println(directionController.getY());
+      // Serial.println();
+
+      // Serial.print(goalAttackSize); Serial.print(" "); Serial.println(goalAttackAngle);
+      // Serial.print(goalDefendSize); Serial.print(" "); Serial.println(goalDefendAngle);
+      // Serial.println();
+
       directionController.calulateAttack();
 
       motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
