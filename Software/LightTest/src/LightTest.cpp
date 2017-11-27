@@ -2,13 +2,13 @@
 
 Light Light;
 
-int lightValues[19];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-bool results[19];
+int lightValues[LIGHTSENSOR_NUM];// = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+bool results[LIGHTSENSOR_NUM];
 
 int threshold = 0;
 int counter = 0;
 
-int mode = 1; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
+int mode = 2; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
 
 
 void setup(){
@@ -22,7 +22,7 @@ void loop(){
   if(mode == 0){
     // === Print out raw values ===
     Light.getVals(lightValues);
-    for(int i=0; i < 19; i++){
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
       Serial.print(lightValues[i]);
 
       if(lightValues[i]<10){
@@ -42,7 +42,7 @@ void loop(){
   else if(mode == 1){
     // // === Print out on white ===
     Light.getOnWhite(results);
-    for(int i=0; i < 19; i++){
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
       // if(results[1] > 0){
       //   Serial.print(results[i]);
       // }
@@ -62,14 +62,14 @@ void loop(){
     Light.getOnWhite(results);
     bool print = false;
 
-    for(int i=0; i < 19; i++){
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
       if(results[i] > 0){
         print = true;
       }
     }
 
     if(print){
-      for(int i=0; i < 19; i++){
+      for(int i=0; i < LIGHTSENSOR_NUM; i++){
         Serial.print(results[i]);
         Serial.print("   ");
       }

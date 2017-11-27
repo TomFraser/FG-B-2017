@@ -64,20 +64,30 @@ void Light::getOnWhite(bool *vals){
   }
 }
 
-void Light::setOnWhite(bool *vals){
-  for(int i=0; i < LIGHTSENSOR_NUM; i++){
-    seeingWhite[i] = vals[i];
-  }
-}
-
 bool Light::getError(){
   return error;
 }
 
 //=============================Other Functions=====================
 void Light::init(){
-    // actually does nothing lol, in here just incase i feel like doing
-    // something sometime
+    // set calubrations based on init values
+    delay(10);
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
+      thresholds[i] = 0;
+    }
+
+    for(int t=0; t < LIGHT_CALB_LOOPS; t++){
+      int vals[LIGHTSENSOR_NUM];
+      getVals(vals);
+      for(int i=0; i < LIGHTSENSOR_NUM; i++){
+        thresholds[i] += vals[i];
+      }
+    }
+
+    for(int i=0; i < LIGHTSENSOR_NUM; i++){
+      thresholds[i] /= LIGHT_CALB_LOOPS;
+      thresholds[i] += THRESHOLD_OFFSET;
+    }
 }
 
 void Light::readLight(){
