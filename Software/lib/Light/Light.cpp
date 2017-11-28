@@ -71,7 +71,7 @@ bool Light::getError(){
 //=============================Other Functions=====================
 void Light::init(){
     // set calubrations based on init values
-    delay(10);
+    delay(500);
     for(int i=0; i < LIGHTSENSOR_NUM; i++){
       thresholds[i] = 0;
     }
