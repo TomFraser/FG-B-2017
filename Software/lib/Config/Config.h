@@ -10,6 +10,7 @@
 
 // if is Goalie
 #define GOALIE false
+// bool GOALIE = false;
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
@@ -47,6 +48,12 @@
 
 //DELAY
 #define MAIN_LOOP_DELAY 5
+
+//Xbee
+#define XBEESERIAL Serial1
+#define XBEE_ADDED_CONST 128
+#define XBEE_START_BYTE 255
+#define XBEE_PACKAGE_SIZE 6
 
 //----------------------------------------------------------------------------
 

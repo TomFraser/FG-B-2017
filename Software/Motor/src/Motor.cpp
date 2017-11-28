@@ -10,6 +10,7 @@
 #include <Blink.h>
 #include <DirectionController.h>
 #include <Goalie.h>
+#include <Xbee.h>
 
 //
 #if ROBOT
@@ -23,15 +24,20 @@
 volatile uint16_t dataOut[1] = {};
 volatile uint16_t dataIn[1] = {};
 
+bool isGoalie;
+int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobotY;
+
 long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
+Xbees xbee = Xbees();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
 Goalie goalie = Goalie();
 
 void setup(){
+    isGoalie = GOALIE;
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 19200);
     Wire1.setDefaultTimeout(50000); // 200ms
 
@@ -105,15 +111,20 @@ void loop(){
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.updateGoalData(0, 65506, 0, 65506);
 
-    #if GOALIE
-    // ---------------- GOALIE MAIN LOGIC -----------------------
-      goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
+    if(isGoalie){
 
-      directionController.goToCoords(goalie.getX(), goalie.getY());
+        // ---------------- GOALIE MAIN LOGIC -----------------------
+          goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
 
-      motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
+          directionController.goToCoords(goalie.getX(), goalie.getY());
 
-    #else
+          motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
+
+    }else{
+        directionController.calulateAttack();
+
+        motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+    }
     // -------------------- ATTACKER MAIN LOGIC -------------------
       // Serial.println(rawBallData);
       // Serial.print(directionController.getX()); Serial.print(" ");
@@ -124,14 +135,21 @@ void loop(){
       // Serial.print(goalDefendSize); Serial.print(" "); Serial.println(goalDefendAngle);
       // Serial.println();
 
-      directionController.calulateAttack();
 
-      motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
-    #endif
 
     //Checking if we can kick
     if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
         kicker.kickBall();
         lastKick = millis();
     }
+
+    // if(xbee.connected()){
+    //     xbee.updateCoordData(ballX, ballY, robotX, robotY);
+    //     otherBallX = xbee.otherBallX;
+    //     otherBallY = xbee.otherBallY;
+    //     otherRobotX = xbee.otherX;
+    //     otherRobotY = xbee.otherY;
+    // }else{
+    //     goalie = true;
+    // }
 }
