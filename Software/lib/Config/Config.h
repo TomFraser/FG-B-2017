@@ -10,6 +10,7 @@
 
 // if is Goalie
 #define GOALIE false
+// bool GOALIE = false;
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
