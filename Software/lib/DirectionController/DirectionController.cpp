@@ -53,10 +53,12 @@ void DirectionController::updateCoordinates(){
 }
 
 void DirectionController::goToCoords(int targetX, int targetY){
+  double coordDirection;
+  double coordSpeed;
   // if coordinates = 65506, cant see goal and cant figure out where we are -> stop
   if(currX == 65506 || currY == 65506){
-    direction = 65506;
-    speed = 0;
+    coordDirection = 65506;
+    coordSpeed = 0;
   }
   else{
     // all good -> go for it
@@ -66,7 +68,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
     int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
     // distance = distance < DISTANCE_CUTOFF ? 0 : distance;
 
-    double coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
+    coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
     // convert to 0-360
     coordDirection = coordDirection < 0 ? coordDirection + 360 : coordDirection;
 
@@ -79,13 +81,14 @@ void DirectionController::goToCoords(int targetX, int targetY){
     #else
       pidOutput = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
     #endif
-
-
-    // make sure our great overlord the light tracker is happy
-    lightTracker.update(lightAngle, coordDirection, pidOutput, false, compassAngle);
-    direction = lightTracker.getDirection();
-    speed = lightTracker.getSpeed();
+    coordSpeed = pidOutput;
   }
+
+  // make sure our great overlord the light tracker is happy
+  lightTracker.update(lightAngle, coordDirection, pidOutput, false, compassAngle);
+  direction = lightTracker.getDirection();
+  speed = lightTracker.getSpeed();
+
 }
 
 void DirectionController::calulateAttack(){

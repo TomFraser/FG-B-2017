@@ -2,8 +2,8 @@
 #define Config_h
 
 //Critical Stuff
-#define CONST_K 3
-#define CONST_J 52
+#define CONST_K 1.75
+#define CONST_J 100
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
@@ -95,10 +95,10 @@
 //Lightsensors
 #define LIGHTSENSOR_NUM 20
 #define DETECTED_NUMBER_LIGHT 3
-#define THRESHOLD_OFFSET 7
+#define THRESHOLD_OFFSET 15
 #define LIGHT_CALB_LOOPS 1000
 #define NUM_COUNTBACK 2
-#define ANGLE_CUTOFF 45
+#define ANGLE_CUTOFF 90
 #define IDENTIFY_THRESHOLD 45
 #define SLIDE_ANGLE 80
 #define STOP_BOUND 150

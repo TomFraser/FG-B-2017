@@ -14,8 +14,8 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 double lightAngle;
 
 void transfer(){
-  dataOut[0] = 65506;
-  // dataOut[0] = Light.getAngle();
+  // dataOut[0] = 65506;
+  dataOut[0] = Light.getAngle();
   LIGHT.rxtx16(dataIn, dataOut, 1);
 }
 
