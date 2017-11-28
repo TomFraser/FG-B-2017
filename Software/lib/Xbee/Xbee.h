@@ -1,27 +1,27 @@
-#include <xbee-arduino.h>
+#ifndef Xbee_h
+#define Xbee_h
+
 #include <Arduino.h>
+#include <Config.h>
 
 class Xbees {
+
 public:
-    XBees();
-    //Master Commands
-    void initMaster();
-    bool sendModeChange();
+    Xbees();
+    void init();
+    void updateCoordData(int ballX, int ballY, int robotX, int robotY);
+    void resetData();
+    bool connected();
 
-    //Slave Commands
-    void initiSlave();
-    bool requestModeChange();
-
-    //Shared Commands
-    bool isConnected();
-    getSelfMode();
-    getOtherMode();
+    int otherBallX, otherBallY, otherX, otherY;
 
 private:
-    Xbee xbee = Xbee();
-    enum mode {
-        attack,
-        goalie,
-        unknown
-    }
-}
+    bool robot;
+    int _ballX, _ballY, _robotX, _robotY;
+    void dataSend();
+    void dataRead();
+    long timeSinceConnected;
+    long timeSinceConnected;
+};
+
+#endif
