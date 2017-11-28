@@ -2,6 +2,7 @@
 #define Light_h
 
 #include <Config.h>
+#include <Common.h>
 #include <Pins.h>
 #include <Defines.h>
 #include <Arduino.h>
@@ -43,6 +44,10 @@ private:
 
     //Find all the clusters
     void findClusters(cluster *);
+
+
+    // cluster shit
+    double getClusterAngle(int clusterBegin, int clusterEnd);
 
     // Other Stuff
 
