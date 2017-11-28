@@ -10,6 +10,7 @@
 #include <Blink.h>
 #include <DirectionController.h>
 #include <Goalie.h>
+#include <Xbee.h>
 
 //
 #if ROBOT
@@ -23,9 +24,12 @@
 volatile uint16_t dataOut[1] = {};
 volatile uint16_t dataIn[1] = {};
 
+int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobotY;
+
 long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
+Xbees xbee = Xbees();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
@@ -134,4 +138,14 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
+
+    // if(xbee.connected()){
+    //     xbee.updateCoordData(ballX, ballY, robotX, robotY);
+    //     otherBallX = xbee.otherBallX;
+    //     otherBallY = xbee.otherBallY;
+    //     otherRobotX = xbee.otherX;
+    //     otherRobotY = xbee.otherY;
+    // }else{
+    //     goalie = true;
+    // }
 }

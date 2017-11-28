@@ -21,7 +21,7 @@ private:
     void dataSend();
     void dataRead();
     long timeSinceConnected;
-    long timeSinceConnected;
+    long timeSinceLastConnected;
 };
 
 #endif

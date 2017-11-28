@@ -16,6 +16,7 @@ void Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY){
     _robotX = robotX + XBEE_ADDED_CONST;
     _robotY = robotY + XBEE_ADDED_CONST;
     dataSend();
+    dataRead();
 }
 
 void Xbees::resetData(){
