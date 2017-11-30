@@ -86,7 +86,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     // one is correct and the other is a meme
 
     // take the larger goal
-    if(areaA > areaD){
+    if(areaA < areaD){
       xCoord = xAttack;
       yCoord = yAttack;
     }
