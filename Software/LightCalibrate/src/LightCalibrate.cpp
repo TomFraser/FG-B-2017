@@ -10,7 +10,7 @@ int numWhiteCycles = 20000;
 
 
 // int offset = -40;
-double percentage = 0.7;
+double percentage = 0.5;
 
 int greenMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 int whiteMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};

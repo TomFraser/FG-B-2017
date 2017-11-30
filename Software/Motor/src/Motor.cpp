@@ -93,9 +93,9 @@ void loop(){
     digitalWrite(TSOP_SS, LOW);
     int rawBallData = SPI.transfer16(2);
     digitalWrite(TSOP_SS, HIGH);
-    delayMicroseconds(200);
+    delayMicroseconds(500);
     digitalWrite(LIGHT_SS, LOW);
-    delayMicroseconds(200);
+    delayMicroseconds(500);
     int lightData = SPI.transfer16(255);
     digitalWrite(LIGHT_SS, HIGH);
     digitalWrite(13, LOW);
