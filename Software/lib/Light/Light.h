@@ -52,14 +52,17 @@ private:
     // Other Stuff
 
     //init stuff
-    int thresholds[LIGHTSENSOR_NUM];
-    // #if ROBOT
-    //   //o_bot
-    //   int thresholds[LIGHTSENSOR_NUM] = {1000, 1000, 1000, 1000, 900, 1000, 1000, 1000, 1000, 900, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, -1};
-    // #else
-    //   //p2_bot
-    //   int thresholds[LIGHTSENSOR_NUM] = {100, 85, 86, 127, 91, 74, 93, 120, 123, 118, 177, 127, 79, 65, 69, 63, 110, 115, 78};
-    // #endif
+    #if AUTO_LIGHT
+      int thresholds[LIGHTSENSOR_NUM];
+    #else
+      #if ROBOT
+        //o_bot
+        int thresholds[LIGHTSENSOR_NUM] = {1000, 1000, 1000, 1000, 900, 1000, 1000, 1000, 1000, 900, -1, 1000, 1000, 1000, 1000, 1000, 1000, 1000, -1};
+      #else
+        //p2_bot
+        int thresholds[LIGHTSENSOR_NUM] = {189, 257, 355, 247, 275, 339, 346, 230, 305, 314, 169, 176, 180, 211, 327, 477, 323, 338, 322, 252};
+      #endif
+    #endif
 
     int lightSensors[LIGHTSENSOR_NUM];
 

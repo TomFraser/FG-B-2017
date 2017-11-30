@@ -75,24 +75,26 @@ double Light::getClusterAngle(int clusterBegin, int clusterEnd){
 
 //=============================Other Functions=====================
 void Light::init(){
-    // set calubrations based on init values
-    delay(500);
-    for(int i=0; i < LIGHTSENSOR_NUM; i++){
-      thresholds[i] = 0;
-    }
-
-    for(int t=0; t < LIGHT_CALB_LOOPS; t++){
-      int vals[LIGHTSENSOR_NUM];
-      getVals(vals);
+    #if AUTO_LIGHT
+      // set calubrations based on init values
+      delay(500);
       for(int i=0; i < LIGHTSENSOR_NUM; i++){
-        thresholds[i] += vals[i];
+        thresholds[i] = 0;
       }
-    }
 
-    for(int i=0; i < LIGHTSENSOR_NUM; i++){
-      thresholds[i] /= LIGHT_CALB_LOOPS;
-      thresholds[i] += THRESHOLD_OFFSET;
-    }
+      for(int t=0; t < LIGHT_CALB_LOOPS; t++){
+        int vals[LIGHTSENSOR_NUM];
+        getVals(vals);
+        for(int i=0; i < LIGHTSENSOR_NUM; i++){
+          thresholds[i] += vals[i];
+        }
+      }
+
+      for(int i=0; i < LIGHTSENSOR_NUM; i++){
+        thresholds[i] /= LIGHT_CALB_LOOPS;
+        thresholds[i] += THRESHOLD_OFFSET;
+      }
+    #endif
 }
 
 void Light::readLight(){
@@ -208,7 +210,7 @@ double Light::getAngle(){
       // Serial.println();
 
       if(!clus1.exist){
-        lineAngle = 65506;
+        directionAngle = 65506;
       }
       else{
         if(!clus2.exist){

@@ -47,7 +47,7 @@
 #define KICK true
 
 //DELAY
-#define MAIN_LOOP_DELAY 5
+#define MAIN_LOOP_DELAY 2
 
 //Xbee
 #define XBEESERIAL Serial1
@@ -100,6 +100,7 @@
 #define ALT_SCK 14
 
 //Lightsensors
+#define AUTO_LIGHT false
 #define LIGHTSENSOR_NUM 20
 #define DETECTED_NUMBER_LIGHT 3
 #define THRESHOLD_OFFSET 15
@@ -109,8 +110,8 @@
 #define IDENTIFY_THRESHOLD 45
 #define SLIDE_ANGLE 80
 #define STOP_BOUND 150
-#define SIDE_STOP_BOUND_MIN 135
-#define SIDE_STOP_BOUND_MAX 160
+#define SIDE_STOP_BOUND_MIN 120
+#define SIDE_STOP_BOUND_MAX 175
 
 //Pixy
 #define CANT_SEE_GOAL 65506

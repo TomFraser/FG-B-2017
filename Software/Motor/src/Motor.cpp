@@ -10,7 +10,7 @@
 #include <Blink.h>
 #include <DirectionController.h>
 #include <Goalie.h>
-#include <Xbee.h>
+// #include <Xbee.h>
 
 //
 #if ROBOT
@@ -30,7 +30,7 @@ int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobo
 long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
-Xbees xbee = Xbees();
+// Xbees xbee = Xbees();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
@@ -104,25 +104,24 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(rawBallData); Serial.println(lightData); Serial.println();
+    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(rawBallData); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    directionController.updateGameData(65506, lightData, compass);
+    directionController.updateGameData(tsopData, lightData, compass);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.updateGoalData(0, 65506, 0, 65506);
 
     if(isGoalie){
 
         // ---------------- GOALIE MAIN LOGIC -----------------------
-          goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
+        goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
 
-          directionController.goToCoords(goalie.getX(), goalie.getY());
+        directionController.goToCoords(goalie.getX(), goalie.getY());
 
-          motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
+        motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
 
     }else{
         directionController.calulateAttack();
-
         motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
     }
     // -------------------- ATTACKER MAIN LOGIC -------------------

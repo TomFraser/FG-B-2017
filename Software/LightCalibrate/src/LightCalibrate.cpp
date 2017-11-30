@@ -10,10 +10,10 @@ int numWhiteCycles = 20000;
 
 
 // int offset = -40;
-double percentage = 0.5;
+double percentage = 0.7;
 
-int greenMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-int whiteMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int greenMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+int whiteMax[LIGHTSENSOR_NUM] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
 
 void setup(){
@@ -147,10 +147,10 @@ void loop(){
 
     Serial.println("Usable:");
     Serial.print("{");
-    for(int k=0; k < 18; k++){
+    for(int k=0; k < LIGHTSENSOR_NUM-1; k++){
       Serial.print(calb[k]);Serial.print(", ");
     }
-    Serial.print(calb[18]); Serial.println("};");
+    Serial.print(calb[LIGHTSENSOR_NUM-1]); Serial.println("};");
 
 
     delay(2000);
