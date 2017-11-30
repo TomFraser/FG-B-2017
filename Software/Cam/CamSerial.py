@@ -1,22 +1,23 @@
-import sensor, image, time, math, pyb
+import sensor,image, time, math, pyb
 from pyb import *
 import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(37, 79, 24, 102, 18, 68), #Ball
-(31, 64, -20, 4, -29, -3), #Goal 1
-(63, 95, -4, 27, 9, 53)] # Goal 2
+thresholds = [(46, 82, 9, 79, 20, 49), #Ball
+(61, 85, -14, 17, 18, 55), #(71, 99, -9, 12, 12, 59), #Goal 1
+(28, 51, -29, 5, -31, 0)] # Goal 2
 
 #LED's
-ledRed = LED(1)
+ledRed = LED(2)
 ledRed.off()
-ledGreen = LED(2)
+ledGreen = LED(1)
 ledGreen.off()
-ledBlue = LED(3)
+ledBlue = LED(4)
 ledBlue.off()
-ledIR = LED(4)
+ledIR = LED(3)
 ledIR.off()
+
 
 global lastTime
 global currentTime
@@ -52,7 +53,7 @@ ledBlue.off()
 #Main Loop
 while(True):
     clock.tick()
-    blink()
+    #blink()
 
     #Reset Variables
     x = 0
@@ -73,11 +74,14 @@ while(True):
         ball = sorted(balls, key= lambda ball: ball.pixels(), reverse=True)[0]
 
         # do the stuff
-        img.draw_cross(ball.cx(), ball.cy())
         x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = ball.cy() - (img.height() / 2)
-        angle = (atan2(y,x) * (180 / pi) - 90)%360
+        angle = (atan2(y,x) * (180 / pi))%360
         strength = sqrt(x**2 + y**2)
+        if strength < 50:
+            angle = 65506
+        else:
+            img.draw_cross(ball.cx(), ball.cy())
 
         # for ball in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
         #     img.draw_cross(ball.cx(), ball.cy())
@@ -92,10 +96,10 @@ while(True):
     if(len(goalsA) > 0):
         goalA = sorted(goalsA, key= lambda goal: goal.pixels(), reverse=True)[0]
 
-        if(sqrt(goalA.pixels())>5000):
+        if(sqrt(goalA.pixels())>10):
             x = -(goalA.cx() - (img.width() / 2))
             y = goalA.cy() - (img.height() / 2)
-            goalAangle = (atan2(y,x) * (180 / pi) - 90)%360
+            goalAangle = (atan2(y,x) * (180 / pi))%360
             goalAsize = sqrt(goalA.pixels())
             img.draw_rectangle(goalA.rect())
             img.draw_cross(goalA.cx(), goalA.cy())
@@ -108,7 +112,7 @@ while(True):
         if(sqrt(goalD.pixels())>10):
             x = -(goalD.cx() - (img.width() / 2))
             y = goalD.cy() - (img.height() / 2)
-            goalDangle = (atan2(y,x) * (180 / pi) - 90)%360
+            goalDangle = (atan2(y,x) * (180 / pi))%360
             goalDsize = sqrt(goalD.pixels())
             img.draw_rectangle(goalD.rect())
             img.draw_cross(goalD.cx(), goalD.cy())
@@ -203,8 +207,8 @@ while(True):
     pyb.delay(1)
 
     #Prints
-    #print("Angle:")
-    #print(angle)
+    print("Angle:")
+    print(angle)
     #print(angleOrbit)
     #print()
     #print("Strength:")
