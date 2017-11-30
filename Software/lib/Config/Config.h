@@ -21,11 +21,11 @@
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 50
 //MOTORS
-#define SPEED_VAL 50
-#define FORWARD_SPEED 80
+#define SPEED_VAL 80
+#define FORWARD_SPEED 100
 #define SPEED_ON_LINE 0
-#define SPEED_OVER_LINE 40
-#define SPEED_SLIDE 40
+#define SPEED_OVER_LINE 60
+#define SPEED_SLIDE 60
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
