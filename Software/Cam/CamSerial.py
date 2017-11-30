@@ -4,7 +4,7 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(46, 82, 9, 79, 20, 49), #Ball
+thresholds = [(29, 85, 17, 83, 26, 75), #Ball
 (61, 85, -14, 17, 18, 55), #(71, 99, -9, 12, 12, 59), #Goal 1
 (28, 51, -29, 5, -31, 0)] # Goal 2
 
@@ -100,7 +100,7 @@ while(True):
             x = -(goalA.cx() - (img.width() / 2))
             y = goalA.cy() - (img.height() / 2)
             goalAangle = (atan2(y,x) * (180 / pi))%360
-            goalAsize = sqrt(goalA.pixels())
+            goalAsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalA.pixels())
             img.draw_rectangle(goalA.rect())
             img.draw_cross(goalA.cx(), goalA.cy())
 
@@ -113,7 +113,7 @@ while(True):
             x = -(goalD.cx() - (img.width() / 2))
             y = goalD.cy() - (img.height() / 2)
             goalDangle = (atan2(y,x) * (180 / pi))%360
-            goalDsize = sqrt(goalD.pixels())
+            goalDsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalD.pixels())
             img.draw_rectangle(goalD.rect())
             img.draw_cross(goalD.cx(), goalD.cy())
 
@@ -134,13 +134,12 @@ while(True):
 
     #If not seeing ball, angle = 65506, else calculate ball angle
     if strength == 0: angle = 500
-    if angle == 0: angle = 360
     if goalAsize == 0: goalAangle = 500
     if goalDsize == 0: goalDangle = 500
 
     ballData = [angle, strength]
-    goalAdata = [goalAangle,int(goalAsize)]
-    goalDdata = [goalDangle,int(goalDsize)]
+    goalAdata = [int(goalAangle),int(goalAsize)]
+    goalDdata = [int(goalDangle),int(goalDsize)]
 
     #print(goalAsize)
 
@@ -202,13 +201,13 @@ while(True):
     # uart.writechar(sendBuff[8])
     # uart.writechar(sendBuff[9])
 
-    #print(sendBuff)
+    #print(goalAdata)
 
     pyb.delay(1)
 
     #Prints
-    print("Angle:")
-    print(angle)
+    #print("Angle:")
+    #print(angle)
     #print(angleOrbit)
     #print()
     #print("Strength:")
