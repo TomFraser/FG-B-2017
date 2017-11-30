@@ -10,6 +10,7 @@
 
 // if is Goalie
 #define GOALIE false
+#define ATTACKING_YELLOW true
 // bool GOALIE = false;
 
 //TSOPS
