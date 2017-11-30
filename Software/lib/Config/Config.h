@@ -10,6 +10,7 @@
 
 // if is Goalie
 #define GOALIE false
+#define ATTACKING_YELLOW true
 // bool GOALIE = false;
 
 //TSOPS
@@ -20,11 +21,11 @@
 #define TSOP_ORBIT_FRONT_RATIO 90
 #define TSOP_ORBIT_SIDE_RATIO 50
 //MOTORS
-#define SPEED_VAL 50
+#define SPEED_VAL 80
 #define FORWARD_SPEED 80
 #define SPEED_ON_LINE 0
-#define SPEED_OVER_LINE 40
-#define SPEED_SLIDE 40
+#define SPEED_OVER_LINE 60
+#define SPEED_SLIDE 60
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
@@ -90,7 +91,7 @@
 #define COMPASS_ABS_MAX 150
 #define COMPASS_ABS_MAX_NEG -150
 
-#define GOAL_MULTIPLIER 0.75
+#define GOAL_MULTIPLIER 2
 #define GOAL_SIZE_THRESHOLD 5
 
 //SPI
@@ -110,8 +111,8 @@
 #define IDENTIFY_THRESHOLD 45
 #define SLIDE_ANGLE 80
 #define STOP_BOUND 150
-#define SIDE_STOP_BOUND_MIN 120
-#define SIDE_STOP_BOUND_MAX 175
+#define SIDE_STOP_BOUND_MIN 135
+#define SIDE_STOP_BOUND_MAX 160
 
 //Pixy
 #define CANT_SEE_GOAL 65506
