@@ -109,7 +109,12 @@ void loop(){
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, lightData, compass);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    directionController.updateGoalData(0, 65506, 0, 65506);
+    // directionController.updateGoalData(0, 65506, 0, 65506);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
+
+    // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
+    // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+    // Serial.println();
 
     if(isGoalie){
 
@@ -121,6 +126,12 @@ void loop(){
         motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
 
     }else{
+        // -------------------- ATTACKER MAIN LOGIC -------------------
+
+        // Serial.print(directionController.getX()); Serial.print(" ");
+        // Serial.println(directionController.getY());
+        // Serial.println();
+
         directionController.calulateAttack();
         motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
     }

@@ -10,21 +10,23 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
-  int goalDiff;
+  // int goalDiff;
 
-  if(attack){
-    goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
-  }
-  else{
-    // defense so back angle
-    goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
-  }
+  // if(attack){
+  //   goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
+  // }
+  // else{
+  //   // defense so back angle
+  //   goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
+  // }
+  //
+  // if(goalDiff > 40){
+  //   goalArea += 0.0009702068*goalDiff*goalDiff*goalDiff - 0.159890341*goalDiff*goalDiff + 8.8953257223*goalDiff - 159.3540633919;
+  // }
+  //
+  // return -0.0004831603*goalArea*goalArea*goalArea + 0.0745118988*goalArea*goalArea - 5.0391683715*goalArea + 150.2067141813;
 
-  if(goalDiff > 40){
-    goalArea += 0.0009702068*goalDiff*goalDiff*goalDiff - 0.159890341*goalDiff*goalDiff + 8.8953257223*goalDiff - 159.3540633919;
-  }
-
-  return -0.0004831603*goalArea*goalArea*goalArea + 0.0745118988*goalArea*goalArea - 5.0391683715*goalArea + 150.2067141813;
+  return 0.0050260035*exp(0.0419970726*goalArea);
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double compassAngle){
