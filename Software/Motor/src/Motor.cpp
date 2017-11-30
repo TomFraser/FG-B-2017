@@ -108,9 +108,9 @@ void loop(){
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, lightData, compass);
-    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(0, 65506, 0, 65506);
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
+    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
 
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
     // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
