@@ -70,7 +70,7 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
         int finalSpeedC = (motorCSpeed * scaledSpeed2)/100 * speed;
         int finalSpeedD = (motorDSpeed * scaledSpeed2)/100 * speed;
 
-        if(angle == 0.00){
+        if(angle <= 15 || angle >= 345){
             motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
             motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
             motorC.set(min((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
