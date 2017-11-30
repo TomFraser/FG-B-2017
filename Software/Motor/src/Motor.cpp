@@ -91,7 +91,7 @@ void loop(){
     digitalWrite(TSOP_SS, HIGH);
 
     digitalWrite(TSOP_SS, LOW);
-    int rawBallData = SPI.transfer16(2);
+    int ballStrength = SPI.transfer16(2);
     digitalWrite(TSOP_SS, HIGH);
     delayMicroseconds(500);
     digitalWrite(LIGHT_SS, LOW);
@@ -104,7 +104,7 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(rawBallData); Serial.println(lightData); Serial.println();
+    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, lightData, compass);

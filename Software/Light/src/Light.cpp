@@ -14,9 +14,11 @@ volatile uint16_t dataOut[DATA_LENGTH] = {};
 double lightAngle;
 
 void transfer(){
-  // dataOut[0] = 65506;
-  dataOut[0] = Light.getAngle();
-  LIGHT.rxtx16(dataIn, dataOut, 1);
+  int command = SPI0_POPR;
+  if (command == 255){
+    SPI0_PUSHR_SLAVE = sendData[0];
+    SPI0_SR |= SPI_SR_RFDF;
+  }
 }
 
 void setup(){

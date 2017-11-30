@@ -176,6 +176,8 @@ while(True):
 
     sendBuff[8] = goalDdata[1]
 
+    sendBuff[9] = strength
+
     for i in range(0,10):
         if sendBuff[i] == 42 and i != 0:
             sendBuff[i] = 43
