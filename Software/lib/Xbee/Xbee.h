@@ -12,8 +12,10 @@ public:
     void updateCoordData(int ballX, int ballY, int robotX, int robotY);
     void resetData();
     bool connected();
+    void tryConnect();
 
     int otherBallX, otherBallY, otherX, otherY;
+    long timeSinceLastConnected;
 
 private:
     bool robot;
@@ -21,7 +23,6 @@ private:
     void dataSend();
     void dataRead();
     long timeSinceConnected;
-    long timeSinceLastConnected;
 };
 
 #endif

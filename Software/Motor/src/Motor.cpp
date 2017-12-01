@@ -10,9 +10,7 @@
 #include <Blink.h>
 #include <DirectionController.h>
 #include <Goalie.h>
-// #include <Xbee.h>
-
-#define XBEESERIAL Serial2
+#include <Xbee.h>
 
 //
 #if ROBOT
@@ -32,15 +30,15 @@ int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobo
 long initialTime, currentTime, lastKick = 0;
 
 // Defender defender = Defender();
-// Xbees xbee = Xbees();
+Xbees xbee = Xbees();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
 MotorController motorController = MotorController();
 Goalie goalie = Goalie();
 
 void setup(){
+    xbee.init();
     isGoalie = GOALIE;
-    XBEESERIAL.begin(9600);
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 19200);
     Wire1.setDefaultTimeout(50000); // 200ms
 
@@ -160,15 +158,32 @@ void loop(){
         lastKick = millis();
     }
 
-    XBEESERIAL.write("MASTER SEND");
-
-    // if(xbee.connected()){
-    //     xbee.updateCoordData(ballX, ballY, robotX, robotY);
-    //     otherBallX = xbee.otherBallX;
-    //     otherBallY = xbee.otherBallY;
-    //     otherRobotX = xbee.otherX;
-    //     otherRobotY = xbee.otherY;
-    // }else{
-    //     goalie = true;
+    //Master
+    // XBEESERIAL.write(1);
+    // if(XBEESERIAL.available()){
+    //     Serial.println(XBEESERIAL.read());
     // }
+    //Slave
+    // if(XBEESERIAL.available()){
+    //     Serial.println(XBEESERIAL.read());
+    //     XBEESERIAL.write(2);
+    // }
+
+    if(xbee.connected()){
+        xbee.updateCoordData(28, 28, 28, 28);
+        otherBallX = xbee.otherBallX;
+        otherBallY = xbee.otherBallY;
+        otherRobotX = xbee.otherX;
+        otherRobotY = xbee.otherY;
+        isGoalie = GOALIE;
+    }else{
+         // goalie = true;
+         xbee.tryConnect();
+         //The Xbee is no longer connected
+         if(!isGoalie && millis() >= 5000){
+             isGoalie = true;
+         }
+    }
+
+    Serial.println(isGoalie);
 }

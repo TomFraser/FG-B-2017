@@ -28,7 +28,7 @@ void Xbees::resetData(){
 
 bool Xbees::connected(){
     timeSinceConnected = millis() - timeSinceLastConnected;
-    if(!XBEESERIAL.available() && timeSinceConnected >= 2000){
+    if(timeSinceConnected >= 1000){
         return false;
     }else{
         return true;
@@ -45,7 +45,12 @@ void Xbees::dataSend(){
 }
 
 void Xbees::dataRead(){
+    // otherBallX = 0;
+    // otherBallY = 0;
+    // otherX = 0;
+    // otherY = 0;
     while(XBEESERIAL.available() >= XBEE_PACKAGE_SIZE){
+        timeSinceLastConnected = millis();
         uint8_t firstByte = XBEESERIAL.read();
         uint8_t secondByte = XBEESERIAL.peek();
 
@@ -61,5 +66,11 @@ void Xbees::dataRead(){
             otherX = dataBuffer[0];
             otherY = dataBuffer[0];
         }
+    }
+}
+
+void Xbees::tryConnect(){
+    if(XBEESERIAL.available()){
+        timeSinceLastConnected = millis();
     }
 }
