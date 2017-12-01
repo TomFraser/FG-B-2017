@@ -87,7 +87,11 @@ void loop(){
     digitalWrite(TSOP_SS, HIGH);
 
     digitalWrite(TSOP_SS, LOW);
-    int goalDefendSize= SPI.transfer16(1);
+    int goalDefendSize= SPI.transfer16(9);
+    digitalWrite(TSOP_SS, HIGH);
+
+    digitalWrite(TSOP_SS, LOW);
+    int rawBallData = SPI.transfer16(1);
     digitalWrite(TSOP_SS, HIGH);
 
     digitalWrite(TSOP_SS, LOW);
