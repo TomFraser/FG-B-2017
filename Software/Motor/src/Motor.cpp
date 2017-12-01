@@ -12,7 +12,6 @@
 #include <Goalie.h>
 #include <Xbee.h>
 
-//
 #if ROBOT
   // o_bot
   #define KICK_THRESHOLD 300
@@ -29,7 +28,6 @@ int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobo
 
 long initialTime, currentTime, lastKick = 0;
 
-// Defender defender = Defender();
 Xbees xbee = Xbees();
 Kicker kicker = Kicker();
 DirectionController directionController = DirectionController();
@@ -40,11 +38,10 @@ void setup(){
     xbee.init();
     isGoalie = GOALIE;
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 19200);
-    Wire1.setDefaultTimeout(50000); // 200ms
+    Wire1.setDefaultTimeout(50000);
 
     pinMode(A12, INPUT);
     pinMode(13, OUTPUT);
-    //
     //SPI SETUP
     pinMode(LIGHT_SS, OUTPUT);
     pinMode(TSOP_SS, OUTPUT);
@@ -53,8 +50,6 @@ void setup(){
     digitalWrite(LIGHT_SS, HIGH);
     SPI.setSCK(ALT_SCK);
     SPI.setClockDivider(SPI_CLOCK_DIV8);
-    // defender.init();
-
     delay(5000);
 }
 
@@ -151,6 +146,9 @@ void loop(){
       // Serial.println();
 
 
+    //-----------------------------------------------------------------------------------------------------------------------------------------
+    //@Alistair, I need you to write a some getters in the direction controller function that will give me the robots x,y and ball x,y ty bb <3
+    //-----------------------------------------------------------------------------------------------------------------------------------------
 
     //Checking if we can kick
     if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
@@ -158,29 +156,17 @@ void loop(){
         lastKick = millis();
     }
 
-    //Master
-    // XBEESERIAL.write(1);
-    // if(XBEESERIAL.available()){
-    //     Serial.println(XBEESERIAL.read());
-    // }
-    //Slave
-    // if(XBEESERIAL.available()){
-    //     Serial.println(XBEESERIAL.read());
-    //     XBEESERIAL.write(2);
-    // }
-
     #if XBEE_ENABLE
         if(xbee.connected()){
-            xbee.updateCoordData(28, 28, 28, 28);
+            xbee.updateCoordData(ballX, ballY, robotX, robotY);
             otherBallX = xbee.otherBallX;
             otherBallY = xbee.otherBallY;
             otherRobotX = xbee.otherX;
             otherRobotY = xbee.otherY;
             isGoalie = GOALIE;
         }else{
-             // goalie = true;
+            //The Xbee is no longer connected, try to connect and assume the goalie position
              xbee.tryConnect();
-             //The Xbee is no longer connected
              if(!isGoalie && millis() >= 5000){
                  isGoalie = true;
              }
