@@ -169,21 +169,21 @@ void loop(){
     //     XBEESERIAL.write(2);
     // }
 
-    if(xbee.connected()){
-        xbee.updateCoordData(28, 28, 28, 28);
-        otherBallX = xbee.otherBallX;
-        otherBallY = xbee.otherBallY;
-        otherRobotX = xbee.otherX;
-        otherRobotY = xbee.otherY;
-        isGoalie = GOALIE;
-    }else{
-         // goalie = true;
-         xbee.tryConnect();
-         //The Xbee is no longer connected
-         if(!isGoalie && millis() >= 5000){
-             isGoalie = true;
-         }
-    }
-
-    Serial.println(isGoalie);
+    #if XBEE_ENABLE
+        if(xbee.connected()){
+            xbee.updateCoordData(28, 28, 28, 28);
+            otherBallX = xbee.otherBallX;
+            otherBallY = xbee.otherBallY;
+            otherRobotX = xbee.otherX;
+            otherRobotY = xbee.otherY;
+            isGoalie = GOALIE;
+        }else{
+             // goalie = true;
+             xbee.tryConnect();
+             //The Xbee is no longer connected
+             if(!isGoalie && millis() >= 5000){
+                 isGoalie = true;
+             }
+        }
+    #endif
 }

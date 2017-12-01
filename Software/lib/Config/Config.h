@@ -1,24 +1,25 @@
 #ifndef Config_h
 #define Config_h
 
-//Critical Stuff
-#define CONST_K 1.75
-#define CONST_J 100
+//Enable Xbee Comms
+#define XBEE_ENABLE false
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
-// if is Goalie
+//Enable Goalie
 #define GOALIE false
+//Attacking colour
 #define ATTACKING_YELLOW true
-// bool GOALIE = false;
+
+//----------------------------------------------------------------------------
 
 //TSOPS
 #define TSOP_FORWARD_LOWER_ED 60 //Complex Orbit
 #define TSOP_FORWARD_UPPER_ED 300 //Complex Orbit
 //ORBIT
 #define TSOP_ORBIT_FRONT_DENOMINATOR 100
-#define TSOP_ORBIT_FRONT_RATIO 90
+#define TSOP_ORBIT_FRONT_RATIO 75
 #define TSOP_ORBIT_SIDE_RATIO 50
 //MOTORS
 #define SPEED_VAL 80
@@ -55,8 +56,6 @@
 #define XBEE_ADDED_CONST 128
 #define XBEE_START_BYTE 255
 #define XBEE_PACKAGE_SIZE 6
-
-//----------------------------------------------------------------------------
 
 //Tsops
 #define TSOP_NUM 12
@@ -128,5 +127,8 @@
 
 #define P2_bot 0
 #define O_bot 1
+
+#define CONST_K 1.75
+#define CONST_J 100
 
 #endif
