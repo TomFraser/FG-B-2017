@@ -16,7 +16,7 @@ double lightAngle;
 void transfer(){
   int command = SPI0_POPR;
   if (command == 255){
-    SPI0_PUSHR_SLAVE = sendData[0];
+    SPI0_PUSHR_SLAVE = Light.getAngle();
     SPI0_SR |= SPI_SR_RFDF;
   }
 }
