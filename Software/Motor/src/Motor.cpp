@@ -12,6 +12,8 @@
 #include <Goalie.h>
 // #include <Xbee.h>
 
+#define XBEESERIAL Serial2
+
 //
 #if ROBOT
   // o_bot
@@ -38,6 +40,7 @@ Goalie goalie = Goalie();
 
 void setup(){
     isGoalie = GOALIE;
+    XBEESERIAL.begin(9600);
     Wire1.begin(I2C_MASTER, 0x00, I2C_PINS_29_30, I2C_PULLUP_EXT, 19200);
     Wire1.setDefaultTimeout(50000); // 200ms
 
@@ -152,6 +155,8 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
+
+    XBEESERIAL.write("MASTER SEND");
 
     // if(xbee.connected()){
     //     xbee.updateCoordData(ballX, ballY, robotX, robotY);
