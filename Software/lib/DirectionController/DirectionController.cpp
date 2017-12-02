@@ -34,8 +34,9 @@ double DirectionController::absToRel(double absoulteDirection){
   return absoulteDirection != 65506 ? doubleMod(absoulteDirection + compassAngle, 360.0) : 65506;
 }
 
-void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, double lightAngle_, double compassAngle_){
+void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, double compassAngle_){
   compassAngle = compassAngle_;
+  ballStrength = ballStrength_;
 
   ballAngle = relToAbs(ballAngle_);
   rawBallAngle = relToAbs(rawBallAngle_);
@@ -50,6 +51,45 @@ void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, in
 
   updateCoordinates();
 }
+
+void DirectionController::updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_){
+  otherBallX = otherBallX_;
+  otherBallY = otherBallY_;
+
+  otherRobotX = otherRobotX_;
+  otherRobotY = otherRobotY_;
+}
+
+// ------------------------ Ball stuff -----------------------------------
+
+int DirectionController::calcBallDist(){
+  // gotta figure out an algorithm for this
+  return 1/ballStrength;
+}
+
+bool DirectionController::calculateBallCoordinates(){ //returns if can calulate ball coords
+  if(rawBallAngle != 65506){
+    int ballDist = calcBallDist();
+    calcBallX = currX + ballDist*sin(angToRad*rawBallAngle);
+    calcBallY = currY + ballDist*cos(angToRad*rawBallAngle);
+    return true;
+  }
+  else{
+    calcBallX = 65506;
+    calcBallY = 65506;
+    return false;
+  }
+}
+
+int DirectionController::getBallX(){
+  return calcBallX;
+}
+
+int DirectionController::getBallY(){
+  return calcBallY;
+}
+
+// -----------------------------------------------------------------------------------
 
 void DirectionController::updateCoordinates(){
   if(coordCalc.update(areaA, angleA, areaD, angleD, compassAngle)){ // returns false if cant see any goal

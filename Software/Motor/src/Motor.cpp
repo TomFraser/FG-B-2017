@@ -107,7 +107,7 @@ void loop(){
     // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    directionController.updateGameData(tsopData, rawBallData, lightData, compass);
+    directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, compass);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     directionController.updateGoalData(0, 65506, 0, 65506);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
@@ -149,10 +149,6 @@ void loop(){
       // Serial.println();
 
 
-    //-----------------------------------------------------------------------------------------------------------------------------------------
-    //@Alistair, I need you to write a some getters in the direction controller function that will give me the robots x,y and ball x,y ty bb <3
-    //-----------------------------------------------------------------------------------------------------------------------------------------
-
     //Checking if we can kick
     if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
         kicker.kickBall();
@@ -161,11 +157,12 @@ void loop(){
 
     #if XBEE_ENABLE
         if(xbee.connected()){
-            xbee.updateCoordData(ballX, ballY, robotX, robotY);
-            otherBallX = xbee.otherBallX;
-            otherBallY = xbee.otherBallY;
-            otherRobotX = xbee.otherX;
-            otherRobotY = xbee.otherY;
+            directionController.calculateBallCoordinates();
+            // what do we want to do if the robot cant see the ball??
+            xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY());
+
+            directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, )
+
             isGoalie = GOALIE;
         }else{
             //The Xbee is no longer connected, try to connect and assume the goalie position

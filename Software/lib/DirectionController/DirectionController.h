@@ -22,13 +22,19 @@ public:
   int getSpeed();
   int getX();
   int getY();
-  void updateGameData(double ballAngle_, double rawBallAngle_, double lightAngle_, double compassAngle_);
+  void updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, double compassAngle_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
+  void updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_);
+  bool calculateBallCoordinates();
+  int getBallX();
+  int getBallY();
   void goToCoords(int targetX, int targetY);
   void calulateAttack();
 
 private:
   void updateCoordinates();
+
+  int calcBallDist();
 
   double relToAbs(double relativeDirection);
   double absToRel(double absoulteDirection);
@@ -39,8 +45,15 @@ private:
   // game data
   double ballAngle;
   double rawBallAngle;
+  int ballStrength;
   double lightAngle;
   double compassAngle;
+
+  // coordinate data
+  int otherBallX;
+  int otherBallY;
+  int otherRobotX;
+  int otherRobotY;
 
   // goal data
   int areaA; // attack goal
@@ -56,6 +69,10 @@ private:
   //current coords
   int currX;
   int currY;
+
+  // balls calulated coordinates
+  int calcBallX;
+  int calcBallY;
 
   // light tracker object
   LightTracker lightTracker = LightTracker();
