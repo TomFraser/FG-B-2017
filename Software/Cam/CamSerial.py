@@ -4,7 +4,7 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(29, 85, 17, 83, 26, 75), #Ball
+thresholds = [(40, 86, 24, 101, 32, 88), #Ball
 (61, 85, -14, 17, 18, 55), #(71, 99, -9, 12, 12, 59), #Goal 1
 (28, 51, -29, 5, -31, 0)] # Goal 2
 
