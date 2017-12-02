@@ -39,6 +39,9 @@
 #define PID_I 0
 #define PID_D 0
 
+// goal TRACKING
+#define GOAL_TRACKING true
+
 
 // Goalie
 #define X_MULTIPLIER 1.25
