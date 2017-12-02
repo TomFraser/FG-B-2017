@@ -27,11 +27,11 @@ int DirectionController::getY(){
 }
 
 double DirectionController::relToAbs(double relativeDirection){
-  return relativeDirection != 65506 ? fmod(relativeDirection - compassAngle, 360.0) : 65506;
+  return relativeDirection != 65506 ? doubleMod(relativeDirection - compassAngle, 360.0) : 65506;
 }
 
 double DirectionController::absToRel(double absoulteDirection){
-  return absoulteDirection != 65506 ? fmod(absoulteDirection + compassAngle, 360.0) : 65506;
+  return absoulteDirection != 65506 ? doubleMod(absoulteDirection + compassAngle, 360.0) : 65506;
 }
 
 void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, double lightAngle_, double compassAngle_){

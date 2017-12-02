@@ -12,6 +12,12 @@ int mod(int x, int m) {
     return r < 0 ? r + m : r;
 }
 
+double doubleMod(double x, double m){
+  double r = fmod(x, m);
+  return r < 0 ? r + m : r;
+}
+
+
 bool angleIsInside(double angleBoundCounterClockwise, double angleBoundClockwise, double angleCheck) {
     if (angleBoundCounterClockwise < angleBoundClockwise) {
         return (angleBoundCounterClockwise < angleCheck && angleCheck < angleBoundClockwise);

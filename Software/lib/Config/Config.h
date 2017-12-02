@@ -26,7 +26,7 @@
 #define FORWARD_SPEED 80
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 60
-#define SPEED_SLIDE 60
+#define SPEED_SLIDE 40
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing

@@ -135,7 +135,7 @@ void loop(){
         directionController.calulateAttack();
         motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
 
-        Serial.print(tsopData); Serial.print(" | "); Serial.print(rawBallData); Serial.print(" | "); Serial.print(lightData); Serial.print(" | "); Serial.println(directionController.getDirection());;
+        Serial.print(tsopData); Serial.print(" | "); Serial.print(rawBallData); Serial.print(" | "); Serial.print(lightData); Serial.print(" | "); Serial.print(directionController.getDirection()); Serial.print(" | "); Serial.println(directionController.getSpeed());
 
     }
     // -------------------- ATTACKER MAIN LOGIC -------------------

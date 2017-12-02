@@ -27,7 +27,7 @@
 
 int mod(int x, int m);
 
-double doubleMod(double x, double max);
+double doubleMod(double x, double m);
 
 bool angleIsInside(double angleBoundCounterClockwise, double angleBoundClockwise, double angleCheck);
 double angleBetween(double angleCounterClockwise, double angleClockwise);

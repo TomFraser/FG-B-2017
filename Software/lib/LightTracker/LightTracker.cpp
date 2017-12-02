@@ -31,7 +31,7 @@ double LightTracker::calulateBounds(double lightAngle, double ballAngle){
 void LightTracker::update(double absLight, double absMove, double moveSpeed, double absRawBall){
     if(absLight != 65506.00){
       // if we can see the line
-      
+
       if(!wasSeeingLine){
         // just started seeing the line
         lineInitDirection = absLight;
@@ -40,7 +40,6 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
       lastAngle = absLight;
       wasSeeingLine = true;
 
-      // CHANGE ANGLE_CUTOFF ONCE THE NEW LIGHTSENSORS COME
       if(smallestAngleBetween(lineInitDirection, absLight) < ANGLE_CUTOFF){
         // we might have moved a bit (ie maybe hit a corner or something) - set a new heading
         lineInitDirection = absLight;
@@ -52,55 +51,21 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
           speed = SPEED_ON_LINE;
           direction = lineInitDirection;
         }
-        else if(smallestAngleBetween(lineInitDirection, absMove) < SLIDE_ANGLE){
+        else if(smallestAngleBetween(lineInitDirection, absRawBall) < SLIDE_ANGLE){
           // not within the angle of a slide -> just go at ball angle
           speed = moveSpeed;
           direction = absMove;
         }
         else{
-          // need to decide whether to slide or to stop
-
-          // identify whether we're on a side
-          bool onSide = false;
-          double angBetween = 0;
-
-          if(smallestAngleBetween(lineInitDirection, 90) < IDENTIFY_THRESHOLD){
-            // on right - from ball to move direction
-            angBetween = angleBetween(absMove, lineInitDirection);
-            onSide = true;
-
-          }
-          else if(smallestAngleBetween(lineInitDirection, 270) < IDENTIFY_THRESHOLD){
-            // on left - from line to move direction
-            angBetween = angleBetween(lineInitDirection, absMove);
-            onSide = true;
-
-          }
-
-          if(onSide){
-            if(angBetween < SIDE_STOP_BOUND_MAX && angBetween > SIDE_STOP_BOUND_MIN){
-              // if within the stop area -> stop
-              speed = SPEED_ON_LINE; //speed on line is stop
-              direction = lineInitDirection;
-            }
-            else{
-              // slide on slide angle
-              speed = SPEED_SLIDE;
-              direction = calulateBounds(absLight, absMove);
-            }
+          if(smallestAngleBetween(lineInitDirection, absRawBall) < STOP_BOUND){
+            // not within stop -> do tha slide
+            speed = SPEED_SLIDE;
+            direction = calulateBounds(absLight, absRawBall);
           }
           else{
-            // not on side -> do normal bounds
-            if(smallestAngleBetween(lineInitDirection, absMove) < STOP_BOUND){
-              // not within stop -> do tha slide
-              speed = SPEED_SLIDE;
-              direction = calulateBounds(absLight, absMove);
-            }
-            else{
-              // stop
-              speed = SPEED_ON_LINE; //speed on line is stop
-              direction = lineInitDirection;
-            }
+            // stop
+            speed = SPEED_ON_LINE; //speed on line is stop
+            direction = lineInitDirection;
           }
         }
       }
