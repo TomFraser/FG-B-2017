@@ -85,7 +85,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     // what happens when one memes tho? we cant really tell which
     // one is correct and the other is a meme
 
-    // take the larger goal
+    // take the smaller goal (smaller distance = closer)
     if(areaA < areaD){
       xCoord = xAttack;
       yCoord = yAttack;

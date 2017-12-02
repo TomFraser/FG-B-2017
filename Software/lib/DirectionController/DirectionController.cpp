@@ -26,10 +26,20 @@ int DirectionController::getY(){
   return currY;
 }
 
-void DirectionController::updateGameData(double ballAngle_, double lightAngle_, double compassAngle_){
-  ballAngle = ballAngle_;
-  lightAngle = lightAngle_;
+double DirectionController::relToAbs(double relativeDirection){
+  return relativeDirection != 65506 ? fmod(relativeDirection - compassAngle, 360.0) : 65506;
+}
+
+double DirectionController::absToRel(double absoulteDirection){
+  return absoulteDirection != 65506 ? fmod(absoulteDirection + compassAngle, 360.0) : 65506;
+}
+
+void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, double lightAngle_, double compassAngle_){
   compassAngle = compassAngle_;
+
+  ballAngle = relToAbs(ballAngle_);
+  rawBallAngle = relToAbs(rawBallAngle_);
+  lightAngle = relToAbs(lightAngle_);
 }
 
 void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_){
@@ -78,15 +88,15 @@ void DirectionController::goToCoords(int targetX, int targetY){
       // Serial.print(pidInput); Serial.print(" ");
       pid.Compute();
       // Serial.println(pidOutput);
+      coordSpeed = pidOutput;
     #else
-      pidOutput = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
+      coordSpeed = (int) (distance * (distance < DISTANCE_CUTOFF ? CUTOFF_SPEED_SCALE : COORD_SPEED_SCALE));
     #endif
-    coordSpeed = pidOutput;
   }
 
   // make sure our great overlord the light tracker is happy
-  lightTracker.update(lightAngle, coordDirection, pidOutput, false, compassAngle);
-  direction = lightTracker.getDirection();
+  lightTracker.update(lightAngle, coordDirection, coordSpeed, rawBallAngle);
+  direction = absToRel(lightTracker.getDirection());
   speed = lightTracker.getSpeed();
 
 }
@@ -94,8 +104,8 @@ void DirectionController::goToCoords(int targetX, int targetY){
 void DirectionController::calulateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
-    lightTracker.update(lightAngle, ballAngle, 0, true, compassAngle);
-    direction = lightTracker.getDirection();
+    lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle);
+    direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
   }
   else{

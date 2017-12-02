@@ -22,7 +22,7 @@ public:
   int getSpeed();
   int getX();
   int getY();
-  void updateGameData(double ballAngle_, double lightAngle_, double compassAngle_);
+  void updateGameData(double ballAngle_, double rawBallAngle_, double lightAngle_, double compassAngle_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
   void goToCoords(int targetX, int targetY);
   void calulateAttack();
@@ -30,11 +30,15 @@ public:
 private:
   void updateCoordinates();
 
+  double relToAbs(double relativeDirection);
+  double absToRel(double absoulteDirection);
+
   int speed;
   double direction;
 
   // game data
   double ballAngle;
+  double rawBallAngle;
   double lightAngle;
   double compassAngle;
 
