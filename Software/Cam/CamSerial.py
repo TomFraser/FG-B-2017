@@ -147,9 +147,9 @@ while(True):
 
     ##### Create Buffer to Send over Serial #####
 
-    sendBuff = [42,0,0,0,0,0,0,0,0,72]
+    sendBuff = [42,0,0,0,0,0,0,0,0,0,72]
     sendBuff[0] = 42
-    sendBuff[9] = 72
+    sendBuff[10] = 72
 
     if angle <= 255:
         sendBuff[1] = int(angle)
@@ -176,7 +176,7 @@ while(True):
 
     sendBuff[8] = goalDdata[1]
 
-    sendBuff[9] = strength
+    sendBuff[9] = int(strength)
 
     for i in range(0,10):
         if sendBuff[i] == 42 and i != 0:
