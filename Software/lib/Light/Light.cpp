@@ -116,7 +116,7 @@ void Light::readLight(){
     }
 }
 
-int getNumSensors(){
+int Light::getNumSensors(){
   return numSensors;
 }
 
