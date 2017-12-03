@@ -5,7 +5,7 @@
 #define XBEE_ENABLE false
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Goalie
 #define GOALIE false
@@ -40,7 +40,7 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING false
+#define GOAL_TRACKING true
 
 
 // Goalie
@@ -115,6 +115,8 @@
 #define STOP_BOUND 150
 #define SIDE_STOP_BOUND_MIN 135
 #define SIDE_STOP_BOUND_MAX 160
+#define DEPTH_THRESH 3
+#define DEPTH_SPEED 20
 
 //Pixy
 #define CANT_SEE_GOAL 65506

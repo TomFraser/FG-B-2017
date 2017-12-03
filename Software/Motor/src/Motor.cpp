@@ -108,13 +108,13 @@ void loop(){
     double rotation = (rotationData - 180);
     double compass = (compassData - 180);
 
-    Serial.print(lightData); Serial.print(" | "); Serial.println(lightNumData);
+    // Serial.print(lightData); Serial.print(" | "); Serial.println(lightNumData);
 
     // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    // directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, 1, compass);
-    directionController.updateGameData(65506, 65506, 0, lightData, 1, compass);
+    directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass);
+    // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
