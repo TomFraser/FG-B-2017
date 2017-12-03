@@ -48,8 +48,13 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
 
         if(absMove == 65506.00){
           // if we dont have any directions -> stop on line
-          // get us to the right depth
-          speed = numSensors > DEPTH_THRESH ? DEPTH_SPEED : SPEED_ON_LINE;
+          #if ENABLE_DEPTH
+            // push us to the right depth
+            speed = numSensors > DEPTH_THRESH ? DEPTH_SPEED : SPEED_ON_LINE; //speed on line is stop
+          #else
+            speed = SPEED_ON_LINE;
+          #endif
+
           direction = lineInitDirection;
         }
         else if(smallestAngleBetween(lineInitDirection, absRawBall) < SLIDE_ANGLE){
@@ -65,8 +70,13 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
           }
           else{
             // stop
-            // push us to the right depth
-            speed = numSensors > DEPTH_THRESH ? DEPTH_SPEED : SPEED_ON_LINE; //speed on line is stop
+            #if ENABLE_DEPTH
+              // push us to the right depth
+              speed = numSensors > DEPTH_THRESH ? DEPTH_SPEED : SPEED_ON_LINE; //speed on line is stop
+            #else
+              speed = SPEED_ON_LINE;
+            #endif
+            
             direction = lineInitDirection;
           }
         }

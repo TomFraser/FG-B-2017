@@ -115,6 +115,7 @@
 #define STOP_BOUND 150
 #define SIDE_STOP_BOUND_MIN 135
 #define SIDE_STOP_BOUND_MAX 160
+#define ENABLE_DEPTH true
 #define DEPTH_THRESH 3
 #define DEPTH_SPEED 20
 
