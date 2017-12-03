@@ -12,7 +12,7 @@ class LightTracker{
 public:
     LightTracker();
 
-    void update(double absLight, double absMove, double moveSpeed, double absRawBall);
+    void update(double absLight, double absMove, double moveSpeed, double absRawBall, int numSensors);
     int getSpeed();
     double getDirection();
     bool getSeeingLine();

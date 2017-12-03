@@ -28,7 +28,7 @@ double LightTracker::calulateBounds(double lightAngle, double ballAngle){
 }
 
 // Light tracker now takes in only abs directions and returns an absolute direction
-void LightTracker::update(double absLight, double absMove, double moveSpeed, double absRawBall){
+void LightTracker::update(double absLight, double absMove, double moveSpeed, double absRawBall, int numSensors){
     if(absLight != 65506.00){
       // if we can see the line
 

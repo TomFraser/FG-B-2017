@@ -34,9 +34,10 @@ double DirectionController::absToRel(double absoulteDirection){
   return absoulteDirection != 65506 ? doubleMod(absoulteDirection + compassAngle, 360.0) : 65506;
 }
 
-void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, double compassAngle_){
+void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_){
   compassAngle = compassAngle_;
   ballStrength = ballStrength_;
+  numSensors = numSensors_;
 
   ballAngle = relToAbs(ballAngle_);
   rawBallAngle = relToAbs(rawBallAngle_);
@@ -135,7 +136,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
   }
 
   // make sure our great overlord the light tracker is happy
-  lightTracker.update(lightAngle, coordDirection, coordSpeed, rawBallAngle);
+  lightTracker.update(lightAngle, coordDirection, coordSpeed, rawBallAngle, numSensors);
   direction = absToRel(lightTracker.getDirection());
   speed = lightTracker.getSpeed();
 
@@ -144,7 +145,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
 void DirectionController::calulateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
-    lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle);
+    lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
   }
