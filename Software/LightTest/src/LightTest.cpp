@@ -8,7 +8,7 @@ bool results[LIGHTSENSOR_NUM];
 int threshold = 0;
 int counter = 0;
 
-int mode = 2; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only
+int mode = 4; // 0 = raw vals, 1 = 1's and 0's, 2 = processed angle, 3 = positive only, 4 = numSensors
 
 
 void setup(){
@@ -76,5 +76,8 @@ void loop(){
       Serial.println();
 
     }
+  }
+  else if(mode == 4){
+    Serial.println(Light.getNumSensors());
   }
 }
