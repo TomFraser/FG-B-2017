@@ -15,9 +15,19 @@ double lightAngle;
 
 void transfer(){
   int command = SPI0_POPR;
-  if (command == 255){
-    SPI0_PUSHR_SLAVE = Light.getAngle();
-    SPI0_SR |= SPI_SR_RFDF;
+  switch(command){
+    case 1:
+      SPI0_PUSHR_SLAVE = Light.getNumSensors(); //Num of Sensors on Line
+      SPI0_SR |= SPI_SR_RFDF;
+      break;
+    case 2:
+      SPI0_PUSHR_SLAVE = Light.getAngle(); //Light Angle
+      SPI0_SR |= SPI_SR_RFDF;
+      break;
+    default:
+      SPI0_PUSHR_SLAVE = 0;
+      SPI0_SR |= SPI_SR_RFDF;
+      break;
   }
 
   // need to also send Light.getNumSensors();
