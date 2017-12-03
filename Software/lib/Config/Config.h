@@ -40,7 +40,7 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING true
+#define GOAL_TRACKING false
 
 
 // Goalie

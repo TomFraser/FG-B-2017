@@ -36,6 +36,9 @@ public:
     // get if theres an error (if a sensor has bricked)
     bool getError();
 
+    // get number of sensors currently seeing the Line
+    int getNumSensors();
+
 private:
     // Function Definitions
 
@@ -69,7 +72,7 @@ private:
     bool error = false;
 
     //for reading light
-    int detectedNumber;
+    int numSensors;
 
     // bool seeingWhite[LIGHTSENSOR_NUM] = {true, true, true, true, true, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false};
     bool seeingWhite[LIGHTSENSOR_NUM];

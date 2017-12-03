@@ -98,13 +98,13 @@ void Light::init(){
 }
 
 void Light::readLight(){
-    detectedNumber = 0;
+    numSensors = 0;
     for(int i = 0; i < LIGHTSENSOR_NUM; i++){
       if(thresholds[i] != -1){
         int val = analogRead(lightSensors[i]);
         if(val >= thresholds[i]){
             seeingWhite[i] = true;
-            detectedNumber++;
+            numSensors++;
         }
         else{
             seeingWhite[i] = false;
@@ -114,6 +114,10 @@ void Light::readLight(){
         seeingWhite[i] = false;
       }
     }
+}
+
+int getNumSensors(){
+  return numSensors;
 }
 
 //[0, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0]

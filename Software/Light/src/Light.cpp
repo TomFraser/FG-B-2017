@@ -19,6 +19,8 @@ void transfer(){
     SPI0_PUSHR_SLAVE = Light.getAngle();
     SPI0_SR |= SPI_SR_RFDF;
   }
+
+  // need to also send Light.getNumSensors();
 }
 
 void setup(){
