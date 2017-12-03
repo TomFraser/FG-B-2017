@@ -94,9 +94,13 @@ void loop(){
     int ballStrength = SPI.transfer16(2);
     digitalWrite(TSOP_SS, HIGH);
     delayMicroseconds(500);
+
     digitalWrite(LIGHT_SS, LOW);
-    delayMicroseconds(500);
-    int lightData = SPI.transfer16(255);
+    int lightData = SPI.transfer16(1);
+    digitalWrite(LIGHT_SS, HIGH);
+
+    digitalWrite(LIGHT_SS, LOW);
+    int lightNumData = SPI.transfer16(2);
     digitalWrite(LIGHT_SS, HIGH);
     digitalWrite(13, LOW);
 
