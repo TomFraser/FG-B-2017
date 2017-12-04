@@ -169,20 +169,15 @@ void loop(){
             directionController.calculateBallCoordinates();
             // what do we want to do if the robot cant see the ball??
             xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
+            // xbee.updateCoordData(-50, 69, 42, 21, true, true);
 
-            if(xbee.otherCanSeeBall && xbee.otherKnowsOwnCoords){
-                //Other robot can see ball and knows where it is
-                directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY);
+            //Other robot can see ball and knows where it is
+            directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
 
-                Serial.println(xbee.otherBallX);
-                Serial.println(xbee.otherBallY);
-                Serial.println(xbee.otherX);
-                Serial.println(xbee.otherY);
+            Serial.print(xbee.otherBallX); Serial.print(" | "); Serial.print(xbee.otherBallY); Serial.print(" | "); Serial.print(xbee.otherX); Serial.print(" | "); Serial.println(xbee.otherY);
 
-                isGoalie = GOALIE;
-            }
+            isGoalie = GOALIE;
         }else{
-            // Serial.println("yo");
             //The Xbee is no longer connected, try to connect and assume the goalie position
              xbee.tryConnect();
              // if(!isGoalie && millis() >= 5000){
