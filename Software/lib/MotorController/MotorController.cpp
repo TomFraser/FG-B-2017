@@ -39,10 +39,10 @@ bool MotorController::playOffense(double angle, double rotation, int speed, bool
         int finalSpeedD = (motorDSpeed * scaledSpeed2)/100 * speed;
 
         if((angle <= 15 || angle >= 345) && followingBall){
-            motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (65506 * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
-            motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (65506 * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
-            motorC.set(min((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
-            motorD.set(min((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+            motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (angle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+            motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (angle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+            motorC.set(min((cos(((angleArray[2] + 90) * angToRad) - (angle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+            motorD.set(min((cos(((angleArray[3] + 90) * angToRad) - (angle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
         }else{
             motorA.set(finalSpeedA);
             motorB.set(finalSpeedB);
