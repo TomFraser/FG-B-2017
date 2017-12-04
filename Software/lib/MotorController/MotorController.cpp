@@ -17,39 +17,7 @@ bool MotorController::playDefense(double goalAngle, double lightAngle, double ba
     }
 }
 
-bool MotorController::playOffense(double angle, double lightAngle, double rotation, int speed){ //<-- The rotation passed here is external rotastion and compass will
-    //still be done unless this value is greater than 0.
-    // if(speed == NO_SPEED){
-    //     speed = SPEED_VAL; //Defaulting to normal speed
-    // }
-
-    // int lowerBoundLight = mod((lightAngle - 45), 360);
-    // int upperBoundLight = mod((lightAngle + 45), 360);
-    // if(lightAngle == 0.00){
-    //     // Serial.println("LIGHT ANGLE");
-    //     angle = angle;
-    //     lightAngle = 0.00;
-    // }else{
-    //     if(smallestAngleBetween(angle, lightAngle) > 45){ //We need to move on a bound
-    //
-    //         if((mod(lightAngle + 180, 360) - angle) > 0 && (mod(lightAngle + 180, 360) - angle) < 180){
-    //             angle = upperBoundLight;
-    //             lightAngle = 0.00;
-    //
-    //             // Serial.println("SMALLEST U");
-    //         }else{
-    //             angle = lowerBoundLight;
-    //             lightAngle = 0.00;
-    //
-    //             // Serial.println("SMALLEST L");
-    //         }
-    //     }else{
-    //         // Serial.println("OTHER");
-    //         angle=angle;
-    //         lightAngle = 0.00;
-    //     }
-    // }
-
+bool MotorController::playOffense(double angle, double rotation, int speed, bool followingBall){ //<-- The rotation passed here is external rotastion and compass will
     if(angle != NO_BALL && speed != 0){
         double motorAPWM = (cos(((angleArray[0] + 90 - angle) * angToRad)));
         double motorBPWM = (cos(((angleArray[1] + 90 - angle) * angToRad)));
@@ -70,9 +38,9 @@ bool MotorController::playOffense(double angle, double lightAngle, double rotati
         int finalSpeedC = (motorCSpeed * scaledSpeed2)/100 * speed;
         int finalSpeedD = (motorDSpeed * scaledSpeed2)/100 * speed;
 
-        if(angle <= 15 || angle >= 345){
-            motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
-            motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+        if((angle <= 15 || angle >= 345) && followingBall){
+            motorA.set(min((cos(((angleArray[0] + 90) * angToRad) - (65506 * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
+            motorB.set(min((cos(((angleArray[1] + 90) * angToRad) - (65506 * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
             motorC.set(min((cos(((angleArray[2] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
             motorD.set(min((cos(((angleArray[3] + 90) * angToRad) - (lightAngle * angToRad))) * (FORWARD_SPEED*2.55) + rotation, 255));
         }else{

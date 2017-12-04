@@ -40,7 +40,7 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING true
+#define GOAL_TRACKING false
 
 
 // Goalie
@@ -115,7 +115,7 @@
 #define STOP_BOUND 150
 #define SIDE_STOP_BOUND_MIN 135
 #define SIDE_STOP_BOUND_MAX 160
-#define ENABLE_DEPTH true
+#define ENABLE_DEPTH false
 #define DEPTH_THRESH 3
 #define DEPTH_SPEED 20
 

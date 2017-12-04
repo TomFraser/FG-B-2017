@@ -14,7 +14,7 @@
 class MotorController{
 public:
     bool playDefense(double goalAngle, double lightAngle, double ballRotation, double speed);// If this method returns true, the ball is being seen
-    bool playOffense(double angle, double lightAngle, double rotation, int speed); //If this method returns true, then for the next 0.5 seconds, the speed needs to be set to 30
+    bool playOffense(double angle, double rotation, int speed, bool followingBall); //If this method returns true, then for the next 0.5 seconds, the speed needs to be set to 30
 
     double doubleAbs(double value);
     int sign(double value);

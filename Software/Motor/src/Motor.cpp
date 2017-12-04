@@ -141,7 +141,7 @@ void loop(){
         // Serial.println();
 
         directionController.calulateAttack();
-        motorController.playOffense(directionController.getDirection(), 65506.0, rotation, directionController.getSpeed());
+        motorController.playOffense(directionController.getDirection(), rotation, directionController.getSpeed(), directionController.getFollowingBall());
 
         // Serial.print(tsopData); Serial.print(" | "); Serial.print(rawBallData); Serial.print(" | "); Serial.print(lightData); Serial.print(" | "); Serial.print(directionController.getDirection()); Serial.print(" | "); Serial.println(directionController.getSpeed());
         // Serial.print(compass); Serial.print(" | "); Serial.println(rotation);
@@ -170,7 +170,9 @@ void loop(){
             // what do we want to do if the robot cant see the ball??
             xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY());
 
-            directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, )
+            directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY);
+            Serial.println(xbee.otherX);
+            Serial.println(xbee.otherY);
 
             isGoalie = GOALIE;
         }else{

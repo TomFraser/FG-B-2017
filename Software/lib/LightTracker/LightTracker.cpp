@@ -12,6 +12,10 @@ double LightTracker::getDirection(){
   return direction;
 }
 
+bool LightTracker::getNormalGameplay(){
+  return normalGameplay;
+}
+
 bool LightTracker::getSeeingLine(){
   return wasSeeingLine;
 }
@@ -29,6 +33,7 @@ double LightTracker::calulateBounds(double lightAngle, double ballAngle){
 
 // Light tracker now takes in only abs directions and returns an absolute direction
 void LightTracker::update(double absLight, double absMove, double moveSpeed, double absRawBall, int numSensors){
+    bool tempGameplay = false;
     if(absLight != 65506.00){
       // if we can see the line
 
@@ -61,6 +66,7 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
           // not within the angle of a slide -> just go at ball angle
           speed = moveSpeed;
           direction = absMove;
+          tempGameplay = true;
         }
         else{
           if(smallestAngleBetween(lineInitDirection, absRawBall) < STOP_BOUND){
@@ -76,7 +82,7 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
             #else
               speed = SPEED_ON_LINE;
             #endif
-            
+
             direction = lineInitDirection;
           }
         }
@@ -96,9 +102,10 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
         wasSeeingLine = false;
         lineInitDirection = 0;
 
+        // normal gameplay
         speed = moveSpeed;
-        // return ball angle to just do normal game play
         direction = absMove;
+        tempGameplay = true;
       }
       else{
         // oops, out on the wrong side - this is priority
@@ -116,5 +123,8 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
       // cant see line and wasnt seeing line - just do normal gameplay
       speed = moveSpeed;
       direction = absMove;
+      tempGameplay = true;
     }
+
+    normalGameplay = tempGameplay;
 }

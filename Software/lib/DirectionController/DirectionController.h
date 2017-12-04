@@ -20,6 +20,7 @@ public:
   DirectionController();
   double getDirection();
   int getSpeed();
+  bool getFollowingBall();
   int getX();
   int getY();
   void updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_);
@@ -74,6 +75,9 @@ private:
   // balls calulated coordinates
   int calcBallX;
   int calcBallY;
+
+  // if we are following ball
+  bool followingBall;
 
   // light tracker object
   LightTracker lightTracker = LightTracker();

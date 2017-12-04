@@ -16,6 +16,7 @@ public:
     int getSpeed();
     double getDirection();
     bool getSeeingLine();
+    bool getNormalGameplay();
 private:
     double calulateBounds(double lightAngle, double ballAngle);
 
@@ -31,6 +32,9 @@ private:
 
     // direction
     double direction;
+
+    // normal gameplay
+    bool normalGameplay;
 
 
 };

@@ -18,6 +18,10 @@ int DirectionController::getSpeed(){
   return speed;
 }
 
+bool DirectionController::getFollowingBall(){
+  return followingBall;
+}
+
 int DirectionController::getX(){
   return currX;
 }
@@ -42,6 +46,8 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
   ballAngle = relToAbs(ballAngle_);
   rawBallAngle = relToAbs(rawBallAngle_);
   lightAngle = relToAbs(lightAngle_);
+
+  followingBall = false;
 }
 
 void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_){
@@ -69,7 +75,7 @@ int DirectionController::calcBallDist(){
 }
 
 bool DirectionController::calculateBallCoordinates(){ //returns if can calulate ball coords
-  if(rawBallAngle != 65506){
+  if(rawBallAngle != 65506 && currX != 65506 && currY != 65506){
     int ballDist = calcBallDist();
     calcBallX = currX + ballDist*sin(angToRad*rawBallAngle);
     calcBallY = currY + ballDist*cos(angToRad*rawBallAngle);
@@ -148,6 +154,7 @@ void DirectionController::calulateAttack(){
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
+    followingBall = lightTracker.getNormalGameplay();
   }
   else{
     // cant see ball -> go to predefined pos
