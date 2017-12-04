@@ -59,12 +59,15 @@ void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, in
   updateCoordinates();
 }
 
-void DirectionController::updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_){
+void DirectionController::updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_, bool otherCanSeeBall_, bool otherKnowsOwnCoords_){
   otherBallX = otherBallX_;
   otherBallY = otherBallY_;
 
   otherRobotX = otherRobotX_;
   otherRobotY = otherRobotY_;
+
+  otherCanSeeBall = otherCanSeeBall_;
+  otherKnowsOwnCoords = otherKnowsOwnCoords_;
 }
 
 // ------------------------ Ball stuff -----------------------------------

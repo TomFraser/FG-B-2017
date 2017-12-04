@@ -25,7 +25,7 @@ public:
   int getY();
   void updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
-  void updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_);
+  void updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_, bool otherCanSeeBall_, bool otherKnowsOwnCoords_);
   bool calculateBallCoordinates();
   int getBallX();
   int getBallY();
@@ -56,6 +56,8 @@ private:
   int otherBallY;
   int otherRobotX;
   int otherRobotY;
+  bool otherCanSeeBall;
+  bool otherKnowsOwnCoords;
 
   // goal data
   int areaA; // attack goal

@@ -17,7 +17,9 @@ void Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool c
     _robotY = robotY + XBEE_ADDED_CONST;
     _canSeeBall = canSeeBall;
     _knowsOwnCoords = knowsOwnCoords;
-    dataSend();
+    if(millis() > lastSendTime + 20){
+      dataSend();
+    }
     dataRead();
 }
 
@@ -47,6 +49,7 @@ void Xbees::dataSend(){
     XBEESERIAL.write(_robotY);
     XBEESERIAL.write(_canSeeBall);
     XBEESERIAL.write(_knowsOwnCoords);
+    lastSendTime = millis();
 }
 
 void Xbees::dataRead(){

@@ -24,7 +24,7 @@ private:
     bool _canSeeBall, _knowsOwnCoords;
     void dataSend();
     void dataRead();
-    long timeSinceConnected;
+    long timeSinceConnected, lastSendTime;
 };
 
 #endif
