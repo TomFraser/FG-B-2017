@@ -29,6 +29,7 @@ public:
   bool calculateBallCoordinates();
   int getBallX();
   int getBallY();
+  double getBallAngle();
   void goToCoords(int targetX, int targetY);
   void calulateAttack();
 

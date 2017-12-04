@@ -131,7 +131,7 @@ void loop(){
         //Serial.print(directionController.getX()); Serial.print(" ");
         //Serial.println(directionController.getY());
 
-        goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
+        goalie.calcTarget(directionController.getX(), directionController.getY(), directionController.getBallAngle(), goalDefendAngle, rotation);
 
         directionController.goToCoords(goalie.getX(), goalie.getY());
 

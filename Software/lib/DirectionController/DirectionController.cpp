@@ -99,6 +99,20 @@ int DirectionController::getBallY(){
   return calcBallY;
 }
 
+double DirectionController::getBallAngle(){
+  if(rawBallAngle != 65506){
+    return rawBallAngle;
+  }
+  else{
+    if(otherBallX != 65506 && otherBallY != 65506){
+      return atan2(otherBallX-currX, otherBallY-currY)*radToAng; //if cant see the ball, use the other robots ball xy
+    }
+    else{
+      return 65506; // no one can see the ball -> dunno where it is
+    }
+  }
+}
+
 // -----------------------------------------------------------------------------------
 
 void DirectionController::updateCoordinates(){

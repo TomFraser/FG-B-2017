@@ -18,10 +18,10 @@ void loop(){
   //
   // Serial.print("Dir: "); Serial.print(directionController.getDirection()); Serial.print(" Speed: "); Serial.println(directionController.getSpeed());
 
-  Serial.println(fmod(-28.5, 360.0));
+  Serial.println(atan2(10, 0)*radToAng);
   // Serial.println(28.5%360.0);
-  Serial.println(doubleMod(-28.5, 360));
-  Serial.println();
+  // Serial.println(doubleMod(-28.5, 360));
+  // Serial.println();
 
 
 }
