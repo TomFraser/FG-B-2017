@@ -17,7 +17,7 @@ bool MotorController::playDefense(double goalAngle, double lightAngle, double ba
     }
 }
 
-bool MotorController::playOffense(double angle, double rotation, int speed, bool followingBall){ //<-- The rotation passed here is external rotastion and compass will
+bool MotorController::move(double angle, double rotation, int speed, bool followingBall){ //<-- The rotation passed here is external rotastion and compass will
     if(angle != NO_BALL && speed != 0){
         double motorAPWM = (cos(((angleArray[0] + 90 - angle) * angToRad)));
         double motorBPWM = (cos(((angleArray[1] + 90 - angle) * angToRad)));

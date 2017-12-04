@@ -131,7 +131,7 @@ void loop(){
 
         directionController.goToCoords(goalie.getX(), goalie.getY());
 
-        motorController.playOffense(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
+        motorController.move(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
 
     }else{
         // -------------------- ATTACKER MAIN LOGIC -------------------
@@ -141,7 +141,7 @@ void loop(){
         // Serial.println();
 
         directionController.calulateAttack();
-        motorController.playOffense(directionController.getDirection(), rotation, directionController.getSpeed(), directionController.getFollowingBall());
+        motorController.move(directionController.getDirection(), rotation, directionController.getSpeed(), directionController.getFollowingBall());
 
         // Serial.print(tsopData); Serial.print(" | "); Serial.print(rawBallData); Serial.print(" | "); Serial.print(lightData); Serial.print(" | "); Serial.print(directionController.getDirection()); Serial.print(" | "); Serial.println(directionController.getSpeed());
         // Serial.print(compass); Serial.print(" | "); Serial.println(rotation);
