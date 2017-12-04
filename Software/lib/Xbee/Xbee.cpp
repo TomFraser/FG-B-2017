@@ -10,11 +10,13 @@ void Xbees::init(){
     resetData();
 }
 
-void Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY){
+void Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords){
     _ballX = ballX + XBEE_ADDED_CONST;
     _ballY = ballY + XBEE_ADDED_CONST;
     _robotX = robotX + XBEE_ADDED_CONST;
     _robotY = robotY + XBEE_ADDED_CONST;
+    _canSeeBall = canSeeBall;
+    _knowsOwnCoords = knowsOwnCoords;
     dataSend();
     dataRead();
 }
@@ -27,9 +29,9 @@ void Xbees::resetData(){
 }
 
 bool Xbees::connected(){
-    timeSinceConnected = millis() - timeSinceLastConnected;
-    if(timeSinceConnected >= 1000){
-        Serial.println(timeSinceConnected);
+    // timeSinceConnected = millis() - timeSinceLastConnected;
+    timeSinceConnected = 0;
+    if(timeSinceConnected >= 5000){
         return false;
     }else{
         return true;
@@ -43,6 +45,8 @@ void Xbees::dataSend(){
     XBEESERIAL.write(_ballY);
     XBEESERIAL.write(_robotX);
     XBEESERIAL.write(_robotY);
+    XBEESERIAL.write(_canSeeBall);
+    XBEESERIAL.write(_knowsOwnCoords);
 }
 
 void Xbees::dataRead(){
@@ -63,9 +67,11 @@ void Xbees::dataRead(){
                 dataBuffer[i] = XBEESERIAL.read() - XBEE_ADDED_CONST;
             }
             otherBallX = dataBuffer[0];
-            otherBallY = dataBuffer[0];
-            otherX = dataBuffer[0];
-            otherY = dataBuffer[0];
+            otherBallY = dataBuffer[1];
+            otherX = dataBuffer[2];
+            otherY = dataBuffer[3];
+            otherCanSeeBall = dataBuffer[4];
+            otherKnowsOwnCoords = dataBuffer[5];
         }
     }
 }

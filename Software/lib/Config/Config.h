@@ -52,7 +52,7 @@
 #define XBEESERIAL Serial1
 #define XBEE_ADDED_CONST 128
 #define XBEE_START_BYTE 255
-#define XBEE_PACKAGE_SIZE 6
+#define XBEE_PACKAGE_SIZE 8
 #define DEFAULT_GOALIE false
 
 //Debug
