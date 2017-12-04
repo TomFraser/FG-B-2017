@@ -7,13 +7,13 @@
 #define XBEE_ENABLE true
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Goalie
-#define GOALIE false
+#define GOALIE true
 
 //Attacking colour
-#define ATTACKING_YELLOW true
+#define ATTACKING_YELLOW false
 
 //MOTORS
 #define SPEED_VAL 60
@@ -34,11 +34,13 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING true
+#define GOAL_TRACKING false
 
 
 // Goalie
 #define X_MULTIPLIER 1.25
+#define GOALIE_Y -20
+#define GOALIE_X_RANGE 35
 
 //PIXY
 #define PIXY_MULTIPLIER 2

@@ -110,14 +110,15 @@ void loop(){
 
     // Serial.print(lightData); Serial.print(" | "); Serial.println(lightNumData);
 
-    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
+    //Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass);
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
-    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
+    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
     // directionController.updateGoalData(0, 65506, 0, 65506);
 
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
@@ -127,18 +128,17 @@ void loop(){
     if(isGoalie){
 
         // ---------------- GOALIE MAIN LOGIC -----------------------
+        //Serial.print(directionController.getX()); Serial.print(" ");
+        //Serial.println(directionController.getY());
+
         goalie.calcTarget(directionController.getX(), directionController.getY(), rawBallData, goalDefendAngle, rotation);
 
         directionController.goToCoords(goalie.getX(), goalie.getY());
 
-        motorController.move(directionController.getDirection(), 65506.0, goalie.getGoalAngle(), directionController.getSpeed());
+        motorController.move(directionController.getDirection(), goalie.getGoalAngle(), directionController.getSpeed(), false);
 
     }else{
         // -------------------- ATTACKER MAIN LOGIC -------------------
-
-        // Serial.print(directionController.getX()); Serial.print(" ");
-        // Serial.println(directionController.getY());
-        // Serial.println();
 
         directionController.calulateAttack();
         motorController.move(directionController.getDirection(), rotation, directionController.getSpeed(), directionController.getFollowingBall());
@@ -174,7 +174,7 @@ void loop(){
             //Other robot can see ball and knows where it is
             directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
 
-            Serial.print(xbee.otherBallX); Serial.print(" | "); Serial.print(xbee.otherBallY); Serial.print(" | "); Serial.print(xbee.otherX); Serial.print(" | "); Serial.println(xbee.otherY);
+            // Serial.print(xbee.otherBallX); Serial.print(" | "); Serial.print(xbee.otherBallY); Serial.print(" | "); Serial.print(xbee.otherX); Serial.print(" | "); Serial.println(xbee.otherY);
 
             isGoalie = GOALIE;
         }else{
