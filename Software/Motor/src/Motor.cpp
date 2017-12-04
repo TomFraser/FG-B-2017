@@ -116,10 +116,10 @@ void loop(){
     directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass);
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
-    // directionController.updateGoalData(0, 65506, 0, 65506);
+    directionController.updateGoalData(0, 65506, 0, 65506);
 
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
     // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);

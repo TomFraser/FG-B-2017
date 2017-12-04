@@ -10,17 +10,17 @@
 #define ROBOT P2_bot
 
 //Enable Goalie
-#define GOALIE true
+#define GOALIE false
 
 //Attacking colour
-#define ATTACKING_YELLOW false
+#define ATTACKING_YELLOW true
 
 //MOTORS
 #define SPEED_VAL 60
 #define FORWARD_SPEED 100
 #define SPEED_ON_LINE 0
-#define SPEED_OVER_LINE 40
-#define SPEED_SLIDE 40
+#define SPEED_OVER_LINE 60
+#define SPEED_SLIDE 60
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
@@ -34,7 +34,7 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING false
+#define GOAL_TRACKING true
 
 
 // Goalie

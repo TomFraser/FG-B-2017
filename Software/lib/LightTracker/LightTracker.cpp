@@ -62,14 +62,50 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
 
           direction = lineInitDirection;
         }
-        else if(smallestAngleBetween(lineInitDirection, absRawBall) < SLIDE_ANGLE){
-          // not within the angle of a slide -> just go at ball angle
-          speed = moveSpeed;
-          direction = absMove;
-          tempGameplay = true;
+        else if(absRawBall == 65506.00 || smallestAngleBetween(lineInitDirection, absRawBall) < 90){
+          // no ball, do normal slide stuff on absMove (this should never really happen)
+
+          if(smallestAngleBetween(lineInitDirection, absMove) < SLIDE_ANGLE){
+            // not within the angle of a slide -> just go at move angle
+            speed = moveSpeed;
+            direction = absMove;
+            tempGameplay = true;
+          }
+          else if(smallestAngleBetween(lineInitDirection, absMove) < STOP_BOUND){
+            // not within stop -> do tha slide
+            speed = SPEED_SLIDE;
+            direction = calulateBounds(absLight, absMove);
+          }
+          else{
+            // stop
+            #if ENABLE_DEPTH
+              // push us to the right depth
+              speed = numSensors > DEPTH_THRESH ? DEPTH_SPEED : SPEED_ON_LINE; //speed on line is stop
+            #else
+              speed = SPEED_ON_LINE;
+            #endif
+
+            direction = lineInitDirection;
+          }
+
+        }
+        else if(smallestAngleBetween(lineInitDirection, absRawBall) < 90 && false)
+        {
+          // ball is inside the field, deal with the orbit
+          // since the ball is inside, we wanna go in,
+          // so just calulate a slide and go for it, no stopping
+          speed = SPEED_SLIDE;
+          direction = calulateBounds(absLight, absMove);
         }
         else{
-          if(smallestAngleBetween(lineInitDirection, absRawBall) < STOP_BOUND){
+          // ball is outside the field, deal with raw ball
+          if(smallestAngleBetween(lineInitDirection, absRawBall) < SLIDE_ANGLE){
+            // not within the angle of a slide -> just go at move angle
+            speed = moveSpeed;
+            direction = absMove;
+            tempGameplay = true;
+          }
+          else if(smallestAngleBetween(lineInitDirection, absRawBall) < STOP_BOUND){
             // not within stop -> do tha slide
             speed = SPEED_SLIDE;
             direction = calulateBounds(absLight, absRawBall);
