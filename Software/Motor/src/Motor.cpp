@@ -117,8 +117,8 @@ void loop(){
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
-    directionController.updateGoalData(0, 65506, 0, 65506);
+    directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
+    // directionController.updateGoalData(0, 65506, 0, 65506);
 
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
     // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
@@ -171,15 +171,16 @@ void loop(){
             xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY());
 
             directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY);
-            Serial.println(xbee.otherX);
-            Serial.println(xbee.otherY);
+            // Serial.println(xbee.otherX);
+            // Serial.println(xbee.otherY);
 
             isGoalie = GOALIE;
         }else{
+            // Serial.println("yo");
             //The Xbee is no longer connected, try to connect and assume the goalie position
              xbee.tryConnect();
              if(!isGoalie && millis() >= 5000){
-                 isGoalie = true;
+                 isGoalie = DEFAULT_GOALIE;
              }
         }
     #endif

@@ -4,13 +4,14 @@
 #include <old_config.h>
 
 //Enable Xbee Comms
-#define XBEE_ENABLE false
+#define XBEE_ENABLE true
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
 //Enable Goalie
 #define GOALIE false
+
 //Attacking colour
 #define ATTACKING_YELLOW true
 
@@ -33,7 +34,7 @@
 #define PID_D 0
 
 // goal TRACKING
-#define GOAL_TRACKING false
+#define GOAL_TRACKING true
 
 
 // Goalie
@@ -52,6 +53,7 @@
 #define XBEE_ADDED_CONST 128
 #define XBEE_START_BYTE 255
 #define XBEE_PACKAGE_SIZE 6
+#define DEFAULT_GOALIE false
 
 //Debug
 #define DEBUG true

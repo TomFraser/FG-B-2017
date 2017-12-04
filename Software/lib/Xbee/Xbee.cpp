@@ -29,6 +29,7 @@ void Xbees::resetData(){
 bool Xbees::connected(){
     timeSinceConnected = millis() - timeSinceLastConnected;
     if(timeSinceConnected >= 1000){
+        Serial.println(timeSinceConnected);
         return false;
     }else{
         return true;
