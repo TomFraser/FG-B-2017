@@ -50,6 +50,7 @@
 
 //DELAY
 #define MAIN_LOOP_DELAY 2
+#define CAMERA_DATA_WAIT 20 //Time between reads of serial data
 
 //Xbee
 #define XBEESERIAL Serial1
