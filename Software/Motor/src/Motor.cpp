@@ -57,7 +57,6 @@ void loop(){
     delay(MAIN_LOOP_DELAY);
 
     //SPI Transactions
-    digitalWrite(13, HIGH);
     digitalWrite(TSOP_SS, LOW);
     int tsopData = SPI.transfer16(3);
     digitalWrite(TSOP_SS, HIGH);
@@ -102,7 +101,6 @@ void loop(){
     digitalWrite(LIGHT_SS, LOW);
     int lightNumData = SPI.transfer16(2);
     digitalWrite(LIGHT_SS, HIGH);
-    digitalWrite(13, LOW);
 
     //Calculating absolute rotation
     double rotation = (rotationData - 180);
@@ -117,9 +115,9 @@ void loop(){
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
+    directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
-    directionController.updateGoalData(0, 65506, 0, 65506);
+    // directionController.updateGoalData(0, 65506, 0, 65506);
 
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
     // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
@@ -128,8 +126,8 @@ void loop(){
     if(isGoalie){
 
         // ---------------- GOALIE MAIN LOGIC -----------------------
-        //Serial.print(directionController.getX()); Serial.print(" ");
-        //Serial.println(directionController.getY());
+        // Serial.print(directionController.getX()); Serial.print(" ");
+        // Serial.println(directionController.getY());
 
         goalie.calcTarget(directionController.getX(), directionController.getY(), directionController.getBallAngle(), goalDefendAngle, rotation);
 
@@ -164,12 +162,12 @@ void loop(){
         lastKick = millis();
     }
 
-    // #if XBEE_ENABLE
+    #if XBEE_ENABLE
         directionController.calculateBallCoordinates();
         // what do we want to do if the robot cant see the ball??
         isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
 
-        if(!isOtherConnected && GOALIE == false){
+        if(!isOtherConnected){
             isGoalie = DEFAULT_GOALIE;
         }else{
             isGoalie = GOALIE;
@@ -177,5 +175,7 @@ void loop(){
 
         //Other robot can see ball and knows where it is
         directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
-    // #endif
+
+        digitalWrite(13, isOtherConnected);
+    #endif
 }

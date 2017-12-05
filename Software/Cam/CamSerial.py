@@ -76,9 +76,9 @@ while(True):
         # do the stuff
         x = -(ball.cx() - (img.width() / 2)) #Calculate Coordinates of Ball
         y = ball.cy() - (img.height() / 2)
-        angle = (atan2(y,x) * (180 / pi))%360
+        angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
-        if strength < 50:
+        if strength < 60:
             angle = 65506
         else:
             img.draw_cross(ball.cx(), ball.cy())
@@ -99,7 +99,7 @@ while(True):
         if(sqrt(goalA.pixels())>10):
             x = -(goalA.cx() - (img.width() / 2))
             y = goalA.cy() - (img.height() / 2)
-            goalAangle = (atan2(y,x) * (180 / pi))%360
+            goalAangle = (atan2(y,x) * (180 / pi) - 90)%360
             goalAsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalA.pixels())
             img.draw_rectangle(goalA.rect())
             img.draw_cross(goalA.cx(), goalA.cy())
@@ -112,7 +112,7 @@ while(True):
         if(sqrt(goalD.pixels())>10):
             x = -(goalD.cx() - (img.width() / 2))
             y = goalD.cy() - (img.height() / 2)
-            goalDangle = (atan2(y,x) * (180 / pi))%360
+            goalDangle = (atan2(y,x) * (180 / pi) - 90)%360
             goalDsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalD.pixels())
             img.draw_rectangle(goalD.rect())
             img.draw_cross(goalD.cx(), goalD.cy())
@@ -208,8 +208,8 @@ while(True):
     pyb.delay(1)
 
     #Prints
-    #print("Angle:")
-    #print(angle)
+    print("Angle:")
+    print(angle)
     #print(angleOrbit)
     #print()
     #print("Strength:")
