@@ -57,6 +57,7 @@ void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, in
   angleD = angleD_;
 
   updateCoordinates();
+  updateBallCoordinates();
 }
 
 void DirectionController::updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_, bool otherCanSeeBall_, bool otherKnowsOwnCoords_){
@@ -77,26 +78,24 @@ int DirectionController::calcBallDist(){
   return 1/ballStrength;
 }
 
-bool DirectionController::calculateBallCoordinates(){ //returns if can calulate ball coords
+void DirectionController::updateBallCoordinates(){ //returns if can calulate ball coords
   if(rawBallAngle != 65506 && currX != 65506 && currY != 65506){
     int ballDist = calcBallDist();
-    calcBallX = currX + ballDist*sin(angToRad*rawBallAngle);
-    calcBallY = currY + ballDist*cos(angToRad*rawBallAngle);
-    return true;
+    ballX = currX + ballDist*sin(angToRad*rawBallAngle);
+    ballY = currY + ballDist*cos(angToRad*rawBallAngle);
   }
   else{
-    calcBallX = 65506;
-    calcBallY = 65506;
-    return false;
+    ballX = 65506;
+    ballY = 65506;
   }
 }
 
 int DirectionController::getBallX(){
-  return calcBallX;
+  return ballX;
 }
 
 int DirectionController::getBallY(){
-  return calcBallY;
+  return ballY;
 }
 
 double DirectionController::getBallAngle(){
@@ -165,7 +164,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
 
 }
 
-void DirectionController::calulateAttack(){
+void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
@@ -177,4 +176,24 @@ void DirectionController::calulateAttack(){
     // cant see ball -> go to predefined pos
     goToCoords(TARGET_X, TARGET_Y);
   }
+}
+
+void DirectionController::calculateGoalie(){
+  // basically the strat is just go to the balls x whilst remaining at a constant y
+  int targetX;
+  if(ballX != 65506){
+    targetX = ballX;
+  }
+  else if(otherCanSeeBall){
+    targetX = otherBallX;
+  }
+  else{
+    goToCoords(0, GOALIE_Y);
+    return;
+  }
+
+  if(targetX > GOALIE_X_RANGE) targetX = GOALIE_X_RANGE;
+  if(targetX < -GOALIE_X_RANGE) targetX = -GOALIE_X_RANGE;
+
+  goToCoords(targetX, GOALIE_Y);
 }

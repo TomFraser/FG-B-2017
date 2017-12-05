@@ -108,7 +108,7 @@ void loop(){
 
     // Serial.print(lightData); Serial.print(" | "); Serial.println(lightNumData);
 
-    Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
+    // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass);
@@ -129,32 +129,20 @@ void loop(){
         // Serial.print(directionController.getX()); Serial.print(" ");
         // Serial.println(directionController.getY());
 
-        goalie.calcTarget(directionController.getX(), directionController.getY(), directionController.getBallAngle(), goalDefendAngle, rotation, compass);
+        directionController.calculateGoalie();
 
-        directionController.goToCoords(goalie.getX(), goalie.getY());
-
-        motorController.move(directionController.getDirection(), goalie.getGoalAngle(), directionController.getSpeed(), false);
+        motorController.move(directionController.getDirection(), rotation, directionController.getSpeed(), false);
 
     }else{
         // -------------------- ATTACKER MAIN LOGIC -------------------
 
-        directionController.calulateAttack();
+        directionController.calculateAttack();
         motorController.move(directionController.getDirection(), rotation, directionController.getSpeed(), directionController.getFollowingBall());
 
         // Serial.print(tsopData); Serial.print(" | "); Serial.print(rawBallData); Serial.print(" | "); Serial.print(lightData); Serial.print(" | "); Serial.print(directionController.getDirection()); Serial.print(" | "); Serial.println(directionController.getSpeed());
         // Serial.print(compass); Serial.print(" | "); Serial.println(rotation);
 
     }
-    // -------------------- ATTACKER MAIN LOGIC -------------------
-      // Serial.println(rawBallData);
-      // Serial.print(directionController.getX()); Serial.print(" ");
-      // Serial.println(directionController.getY());
-      // Serial.println();
-
-      // Serial.print(goalAttackSize); Serial.print(" "); Serial.println(goalAttackAngle);
-      // Serial.print(goalDefendSize); Serial.print(" "); Serial.println(goalDefendAngle);
-      // Serial.println();
-
 
     //Checking if we can kick
     if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
@@ -163,8 +151,6 @@ void loop(){
     }
 
     #if XBEE_ENABLE
-        directionController.calculateBallCoordinates();
-        // what do we want to do if the robot cant see the ball??
         isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
 
         if(!isOtherConnected){
