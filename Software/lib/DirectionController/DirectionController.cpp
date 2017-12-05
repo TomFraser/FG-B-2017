@@ -104,7 +104,7 @@ double DirectionController::getBallAngle(){
     return rawBallAngle;
   }
   else{
-    if(otherCan){
+    if(otherCanSeeBall){
       return atan2(otherBallX-currX, otherBallY-currY)*radToAng; //if cant see the ball, use the other robots ball xy
     }
     else{
