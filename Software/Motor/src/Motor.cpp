@@ -23,7 +23,7 @@
 volatile uint16_t dataOut[1] = {};
 volatile uint16_t dataIn[1] = {};
 
-bool isGoalie;
+bool isGoalie, isOtherConnected;
 int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobotY;
 
 long initialTime, currentTime, lastKick = 0;
@@ -165,24 +165,13 @@ void loop(){
     }
 
     // #if XBEE_ENABLE
-        if(xbee.connected()){
-            directionController.calculateBallCoordinates();
-            // what do we want to do if the robot cant see the ball??
-            xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
-            // xbee.updateCoordData(-50, 69, 42, 21, true, true);
+        directionController.calculateBallCoordinates();
+        // what do we want to do if the robot cant see the ball??
+        isOtherConneted = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
 
-            //Other robot can see ball and knows where it is
-            directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
+        Serial.println(isOtherConnected);
 
-            // Serial.print(xbee.otherBallX); Serial.print(" | "); Serial.print(xbee.otherBallY); Serial.print(" | "); Serial.print(xbee.otherX); Serial.print(" | "); Serial.println(xbee.otherY);
-
-            isGoalie = GOALIE;
-        }else{
-            //The Xbee is no longer connected, try to connect and assume the goalie position
-             xbee.tryConnect();
-             // if(!isGoalie && millis() >= 5000){
-             //     isGoalie = DEFAULT_GOALIE;
-             // }
-        }
+        //Other robot can see ball and knows where it is
+        directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
     // #endif
 }

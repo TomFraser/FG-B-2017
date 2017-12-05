@@ -20,7 +20,8 @@ bool Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool c
     if(millis() > lastSendTime + 20){
       dataSend();
     }
-    dataRead();
+    bool willItConnect = dataRead();
+    return willItConnect;
 }
 
 void Xbees::resetData(){
@@ -53,6 +54,7 @@ void Xbees::dataSend(){
 }
 
 bool Xbees::dataRead(){
+    isConnected = false;
     // otherBallX = 0;
     // otherBallY = 0;
     // otherX = 0;
@@ -78,7 +80,11 @@ bool Xbees::dataRead(){
         }
         isConnected = true;
     }
-    return isConnected;
+    if(!isConnected && millis() - timeSinceLastConnected >= 2000){
+        return isConnected;
+    }else{
+        return true;
+    }
 }
 
 void Xbees::tryConnect(){
