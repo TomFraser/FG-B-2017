@@ -9,7 +9,7 @@ class Xbees {
 public:
     Xbees();
     void init();
-    void updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords);
+    bool updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords);
     void resetData();
     bool connected();
     void tryConnect();
@@ -19,11 +19,11 @@ public:
     long timeSinceLastConnected;
 
 private:
-    bool robot;
+    bool robot, isConnected;
     int _ballX, _ballY, _robotX, _robotY;
     bool _canSeeBall, _knowsOwnCoords;
     void dataSend();
-    void dataRead();
+    bool dataRead();
     long timeSinceConnected, lastSendTime;
 };
 

@@ -10,7 +10,7 @@ void Xbees::init(){
     resetData();
 }
 
-void Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords){
+bool Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords){
     _ballX = ballX + XBEE_ADDED_CONST;
     _ballY = ballY + XBEE_ADDED_CONST;
     _robotX = robotX + XBEE_ADDED_CONST;
@@ -52,7 +52,7 @@ void Xbees::dataSend(){
     lastSendTime = millis();
 }
 
-void Xbees::dataRead(){
+bool Xbees::dataRead(){
     // otherBallX = 0;
     // otherBallY = 0;
     // otherX = 0;
@@ -76,7 +76,9 @@ void Xbees::dataRead(){
             otherCanSeeBall = dataBuffer[4];
             otherKnowsOwnCoords = dataBuffer[5];
         }
+        isConnected = true;
     }
+    return isConnected;
 }
 
 void Xbees::tryConnect(){
