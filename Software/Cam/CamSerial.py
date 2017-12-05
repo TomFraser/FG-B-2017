@@ -4,9 +4,9 @@ import ustruct, utime
 from math import atan2, sqrt, pi, log
 
 #Thresholds
-thresholds = [(42, 88, 22, 103, 30, 90), #Ball
-(61, 85, -14, 17, 18, 55), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-(32, 63, -31, 2, -38, -2)] # Blue Goal
+thresholds = [(0, 68, 14, 73, 18, 51), #Ball
+(47, 81, -7, 46, 20, 61), #(71, 99, -9, 12, 12, 59), #Yellow Goal
+(33, 51, -29, 28, -30, -7)] # Blue Goal
 
 #LED's
 ledRed = LED(2)
@@ -78,7 +78,7 @@ while(True):
         y = ball.cy() - (img.height() / 2)
         angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
-        if strength < 60:
+        if strength <  60:
             angle = 65506
         else:
             img.draw_cross(ball.cx(), ball.cy())
@@ -203,13 +203,13 @@ while(True):
     # uart.writechar(sendBuff[8])
     # uart.writechar(sendBuff[9])
 
-    #print(goalAdata)
+    #print(sendBuff)
 
     pyb.delay(1)
 
     #Prints
-    print("Angle:")
-    print(angle)
+    #print("Angle:")
+    #print(angle)
     #print(angleOrbit)
     #print()
     #print("Strength:")

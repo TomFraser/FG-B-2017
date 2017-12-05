@@ -33,7 +33,7 @@ void Goalie::calcTarget(int currentX, int currentY, int ballData, int goalAngle,
 
     yTarget = GOALIE_Y;
   }
-  if (goalAngle == 65506 || goalAngle == 180)
+  if (goalAngle == 65506 || goalAngle == 180 || correctedAngle == 65506 || ballAngle == 65506)
   {
       _defendGoalAngle = _compass;
   } else{
