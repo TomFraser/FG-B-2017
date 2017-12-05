@@ -55,7 +55,7 @@
 #define XBEE_ADDED_CONST 128
 #define XBEE_START_BYTE 255
 #define XBEE_PACKAGE_SIZE 8
-#define DEFAULT_GOALIE false
+#define DEFAULT_GOALIE true
 
 //Debug
 #define DEBUG true

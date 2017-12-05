@@ -167,9 +167,13 @@ void loop(){
     // #if XBEE_ENABLE
         directionController.calculateBallCoordinates();
         // what do we want to do if the robot cant see the ball??
-        isOtherConneted = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
+        isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
 
-        Serial.println(isOtherConnected);
+        if(!isOtherConnected && GOALIE == false){
+            isGoalie = DEFAULT_GOALIE;
+        }else{
+            isGoalie = GOALIE;
+        }
 
         //Other robot can see ball and knows where it is
         directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);

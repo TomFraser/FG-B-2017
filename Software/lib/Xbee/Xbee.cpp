@@ -80,6 +80,9 @@ bool Xbees::dataRead(){
         }
         isConnected = true;
     }
+    if(millis() <= 10000){
+        isConnected = true;
+    }
     if(!isConnected && millis() - timeSinceLastConnected >= 2000){
         return isConnected;
     }else{
