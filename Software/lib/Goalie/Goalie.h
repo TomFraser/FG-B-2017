@@ -3,6 +3,7 @@
 #include <Config.h>
 #include <Pins.h>
 #include <Defines.h>
+#include <Common.h>
 
 #include <math.h>
 #include <Vector3D.h>
@@ -10,7 +11,7 @@
 class Goalie{
 public:
     Goalie();
-    void calcTarget(int currentX, int currentY, int ballData, int goalAngle, int _compass);
+    void calcTarget(int currentX, int currentY, int ballData, int goalAngle, double _rotation, double _compass);
     int getX();
     int getY();
     int getGoalAngle();

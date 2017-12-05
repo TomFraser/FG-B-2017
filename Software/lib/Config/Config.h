@@ -4,13 +4,13 @@
 #include <old_config.h>
 
 //Enable Xbee Comms
-#define XBEE_ENABLE true
+#define XBEE_ENABLE false
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT O_bot
 
 //Enable Goalie
-#define GOALIE false
+#define GOALIE true
 #define DEFAULT_GOALIE true
 
 //Attacking colour
@@ -41,7 +41,7 @@
 // Goalie
 #define X_MULTIPLIER 1.25
 #define GOALIE_Y -70
-#define GOALIE_X_RANGE 25
+#define GOALIE_X_RANGE 20
 
 //PIXY
 #define PIXY_MULTIPLIER 2
