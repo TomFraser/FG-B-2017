@@ -5,7 +5,7 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Xbee Comms
 #define XBEE_ENABLE true
@@ -22,10 +22,10 @@
 
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
-#define TARGET_Y -15
+#define TARGET_Y 30
 #define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF_GOALIE 0
-#define DISTANCE_CUTOFF_ATTACK 5
+#define DISTANCE_CUTOFF_ATTACK 10
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID true
 #define PID_P 3.75
@@ -86,9 +86,6 @@
 //Kicker
 #define KICKER_DELAY 1000L
 #define KICK_THRESHOLD 0
-
-#define P2_bot 0
-#define O_bot 1
 
 #if ROBOT
   #include <O_bot.h>

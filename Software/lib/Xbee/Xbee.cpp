@@ -24,13 +24,22 @@ bool Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, int ca
     return willItConnect;
 }
 
-void Xbees::resetData(){
+void Xbees::resetSendData(){
     _ballX = 65506;
     _ballY = 65506;
     _robotX = 65506;
     _robotY = 65506;
     _canSeeBall = 0;
     _knowsOwnCoords = 0;
+}
+
+void Xbees::resetData(){
+    otherBallX = 65506;
+    otherBallY = 65506;
+    otherX = 65506;
+    otherY = 65506;
+    otherCanSeeBall = 0;
+    otherKnowsOwnCoords = 0;
 }
 
 bool Xbees::connected(){

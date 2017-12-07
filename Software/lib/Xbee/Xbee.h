@@ -11,6 +11,7 @@ public:
     void init();
     bool updateCoordData(int ballX, int ballY, int robotX, int robotY, int canSeeBall, int knowsOwnCoords);
     void resetData();
+    void resetSendData();
     bool connected();
     void tryConnect();
 

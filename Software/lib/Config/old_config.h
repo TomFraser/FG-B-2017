@@ -1,6 +1,9 @@
 #ifndef old_config_h
 #define old_config_h
 
+#define P2_bot 0
+#define O_bot 1
+
 //Tsops
 #define TSOP_NUM 12
 #define READ_THRESHOLD 40

@@ -3,10 +3,10 @@
 
 //Enable Goalie
 #define GOALIE false
-#define DEFAULT_GOALIE false
+#define DEFAULT_GOALIE true
 
 // goal TRACKING
-#define GOAL_TRACKING true
+#define GOAL_TRACKING false
 
 //SOLENOID
 #define KICK false

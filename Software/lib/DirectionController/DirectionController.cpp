@@ -205,8 +205,16 @@ void DirectionController::calculateAttack(){
     followingBall = lightTracker.getNormalGameplay();
   }
   else{
-    // cant see ball -> go to predefined pos
-    goToCoords(TARGET_X, TARGET_Y);
+    // cant see ball -> go to ball or predefined pos
+    int allBallX = getAllBallX();
+    int allBallY = getAllBallY();
+
+    if(allBallX != 65506 && allBallY != 65506){
+      goToCoords(allBallX, allBallY);
+    }
+    else{
+      goToCoords(TARGET_X, TARGET_Y);
+    }
   }
 }
 
