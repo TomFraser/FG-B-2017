@@ -7,7 +7,7 @@
 #define XBEE_ENABLE false
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Goalie
 #define GOALIE true
@@ -26,7 +26,7 @@
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y 0
-#define COORD_SPEED_SCALE 1.5 // scaler to convert coordinate dist to speed
+#define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID false
