@@ -18,11 +18,15 @@ int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
   else{
     // defense so back angle
     goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
-
-    goalArea -= 0.2623294624*pow(goalDiff, 1.2362025092);
-
-    return 0.1312196291*exp(0.0312218791*goalArea);
   }
+
+  #if ROBOT
+    // o_bot
+    return 0.1312196291*exp(0.0312218791*goalArea);
+  #else
+    // p2_bot
+    return 0.1460316778*exp(0.0312099113*goalArea);
+  #endif
 }
 
 bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double compassAngle){
@@ -42,7 +46,9 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     int distance = calcDistance(areaA, angleA, true);
 
-    if(distance < 100 && distance > 0)
+    Serial.println(distance);
+
+    if(distance < 150 && distance > 0)
     {
       int xGoal = distance*sin(angToRad*angleA);
       int yGoal = distance*cos(angToRad*angleA);
@@ -62,7 +68,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     int distance = calcDistance(areaD, angleD, false);
 
-    if(distance < 100 && distance > 0)
+    if(distance < 150 && distance > 0)
     {
       int xGoal = distance*sin(angToRad*angleD);
       int yGoal = distance*cos(angToRad*angleD);
