@@ -24,7 +24,8 @@
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y -15
 #define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
-#define DISTANCE_CUTOFF 0
+#define DISTANCE_CUTOFF_GOALIE 0
+#define DISTANCE_CUTOFF_ATTACK 5
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID true
 #define PID_P 3.75

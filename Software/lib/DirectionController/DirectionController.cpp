@@ -38,10 +38,11 @@ double DirectionController::absToRel(double absoulteDirection){
   return absoulteDirection != 65506 ? doubleMod(absoulteDirection + compassAngle, 360.0) : 65506;
 }
 
-void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_){
+void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_, bool isGoalie_){
   compassAngle = compassAngle_;
   ballStrength = ballStrength_;
   numSensors = numSensors_;
+  isGoalie = isGoalie_;
 
   ballAngle = relToAbs(ballAngle_);
   rawBallAngle = relToAbs(rawBallAngle_);
@@ -145,7 +146,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
     int deltaX = targetX - currX;
     int deltaY = targetY - currY;
     int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
-    distance = distance < DISTANCE_CUTOFF ? 0 : distance;
+    distance = distance < (isGoalie ? DISTANCE_CUTOFF_GOALIE : DISTANCE_CUTOFF_ATTACK) ? 0 : distance;
 
     coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
     // convert to 0-360

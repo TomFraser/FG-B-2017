@@ -23,7 +23,7 @@ public:
   bool getFollowingBall();
   int getX();
   int getY();
-  void updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_);
+  void updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_, bool isGoalie_);
   void updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_);
   void updateOtherData(int otherBallX_, int otherBallY_, int otherRobotX_, int otherRobotY_, bool otherCanSeeBall_, bool otherKnowsOwnCoords_);
   int getBallX();
@@ -57,6 +57,7 @@ private:
   double lightAngle;
   int numSensors;
   double compassAngle;
+  bool isGoalie;
 
   // coordinate data
   int otherBallX;

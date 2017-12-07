@@ -111,7 +111,7 @@ void loop(){
     // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
     // update the direction controller with everything it needs -> it know knows everything required to do everything
-    directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass);
+    directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass, isGoalie);
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
     directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
@@ -163,6 +163,12 @@ void loop(){
 
         //Other robot can see ball and knows where it is
         directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall == 1 ? true : false, xbee.otherKnowsOwnCoords == 1 ? true : false);
+
+        Serial.println(isOtherConnected);
+        Serial.println(xbee.otherBallX);
+        Serial.println(xbee.otherBallY);
+        Serial.println(xbee.otherCanSeeBall == 1 ? true : false);
+        Serial.println();
 
         digitalWrite(13, isOtherConnected);
     #endif

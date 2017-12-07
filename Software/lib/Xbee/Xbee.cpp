@@ -29,6 +29,8 @@ void Xbees::resetData(){
     _ballY = 65506;
     _robotX = 65506;
     _robotY = 65506;
+    _canSeeBall = 0;
+    _knowsOwnCoords = 0;
 }
 
 bool Xbees::connected(){
@@ -86,6 +88,7 @@ bool Xbees::dataRead(){
         isConnected = true;
     }
     if(!isConnected && millis() - timeSinceLastConnected >= 2000){
+        resetData();
         return isConnected;
     }else{
         return true;
