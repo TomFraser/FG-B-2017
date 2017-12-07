@@ -6,7 +6,7 @@
 #define DEFAULT_GOALIE true
 
 // goal TRACKING
-#define GOAL_TRACKING false
+#define GOAL_TRACKING true
 
 //SOLENOID
 #define KICK false
