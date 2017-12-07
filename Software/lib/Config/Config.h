@@ -10,11 +10,11 @@
 #define ROBOT P2_bot
 
 //Enable Goalie
-#define GOALIE false
-#define DEFAULT_GOALIE false
+#define GOALIE true
+#define DEFAULT_GOALIE true
 
 //Attacking colour
-#define ATTACKING_YELLOW true
+#define ATTACKING_YELLOW false
 
 //MOTORS
 #define SPEED_VAL 60
@@ -26,7 +26,7 @@
 // IF CANT SEE BALL
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y 0
-#define COORD_SPEED_SCALE 1.5 // scaler to convert coordinate dist to speed
+#define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID false

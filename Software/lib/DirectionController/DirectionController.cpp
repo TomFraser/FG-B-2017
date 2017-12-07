@@ -75,12 +75,18 @@ void DirectionController::updateOtherData(int otherBallX_, int otherBallY_, int 
 
 int DirectionController::calcBallDist(){
   // gotta figure out an algorithm for this
-  return 1/ballStrength;
+  if(ballStrength > 15 && ballStrength < 122){
+    return -sqrt(9550-pow(ballStrength-15, 2))+98;
+  }
+  else{
+    return -1;
+  }
+
 }
 
 void DirectionController::updateBallCoordinates(){ //returns if can calulate ball coords
-  if(rawBallAngle != 65506 && currX != 65506 && currY != 65506){
-    int ballDist = calcBallDist();
+  int ballDist = calcBallDist();
+  if(rawBallAngle != 65506 && currX != 65506 && currY != 65506 && ballDist > 0){
     ballX = currX + ballDist*sin(angToRad*rawBallAngle);
     ballY = currY + ballDist*cos(angToRad*rawBallAngle);
   }
@@ -164,6 +170,31 @@ void DirectionController::goToCoords(int targetX, int targetY){
 
 }
 
+int DirectionController::getAllBallX(){
+  if(ballX != 65506){
+    return ballX;
+  }
+  else if(otherCanSeeBall){
+    return otherBallX;
+  }
+  else{
+    return 65506;
+  }
+}
+
+int DirectionController::getAllBallY(){
+  if(ballY != 65506){
+    return ballY;
+  }
+  else if(otherCanSeeBall){
+    return otherBallY;
+  }
+  else{
+    return 65506;
+  }
+}
+
+
 void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
@@ -181,15 +212,14 @@ void DirectionController::calculateAttack(){
 void DirectionController::calculateGoalie(){
   // basically the strat is just go to the balls x whilst remaining at a constant y
   int targetX;
-  if(ballX != 65506){
-    targetX = ballX;
-  }
-  else if(otherCanSeeBall){
-    targetX = otherBallX;
+  int allBallX = getAllBallX();
+  int allBallY = getAllBallY();
+
+  if(allBallX != 65506){
+    targetX = allBallX;
   }
   else{
-    goToCoords(0, GOALIE_Y);
-    return;
+    targetX = 0;
   }
 
   if(targetX > GOALIE_X_RANGE) targetX = GOALIE_X_RANGE;

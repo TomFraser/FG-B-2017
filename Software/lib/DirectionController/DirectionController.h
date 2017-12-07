@@ -44,6 +44,9 @@ private:
   double relToAbs(double relativeDirection);
   double absToRel(double absoulteDirection);
 
+  int getAllBallX();
+  int getAllBallY();
+
   int speed;
   double direction;
 

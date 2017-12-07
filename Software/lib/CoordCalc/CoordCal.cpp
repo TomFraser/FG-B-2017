@@ -10,22 +10,27 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
-  int goalDiff;
-
-  if(attack){
-    goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
-  }
-  else{
-    // defense so back angle
-    goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
-  }
+  // int goalDiff;
+  //
+  // if(attack){
+  //   goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
+  // }
+  // else{
+  //   // defense so back angle
+  //   goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
+  // }
 
   #if ROBOT
     // o_bot
     return 0.1312196291*exp(0.0312218791*goalArea);
   #else
     // p2_bot
-    return 0.1460316778*exp(0.0312099113*goalArea);
+    if(goalArea > 109 && goalArea < 206){
+      return -sqrt(9550-pow(goalArea-109, 2))+106;
+    }
+    else{
+      return -1;
+    }
   #endif
 }
 
@@ -45,8 +50,6 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     angleA = mod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA, true);
-
-    Serial.println(distance);
 
     if(distance < 150 && distance > 0)
     {

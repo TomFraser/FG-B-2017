@@ -122,12 +122,15 @@ void loop(){
     // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
     // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
 
+    // Serial.print(directionController.getX()); Serial.print(" ");
+    // Serial.print(directionController.getY()); Serial.print(" | ");
+    // Serial.print(directionController.getBallX()); Serial.print(" ");
+    // Serial.print(directionController.getBallY()); Serial.println();
+
+
     if(isGoalie){
 
         // ---------------- GOALIE MAIN LOGIC -----------------------
-        // Serial.print(directionController.getX()); Serial.print(" ");
-        // Serial.println(directionController.getY());
-
         directionController.calculateGoalie();
 
         motorController.move(directionController.getDirection(), rotation, directionController.getSpeed(), false);
