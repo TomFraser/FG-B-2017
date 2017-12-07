@@ -119,8 +119,9 @@ void loop(){
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
     // directionController.updateGoalData(0, 65506, 0, 65506);
 
-    // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
-    // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+    Serial.print(goalAttackSize); Serial.print(" | "); Serial.print(goalAttackAngle); Serial.print("  ");
+    Serial.print(goalDefendSize); Serial.print(" | "); Serial.print(goalDefendAngle); Serial.print("  ");
+    Serial.println(rawBallData);
     // Serial.println();
 
     if(isGoalie){
