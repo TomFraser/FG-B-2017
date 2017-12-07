@@ -6,7 +6,7 @@ from math import atan2, sqrt, pi, log
 robotO = 0
 robotP2 = 1
 
-robot = robotP2
+robot = robotO
 
 #Thresholds
 if robot: #P2_Bot
@@ -20,7 +20,7 @@ else: #O_Bot
 
 #LED's
 ledRed = LED(2)
-ledRed.off()
+ledRed.on()
 ledGreen = LED(1)
 ledGreen.off()
 ledBlue = LED(4)
@@ -32,7 +32,6 @@ ledIR.off()
 global lastTime
 global currentTime
 lastTime = 500
-ledRed.on()
 
 def blink():
     global lastTime
