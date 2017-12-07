@@ -145,7 +145,7 @@ void DirectionController::goToCoords(int targetX, int targetY){
     int deltaX = targetX - currX;
     int deltaY = targetY - currY;
     int distance = (int)sqrt((deltaX*deltaX) + (deltaY*deltaY));
-    // distance = distance < DISTANCE_CUTOFF ? 0 : distance;
+    distance = distance < DISTANCE_CUTOFF ? 0 : distance;
 
     coordDirection = atan2(deltaX, deltaY) * radToAng; // coords -180 to 180 on North
     // convert to 0-360
