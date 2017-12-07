@@ -26,6 +26,9 @@
 #define PIXY_ABS_MAX 60 //80
 #define PIXY_ABS_MAX_NEG -60 //-80
 
+//PIXY
+#define PIXY_MULTIPLIER 2
+
 //Defender
 #define DEFENDER_SPEED 40
 #define DEFENDER_MULTIPLIER 2.30
@@ -37,5 +40,8 @@
 #define TSOP_ORBIT_FRONT_DENOMINATOR 100
 #define TSOP_ORBIT_FRONT_RATIO 75
 #define TSOP_ORBIT_SIDE_RATIO 50
+
+//Debug
+#define DEBUG true
 
 #endif

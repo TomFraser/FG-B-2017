@@ -1,17 +1,21 @@
 #ifndef Config_h
 #define Config_h
-
 #include <old_config.h>
 
-//Enable Xbee Comms
-#define XBEE_ENABLE true
+
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
-//Enable Goalie
-#define GOALIE true
-#define DEFAULT_GOALIE true
+#if ROBOT
+  #include <O_bot.h>
+#else
+  #include <P2_bot.h>
+#endif
+
+
+//Enable Xbee Comms
+#define XBEE_ENABLE true
 
 //Attacking colour
 #define ATTACKING_YELLOW false
@@ -34,19 +38,10 @@
 #define PID_I 0
 #define PID_D 0.5
 
-// goal TRACKING
-#define GOAL_TRACKING false
-
-
 // Goalie
 #define X_MULTIPLIER 1.25
 #define GOALIE_Y -60
 #define GOALIE_X_RANGE 20
-
-//PIXY
-#define PIXY_MULTIPLIER 2
-//SOLENOID
-#define KICK false
 
 //DELAY
 #define MAIN_LOOP_DELAY 2
@@ -57,9 +52,6 @@
 #define XBEE_ADDED_CONST 128
 #define XBEE_START_BYTE 255
 #define XBEE_PACKAGE_SIZE 8
-
-//Debug
-#define DEBUG true
 
 //Motors
 #define SS_MULTIPLIER 1.00
