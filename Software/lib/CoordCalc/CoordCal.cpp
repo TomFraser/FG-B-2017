@@ -22,7 +22,12 @@ int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
 
   #if ROBOT
     // o_bot
-    return 0.1312196291*exp(0.0312218791*goalArea);
+    if(goalArea > 109 && goalArea < 206){
+      return -sqrt(9550-pow(goalArea-109, 2))+106;
+    }
+    else{
+      return -1;
+    }
   #else
     // p2_bot
     if(goalArea > 109 && goalArea < 206){

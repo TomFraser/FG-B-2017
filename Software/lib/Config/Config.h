@@ -4,14 +4,14 @@
 #include <old_config.h>
 
 //Enable Xbee Comms
-#define XBEE_ENABLE false
+#define XBEE_ENABLE true
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
 #define ROBOT P2_bot
 
 //Enable Goalie
-#define GOALIE false
-#define DEFAULT_GOALIE false
+#define GOALIE true
+#define DEFAULT_GOALIE true
 
 //Attacking colour
 #define ATTACKING_YELLOW false
@@ -27,7 +27,7 @@
 #define TARGET_X 0 // target center for now, just testing
 #define TARGET_Y -15
 #define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
-#define DISTANCE_CUTOFF 10
+#define DISTANCE_CUTOFF 0
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID true
 #define PID_P 3.75
@@ -35,18 +35,18 @@
 #define PID_D 0.5
 
 // goal TRACKING
-#define GOAL_TRACKING true
+#define GOAL_TRACKING false
 
 
 // Goalie
 #define X_MULTIPLIER 1.25
-#define GOALIE_Y -70
+#define GOALIE_Y -60
 #define GOALIE_X_RANGE 20
 
 //PIXY
 #define PIXY_MULTIPLIER 2
 //SOLENOID
-#define KICK true
+#define KICK false
 
 //DELAY
 #define MAIN_LOOP_DELAY 2
