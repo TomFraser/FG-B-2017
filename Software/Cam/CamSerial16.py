@@ -88,7 +88,7 @@ while(True):
         y = ball.cy() - (img.height() / 2)
         angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
-        if strength < 50 :
+        if strength < 55 :
             angle = 65506
         else:
             img.draw_cross(ball.cx(), ball.cy())
@@ -196,14 +196,19 @@ while(True):
             sendBuff[i] = 43
 
     ##### Send Buffer Over Serial #####
-    for buf in sendBuff:
-        while True:
-            try:
-                uart.writechar(buf)
-                break
-            except Exception as e:
-                print(e)
-                pass
+    #for buf in sendBuff:
+    #    while True:
+    #        try:
+    #            uart.writechar(buf)
+    #            break
+    #        except Exception as e:
+    #            print(e)
+    #            pass
+
+    num = 360
+    uart.writechar(num >> 8)
+    uart.writechar(num & 0xFF)
+    uart.writechar(72)
 
     # uart.writechar(sendBuff[0])
     # uart.writechar(sendBuff[1])
