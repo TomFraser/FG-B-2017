@@ -3,10 +3,20 @@ from pyb import *
 import ustruct, utime
 from math import atan2, sqrt, pi, log
 
+robotO = 0
+robotP2 = 1
+
+robot = robotP2
+
 #Thresholds
-thresholds = [(0, 68, 14, 73, 18, 51), #Ball
-(47, 81, -7, 46, 20, 61), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-(33, 51, -29, 28, -30, -7)] # Blue Goal
+if robot: #P2_Bot
+    thresholds = [(36, 88, 25, 76, 13, 63), #Ball
+    (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
+    (34, 81, -26, 4, -44, -6)] # Blue Goal
+else: #O_Bot
+    thresholds = [(36, 88, 25, 76, 13, 63), #Ball
+    (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
+    (35, 54, -8, 18, -71, -19)] # Blue Goal
 
 #LED's
 ledRed = LED(2)
@@ -78,10 +88,11 @@ while(True):
         y = ball.cy() - (img.height() / 2)
         angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
-        if strength <  60:
+        if strength < 55 :
             angle = 65506
         else:
             img.draw_cross(ball.cx(), ball.cy())
+            #img.draw_cross(int(img.width()/2), img.height() - int(img.height() / 8))
 
         # for ball in img.find_blobs([thresholds[0]], x_stride=2, y_stride=2, area_threshold=1, pixel_threshold=1, merge=False):
         #     img.draw_cross(ball.cx(), ball.cy())
@@ -101,6 +112,7 @@ while(True):
             y = goalA.cy() - (img.height() / 2)
             goalAangle = (atan2(y,x) * (180 / pi) - 90)%360
             goalAsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalA.pixels())
+            #print(goalAsize)
             img.draw_rectangle(goalA.rect())
             img.draw_cross(goalA.cx(), goalA.cy())
 
@@ -114,6 +126,7 @@ while(True):
             y = goalD.cy() - (img.height() / 2)
             goalDangle = (atan2(y,x) * (180 / pi) - 90)%360
             goalDsize = 2*(sqrt(x**2 + y**2)) #sqrt(goalD.pixels())
+            #print(goalDsize)
             img.draw_rectangle(goalD.rect())
             img.draw_cross(goalD.cx(), goalD.cy())
 
@@ -205,7 +218,7 @@ while(True):
 
     #print(sendBuff)
 
-    pyb.delay(1)
+    #pyb.delay(1)
 
     #Prints
     #print("Angle:")
