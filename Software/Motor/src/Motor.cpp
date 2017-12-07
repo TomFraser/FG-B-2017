@@ -153,7 +153,7 @@ void loop(){
     }
 
     #if XBEE_ENABLE
-        isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506, directionController.getX() != 65505);
+        isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506 ? 1 : 0, directionController.getX() != 65506 ? 1 : 0);
 
         if(!isOtherConnected){
             isGoalie = DEFAULT_GOALIE;
@@ -162,15 +162,7 @@ void loop(){
         }
 
         //Other robot can see ball and knows where it is
-        directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall, xbee.otherKnowsOwnCoords);
-
-        Serial.println(xbee.otherBallX);
-        Serial.println(xbee.otherBallY);
-        Serial.println(xbee.otherX);
-        Serial.println(xbee.otherY);
-        Serial.println(xbee.otherCanSeeBall);
-        Serial.println(xbee.otherKnowsOwnCoords);
-        Serial.println();
+        directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall == 1 ? true : false, xbee.otherKnowsOwnCoords == 1 ? true : false);
 
         digitalWrite(13, isOtherConnected);
     #endif

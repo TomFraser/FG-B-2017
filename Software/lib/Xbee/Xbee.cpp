@@ -10,7 +10,7 @@ void Xbees::init(){
     resetData();
 }
 
-bool Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords){
+bool Xbees::updateCoordData(int ballX, int ballY, int robotX, int robotY, int canSeeBall, int knowsOwnCoords){
     _ballX = ballX + XBEE_ADDED_CONST;
     _ballY = ballY + XBEE_ADDED_CONST;
     _robotX = robotX + XBEE_ADDED_CONST;
@@ -68,9 +68,11 @@ bool Xbees::dataRead(){
             XBEESERIAL.read();
 
             int dataBuffer[XBEE_PACKAGE_SIZE - 2];
-            for(int i = 0; i < XBEE_PACKAGE_SIZE - 2; i++){
+            for(int i = 0; i < XBEE_PACKAGE_SIZE - 4; i++){
                 dataBuffer[i] = XBEESERIAL.read() - XBEE_ADDED_CONST;
             }
+            dataBuffer[4] = XBEESERIAL.read();
+            dataBuffer[5] = XBEESERIAL.read();
             otherBallX = dataBuffer[0];
             otherBallY = dataBuffer[1];
             otherX = dataBuffer[2];

@@ -2,7 +2,7 @@
 #define O_bot_h
 
 //Enable Goalie
-#define GOALIE true
+#define GOALIE false
 #define DEFAULT_GOALIE true
 
 // goal TRACKING

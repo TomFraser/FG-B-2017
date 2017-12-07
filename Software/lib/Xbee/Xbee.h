@@ -9,13 +9,13 @@ class Xbees {
 public:
     Xbees();
     void init();
-    bool updateCoordData(int ballX, int ballY, int robotX, int robotY, bool canSeeBall, bool knowsOwnCoords);
+    bool updateCoordData(int ballX, int ballY, int robotX, int robotY, int canSeeBall, int knowsOwnCoords);
     void resetData();
     bool connected();
     void tryConnect();
 
     int otherBallX, otherBallY, otherX, otherY;
-    bool otherCanSeeBall, otherKnowsOwnCoords;
+    int otherCanSeeBall, otherKnowsOwnCoords;
     long timeSinceLastConnected;
 
 private:
