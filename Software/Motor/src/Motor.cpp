@@ -169,7 +169,6 @@ void loop(){
         // Serial.println(xbee.otherBallY);
         // Serial.println(xbee.otherCanSeeBall == 1 ? true : false);
         // Serial.println();
-
-        digitalWrite(13, isOtherConnected);
+        digitalWrite(13, isOtherConnected == 0 ? LOW:HIGH);
     #endif
 }

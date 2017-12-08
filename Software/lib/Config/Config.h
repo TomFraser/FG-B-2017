@@ -5,10 +5,10 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Xbee Comms
-#define XBEE_ENABLE false
+#define XBEE_ENABLE true
 
 //Attacking colour
 #define ATTACKING_YELLOW false
