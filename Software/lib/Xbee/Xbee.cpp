@@ -65,7 +65,7 @@ void Xbees::dataSend(){
 }
 
 bool Xbees::dataRead(){
-    isConnected = false;
+    isConnected = true;
     // otherBallX = 0;
     // otherBallY = 0;
     // otherX = 0;
@@ -90,8 +90,10 @@ bool Xbees::dataRead(){
             otherY = dataBuffer[3];
             otherCanSeeBall = dataBuffer[4];
             otherKnowsOwnCoords = dataBuffer[5];
+            if(dataBuffer[0] + dataBuffer[1] + dataBuffer[2] + dataBuffer[3] + dataBuffer[4] + dataBuffer[5] == 0){
+              isConnected = false;
+            }
         }
-        isConnected = true;
     }
     if(millis() <= 10000){
         isConnected = true;
@@ -106,6 +108,6 @@ bool Xbees::dataRead(){
 
 void Xbees::tryConnect(){
     if(XBEESERIAL.available()){
-        timeSinceLastConnected = millis();
+        isConnected = true;
     }
 }
