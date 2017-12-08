@@ -20,7 +20,7 @@ public:
     long timeSinceLastConnected;
 
 private:
-    bool robot, isConnected;
+    bool robot, isConnected, connectedThisLoop;
     int _ballX, _ballY, _robotX, _robotY;
     bool _canSeeBall, _knowsOwnCoords;
     void dataSend();
