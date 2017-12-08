@@ -10,20 +10,10 @@ CoordCalc::CoordCalc(){
 }
 
 int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
-  // int goalDiff;
-  //
-  // if(attack){
-  //   goalDiff = goalAngle < 180 ? goalAngle : 360 - goalAngle;
-  // }
-  // else{
-  //   // defense so back angle
-  //   goalDiff = goalAngle < 180 ? 180 - goalAngle : goalAngle - 180;
-  // }
-
   #if ROBOT
     // o_bot
-    if(goalArea > 109 && goalArea < 206){
-      return -sqrt(9550-pow(goalArea-109, 2))+106;
+    if(goalArea > 97 && goalArea <= 194){
+      return -sqrt(9550-pow(goalArea-97, 2))+102;
     }
     else{
       return -1;
@@ -52,7 +42,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
   // attack calulations
   if(attackGoal){
 
-    angleA = mod(angleA - compassAngle, 360); // CHECK THIS
+    angleA = doubleMod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA, true);
 
@@ -72,7 +62,7 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
   // defense calulations
   if(defenseGoal){
-    angleD = mod(angleD - compassAngle, 360); // CHECK THIS
+    angleD = doubleMod(angleD - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaD, angleD, false);
 

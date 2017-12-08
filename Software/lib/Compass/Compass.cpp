@@ -43,7 +43,7 @@ void Compass::update() {
     double reading = (double) read().z;
 
 	  long currentTime = micros();
-    heading += (2*((double)(currentTime - previousTime) / 1000000.0) * (reading - calibration));
+    heading += (4*((double)(currentTime - previousTime) / 1000000.0) * (reading - calibration));
 	  heading = doubleMod(heading, 360.0);
 	  previousTime = currentTime;
 }

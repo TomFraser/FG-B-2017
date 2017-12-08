@@ -11,4 +11,7 @@
 //SOLENOID
 #define KICK false
 
+#define TARGET_X 0
+#define TARGET_Y 30
+
 #endif

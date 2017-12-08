@@ -5,24 +5,22 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT P2_bot
+#define ROBOT O_bot
 
 //Enable Xbee Comms
-#define XBEE_ENABLE true
+#define XBEE_ENABLE false
 
 //Attacking colour
-#define ATTACKING_YELLOW false
+#define ATTACKING_YELLOW true
 
 //MOTORS
-#define SPEED_VAL 60
+#define SPEED_VAL 80
 #define FORWARD_SPEED 100
 #define SPEED_ON_LINE 0
 #define SPEED_OVER_LINE 60
 #define SPEED_SLIDE 60
 
 // IF CANT SEE BALL
-#define TARGET_X 0 // target center for now, just testing
-#define TARGET_Y 30
 #define COORD_SPEED_SCALE 2.5 // scaler to convert coordinate dist to speed
 #define DISTANCE_CUTOFF_GOALIE 0
 #define DISTANCE_CUTOFF_ATTACK 10
