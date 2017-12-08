@@ -11,7 +11,7 @@
 #define XBEE_ENABLE false
 
 //Attacking colour
-#define ATTACKING_YELLOW true
+#define ATTACKING_YELLOW false
 
 //MOTORS
 #define SPEED_VAL 80
@@ -73,7 +73,7 @@
 #define NUM_COUNTBACK 2
 #define ANGLE_CUTOFF 90
 #define IDENTIFY_THRESHOLD 45
-#define SLIDE_ANGLE 90
+#define SLIDE_ANGLE 80
 #define STOP_BOUND 150
 #define SIDE_STOP_BOUND_MIN 135
 #define SIDE_STOP_BOUND_MAX 160
