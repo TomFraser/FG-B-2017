@@ -65,16 +65,14 @@ void Xbees::dataSend(){
 }
 
 bool Xbees::dataRead(){
-    connectedThisLoop = false;
     while(XBEESERIAL.available() >= XBEE_PACKAGE_SIZE){
-        timeSinceLastConnected = millis();
         uint8_t firstByte = XBEESERIAL.read();
         uint8_t secondByte = XBEESERIAL.peek();
 
         if(firstByte == 255 && secondByte == 255){
+            timeSinceLastConnected = millis();
             XBEESERIAL.read();
 
-            int dataBuffer[XBEE_PACKAGE_SIZE - 2];
             for(int i = 0; i < XBEE_PACKAGE_SIZE - 4; i++){
                 dataBuffer[i] = XBEESERIAL.read() - XBEE_ADDED_CONST;
             }
@@ -87,15 +85,12 @@ bool Xbees::dataRead(){
             otherCanSeeBall = dataBuffer[4];
             otherKnowsOwnCoords = dataBuffer[5];
         }
-        connectedThisLoop = true;
     }
-    if(connectedThisLoop == false && millis() - timeSinceLastConnected > 500 && millis() > 10000){
-        isConnected = false;
+    if((millis() - timeSinceLastConnected) > 2000){
+        return false;
     }else{
-        isConnected = true;
+        return true;
     }
-
-    return isConnected;
 }
 
 void Xbees::tryConnect(){

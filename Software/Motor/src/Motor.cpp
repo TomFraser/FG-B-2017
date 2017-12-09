@@ -164,11 +164,10 @@ void loop(){
         //Other robot can see ball and knows where it is
         directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall == 1 ? true : false, xbee.otherKnowsOwnCoords == 1 ? true : false);
 
-        // Serial.println(isOtherConnected);
+        Serial.println(isOtherConnected);
         // Serial.println(xbee.otherBallX);
         // Serial.println(xbee.otherBallY);
         // Serial.println(xbee.otherCanSeeBall == 1 ? true : false);
         // Serial.println();
-        digitalWrite(13, isOtherConnected == 0 ? LOW:HIGH);
     #endif
 }

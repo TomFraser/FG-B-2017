@@ -20,6 +20,7 @@ public:
     long timeSinceLastConnected;
 
 private:
+    int dataBuffer[XBEE_PACKAGE_SIZE - 2];
     bool robot, isConnected, connectedThisLoop;
     int _ballX, _ballY, _robotX, _robotY;
     bool _canSeeBall, _knowsOwnCoords;
