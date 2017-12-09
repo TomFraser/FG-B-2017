@@ -9,11 +9,11 @@
 #define GOAL_TRACKING false
 
 //SOLENOID
-#define KICK false
+#define KICK true
 
 #define TARGET_X 0
 #define TARGET_Y 0
 
-#define KICK_THRESHOLD 3000
+#define KICK_THRESHOLD 350
 
 #endif
