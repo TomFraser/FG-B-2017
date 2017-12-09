@@ -12,14 +12,6 @@
 #include <Goalie.h>
 #include <Xbee.h>
 
-#if ROBOT
-  // o_bot
-  #define KICK_THRESHOLD 300
-#else
-  // P2_bot
-  #define KICK_THRESHOLD 980
-#endif
-
 volatile uint16_t dataOut[1] = {};
 volatile uint16_t dataIn[1] = {};
 
@@ -151,6 +143,8 @@ void loop(){
         kicker.kickBall();
         lastKick = millis();
     }
+
+    Serial.println(LIGHTGATE_PIN);
 
     #if XBEE_ENABLE
         isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506 ? 1 : 0, directionController.getX() != 65506 ? 1 : 0);
