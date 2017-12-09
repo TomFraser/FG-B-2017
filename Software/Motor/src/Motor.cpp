@@ -144,8 +144,6 @@ void loop(){
         lastKick = millis();
     }
 
-    Serial.println(analogRead(LIGHTGATE_PIN));
-
     #if XBEE_ENABLE
         isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506 ? 1 : 0, directionController.getX() != 65506 ? 1 : 0);
 
