@@ -48,7 +48,7 @@ double RotationController::rotate(int rotationData, int goalData, int goalSize){
     goalHeading = (goalHeading * GOAL_MULTIPLIER);
     //Serial.println(goalHeading);
 
-    if (goalData == -30 || goalData == 0){ //If not seeing goal, do compass
+    if (goalData == -30 || goalData == 0 || abs(goalHeading/GOAL_MULTIPLIER) > GOAL_TRACKING_CUTOFF){ //If not seeing goal, do compass
         if(compassHeading <= 0){ //Negative
             if(compassHeading < COMPASS_ABS_MAX_NEG){
                 return COMPASS_ABS_MAX_NEG;

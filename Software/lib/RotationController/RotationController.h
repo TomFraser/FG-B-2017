@@ -6,6 +6,7 @@
 #include <i2c_t3.h>
 #include <Defines.h>
 #include <Arduino.h>
+#include <Common.h>
 // #include <PixyI2C.h>
 
 class RotationController{

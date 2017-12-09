@@ -5,13 +5,13 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Xbee Comms
 #define XBEE_ENABLE true
 
 //Attacking colour
-#define ATTACKING_YELLOW false
+#define ATTACKING_YELLOW true
 
 //MOTORS
 #define SPEED_VAL 80
@@ -51,12 +51,14 @@
 //Rotation
 #define COMPASS_CALIBRATION_TIME 500
 #define COMPASS_CALIBRATION_NUMBER 500
-#define COMPASS_MULTIPLIER 1.5
+#define COMPASS_MULTIPLIER 2
 #define COMPASS_ABS_MAX 150
 #define COMPASS_ABS_MAX_NEG -150
 
-#define GOAL_MULTIPLIER 2
+#define GOAL_MULTIPLIER 2.5
 #define GOAL_SIZE_THRESHOLD 5
+
+#define GOAL_TRACKING_CUTOFF 60
 
 //SPI
 #define DATA_LENGTH 1
