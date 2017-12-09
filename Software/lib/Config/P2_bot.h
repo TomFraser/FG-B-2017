@@ -9,7 +9,7 @@
 #define GOAL_TRACKING true
 
 //SOLENOID
-#define KICK false
+#define KICK true
 
 #define TARGET_X 0
 #define TARGET_Y 20

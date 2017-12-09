@@ -87,6 +87,7 @@ bool Xbees::dataRead(){
         }
     }
     if((millis() - timeSinceLastConnected) > 2000){
+        resetData();
         return false;
     }else{
         return true;
