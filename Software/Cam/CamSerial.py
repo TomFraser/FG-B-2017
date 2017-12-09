@@ -12,11 +12,11 @@ robot = robotO
 if robot: #P2_Bot
     thresholds = [(36, 88, 25, 76, 13, 63), #Ball
     (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-    (34, 81, -26, 4, -44, -6)] # Blue Goal
+    (0, 79, -24, 9, -63, -14)] # Blue Goal
 else: #O_Bot
     thresholds = [(36, 88, 25, 76, 13, 63), #Ball
     (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-    (35, 54, -8, 18, -71, -19)] # Blue Goal
+    (21, 100, -16, 12, -49, -16)] # Blue Goal
 
 #LED's
 ledRed = LED(2)

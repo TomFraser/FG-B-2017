@@ -12,16 +12,16 @@ CoordCalc::CoordCalc(){
 int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
   #if ROBOT
     // o_bot
-    if(goalArea > 97 && goalArea <= 194){
-      return -sqrt(9550-pow(goalArea-97, 2))+102;
+    if(goalArea > 99 && goalArea <= 199){
+      return -sqrt(10000-pow(goalArea-99, 2))+108;
     }
     else{
       return -1;
     }
   #else
     // p2_bot
-    if(goalArea > 109 && goalArea < 206){
-      return -sqrt(9550-pow(goalArea-109, 2))+106;
+    if(goalArea > 98 && goalArea < 197){
+      return -sqrt(10400-1.06*pow(goalArea-98, 2))+110;
     }
     else{
       return -1;
@@ -45,6 +45,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     angleA = doubleMod(angleA - compassAngle, 360); // CHECK THIS
 
     int distance = calcDistance(areaA, angleA, true);
+
+    // Serial.println(distance);
 
     if(distance < 150 && distance > 0)
     {
