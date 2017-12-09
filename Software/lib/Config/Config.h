@@ -11,7 +11,7 @@
 #define XBEE_ENABLE true
 
 //Attacking colour
-#define ATTACKING_YELLOW true
+#define ATTACKING_YELLOW false
 
 //MOTORS
 #define SPEED_VAL 80
