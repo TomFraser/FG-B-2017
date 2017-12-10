@@ -89,14 +89,6 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
           }
 
         }
-        else if(smallestAngleBetween(lineInitDirection, absRawBall) < 90 && false)
-        {
-          // ball is inside the field, deal with the orbit
-          // since the ball is inside, we wanna go in,
-          // so just calulate a slide and go for it, no stopping
-          speed = SPEED_SLIDE;
-          direction = calulateBounds(absLight, absMove);
-        }
         else{
           // ball is outside the field, deal with raw ball
           if(smallestAngleBetween(lineInitDirection, absRawBall) < SLIDE_ANGLE){
