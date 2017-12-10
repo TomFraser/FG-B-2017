@@ -34,6 +34,10 @@
 #define X_MULTIPLIER 1.25
 #define GOALIE_Y -60
 #define GOALIE_X_RANGE 20
+#define ENABLE_GOALIE_SURGE true
+#define SURGE_X 5
+#define SURGE_Y 30
+#define SURGE_MAX_Y GOALIE_Y + SURGE_Y + 10
 
 //DELAY
 #define MAIN_LOOP_DELAY 2
