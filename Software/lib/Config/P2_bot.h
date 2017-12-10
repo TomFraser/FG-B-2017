@@ -12,7 +12,7 @@
 #define KICK true
 
 #define TARGET_X 0
-#define TARGET_Y 20
+#define TARGET_Y -15
 
 #define KICK_THRESHOLD 1020
 

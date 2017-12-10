@@ -63,7 +63,7 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
           direction = lineInitDirection;
         }
         else if(absRawBall == 65506.00 || smallestAngleBetween(lineInitDirection, absRawBall) < 90){
-          // no ball, do normal slide stuff on absMove (this should never really happen)
+          // no ball or ball in field, do normal slide stuff on absMove
 
           if(smallestAngleBetween(lineInitDirection, absMove) < SLIDE_ANGLE){
             // not within the angle of a slide -> just go at move angle
@@ -88,14 +88,6 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
             direction = lineInitDirection;
           }
 
-        }
-        else if(smallestAngleBetween(lineInitDirection, absRawBall) < 90 && false)
-        {
-          // ball is inside the field, deal with the orbit
-          // since the ball is inside, we wanna go in,
-          // so just calulate a slide and go for it, no stopping
-          speed = SPEED_SLIDE;
-          direction = calulateBounds(absLight, absMove);
         }
         else{
           // ball is outside the field, deal with raw ball
@@ -125,7 +117,7 @@ void LightTracker::update(double absLight, double absMove, double moveSpeed, dou
       }
       else{
         speed = SPEED_OVER_LINE;
-        // flipped over the line, this is priority (adusted for compass)
+        // flipped over the line, this is priority
         direction = lineInitDirection;
       }
     }

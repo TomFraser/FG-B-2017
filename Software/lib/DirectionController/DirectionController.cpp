@@ -221,18 +221,32 @@ void DirectionController::calculateAttack(){
 void DirectionController::calculateGoalie(){
   // basically the strat is just go to the balls x whilst remaining at a constant y
   int targetX;
+  int targetY;
   int allBallX = getAllBallX();
   int allBallY = getAllBallY();
 
   if(allBallX != 65506){
     targetX = allBallX;
+
+    #if ENABLE_GOALIE_SURGE
+      if(abs(allBallX-currX) < SURGE_X && (allBallY-currY < SURGE_Y && allBallY-currY > 0 && allBallY < SURGE_MAX_Y)){
+        targetY = allBallY;
+      }
+      else{
+        targetY = GOALIE_Y;
+      }
+    #else
+      targetY = GOALIE_Y;
+    #endif
   }
   else{
     targetX = 0;
+    targetY = GOALIE_Y;
   }
 
   if(targetX > GOALIE_X_RANGE) targetX = GOALIE_X_RANGE;
   if(targetX < -GOALIE_X_RANGE) targetX = -GOALIE_X_RANGE;
 
-  goToCoords(targetX, GOALIE_Y);
+
+  goToCoords(targetX, targetY);
 }

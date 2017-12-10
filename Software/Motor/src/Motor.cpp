@@ -42,7 +42,7 @@ void setup(){
     digitalWrite(LIGHT_SS, HIGH);
     SPI.setSCK(ALT_SCK);
     SPI.setClockDivider(SPI_CLOCK_DIV8);
-    delay(5000);
+    delay(2000);
 }
 
 void loop(){
