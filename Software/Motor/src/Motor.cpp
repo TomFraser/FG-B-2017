@@ -79,19 +79,19 @@ void loop(){
       digitalWrite(TSOP_SS, HIGH);
     #else
       digitalWrite(TSOP_SS, LOW);
-      int goalAttackAngle = SPI.transfer16(6);
+      int frontSonar = SPI.transfer16(6);
       digitalWrite(TSOP_SS, HIGH);
 
       digitalWrite(TSOP_SS, LOW);
-      int goalAttackSize = SPI.transfer16(7);
+      int backSonar = SPI.transfer16(7);
       digitalWrite(TSOP_SS, HIGH);
 
       digitalWrite(TSOP_SS, LOW);
-      int goalDefendAngle = SPI.transfer16(8);
+      int leftSonar = SPI.transfer16(8);
       digitalWrite(TSOP_SS, HIGH);
 
       digitalWrite(TSOP_SS, LOW);
-      int goalDefendSize= SPI.transfer16(9);
+      int rightSonar = SPI.transfer16(9);
       digitalWrite(TSOP_SS, HIGH);
     #endif
 
@@ -124,13 +124,18 @@ void loop(){
     directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass, isGoalie);
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
 
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
-    // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
-    // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
-    // directionController.updateGoalData(0, 65506, 0, 65506);
+    #if GOALIE
+      directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+      // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
+      // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
+      // directionController.updateGoalData(0, 65506, 0, 65506);
 
-    // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
-    // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+      // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
+      // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+    #else
+      directionController.updateSonarData(sonarFront, sonarBack, sonarLeft, sonarRight);
+    #endif
+
 
     // Serial.print(directionController.getX()); Serial.print(" ");
     // Serial.println(directionController.getY()); //Serial.print(" | ");

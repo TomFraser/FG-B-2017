@@ -8,6 +8,8 @@ SRF10::SRF10(uint8_t address_){
 
 void SRF10::setup(){
   // do stuff just not yet
+  // set gain
+  // set something else
 }
 
 void SRF10::update(){
