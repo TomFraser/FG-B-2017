@@ -6,7 +6,7 @@
 #include <Pins.h>
 #include <Defines.h>
 #include <Arduino.h>
-#include <Wire.h>
+#include <i2c_t3.h>
 
 #define CMD (byte)0x00 // Command byte, values of 0 being sent with write have to be masked as a byte to stop them being misinterpreted as NULL this is a bug with arduino 1.0
 #define RANGEBYTE 0x02 // Byte for start of ranging data

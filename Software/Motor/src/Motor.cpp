@@ -17,6 +17,7 @@ volatile uint16_t dataIn[1] = {};
 
 bool isGoalie, isOtherConnected;
 int ballX, ballY, robotX, robotY, otherBallX, otherBallY, otherRobotX, otherRobotY;
+int sonarFront, sonarBack, sonarLeft, sonarRight;
 
 long initialTime, currentTime, lastKick = 0;
 
@@ -120,6 +121,18 @@ void loop(){
 
     // Serial.println(tsopData); Serial.println(rotationData); Serial.println(compassData); Serial.println(goalAttackAngle); Serial.println(goalAttackSize); Serial.println(goalDefendAngle); Serial.println(goalDefendSize); Serial.println(ballStrength); Serial.println(lightData); Serial.println();
 
+    // Serial.println(tsopData);
+    // Serial.println(rotationData);
+    // Serial.println(compassData);
+    // Serial.println(frontSonar);
+    // Serial.println(backSonar);
+    // Serial.println(leftSonar);
+    // Serial.println(rightSonar);
+    // Serial.println(rawBallData);
+    // Serial.println(ballStrength);
+    // Serial.println(lightData);
+    // Serial.println();
+
     // update the direction controller with everything it needs -> it know knows everything required to do everything
     directionController.updateGameData(tsopData, rawBallData, ballStrength, lightData, lightNumData, compass, isGoalie);
     // directionController.updateGameData(65506, 65506, 0, lightData, lightNumData, compass);
@@ -133,7 +146,12 @@ void loop(){
       // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
       // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
     #else
-      directionController.updateSonarData(sonarFront, sonarBack, sonarLeft, sonarRight);
+      // Serial.println(frontSonar);
+      // Serial.println(backSonar);
+      // Serial.println(leftSonar);
+      // Serial.println(rightSonar);
+      // Serial.println();
+      directionController.updateSonarData(frontSonar, backSonar, leftSonar, rightSonar);
     #endif
 
 

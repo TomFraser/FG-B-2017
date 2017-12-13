@@ -3,7 +3,6 @@
 SRF10::SRF10(uint8_t address_){
     //setup
     address = address_;
-    Wire.begin();
 }
 
 void SRF10::setup(){
