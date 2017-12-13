@@ -61,21 +61,39 @@ void loop(){
     int compassData = SPI.transfer16(5);
     digitalWrite(TSOP_SS, HIGH);
 
-    digitalWrite(TSOP_SS, LOW);
-    int goalAttackAngle = SPI.transfer16(6);
-    digitalWrite(TSOP_SS, HIGH);
+    #if GOALIE
+      digitalWrite(TSOP_SS, LOW);
+      int goalAttackAngle = SPI.transfer16(6);
+      digitalWrite(TSOP_SS, HIGH);
 
-    digitalWrite(TSOP_SS, LOW);
-    int goalAttackSize = SPI.transfer16(7);
-    digitalWrite(TSOP_SS, HIGH);
+      digitalWrite(TSOP_SS, LOW);
+      int goalAttackSize = SPI.transfer16(7);
+      digitalWrite(TSOP_SS, HIGH);
 
-    digitalWrite(TSOP_SS, LOW);
-    int goalDefendAngle = SPI.transfer16(8);
-    digitalWrite(TSOP_SS, HIGH);
+      digitalWrite(TSOP_SS, LOW);
+      int goalDefendAngle = SPI.transfer16(8);
+      digitalWrite(TSOP_SS, HIGH);
 
-    digitalWrite(TSOP_SS, LOW);
-    int goalDefendSize= SPI.transfer16(9);
-    digitalWrite(TSOP_SS, HIGH);
+      digitalWrite(TSOP_SS, LOW);
+      int goalDefendSize= SPI.transfer16(9);
+      digitalWrite(TSOP_SS, HIGH);
+    #else
+      digitalWrite(TSOP_SS, LOW);
+      int goalAttackAngle = SPI.transfer16(6);
+      digitalWrite(TSOP_SS, HIGH);
+
+      digitalWrite(TSOP_SS, LOW);
+      int goalAttackSize = SPI.transfer16(7);
+      digitalWrite(TSOP_SS, HIGH);
+
+      digitalWrite(TSOP_SS, LOW);
+      int goalDefendAngle = SPI.transfer16(8);
+      digitalWrite(TSOP_SS, HIGH);
+
+      digitalWrite(TSOP_SS, LOW);
+      int goalDefendSize= SPI.transfer16(9);
+      digitalWrite(TSOP_SS, HIGH);
+    #endif
 
     digitalWrite(TSOP_SS, LOW);
     int rawBallData = SPI.transfer16(1);
