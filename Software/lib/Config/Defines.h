@@ -23,6 +23,12 @@
 #define angToRad 0.01745329251
 #define radToAng 57.2957795131
 
+// ============= Sonars ===================
+#define FRONT_SONAR_ADDR 115
+#define RIGHT_SONAR_ADDR 112
+#define BACK_SONAR_ADDR 113
+#define LEFT_SONAR_ADDR 114
+
 //================Lightsensors==============
 #define maxNumClusters 20
 //CARTESIAN CO-ORDINATES

@@ -12,7 +12,7 @@ void SRF10::setup(){
 
 void SRF10::update(){
   if(!ranging){
-    // not ranging -> start rainging, not gonna be ready to read yet
+    // not ranging -> start ranging, not gonna be ready to read yet
     startRanging();
     ranging = true;
   }
