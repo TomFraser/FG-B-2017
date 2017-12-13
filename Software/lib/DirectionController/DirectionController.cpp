@@ -51,13 +51,23 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
   followingBall = false;
 }
 
+void DirectionController::updateSonarData(int rangeFront_, int rangeBack_, int rangeLeft_, int rangeRight_){
+  rangeFront = rangeFront_;
+  rangeBack = rangeBack_;
+  rangeLeft = rangeLeft_;
+  rangeRight = rangeRight_;
+
+  updateSonarCoordinates();
+  updateBallCoordinates();
+}
+
 void DirectionController::updateGoalData(int areaA_, int angleA_, int areaD_, int angleD_){
   areaA = areaA_;
   angleA = angleA_;
   areaD = areaD_;
   angleD = angleD_;
 
-  updateCoordinates();
+  updateGoalCoordinates();
   updateBallCoordinates();
 }
 
@@ -121,7 +131,7 @@ double DirectionController::getBallAngle(){
 
 // -----------------------------------------------------------------------------------
 
-void DirectionController::updateCoordinates(){
+void DirectionController::updateGoalCoordinates(){
   if(coordCalc.update(areaA, angleA, areaD, angleD, compassAngle)){ // returns false if cant see any goal
     currX = coordCalc.getX();
     currY = coordCalc.getY();
@@ -130,6 +140,10 @@ void DirectionController::updateCoordinates(){
     currX = 65506;
     currY = 65506;
   }
+}
+
+void DirectionController::updateSonarCoordinates(){
+  // plug into a thing and then update currX and currY
 }
 
 void DirectionController::goToCoords(int targetX, int targetY){

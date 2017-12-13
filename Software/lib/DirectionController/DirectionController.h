@@ -35,7 +35,7 @@ public:
 
 
 private:
-  void updateCoordinates();
+  void updateGoalCoordinates();
   void updateBallCoordinates();
 
 
@@ -66,6 +66,12 @@ private:
   int otherRobotY;
   bool otherCanSeeBall;
   bool otherKnowsOwnCoords;
+
+  // sonar data
+  int rangeFront;
+  int rangeBack;
+  int rangeLeft;
+  int rangeRight;
 
   // goal data
   int areaA; // attack goal
