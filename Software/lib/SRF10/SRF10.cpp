@@ -6,16 +6,32 @@ SRF10::SRF10(uint8_t address_){
 }
 
 void SRF10::setup(){
-  // do stuff just not yet
-  // set gain
-  // set something else
+  // dunno whats up with this
+  // // set centimeters
+  // writeRegister(byte(0x00), byte(0x51));
+  //
+  // // set gain
+  // writeRegister(byte(0x01), byte(0xFF));
+  //
+  // // set gain
+  // writeRegister(byte(0x02), byte(0x12));
+  //
+  // delay(70);
 }
 
-void SRF10::update(){
+void SRF10::writeRegister(byte register_, byte data){
+  Wire.beginTransmission(address);
+  Wire.write(register_);
+  Wire.write(data);
+  Wire.endTransmission();
+}
+
+bool SRF10::update(){
   if(!ranging){
     // not ranging -> start ranging, not gonna be ready to read yet
     startRanging();
     ranging = true;
+    return false;
   }
   else{
     // already ranging -> check if ready to read
@@ -23,6 +39,7 @@ void SRF10::update(){
       range = read();
       ranging = false;
       lastRead = millis();
+      return true;
     }
   }
 }

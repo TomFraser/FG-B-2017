@@ -39,6 +39,13 @@
 #define SURGE_Y 30
 #define SURGE_MAX_Y GOALIE_Y + SURGE_Y + 10
 
+// sonars
+#define SUM_X_MIN 350
+#define SUM_X_MAX 450
+#define SUM_Y_MIN 550
+#define SUM_Y_MAX 650
+#define ROBOT_WIDTH 21
+
 //DELAY
 #define MAIN_LOOP_DELAY 2
 #define CAMERA_DATA_WAIT 20 //Time between reads of serial data

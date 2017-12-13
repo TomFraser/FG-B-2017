@@ -17,16 +17,18 @@ class SRF10{
 public:
   SRF10(uint8_t address_);
   void setup();
-  void update();
+  bool update();
   int getRange();
-  void startRanging();
-  int read(byte register_ = RANGEBYTE);
 
 private:
   uint8_t address;
   int range = 0;
   long lastRead = 0;
   bool ranging = false;
+  void startRanging();
+  int read(byte register_ = RANGEBYTE);
+  void writeRegister(byte register_, byte data);
+
 
 };
 #endif
