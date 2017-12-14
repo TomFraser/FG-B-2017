@@ -11,7 +11,7 @@
 #define XBEE_ENABLE false
 
 //Attacking colour
-#define ATTACKING_YELLOW true
+#define ATTACKING_YELLOW false
 
 //MOTORS
 #define SPEED_VAL 80
@@ -38,6 +38,12 @@
 #define SURGE_X 5
 #define SURGE_Y 30
 #define SURGE_MAX_Y GOALIE_Y + SURGE_Y + 10
+
+// attacker spiral
+#define ENABLE_SPIRAL true
+#define SPIRAL_RATE 1
+#define SPIRAL_SPEED 40
+#define SPIRAL_RESET 1
 
 //DELAY
 #define MAIN_LOOP_DELAY 2

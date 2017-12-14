@@ -199,22 +199,42 @@ int DirectionController::getAllBallY(){
 void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
+    isSpiraling = false;
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
     followingBall = lightTracker.getNormalGameplay();
   }
   else{
-    // cant see ball -> go to ball or predefined pos
-    int allBallX = getAllBallX();
-    int allBallY = getAllBallY();
+    #if ENABLE_SPIRAL
+      // spiral
+      if(isSpiraling){
+        double add = 1000.0/(millis() - startSpiralTime) * SPIRAL_RATE;
+        spiralDirection += add;
+        if(add < SPIRAL_RESET) startSpiralTime = millis();
+      }
+      else{
+        spiralDirection = 0;
+        startSpiralTime = millis();
+        isSpiraling = true;
+      }
 
-    if(allBallX != 65506 && allBallY != 65506){
-      goToCoords(allBallX, allBallY);
-    }
-    else{
-      goToCoords(TARGET_X, TARGET_Y);
-    }
+      lightTracker.update(lightAngle, spiralDirection, SPIRAL_SPEED, rawBallAngle, numSensors);
+      direction = absToRel(lightTracker.getDirection());
+      speed = lightTracker.getSpeed();
+      followingBall = false;
+    #else
+      // cant see ball -> go to ball or predefined pos
+      int allBallX = getAllBallX();
+      int allBallY = getAllBallY();
+
+      if(allBallX != 65506 && allBallY != 65506){
+        goToCoords(allBallX, allBallY);
+      }
+      else{
+        goToCoords(TARGET_X, TARGET_Y);
+      }
+    #endif
   }
 }
 

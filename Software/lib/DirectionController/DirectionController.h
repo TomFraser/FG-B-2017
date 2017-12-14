@@ -86,6 +86,11 @@ private:
   int ballX;
   int ballY;
 
+  // spiral
+  double spiralDirection = 0;
+  bool isSpiraling = false;
+  double startSpiralTime = 0;
+
   // if we are following ball
   bool followingBall;
 
