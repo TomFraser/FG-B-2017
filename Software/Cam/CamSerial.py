@@ -14,9 +14,9 @@ if robot: #P2_Bot
     (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
     (0, 79, -24, 9, -63, -14)] # Blue Goal
 else: #O_Bot
-    thresholds = [(36, 88, 25, 76, 13, 63), #Ball
-    (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-    (21, 100, -16, 12, -49, -16)] # Blue Goal
+    thresholds = [(32, 100, 38, 78, 18, 44), #Ball
+    (42, 76, -30, 40, 25, 72), #(71, 99, -9, 12, 12, 59), #Yellow Goal
+    (22, 34, -24, 21, -29, -5)] # Blue Goal
 
 #LED's
 ledRed = LED(2)
@@ -48,7 +48,7 @@ uart = UART(3, 9600, timeout_char=10)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
-sensor.skip_frames(time = 1000) #Start Delay
+sensor.skip_frames(time = 100) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
 sensor.set_contrast(3)
@@ -87,8 +87,12 @@ while(True):
         y = ball.cy() - (img.height() / 2)
         angle = (atan2(y,x) * (180 / pi) - 90)%360
         strength = sqrt(x**2 + y**2)
-        if strength < 50 :
-            angle = 65506
+        if angle > 45 and angle < 315:
+            if strength < 60:
+                angle = 65506
+                strength = 0
+            else:
+                img.draw_cross(ball.cx(), ball.cy())
         else:
             img.draw_cross(ball.cx(), ball.cy())
             #img.draw_cross(int(img.width()/2), img.height() - int(img.height() / 8))
@@ -225,7 +229,7 @@ while(True):
     #print(angleOrbit)
     #print()
     #print("Strength:")
-    #print(strength)
+    print(strength)
     #print()
     #print("Orbit Angle:")
     #print(orbitAngle)

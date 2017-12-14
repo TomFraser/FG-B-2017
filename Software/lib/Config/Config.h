@@ -8,7 +8,7 @@
 #define ROBOT O_bot
 
 //Enable Xbee Comms
-#define XBEE_ENABLE true
+#define XBEE_ENABLE false
 
 //Attacking colour
 #define ATTACKING_YELLOW false
@@ -26,9 +26,9 @@
 #define DISTANCE_CUTOFF_ATTACK 10
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID true
-#define PID_P 3.75
+#define PID_P 4.75
 #define PID_I 0
-#define PID_D 0.5
+#define PID_D 0.75
 
 // Goalie
 #define X_MULTIPLIER 1.25
