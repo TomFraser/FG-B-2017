@@ -146,10 +146,10 @@ void loop(){
       // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
       // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
     #else
-      // Serial.println(frontSonar);
-      // Serial.println(backSonar);
-      // Serial.println(leftSonar);
-      // Serial.println(rightSonar);
+      // Serial.print(frontSonar); Serial.print(" ");
+      // Serial.print(backSonar); Serial.print(" ");
+      // Serial.print(leftSonar); Serial.print(" ");
+      // Serial.print(rightSonar); Serial.print(" ");
       // Serial.println();
       directionController.updateSonarData(frontSonar, backSonar, leftSonar, rightSonar);
     #endif

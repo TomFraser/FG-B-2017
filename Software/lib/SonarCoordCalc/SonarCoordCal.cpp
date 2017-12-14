@@ -16,6 +16,7 @@ bool SonarCoordCalc::update(int sonarFront, int sonarBack, int sonarLeft, int so
 
   // horizontal (x)
   int sumX = sonarLeft + sonarRight + ROBOT_WIDTH;
+  Serial.print(sonarLeft); Serial.print(" | "); Serial.print(sonarRight); Serial.print(" | "); Serial.println(sumX);
   if(SUM_X_MIN < sumX && sumX < SUM_X_MAX){
     // we somewhat checkout, lets go for it
     // use the smaller value (easily swapped)
@@ -31,29 +32,30 @@ bool SonarCoordCalc::update(int sonarFront, int sonarBack, int sonarLeft, int so
   }
 
   // vertical (y)
-  int sumY = sonarFront + sonarRight + ROBOT_WIDTH;
-  if(SUM_Y_MIN < sumY && sumY < SUM_Y_MAX){
-    // we somewhat checkout, lets go for it
-    // use the smaller value (easily swapped)
-    if(sonarFront < sonarBack){
-      yCoord = FRONT_LEFT_Y - sonarFront;
-    }
-    else{
-      yCoord = BACK_LEFT_Y + sonarBack;
-    }
-  }
-  else{
-    return false;
-  }
+  yCoord = TARGET_Y;
+  // int sumY = sonarFront + sonarRight + ROBOT_WIDTH;
+  // if(SUM_Y_MIN < sumY && sumY < SUM_Y_MAX){
+  //   // we somewhat checkout, lets go for it
+  //   // use the smaller value (easily swapped)
+  //   if(sonarFront < sonarBack){
+  //     yCoord = FRONT_LEFT_Y - sonarFront;
+  //   }
+  //   else{
+  //     yCoord = BACK_LEFT_Y + sonarBack;
+  //   }
+  // }
+  // else{
+  //   return false;
+  // }
 
   return true;
 
 }
 
-int CoordCalc::getX(){
+int SonarCoordCalc::getX(){
   return xCoord;
 }
 
-int CoordCalc::getY(){
+int SonarCoordCalc::getY(){
   return yCoord;
 }

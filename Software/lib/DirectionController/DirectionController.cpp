@@ -144,6 +144,14 @@ void DirectionController::updateGoalCoordinates(){
 
 void DirectionController::updateSonarCoordinates(){
   // plug into a thing and then update currX and currY
+  if(sonarCoordCalc.update(rangeFront, rangeBack, rangeLeft, rangeRight, compassAngle)){
+    currX = sonarCoordCalc.getX();
+    currY = sonarCoordCalc.getY();
+  }
+  else{
+    currX = 65506;
+    currY = 65506;
+  }
 }
 
 void DirectionController::goToCoords(int targetX, int targetY){

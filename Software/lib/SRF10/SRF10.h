@@ -15,7 +15,7 @@
 class SRF10{
 
 public:
-  SRF10(uint8_t address_);
+  SRF10(uint8_t address_, byte gain_, byte range_);
   void setup();
   bool update();
   int getRange();
@@ -28,6 +28,8 @@ private:
   void startRanging();
   int read(byte register_ = RANGEBYTE);
   void writeRegister(byte register_, byte data);
+  byte gain;
+  byte setRange;
 
 
 };

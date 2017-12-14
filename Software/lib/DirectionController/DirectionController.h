@@ -12,6 +12,7 @@
 #include <LightTracker.h>
 #include <CoordCalc.h>
 #include <PID.h>
+#include <SonarCoordCalc.h>
 
 
 class DirectionController{
@@ -102,6 +103,9 @@ private:
 
   // CoordCalc object
   CoordCalc coordCalc = CoordCalc();
+
+  // Sonar coord calc object
+  SonarCoordCalc sonarCoordCalc = SonarCoordCalc();
 
   // PID stuff
   double pidSetpoint;

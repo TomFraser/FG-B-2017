@@ -18,10 +18,10 @@ ReadTSOPS ball;
 
 // Sonars
 #if !GOALIE
-  SRF10 frontSonar(FRONT_SONAR_ADDR);
-  SRF10 backSonar(BACK_SONAR_ADDR);
-  SRF10 leftSonar(LEFT_SONAR_ADDR);
-  SRF10 rightSonar(RIGHT_SONAR_ADDR);
+  SRF10 frontSonar(FRONT_SONAR_ADDR, byte(0x0C), byte(0x0D));
+  SRF10 backSonar(BACK_SONAR_ADDR, byte(0x0C), byte(0x0D));
+  SRF10 leftSonar(LEFT_SONAR_ADDR, byte(0x08), byte(0x0D));
+  SRF10 rightSonar(RIGHT_SONAR_ADDR, byte(0x08), byte(0x0D));
 #endif
 
 int prevTime;
@@ -90,6 +90,9 @@ void transfer(){
 }
 
 void setup() {
+  Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, 100000);
+  Wire.setDefaultTimeout(50000); // 200ms
+
   // Sonars
   #if !GOALIE
     frontSonar.setup();
@@ -97,9 +100,6 @@ void setup() {
     leftSonar.setup();
     rightSonar.setup();
   #endif
-
-  Wire.begin(I2C_MASTER, 0x00, I2C_PINS_18_19, I2C_PULLUP_EXT, 100000);
-  Wire.setDefaultTimeout(50000); // 200ms
 
   compass.init();
   delay(10);

@@ -1,22 +1,25 @@
 #include <SRF10.h>
 
-SRF10::SRF10(uint8_t address_){
+SRF10::SRF10(uint8_t address_, byte gain_, byte range_){
     //setup
     address = address_;
+    gain = gain_;
+    setRange = range_;
 }
 
 void SRF10::setup(){
-  // dunno whats up with this
-  // // set centimeters
-  // writeRegister(byte(0x00), byte(0x51));
-  //
-  // // set gain
-  // writeRegister(byte(0x01), byte(0xFF));
-  //
-  // // set gain
-  // writeRegister(byte(0x02), byte(0x12));
-  //
-  // delay(70);
+  // set centimeters
+  writeRegister(byte(0x00), byte(0x51));
+
+  // set gain
+  writeRegister(byte(0x01), gain);
+
+
+  // set range
+  writeRegister(byte(0x02), setRange);
+
+
+  delay(70);
 }
 
 void SRF10::writeRegister(byte register_, byte data){
