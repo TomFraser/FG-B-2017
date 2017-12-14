@@ -172,27 +172,29 @@ void DirectionController::goToCoords(int targetX, int targetY){
 }
 
 int DirectionController::getAllBallX(){
-  if(ballX != 65506){
-    return ballX;
-  }
-  else if(otherCanSeeBall){
-    return otherBallX;
-  }
-  else{
-    return 65506;
-  }
+  return ballX;
+  // if(ballX != 65506){
+  //   return ballX;
+  // }
+  // else if(otherCanSeeBall){
+  //   return otherBallX;
+  // }
+  // else{
+  //   return 65506;
+  // }
 }
 
 int DirectionController::getAllBallY(){
-  if(ballY != 65506){
-    return ballY;
-  }
-  else if(otherCanSeeBall){
-    return otherBallY;
-  }
-  else{
-    return 65506;
-  }
+  return ballY;
+  // if(ballY != 65506){
+  //   return ballY;
+  // }
+  // else if(otherCanSeeBall){
+  //   return otherBallY;
+  // }
+  // else{
+  //   return 65506;
+  // }
 }
 
 
@@ -245,6 +247,9 @@ void DirectionController::calculateGoalie(){
   int allBallX = getAllBallX();
   int allBallY = getAllBallY();
 
+  // Serial.println(allBallX);
+  // Serial.println(allBallY);
+
   if(allBallX != 65506){
     targetX = allBallX;
 
@@ -267,6 +272,10 @@ void DirectionController::calculateGoalie(){
   if(targetX > GOALIE_X_RANGE) targetX = GOALIE_X_RANGE;
   if(targetX < -GOALIE_X_RANGE) targetX = -GOALIE_X_RANGE;
 
+  // Serial.println(targetX);
+  // Serial.println(targetY);
+  // Serial.println();
+  //
 
   goToCoords(targetX, targetY);
 }
