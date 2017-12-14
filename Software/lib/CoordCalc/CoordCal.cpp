@@ -12,19 +12,32 @@ CoordCalc::CoordCalc(){
 int CoordCalc::calcDistance(int goalArea, int goalAngle, bool attack){
   #if ROBOT
     // o_bot
-    if(goalArea > 99 && goalArea <= 199){
-      return -sqrt(10000-pow(goalArea-99, 2))+108;
+    if(goalArea > 105 && goalArea <= 206){
+      return -sqrt(9100-0.87*pow(goalArea-105, 2))+101;
     }
     else{
       return -1;
     }
   #else
     // p2_bot
-    if(goalArea > 98 && goalArea < 197){
-      return -sqrt(10400-1.06*pow(goalArea-98, 2))+110;
+    if(attack){
+      // front thing
+      if(goalArea > 99 && goalArea <= 198){
+        return -1.02*sqrt(10400-1.06*pow(goalArea-99, 2))+111;
+      }
+      else{
+        return -1;
+      }
     }
     else{
-      return -1;
+      // back thing
+      if(goalArea > 103 && goalArea <= 214){
+        return -sqrt(9100-0.76*pow(goalArea-105, 2))+99;
+      }
+      else{
+        return -1;
+      }
+
     }
   #endif
 }
@@ -55,6 +68,10 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
       xAttack = ATTACK_GOAL_X-xGoal;
       yAttack = ATTACK_GOAL_Y-yGoal;
+
+      // Serial.println(xAttack);
+      // Serial.println(yAttack);
+      // Serial.println();
     }
     else{
       attackGoal = false;
@@ -68,6 +85,8 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
     int distance = calcDistance(areaD, angleD, false);
 
+    // Serial.println(distance);
+
     if(distance < 150 && distance > 0)
     {
       int xGoal = distance*sin(angToRad*angleD);
@@ -75,6 +94,10 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
 
       xDefense = DEFENSE_GOAL_X-xGoal;
       yDefense = DEFENSE_GOAL_Y-yGoal;
+
+      // Serial.println(xDefense);
+      // Serial.println(yDefense);
+      // Serial.println();
     }
     else{
       defenseGoal = false;
@@ -113,6 +136,10 @@ bool CoordCalc::update(int areaA, int angleA, int areaD, int angleD, double comp
     return false;
   }
 
+  // Serial.println(xCoord);
+  // Serial.println(yCoord);
+  // Serial.println();
+  //
   // make sure our coords are within the field - ceebs doing this, i dont think its good
   // return (FRONT_LEFT_X < xCoord && xCoord < FRONT_RIGHT_X) && (FRONT_LEFT_Y < yCoord && yCoord < BACK_LEFT_Y);
   return true;

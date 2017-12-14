@@ -11,7 +11,7 @@
 #define XBEE_ENABLE false
 
 //Attacking colour
-#define ATTACKING_YELLOW false
+#define ATTACKING_YELLOW true
 
 //MOTORS
 #define SPEED_VAL 80
@@ -26,14 +26,14 @@
 #define DISTANCE_CUTOFF_ATTACK 10
 #define CUTOFF_SPEED_SCALE 1
 #define ENABLE_PID true
-#define PID_P 4.75
+#define PID_P 5.25
 #define PID_I 0
-#define PID_D 0.75
+#define PID_D 1.1
 
 // Goalie
 #define X_MULTIPLIER 1.25
-#define GOALIE_Y -60
-#define GOALIE_X_RANGE 20
+#define GOALIE_Y -65
+#define GOALIE_X_RANGE 15
 #define ENABLE_GOALIE_SURGE false
 #define SURGE_X 5
 #define SURGE_Y 30
