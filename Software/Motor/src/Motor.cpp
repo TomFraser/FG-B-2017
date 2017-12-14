@@ -141,10 +141,20 @@ void loop(){
     }
 
     //Checking if we can kick
-    if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
-        kicker.kickBall();
-        lastKick = millis();
-    }
+    #if ROBOT
+      // o_bot
+      if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+          kicker.kickBall();
+          lastKick = millis();
+      }
+    #else
+      // p2_bot
+      Serial.println(ballStrength);
+      if(ballStrength < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+          kicker.kickBall();
+          lastKick = millis();
+      }
+    #endif
 
     #if XBEE_ENABLE
         isOtherConnected = xbee.updateCoordData(directionController.getBallX(), directionController.getBallY(), directionController.getX(), directionController.getY(), directionController.getBallX() != 65506 ? 1 : 0, directionController.getX() != 65506 ? 1 : 0);
