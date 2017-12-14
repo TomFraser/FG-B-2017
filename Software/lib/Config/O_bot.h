@@ -2,11 +2,11 @@
 #define O_bot_h
 
 //Enable Goalie
-#define GOALIE true
-#define DEFAULT_GOALIE true
+#define GOALIE false
+#define DEFAULT_GOALIE false
 
 // goal TRACKING
-#define GOAL_TRACKING false
+#define GOAL_TRACKING true
 
 //SOLENOID
 #define KICK true

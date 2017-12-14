@@ -6,13 +6,13 @@ from math import atan2, sqrt, pi, log
 robotO = 0
 robotP2 = 1
 
-robot = robotO
+robot = robotP2
 
 #Thresholds
 if robot: #P2_Bot
-    thresholds = [(36, 88, 25, 76, 13, 63), #Ball
-    (52, 92, -12, 26, 7, 60), #(71, 99, -9, 12, 12, 59), #Yellow Goal
-    (0, 79, -24, 9, -63, -14)] # Blue Goal
+    thresholds = [(0, 100, 16, 127, 3, 83), #Ball
+    (39, 71, -41, 53, 48, 127), #(71, 99, -9, 12, 12, 59), #Yellow Goal
+    (0, 27, -20, -6, -20, 4)] # Blue Goal
 else: #O_Bot
     thresholds = [(32, 100, 38, 78, 18, 44), #Ball
     (42, 76, -30, 40, 25, 72), #(71, 99, -9, 12, 12, 59), #Yellow Goal
@@ -48,10 +48,11 @@ uart = UART(3, 9600, timeout_char=10)
 sensor.reset()
 sensor.set_pixformat(sensor.RGB565)
 sensor.set_framesize(sensor.QVGA) #Resolution, QVGA = 42FPS,QQVGA = 85FPS
-sensor.skip_frames(time = 100) #Start Delay
 sensor.set_auto_gain(False) #Must remain false for blob tracking
 sensor.set_auto_whitebal(False) #Must remain false for blob tracking
+sensor.set_brightness(0)
 sensor.set_contrast(3)
+sensor.skip_frames(time = 1000) #Start Delay
 clock = time.clock()
 
 #LED's all turn off after boot up is done
@@ -229,7 +230,7 @@ while(True):
     #print(angleOrbit)
     #print()
     #print("Strength:")
-    print(strength)
+    #print(strength)
     #print()
     #print("Orbit Angle:")
     #print(orbitAngle)
