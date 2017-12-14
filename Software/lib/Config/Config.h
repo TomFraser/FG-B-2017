@@ -5,7 +5,7 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT O_bot
+#define ROBOT P2_bot
 
 //Enable Xbee Comms
 #define XBEE_ENABLE false
@@ -42,8 +42,8 @@
 // attacker spiral
 #define ENABLE_SPIRAL true
 #define SPIRAL_RATE 1
-#define SPIRAL_SPEED 40
-#define SPIRAL_RESET 1
+#define SPIRAL_SPEED 60
+#define SPIRAL_RESET 0.05
 
 //DELAY
 #define MAIN_LOOP_DELAY 2
