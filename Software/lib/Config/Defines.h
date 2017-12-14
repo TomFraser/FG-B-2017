@@ -92,6 +92,12 @@
 #define NO_LIGHT 65506.00
 #define NO_SPEED 0
 
+// ============= Sonars ===================
+#define FRONT_SONAR_ADDR 115
+#define RIGHT_SONAR_ADDR 112
+#define BACK_SONAR_ADDR 113
+#define LEFT_SONAR_ADDR 114
+
 // ================ Coordinate Calulations ==========
 #define FRONT_LEFT_X -60
 #define FRONT_LEFT_Y 90
