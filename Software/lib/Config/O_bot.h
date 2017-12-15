@@ -14,6 +14,6 @@
 #define TARGET_X 0
 #define TARGET_Y 0
 
-#define KICK_THRESHOLD 350
+#define KICK_THRESHOLD 650
 
 #endif
