@@ -48,6 +48,7 @@ private:
   int getAllBallY();
 
   void doSpiral();
+  void resetSpiral();
 
   int speed;
   double direction;

@@ -54,7 +54,7 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
 
   if(lightAngle != 65506){
     if(lightAngle != targetDir){
-      startSpiralTime = millis();
+      resetSpiral();
     }
     targetDir = lightAngle; // the direction we will target spiral towards
   }
@@ -220,8 +220,7 @@ int DirectionController::getAllBallY(){
 void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
-    isSpiraling = false;
-    targetDir = -1;
+    resetSpiral();
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
@@ -242,8 +241,14 @@ void DirectionController::calculateAttack(){
     #endif
     else{
       goToCoords(TARGET_X, TARGET_Y);
+      resetSpiral();
     }
   }
+}
+
+void DirectionController::resetSpiral(){
+  isSpiraling = false;
+  targetDir = -1;
 }
 
 void DirectionController::doSpiral(){
