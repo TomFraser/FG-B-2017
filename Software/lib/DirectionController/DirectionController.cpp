@@ -176,29 +176,36 @@ void DirectionController::goToCoords(int targetX, int targetY){
 }
 
 int DirectionController::getAllBallX(){
-  return ballX;
-  // if(ballX != 65506){
-  //   return ballX;
-  // }
-  // else if(otherCanSeeBall){
-  //   return otherBallX;
-  // }
-  // else{
-  //   return 65506;
-  // }
+  #if XBEE_ENABLE
+    if(ballX != 65506){
+      return ballX;
+    }
+    else if(otherCanSeeBall){
+      return otherBallX;
+    }
+    else{
+      return 65506;
+    }
+  #else
+    return ballX;
+  #endif
+
 }
 
 int DirectionController::getAllBallY(){
-  return ballY;
-  // if(ballY != 65506){
-  //   return ballY;
-  // }
-  // else if(otherCanSeeBall){
-  //   return otherBallY;
-  // }
-  // else{
-  //   return 65506;
-  // }
+  #if XBEE_ENABLE
+    if(ballY != 65506){
+      return ballY;
+    }
+    else if(otherCanSeeBall){
+      return otherBallY;
+    }
+    else{
+      return 65506;
+    }
+  #else
+    return ballY;
+  #endif
 }
 
 
@@ -212,36 +219,46 @@ void DirectionController::calculateAttack(){
     followingBall = lightTracker.getNormalGameplay();
   }
   else{
+    // cant see ball -> go to ball or predefined pos
+    int allBallX = getAllBallX();
+    int allBallY = getAllBallY();
+
+    if(allBallX != 65506 && allBallY != 65506){
+      goToCoords(allBallX, allBallY);
+    }
     #if ENABLE_SPIRAL
-      // spiral
-      if(isSpiraling){
-        double add = 1000.0/(millis() - startSpiralTime + SPIRAL_CONST) * SPIRAL_RATE;
-        spiralDirection += add;
-        if(add < SPIRAL_RESET) startSpiralTime = millis();
-      }
-      else{
-        spiralDirection = prevBallAngle;
-        startSpiralTime = millis();
-        isSpiraling = true;
-      }
-
-      lightTracker.update(lightAngle, spiralDirection, SPIRAL_SPEED, rawBallAngle, numSensors);
-      direction = absToRel(lightTracker.getDirection());
-      speed = lightTracker.getSpeed();
-      followingBall = false;
-    #else
-      // cant see ball -> go to ball or predefined pos
-      int allBallX = getAllBallX();
-      int allBallY = getAllBallY();
-
-      if(allBallX != 65506 && allBallY != 65506){
-        goToCoords(allBallX, allBallY);
-      }
-      else{
-        goToCoords(TARGET_X, TARGET_Y);
-      }
+    else if(currX == 65506 || currY == 65506 || (abs(currX - TARGET_X) < SPIRAL_COORD_DIST) && abs(currY - TARGET_Y) < SPIRAL_COORD_DIST){
+      doSpiral();
+    }
     #endif
+    else{
+      goToCoords(TARGET_X, TARGET_Y);
+    }
   }
+}
+
+void DirectionController::doSpiral(){
+  double spirDir = calculateSpiral();
+  lightTracker.update(lightAngle, spirDir, SPIRAL_SPEED, rawBallAngle, numSensors);
+  direction = absToRel(lightTracker.getDirection());
+  speed = lightTracker.getSpeed();
+  followingBall = false;
+}
+
+double DirectionController::calculateSpiral(){
+  // spiral
+  if(isSpiraling){
+    double add = 1000.0/(millis() - startSpiralTime + SPIRAL_CONST) * SPIRAL_RATE;
+    spiralDirection += add;
+    if(add < SPIRAL_RESET) startSpiralTime = millis();
+  }
+  else{
+    spiralDirection = prevBallAngle;
+    startSpiralTime = millis();
+    isSpiraling = true;
+  }
+
+  return spiralDirection;
 }
 
 void DirectionController::calculateGoalie(){

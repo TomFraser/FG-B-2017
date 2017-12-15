@@ -47,6 +47,9 @@ private:
   int getAllBallX();
   int getAllBallY();
 
+  void doSpiral();
+  double calculateSpiral();
+
   int speed;
   double direction;
 

@@ -5,13 +5,17 @@
 
 
 //ROBOT NUM (0 is P2_bot, 1 is O_bot)
-#define ROBOT P2_bot
+#define ROBOT O_bot
 
 //Enable Xbee Comms
 #define XBEE_ENABLE false
 
 //Attacking colour
 #define ATTACKING_YELLOW false
+
+#define SUPERTEAM true
+
+#define ENABLE_SPIRAL true
 
 //MOTORS
 #define SPEED_VAL 80
@@ -39,11 +43,11 @@
 #define SURGE_MAX_Y GOALIE_Y + SURGE_Y + 10
 
 // attacker spiral
-#define ENABLE_SPIRAL true
 #define SPIRAL_RATE 1
 #define SPIRAL_SPEED 60
-#define SPIRAL_RESET 0.05
+#define SPIRAL_RESET 0.07
 #define SPIRAL_CONST 1000
+#define SPIRAL_COORD_DIST 10
 
 //DELAY
 #define MAIN_LOOP_DELAY 2

@@ -1,6 +1,7 @@
 #ifndef Defines_h
 #define Defines_h
 
+#include <Config.h>
 //=========IMU (compass) Definitions=========
 #define IMU_ADDRESS 0x68
 #define MAG_ADDRESS 0x0C
@@ -99,6 +100,28 @@
 #define LEFT_SONAR_ADDR 114
 
 // ================ Coordinate Calulations ==========
+#if SUPERTEAM
+
+#define FRONT_LEFT_X -200
+#define FRONT_LEFT_Y 300
+
+#define FRONT_RIGHT_X 200
+#define FRONT_RIGHT_Y 300
+
+#define BACK_LEFT_X -200
+#define BACK_LEFT_Y -300
+
+#define BACK_RIGHT_X 200
+#define BACK_RIGHT_Y -300
+
+#define ATTACK_GOAL_X 0
+#define ATTACK_GOAL_Y 300
+
+#define DEFENSE_GOAL_X 0
+#define DEFENSE_GOAL_Y -300
+
+#else
+
 #define FRONT_LEFT_X -60
 #define FRONT_LEFT_Y 90
 
@@ -116,6 +139,8 @@
 
 #define DEFENSE_GOAL_X 0
 #define DEFENSE_GOAL_Y -90
+
+#endif
 
 
 #endif
