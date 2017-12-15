@@ -43,6 +43,13 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
     prevBallAngle = ballAngle; // prevBallAngle is last known ball
   }
 
+  if(lightAngle != 65506){
+    if(lightAngle != targetDir){
+      startSpiralTime = millis();
+    }
+    targetDir = lightAngle; // the direction we will target spiral towards
+  }
+
   compassAngle = compassAngle_;
   ballStrength = ballStrength_;
   numSensors = numSensors_;
@@ -213,6 +220,7 @@ void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
     isSpiraling = false;
+    targetDir = -1;
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
@@ -238,24 +246,30 @@ void DirectionController::calculateAttack(){
 }
 
 void DirectionController::doSpiral(){
-  calculateSpiral(90);
-  lightTracker.update(lightAngle, spiralDirection, SPIRAL_SPEED, rawBallAngle, numSensors);
-  direction = absToRel(lightTracker.getDirection());
-  speed = lightTracker.getSpeed();
-  followingBall = false;
-}
-
-void DirectionController::calculateSpiral(int targetDir){
+  Serial.println(targetDir);
   // spiral
   if(isSpiraling){
     double add;
-    bool goingDirection = smallestAngleBetween(targetDir, spiralDirection) < 1;
-    bool goingOpposite = abs(smallestAngleBetween(targetDir, spiralDirection)-180) < 45;
+    bool goingDirection;
+    bool goingOpposite;
+    #if ENABLE_TARGET_SPIRAL
+      if(targetDir != -1){
+        goingDirection = smallestAngleBetween(targetDir, spiralDirection) < 1;
+        goingOpposite = abs(smallestAngleBetween(targetDir, spiralDirection)-180) < 45;
+      }
+      else{
+        goingDirection = false;
+        goingOpposite = false;
+      }
+    #else
+      goingDirection = false;
+      goingOpposite = false;
+    #endif
+
     if(goingDirection){
       add = 1000.0/(millis() - startSpiralTime + SPIRAL_CONST) * SPIRAL_DIRECION_RATE;
     }
-    else if(goingOpposite)
-    {
+    else if(goingOpposite){
       add = 1000.0/(millis() - startSpiralTime + SPIRAL_CONST) * (1/SPIRAL_DIRECION_RATE);
     }
     else{
@@ -264,9 +278,10 @@ void DirectionController::calculateSpiral(int targetDir){
 
     spiralDirection = fmod(spiralDirection + add, 360);
 
-    // Serial.println(add);
-
-    if(add < SPIRAL_RESET && !goingDirection) startSpiralTime = millis();
+    if(add < SPIRAL_RESET && !goingDirection){
+      startSpiralTime = millis();
+      targetDir = -1;
+    }
   }
   else{
     spiralDirection = prevBallAngle;
@@ -274,7 +289,10 @@ void DirectionController::calculateSpiral(int targetDir){
     isSpiraling = true;
   }
 
-  // Serial.println(spiralDirection);
+  lightTracker.update(lightAngle, spiralDirection, SPIRAL_SPEED, rawBallAngle, numSensors);
+  direction = absToRel(lightTracker.getDirection());
+  speed = lightTracker.getSpeed();
+  followingBall = false;
 }
 
 void DirectionController::calculateGoalie(){

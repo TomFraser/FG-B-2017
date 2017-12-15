@@ -48,7 +48,6 @@ private:
   int getAllBallY();
 
   void doSpiral();
-  void calculateSpiral(int targetDir);
 
   int speed;
   double direction;
@@ -64,6 +63,8 @@ private:
 
   // prev data
   double prevBallAngle;
+  double prevLightAngle;
+  int targetDir;
 
   // coordinate data
   int otherBallX;
