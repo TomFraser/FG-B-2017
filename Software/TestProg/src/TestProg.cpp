@@ -1,27 +1,41 @@
-#include <DirectionController.h>
-#include <Common.h>
+#include <SRF10.h>
+#include <Defines.h>
 
-DirectionController directionController = DirectionController();
+SRF10 fSonar(FRONT_SONAR_ADDR, byte(0x0C), byte(0x0D));
+SRF10 bSonar(BACK_SONAR_ADDR, byte(0x0C), byte(0x0D));
 
 void setup(){
-    Serial.begin(9600);
+  Serial.println("sss");
+  delay(3000);
+  Serial.begin(9600);
+  Wire.begin();
+  Serial.println("setup");
+  fSonar.setup();
+  bSonar.setup();
+  Serial.println("asldfkj");
 }
 
+int sonarCount = 0;
+long lastRead = 0;
 void loop(){
-  // directionController.updateGameData(65506, 65506, 0);
-  // // directionController.updateGoalData(0, -30, 0, -30);
-  // directionController.updateGoalData(114, 280.3, 0, -30);
-  // directionController.calulate();
-  //
-  // // atan2(dx, dy)
-  // // Serial.println(atan2(-5, -80)*radToAng);
-  //
-  // Serial.print("Dir: "); Serial.print(directionController.getDirection()); Serial.print(" Speed: "); Serial.println(directionController.getSpeed());
+  Serial.println("a");
+  if((millis() - lastRead) > 50){
+    Serial.println(sonarCount%2);
+    switch (sonarCount % 2) {
+      case 0:
+        fSonar.update();
+        sonarCount ++;
+        lastRead = millis();
+        break;
+      case 1:
+        bSonar.update();
+        sonarCount ++;
+        lastRead = millis();
+        break;
+    }
+  }
 
-  Serial.println(atan2(10, 0)*radToAng);
-  // Serial.println(28.5%360.0);
-  // Serial.println(doubleMod(-28.5, 360));
-  // Serial.println();
-
-
+  Serial.print(fSonar.getRange()); Serial.print(" ");
+  Serial.print(bSonar.getRange()); Serial.print(" ");
+  Serial.println();
 }

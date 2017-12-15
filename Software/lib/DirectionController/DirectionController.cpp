@@ -39,6 +39,10 @@ double DirectionController::absToRel(double absoulteDirection){
 }
 
 void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_, int ballStrength_, double lightAngle_, int numSensors_, double compassAngle_, bool isGoalie_){
+  if(ballAngle != 65506){
+    prevBallAngle = ballAngle; // prevBallAngle is last known ball
+  }
+
   compassAngle = compassAngle_;
   ballStrength = ballStrength_;
   numSensors = numSensors_;
@@ -211,12 +215,12 @@ void DirectionController::calculateAttack(){
     #if ENABLE_SPIRAL
       // spiral
       if(isSpiraling){
-        double add = 1000.0/(millis() - startSpiralTime) * SPIRAL_RATE;
+        double add = 1000.0/(millis() - startSpiralTime + SPIRAL_CONST) * SPIRAL_RATE;
         spiralDirection += add;
         if(add < SPIRAL_RESET) startSpiralTime = millis();
       }
       else{
-        spiralDirection = 0;
+        spiralDirection = prevBallAngle;
         startSpiralTime = millis();
         isSpiraling = true;
       }

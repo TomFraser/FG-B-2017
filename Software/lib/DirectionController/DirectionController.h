@@ -59,6 +59,9 @@ private:
   double compassAngle;
   bool isGoalie;
 
+  // prev data
+  double prevBallAngle;
+
   // coordinate data
   int otherBallX;
   int otherBallY;

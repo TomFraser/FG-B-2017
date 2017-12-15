@@ -151,7 +151,7 @@ void loop(){
     #else
       // p2_bot
       // Serial.println(ballStrength);
-      if(ballStrength < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+      if(ballStrength < KICK_THRESHOLD && ballStrength != 0 && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
           kicker.kickBall();
           lastKick = millis();
       }
