@@ -43,13 +43,6 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
     prevBallAngle = ballAngle; // prevBallAngle is last known ball
   }
 
-  if(lightAngle != 65506){
-    if(lightAngle != targetDir){
-      startSpiralTime = millis();
-    }
-    targetDir = lightAngle; // the direction we will target spiral towards
-  }
-
   compassAngle = compassAngle_;
   ballStrength = ballStrength_;
   numSensors = numSensors_;
@@ -58,6 +51,14 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
   ballAngle = relToAbs(ballAngle_);
   rawBallAngle = relToAbs(rawBallAngle_);
   lightAngle = relToAbs(lightAngle_);
+
+  if(lightAngle != 65506){
+    if(lightAngle != targetDir){
+      startSpiralTime = millis();
+    }
+    targetDir = lightAngle; // the direction we will target spiral towards
+  }
+
 
   followingBall = false;
 }
@@ -246,7 +247,6 @@ void DirectionController::calculateAttack(){
 }
 
 void DirectionController::doSpiral(){
-  Serial.println(targetDir);
   // spiral
   if(isSpiraling){
     double add;
