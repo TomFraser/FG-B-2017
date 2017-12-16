@@ -53,9 +53,9 @@ void DirectionController::updateGameData(double ballAngle_, double rawBallAngle_
   lightAngle = relToAbs(lightAngle_);
 
   if(lightAngle != 65506){
-    if(lightAngle != targetDir){
-      resetSpiral();
-    }
+    // if(lightAngle != targetDir){
+    //   resetSpiral();
+    // }
     targetDir = lightAngle; // the direction we will target spiral towards
   }
 
@@ -220,7 +220,7 @@ int DirectionController::getAllBallY(){
 void DirectionController::calculateAttack(){
   // if got ball -> plug into light
   if(ballAngle != 65506){
-    resetSpiral();
+    resetSpiral(rawBallAngle);
     lightTracker.update(lightAngle, ballAngle, SPEED_VAL, rawBallAngle, numSensors);
     direction = absToRel(lightTracker.getDirection());
     speed = lightTracker.getSpeed();
@@ -240,15 +240,20 @@ void DirectionController::calculateAttack(){
     }
     #endif
     else{
+      if(currY < 0){
+        resetSpiral(0);
+      }
+      else{
+        resetSpiral(180);
+      }
       goToCoords(TARGET_X, TARGET_Y);
-      resetSpiral();
     }
   }
 }
 
-void DirectionController::resetSpiral(){
+void DirectionController::resetSpiral(int target){
   isSpiraling = false;
-  targetDir = -1;
+  targetDir = target;
 }
 
 void DirectionController::doSpiral(){
@@ -258,6 +263,7 @@ void DirectionController::doSpiral(){
     bool goingDirection;
     bool goingOpposite;
     #if ENABLE_TARGET_SPIRAL
+      // Serial.println(targetDir);
       if(targetDir != -1){
         goingDirection = smallestAngleBetween(targetDir, spiralDirection) < 1;
         goingOpposite = abs(smallestAngleBetween(targetDir, spiralDirection)-180) < 45;
@@ -283,9 +289,16 @@ void DirectionController::doSpiral(){
 
     spiralDirection = fmod(spiralDirection + add, 360);
 
+    #if ENABLE_TARGET_SPIRAL
+    bool canReset = true;
+    if(targetDir != -1){
+      canReset = smallestAngleBetween(targetDir + 90, spiralDirection) < 1;
+    }
+    if(add < SPIRAL_RESET && !goingDirection && canReset){
+    #else
     if(add < SPIRAL_RESET && !goingDirection){
-      startSpiralTime = millis();
-      targetDir = -1;
+    #endif
+      resetSpiral();
     }
   }
   else{

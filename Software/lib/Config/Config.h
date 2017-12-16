@@ -35,7 +35,11 @@
 #define PID_D 1
 // Goalie
 #define X_MULTIPLIER 1.25
+#if SUPERTEAM
+#define GOALIE_Y -275
+#else
 #define GOALIE_Y -65
+#endif
 #define GOALIE_X_RANGE 15
 #define ENABLE_GOALIE_SURGE true
 #define SURGE_X 5
