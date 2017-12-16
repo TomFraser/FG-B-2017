@@ -66,6 +66,7 @@ private:
   double prevBallAngle;
   double prevLightAngle;
   int targetDir = -1;
+  int prevBallX = 65506;
 
   // coordinate data
   int otherBallX;

@@ -98,6 +98,7 @@ int DirectionController::calcBallDist(){
 }
 
 void DirectionController::updateBallCoordinates(){ //returns if can calulate ball coords
+  prevBallX = getAllBallX();
   int ballDist = calcBallDist();
   if(rawBallAngle != 65506 && currX != 65506 && currY != 65506 && ballDist > 0){
     ballX = currX + ballDist*sin(angToRad*rawBallAngle);
@@ -324,6 +325,13 @@ void DirectionController::calculateGoalie(){
   // Serial.println(allBallY);
 
   if(allBallX != 65506){
+    // if(prevBallX != 65506){
+    //   targetX = allBallX + (allBallX - prevBallX)*25;
+    // }
+    // else{
+    //   targetX = allBallX;
+    // }
+
     targetX = allBallX;
 
     #if ENABLE_GOALIE_SURGE

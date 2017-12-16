@@ -150,7 +150,11 @@ void loop(){
     #if ROBOT
       // o_bot
       // Serial.println(analogRead(LIGHTGATE_PIN));
-      if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+      // if(analogRead(LIGHTGATE_PIN) < KICK_THRESHOLD && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
+      //     kicker.kickBall();
+      //     lastKick = millis();
+      // }
+      if(ballStrength < KICK_THRESHOLD && ballStrength != 0 && millis() >= lastKick + 2000 && KICK){ //Limits kicks to 1 per second
           kicker.kickBall();
           lastKick = millis();
       }

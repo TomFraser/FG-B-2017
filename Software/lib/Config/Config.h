@@ -42,9 +42,11 @@
 #endif
 #define GOALIE_X_RANGE 15
 #define ENABLE_GOALIE_SURGE true
-#define SURGE_X 5
-#define SURGE_Y 20
+#define SURGE_X 10
+#define SURGE_Y 30
 #define SURGE_MAX_Y GOALIE_Y + SURGE_Y + 10
+// #define SURGE_Y 30
+// #define SURGE_MAX_Y GOALIE_Y + SURGE_Y
 
 // attacker spiral
 #define SPIRAL_RATE 1
