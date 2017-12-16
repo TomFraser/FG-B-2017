@@ -14,6 +14,6 @@
 #define TARGET_X 0
 #define TARGET_Y 0
 
-#define KICK_THRESHOLD 56 //currently a threshold for ball strength instead of lightgate
+#define KICK_THRESHOLD 60 //currently a threshold for ball strength instead of lightgate
 
 #endif

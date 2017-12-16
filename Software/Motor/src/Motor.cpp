@@ -108,7 +108,12 @@ void loop(){
     // directionController.updateGameData(65506, 65506, 0, 65506, lightNumData, compass, isGoalie);
 
 
-    directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    if(isGoalie){
+      directionController.updateGoalData(65506, 0, goalDefendSize, goalDefendAngle);
+    }
+    else{
+      directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
+    }
     // directionController.updateGoalData(65506, 65506, goalDefendSize, goalDefendAngle);
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
     // directionController.updateGoalData(0, 65506, 0, 65506);
