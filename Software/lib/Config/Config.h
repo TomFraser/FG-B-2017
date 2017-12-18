@@ -8,14 +8,16 @@
 #define ROBOT P2_bot
 
 //Enable Xbee Comms
-#define XBEE_ENABLE false
+#define XBEE_ENABLE true
 
 //Attacking colour
-#define ATTACKING_YELLOW false
+#define ATTACKING_YELLOW true
 
-#define SUPERTEAM true
+#define SUPERTEAM false
 
-#define ENABLE_SPIRAL true
+#define ENABLE_SPIRAL false
+
+#define ATTACKER_MIN_Y -20
 
 //MOTORS
 #define SPEED_VAL 80

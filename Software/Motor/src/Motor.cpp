@@ -109,7 +109,7 @@ void loop(){
 
 
     if(isGoalie){
-      directionController.updateGoalData(65506, 0, goalDefendSize, goalDefendAngle);
+      directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
     }
     else{
       directionController.updateGoalData(goalAttackSize, goalAttackAngle, goalDefendSize, goalDefendAngle);
@@ -118,8 +118,9 @@ void loop(){
     // directionController.updateGoalData(goalAttackSize, goalAttackAngle, 0, 65506);
     // directionController.updateGoalData(0, 65506, 0, 65506);
 
-    // Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
-    // Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+    Serial.print(goalAttackSize); Serial.print(" | "); Serial.println(goalAttackAngle);
+    Serial.print(goalDefendSize); Serial.print(" | "); Serial.println(goalDefendAngle);
+    Serial.println();
 
     // Serial.println(rawBallData);
     // Serial.println(ballStrength);
@@ -179,8 +180,8 @@ void loop(){
         //Other robot can see ball and knows where it is
         directionController.updateOtherData(xbee.otherBallX, xbee.otherBallY, xbee.otherX, xbee.otherY, xbee.otherCanSeeBall == 1 ? true : false, xbee.otherKnowsOwnCoords == 1 ? true : false);
 
-        // Serial.println(isOtherConnected);
-        // Serial.println(xbee.otherBallX);
+        // Serial.print(isOtherConnected); Serial.print(" | ");
+        // Serial.print(xbee.otherBallX); Serial.print(" | ");
         // Serial.println(xbee.otherBallY);
         // Serial.println(xbee.otherCanSeeBall == 1 ? true : false);
         // Serial.println();

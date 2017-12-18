@@ -219,6 +219,19 @@ int DirectionController::getAllBallY(){
 
 
 void DirectionController::calculateAttack(){
+
+  // if(currX != 65506 && currY != 65506 && currY < ATTACKER_MIN_Y && lightAngle == 65506){
+  //   if(smallestAngleBetween(lightAngle, 270) < 45){
+  //     lightAngle = 315;
+  //   }
+  //   else if(smallestAngleBetween(lightAngle, 90) < 45){
+  //     lightAngle = 45;
+  //   }
+  //   else{
+  //     lightAngle = 0;
+  //   }
+  // }
+
   // if got ball -> plug into light
   if(ballAngle != 65506){
     resetSpiral(rawBallAngle);
