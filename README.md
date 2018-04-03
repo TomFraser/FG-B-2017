@@ -2,6 +2,8 @@
 
 **The Team:** Alistair English, Thomas Fraser, Tom Hulbert, Cooper Richmond, William Plummer
 
+**Note:** This repo is no longer under development and wont recieve updates. Please understand that a lot of the code was written during competition and might be difficult to understand or follow. Please ignore inappropriate commit messages, we are Australian.
+
 -------------------------------------------------------------
 
 [FG&B Robotics](https://fg-b.github.io)
