@@ -1,5 +1,7 @@
 # **FG&B** Repo For 2017
 
+## This repo is no longer being developed.
+
 **The Team:** Alistair English, Thomas Fraser, Tom Hulbert, Cooper Richmond, William Plummer
 
 -------------------------------------------------------------
