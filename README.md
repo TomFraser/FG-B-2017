@@ -1,14 +1,17 @@
 # **FG&B** Repo For 2017
 
-**The Team:** Alistair English, Thomas Fraser, Tom Hulbert, Cooper Richmond, William Plummer ​:heart:​
+**The Team:** Alistair English, Thomas Fraser, Tom Hulbert, Cooper Richmond, William Plummer
+
+**Note:** This repo is no longer under development and wont recieve updates. Please understand that a lot of the code was written during competition and might be difficult to understand or follow. Please ignore inappropriate commit messages, we are Australian.
 
 -------------------------------------------------------------
 
-[BBC Robotics](https://bbcrobotics.org)
-
 [FG&B Robotics](https://fg-b.github.io)
 
-[Brisbane Boys' College, Queensland Australia](http://www.bbc.qld.edu.au)
+For enquiries relating to BBC Robotics please visit:
+[Brisbane Boys' College Website](http://www.bbc.qld.edu.au)
+
+For enquiries relating to this repo please contact: tr.fraser@bigpond.com
 
 -------------------------------------------------------------
 
@@ -17,8 +20,16 @@
 -------------------------------------------------------------
 ## Branches
 
-The **Master** branch contains IR Ball codebase for both robots
+The **Master** branch contains IR Ball code for both robots
 
-The **360Cam** branch contains the Passive Ball codebase for both robots
+The **360Cam** branch contains the Passive Ball code for both robots
 
-The **defender** branch contains the Defender codebasae for either robot
+The **passiveOnPixy** branch contains the Pixy Passive code for both robots
+
+The **Light** branch contains an outdated test version of lightsensor code
+
+The **Light20** branch contains an outdated test version of the 20 sensor lightsensor code
+
+The **SPIrewrite** branch contains outdated SPI changes
+
+The **ThailandSuperteam** branch contains code for the superteam competition at the 2017 RCAP (Robocup Asia Pacific) super team competition
